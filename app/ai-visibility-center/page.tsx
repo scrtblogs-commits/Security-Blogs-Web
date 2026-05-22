@@ -9,6 +9,8 @@ import AnimatedSVGTimeline from '@/components/ui/AnimatedSVGTimeline'
 import BeforeAfter from '@/components/ui/BeforeAfter'
 import MarqueeStrip from '@/components/ui/MarqueeStrip'
 import ScoreCalculator from './ScoreCalculator'
+import Interactive3D from './Interactive3D'
+import OrbitalTimeline from './OrbitalTimeline'
 
 export const metadata = {
   title: 'AI Visibility Center — How AI Sees Your Security Brand | SecurityGrowth',
@@ -61,6 +63,14 @@ export default function AIVisibilityCenterPage() {
         </div>
       </section>
 
+      <section className="section" style={{ paddingBottom: 0 }}>
+        <div className="container">
+          <Reveal>
+            <Interactive3D />
+          </Reveal>
+        </div>
+      </section>
+
       <section className="section">
         <div className="container">
           <SectionHead
@@ -69,6 +79,17 @@ export default function AIVisibilityCenterPage() {
             sub="Eight steps run silently every time a buyer asks. Win them all and you become the default recommendation."
           />
           <AnimatedSVGTimeline steps={timeline} gradient="linear-gradient(180deg, var(--red), var(--yellow), var(--blue))" />
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="The journey"
+            title="Your brand's orbit to AI authority"
+            sub="Tap any node to explore the milestones — and how they connect — on the path to becoming the answer AI gives."
+          />
+          <OrbitalTimeline />
         </div>
       </section>
 
