@@ -49,10 +49,11 @@ html[data-theme='dark'] {
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg);
 }
 
 body {
-  background: var(--bg);
+  background: transparent;
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -231,7 +232,7 @@ a {
   overflow: hidden;
   padding-top: calc(var(--nav-h) + 64px);
   padding-bottom: 80px;
-  background: var(--bg);
+  background: transparent;
 }
 
 /* ---------- Meters ---------- */

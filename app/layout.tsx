@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import CustomCursor from '@/components/ui/CustomCursor'
+import SiteBackground from '@/components/ui/SiteBackground'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://securityblogs.com.au'),
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body>
+        <SiteBackground />
         <ScrollProgress />
         <CustomCursor />
         <Navbar />
