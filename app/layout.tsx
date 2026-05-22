@@ -1,22 +1,48 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
+import ScrollProgress from '@/components/ui/ScrollProgress'
+import CustomCursor from '@/components/ui/CustomCursor'
 
 export const metadata: Metadata = {
-  title: 'SecurityGrowth — Be the answer AI gives',
+  metadataBase: new URL('https://securityblogs.com.au'),
+  title: {
+    default: 'SecurityGrowth — The AI Visibility Platform for Security Brands',
+    template: '%s | SecurityGrowth',
+  },
   description:
-    'AI visibility, SEO, and paid media for security brands. Rank #1, get cited by ChatGPT, Perplexity & every AI answer engine, and convert high-intent buyers.',
+    'AI visibility, SEO and paid media built exclusively for the security industry. Rank #1 on Google and get cited by ChatGPT, Perplexity, Gemini and every AI answer engine.',
+  keywords: [
+    'security SEO',
+    'AI visibility',
+    'AIO',
+    'AEO',
+    'GEO',
+    'security marketing',
+    'Google Ads security',
+  ],
+  openGraph: {
+    title: 'SecurityGrowth — The AI Visibility Platform for Security Brands',
+    description:
+      'Be the answer AI gives. AI visibility, SEO and paid media for security brands.',
+    url: 'https://securityblogs.com.au',
+    siteName: 'SecurityGrowth',
+    type: 'website',
+  },
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const themeInit = `(function(){try{var t=localStorage.getItem('sg-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body>
+        <ScrollProgress />
+        <CustomCursor />
         <Navbar />
         <main>{children}</main>
         <Footer />
