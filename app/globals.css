@@ -300,6 +300,15 @@ a {
 .blink { animation: blink 1s steps(2, start) infinite; }
 .float { animation: float 6s ease-in-out infinite; }
 
+.sg-loader {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--blue);
+  animation: spin-slow 0.8s linear infinite;
+}
+
 .skeleton {
   position: relative;
   overflow: hidden;

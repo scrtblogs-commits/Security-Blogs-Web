@@ -3,6 +3,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
 import ContactForm from '@/components/ui/ContactForm'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
+import Interactive3D from '@/components/ui/Interactive3D'
 import Reveal from '@/components/ui/Reveal'
 
 export const metadata = {
@@ -37,6 +38,18 @@ export default function ContactPage() {
           </Reveal>
         </div>
       </HeroBg>
+
+      <section className="section" style={{ paddingBottom: 0 }}>
+        <div className="container">
+          <Reveal>
+            <Interactive3D
+              eyebrow="Before you reach out"
+              title={<>Let&apos;s make AI <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>recommend you</span></>}
+              description="Tell us about your security brand and we'll show you exactly where AI cites your competitors instead of you — and the fastest path to becoming the answer. Drag the 3D model while you're here."
+            />
+          </Reveal>
+        </div>
+      </section>
 
       <section className="section">
         <div className="container" style={{ maxWidth: 760 }}>
