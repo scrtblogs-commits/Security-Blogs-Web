@@ -1,4 +1,5 @@
 'use client'
+import { ReactNode } from 'react'
 import { SplineScene } from '@/components/ui/splite'
 
 function Spotlight() {
@@ -29,7 +30,11 @@ function Spotlight() {
   )
 }
 
-export default function Interactive3D() {
+export default function Interactive3D({
+  eyebrow = 'Interactive',
+  title,
+  description,
+}: { eyebrow?: string; title?: ReactNode; description?: ReactNode }) {
   return (
     <div
       style={{
@@ -41,14 +46,14 @@ export default function Interactive3D() {
       <Spotlight />
       <div className="sg-3d-grid" style={{ display: 'flex', height: '100%', minHeight: 480, position: 'relative', zIndex: 2 }}>
         <div style={{ flex: 1, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <span className="eyebrow" style={{ color: '#7fa8ff' }}>Interactive</span>
+          <span className="eyebrow" style={{ color: '#7fa8ff' }}>{eyebrow}</span>
           <h2 style={{ fontSize: 'clamp(30px,4vw,46px)', margin: '12px 0 14px', color: '#fff', lineHeight: 1.1 }}>
-            See your brand the way <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>AI sees it</span>
+            {title ?? (
+              <>See your brand the way <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>AI sees it</span></>
+            )}
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.72)', maxWidth: 460, fontSize: 16, lineHeight: 1.6 }}>
-            Every answer engine builds a live model of your security brand — its entities, signals
-            and authority. Explore the 3D model and the orbital map below to understand exactly what
-            AI knows about you.
+            {description ?? 'Every answer engine builds a live model of your security brand — its entities, signals and authority. Explore the 3D model to understand exactly what AI knows about you.'}
           </p>
         </div>
         <div className="sg-3d-scene" style={{ flex: 1, position: 'relative', minHeight: 320 }}>

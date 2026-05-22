@@ -9,7 +9,7 @@ import AnimatedSVGTimeline from '@/components/ui/AnimatedSVGTimeline'
 import BeforeAfter from '@/components/ui/BeforeAfter'
 import MarqueeStrip from '@/components/ui/MarqueeStrip'
 import ScoreCalculator from './ScoreCalculator'
-import Interactive3D from './Interactive3D'
+import Interactive3D from '@/components/ui/Interactive3D'
 import OrbitalTimeline from './OrbitalTimeline'
 
 export const metadata = {
