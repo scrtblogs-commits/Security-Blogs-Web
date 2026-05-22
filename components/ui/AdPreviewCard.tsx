@@ -1,3 +1,5 @@
+'use client'
+
 export type AdData = {
   badge?: string
   badgeColor?: string
