@@ -1,7 +1,7 @@
 // Web3Forms is a free form-handling service that emails submissions to you.
 // One-time setup: sign up at https://web3forms.com using info@securityblogs.com.au,
 // then paste the access key you receive into the constant below and rebuild the site.
-export const WEB3FORMS_ACCESS_KEY = 'PASTE_YOUR_WEB3FORMS_ACCESS_KEY_HERE'
+export const WEB3FORMS_ACCESS_KEY = '9b5ca0e0-e2b2-4572-846e-1133389e8163'
 
 // Inbox that should receive form submissions.
 export const CONTACT_EMAIL = 'info@securityblogs.com.au'
