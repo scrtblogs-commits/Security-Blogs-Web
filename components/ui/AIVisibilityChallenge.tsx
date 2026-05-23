@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import GaugeRing, { tierFor } from './GaugeRing'
+import { submitForm } from '@/lib/submitForm'
 
 const queries = ['best security company Sydney', 'CCTV installers Melbourne', 'access control systems', 'security monitoring services', 'alarm installation Brisbane', 'enterprise security solutions', 'security camera installation', '24/7 security monitoring']
 const platforms = ['ChatGPT', 'Perplexity', 'Gemini', 'Google AI Overview', 'Bing Copilot']
@@ -32,8 +33,18 @@ export default function AIVisibilityChallenge({ variant = 'full' }: { variant?: 
   }
 
   const finish = () => {
-    setResult(computeScore())
-    console.log('challenge result', { selQueries, aiToggles, slider, challenge, name, email, timestamp: new Date().toISOString() })
+    const score = computeScore()
+    setResult(score)
+    const fd = new FormData()
+    fd.set('name', name)
+    fd.set('email', email)
+    fd.set('score', String(score))
+    fd.set('tier', tierFor(score).label)
+    fd.set('challenge', challenge)
+    fd.set('queries', selQueries.join(', '))
+    fd.set('aiAppearance', Object.entries(aiToggles).map(([k, v]) => `${k}:${v ? 'yes' : 'no'}`).join(', '))
+    fd.set('confidence', String(slider))
+    if (email) submitForm({ formData: fd, subject: 'New AI Visibility Challenge lead' })
   }
 
   if (result !== null) {
