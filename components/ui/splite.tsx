@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense, lazy, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 const Spline = lazy(() => import('@splinetool/react-spline'))
 
 interface SplineSceneProps {
@@ -39,14 +39,79 @@ class SplineErrorBoundary extends React.Component<{ children: React.ReactNode },
   }
 }
 
+// Decide once per page whether this device should render Spline at all.
+// Skip on small screens, reduced-motion preference, and save-data hints.
+function shouldRenderSpline(): boolean {
+  if (typeof window === 'undefined') return false
+  try {
+    if (window.matchMedia('(max-width: 820px)').matches) return false
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection
+    if (conn?.saveData) return false
+    if (conn?.effectiveType && /2g|slow-2g/.test(conn.effectiveType)) return false
+  } catch {
+    return true
+  }
+  return true
+}
+
 export function SplineScene({ scene, className }: SplineSceneProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [shouldLoad, setShouldLoad] = useState(false)
   const [failed, setFailed] = useState(false)
-  if (failed) return <Fallback />
+
+  useEffect(() => {
+    if (!shouldRenderSpline()) return
+
+    const node = containerRef.current
+    if (!node) return
+
+    // Idle delay so hydration + interactive controls (forms, buttons) settle first.
+    const kick = () => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            setShouldLoad(true)
+            observer.disconnect()
+          }
+        },
+        { rootMargin: '200px' },
+      )
+      observer.observe(node)
+      return () => observer.disconnect()
+    }
+
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void) => number
+      cancelIdleCallback?: (id: number) => void
+    }
+    let cleanup: (() => void) | undefined
+    const usingIdle = typeof w.requestIdleCallback === 'function'
+    const id = usingIdle
+      ? w.requestIdleCallback!(() => { cleanup = kick() })
+      : window.setTimeout(() => { cleanup = kick() }, 600)
+
+    return () => {
+      if (usingIdle && typeof w.cancelIdleCallback === 'function') {
+        w.cancelIdleCallback(id as number)
+      } else {
+        clearTimeout(id as number)
+      }
+      cleanup?.()
+    }
+  }, [])
+
   return (
-    <SplineErrorBoundary>
-      <Suspense fallback={<Fallback loading />}>
-        <Spline scene={scene} className={className} onError={() => setFailed(true)} />
-      </Suspense>
-    </SplineErrorBoundary>
+    <div ref={containerRef} className={className} style={{ width: '100%', height: '100%' }}>
+      {failed || !shouldLoad ? (
+        <Fallback />
+      ) : (
+        <SplineErrorBoundary>
+          <Suspense fallback={<Fallback loading />}>
+            <Spline scene={scene} className={className} onError={() => setFailed(true)} />
+          </Suspense>
+        </SplineErrorBoundary>
+      )}
+    </div>
   )
 }

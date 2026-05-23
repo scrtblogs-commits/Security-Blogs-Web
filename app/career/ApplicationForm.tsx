@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { submitForm } from '../../lib/submitForm'
 
 const roles = [
   'AI Content Strategist',
@@ -17,13 +18,19 @@ const MAX = 500
 export default function ApplicationForm() {
   const [sent, setSent] = useState(false)
   const [why, setWhy] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     if (fd.get('company_url')) return // honeypot
-    console.log('career application', Object.fromEntries(fd.entries()))
-    setSent(true)
+    setSubmitting(true)
+    setError(null)
+    const result = await submitForm({ formData: fd, subject: 'New career application' })
+    setSubmitting(false)
+    if (result.ok) setSent(true)
+    else setError(result.error || 'Submission failed.')
   }
 
   if (sent) {
@@ -89,7 +96,12 @@ export default function ApplicationForm() {
         </select>
       </div>
       <input type="text" name="company_url" className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-      <button type="submit" className="btn btn-primary" style={{ gridColumn: '1 / -1' }}>Submit application →</button>
+      {error && (
+        <div style={{ gridColumn: '1 / -1', color: 'var(--red)', fontSize: 13 }}>{error}</div>
+      )}
+      <button type="submit" className="btn btn-primary" style={{ gridColumn: '1 / -1' }} disabled={submitting}>
+        {submitting ? 'Submitting…' : 'Submit application →'}
+      </button>
     </form>
   )
 }

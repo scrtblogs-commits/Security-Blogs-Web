@@ -13,7 +13,7 @@ export const metadata = {
 
 const details = [
   { icon: '📍', title: 'Australia', sub: 'Also serving US · UK · UAE · SG' },
-  { icon: '📧', title: 'hello@securityblogs.com.au', sub: 'Email us anytime' },
+  { icon: '📧', title: 'info@securityblogs.com.au', sub: 'Email us anytime' },
   { icon: '⏰', title: 'Response within 24 hours', sub: 'Real humans, fast replies' },
   { icon: '🔒', title: '100% confidential, no spam', sub: 'Your data stays private' },
 ]

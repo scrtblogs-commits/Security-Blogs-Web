@@ -1,6 +1,7 @@
 'use client'
 import { useMemo, useState } from 'react'
 import MagneticButton from '@/components/ui/MagneticButton'
+import { submitForm } from '@/lib/submitForm'
 
 const INDUSTRIES = [
   'CCTV',
@@ -143,17 +144,14 @@ export default function VisibilityChecker() {
     setPlatforms((prev) => (prev.includes(p) ? prev.filter((x) => x !== p) : [...prev, p]))
 
   const run = () => {
-    const payload = {
-      brand,
-      url,
-      industry,
-      email,
-      query: allQueries.length ? allQueries : [primaryQuery],
-      platforms,
-      timestamp: new Date().toISOString(),
-    }
-    // eslint-disable-next-line no-console
-    console.log(payload)
+    const fd = new FormData()
+    fd.set('brand', brand)
+    fd.set('url', url)
+    fd.set('industry', industry)
+    fd.set('email', email)
+    fd.set('queries', (allQueries.length ? allQueries : [primaryQuery]).join(', '))
+    fd.set('platforms', platforms.join(', '))
+    submitForm({ formData: fd, subject: 'New AI Visibility Checker lead' })
     setRan(true)
     setStep(3)
   }
