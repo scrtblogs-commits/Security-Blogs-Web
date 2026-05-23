@@ -1,10 +1,11 @@
 import MagneticButton from './MagneticButton'
+import { SITE } from '@/content/site'
 
 export default function CTABand({
-  title = 'Ready to be the answer AI gives?',
-  subtitle = 'Get a free AI visibility audit and see exactly where your security brand wins — and where competitors get cited instead of you.',
-  ctaLabel = 'Get your free audit →',
-  ctaHref = '/book-strategy-call/',
+  title = SITE.ctaBand.title,
+  subtitle = SITE.ctaBand.subtitle,
+  ctaLabel = SITE.ctaBand.ctaLabel,
+  ctaHref = SITE.ctaBand.ctaHref,
 }: { title?: string; subtitle?: string; ctaLabel?: string; ctaHref?: string }) {
   return (
     <section className="section">

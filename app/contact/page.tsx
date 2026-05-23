@@ -5,6 +5,7 @@ import ContactForm from '@/components/ui/ContactForm'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
 import Interactive3D from '@/components/ui/Interactive3D'
 import Reveal from '@/components/ui/Reveal'
+import { SITE } from '@/content/site'
 
 export const metadata = {
   title: 'Contact · SecurityGrowth',
@@ -12,10 +13,10 @@ export const metadata = {
 }
 
 const details = [
-  { icon: '📍', title: 'Australia', sub: 'Also serving US · UK · UAE · SG' },
-  { icon: '📧', title: 'hello@securityblogs.com.au', sub: 'Email us anytime' },
-  { icon: '⏰', title: 'Response within 24 hours', sub: 'Real humans, fast replies' },
-  { icon: '🔒', title: '100% confidential, no spam', sub: 'Your data stays private' },
+  { icon: '📍', title: SITE.contact.location, sub: SITE.contact.locationSub },
+  { icon: '📧', title: SITE.contact.email, sub: 'Email us anytime' },
+  { icon: '⏰', title: SITE.contact.responseTime, sub: SITE.contact.responseSub },
+  { icon: '🔒', title: SITE.contact.confidentiality, sub: SITE.contact.confidentialitySub },
 ]
 
 export default function ContactPage() {

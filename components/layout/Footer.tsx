@@ -1,7 +1,11 @@
 import Link from 'next/link'
 import { services, knowledgeHub, publishWithUs, companyLinks } from '@/lib/site'
+import { SITE } from '@/content/site'
 
-const socials = ['LinkedIn', 'Facebook', 'Instagram', 'YouTube']
+const socialKeys = ['linkedin', 'facebook', 'instagram', 'youtube'] as const
+const socialLabels: Record<typeof socialKeys[number], string> = {
+  linkedin: 'LinkedIn', facebook: 'Facebook', instagram: 'Instagram', youtube: 'YouTube',
+}
 
 export default function Footer() {
   return (
@@ -14,12 +18,17 @@ export default function Footer() {
               <span><span className="accent">Security</span>Growth</span>
             </Link>
             <p className="text-soft" style={{ fontSize: 14, maxWidth: 280, marginBottom: 18 }}>
-              The AI Visibility Platform for Security Brands.
+              {SITE.footer.tagline}
             </p>
             <div className="flex gap-2">
-              {socials.map((s) => (
-                <span key={s} title={s} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 600, color: 'var(--text-dim)' }}>{s[0]}</span>
-              ))}
+              {socialKeys.map((k) => {
+                const href = SITE.socials[k]
+                if (!href) return null
+                const label = socialLabels[k]
+                return (
+                  <a key={k} href={href} target="_blank" rel="noreferrer" title={label} aria-label={label} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 600, color: 'var(--text-dim)' }}>{label[0]}</a>
+                )
+              })}
             </div>
           </div>
 
