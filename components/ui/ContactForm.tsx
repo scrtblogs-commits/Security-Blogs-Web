@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { submitForm } from '../../lib/submitForm'
 
 type FieldDef = { name: string; label: string; type?: string; required?: boolean; options?: string[]; full?: boolean; placeholder?: string }
 
@@ -16,15 +17,23 @@ export default function ContactForm({
   fields = defaultFields,
   submitLabel = 'Send Message →',
   successMsg = "✓ Message received! We'll be in touch within 24 hours.",
-}: { fields?: FieldDef[]; submitLabel?: string; successMsg?: string }) {
+  subject = 'New contact form submission',
+}: { fields?: FieldDef[]; submitLabel?: string; successMsg?: string; subject?: string }) {
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const fd = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const fd = new FormData(form)
     if (fd.get('company_url')) return // honeypot
-    console.log('form submit', Object.fromEntries(fd.entries()))
-    setSent(true)
+    setSubmitting(true)
+    setError(null)
+    const result = await submitForm({ formData: fd, subject })
+    setSubmitting(false)
+    if (result.ok) setSent(true)
+    else setError(result.error || 'Submission failed.')
   }
 
   if (sent) {
@@ -55,7 +64,12 @@ export default function ContactForm({
         </div>
       ))}
       <input type="text" name="company_url" className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-      <button type="submit" className="btn btn-primary" style={{ gridColumn: '1 / -1' }}>{submitLabel}</button>
+      {error && (
+        <div style={{ gridColumn: '1 / -1', color: 'var(--red)', fontSize: 13 }}>{error}</div>
+      )}
+      <button type="submit" className="btn btn-primary" style={{ gridColumn: '1 / -1' }} disabled={submitting}>
+        {submitting ? 'Sending…' : submitLabel}
+      </button>
     </form>
   )
 }

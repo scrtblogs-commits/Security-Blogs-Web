@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { submitForm } from '../../../lib/submitForm'
 
 const categories = [
   'CCTV',
@@ -34,18 +35,28 @@ export default function GuestPostForm() {
   const [metaTitle, setMetaTitle] = useState('')
   const [metaDesc, setMetaDesc] = useState('')
   const [sent, setSent] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const words = countWords(body)
   const links = countLinks(body)
   const wordsOk = words >= MIN_WORDS
   const linksOk = links <= MAX_LINKS
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
     if (fd.get('company_url')) return // honeypot
-    console.log('guest post submit', { ...Object.fromEntries(fd.entries()), wordCount: words, linkCount: links })
-    setSent(true)
+    setSubmitting(true)
+    setError(null)
+    const result = await submitForm({
+      formData: fd,
+      subject: 'New guest post submission',
+      extras: { wordCount: words, linkCount: links },
+    })
+    setSubmitting(false)
+    if (result.ok) setSent(true)
+    else setError(result.error || 'Submission failed.')
   }
 
   const onPreview = () => {
@@ -217,9 +228,14 @@ export default function GuestPostForm() {
 
       <input type="text" name="company_url" className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
+      {error && (
+        <div style={{ color: 'var(--red)', fontSize: 13 }}>{error}</div>
+      )}
       <div className="flex flex-wrap gap-3">
         <button type="button" className="btn btn-outline" onClick={onPreview}>Preview Article</button>
-        <button type="submit" className="btn btn-primary">Submit for Review</button>
+        <button type="submit" className="btn btn-primary" disabled={submitting}>
+          {submitting ? 'Submitting…' : 'Submit for Review'}
+        </button>
       </div>
     </form>
   )
