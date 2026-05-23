@@ -1,22 +1,17 @@
-name: Deploy to GitHub Pages
+name: Build & Deploy to Hostinger
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment, don't cancel in-progress runs
+# Avoid concurrent deploys overwriting each other.
 concurrency:
-  group: pages
+  group: hostinger-deploy
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,21 +29,29 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to Hostinger via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          path: out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
+          username: ${{ secrets.HOSTINGER_FTP_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASS }}
+          # If your Hostinger plan exposes only plain FTP, change protocol to "ftp".
+          # If it's SFTP (SSH-based, port 65002 on Hostinger Business+), change to "sftp"
+          # and add `port: 65002`.
+          protocol: ftps
+          port: 21
+          local-dir: ./out/
+          # The remote folder served as your domain root on Hostinger.
+          # If your domain is the primary site, this is `/public_html/`.
+          # For an addon domain, it'd be `/domains/securityblogs.com.au/public_html/`.
+          server-dir: /public_html/
+          # Mirror semantics: files on the server that aren't in ./out/ will be
+          # deleted, so the live site exactly matches the build.
+          # The action excludes git internals and node_modules by default.
+          # Preserve well-known/ (Let's Encrypt etc) and cgi-bin/ if present.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .well-known/**
+            cgi-bin/**
