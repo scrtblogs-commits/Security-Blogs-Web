@@ -1,0 +1,53 @@
+# SecurityBlogs
+
+> SecurityBlogs is an AI visibility, SEO and paid-media agency built exclusively for the security industry. We help security brands in Australia, the US, UK, UAE and Singapore rank on Google and get cited by ChatGPT, Perplexity, Gemini, Claude and every AI answer engine.
+
+## Services
+
+- [Security SEO](https://securityblogs.com.au/services/security-seo/): Rank #1 for high-intent security keywords — CCTV installation, access control, monitoring, alarms, cyber security.
+- [AIO — AI Optimisation](https://securityblogs.com.au/services/aio/): Make a security brand discoverable and citable by ChatGPT, Perplexity, Gemini and every AI answer engine.
+- [AEO — Answer Engine Optimisation](https://securityblogs.com.au/services/aeo/): Position the brand as the direct answer AI assistants and search engines return.
+- [GEO — Generative Engine Optimisation](https://securityblogs.com.au/services/geo/): Build entity authority across the AI knowledge graph.
+- [Google Ads for Security](https://securityblogs.com.au/services/google-ads/): High-converting PPC campaigns engineered for security buyers.
+- [Bing Ads for Security](https://securityblogs.com.au/services/bing-ads/): Microsoft Advertising for the B2B security buyers Google misses.
+- [AI-Ready Security Website Design](https://securityblogs.com.au/services/web-design/): Schema-rich, conversion-focused security websites that rank and get cited.
+
+## Knowledge Hub
+
+- [Definitions & Glossary](https://securityblogs.com.au/knowledge-hub/definitions-glossary/): Plain-English definitions of AIO, AEO, GEO, SERP, schema, entity, E-E-A-T, citation and more.
+- [Security Industry SEO](https://securityblogs.com.au/knowledge-hub/security-industry-seo/): Tactical SEO playbook specifically for security companies.
+- [Security Guides](https://securityblogs.com.au/knowledge-hub/security-guides/): Step-by-step guides for SEO, AI visibility and paid media in the security niche.
+- [Industry News](https://securityblogs.com.au/knowledge-hub/industry-news/): Security industry SEO and AI visibility news.
+- [Security Trends 2026](https://securityblogs.com.au/knowledge-hub/security-trends-2026/): The marketing and AI-search trends shaping security brands in 2026.
+- [Research Reports](https://securityblogs.com.au/knowledge-hub/research-reports/): Original research on AI citation, SEO and buyer behaviour in security.
+- [Blog](https://securityblogs.com.au/knowledge-hub/blogs/): Tactical reads on SEO, AIO, AEO, GEO and paid ads for security brands.
+
+## Publish With Us
+
+- [Sponsored Editorial Placements](https://securityblogs.com.au/publish-with-us/backlink-packages/): Sponsored editorial articles with rel="sponsored" placement, disclosed per Google's webmaster policy.
+- [Sponsored Posts](https://securityblogs.com.au/publish-with-us/sponsored-posts/): Promote a security brand via permanent sponsored posts.
+- [Guest Posting](https://securityblogs.com.au/publish-with-us/guest-posting/): Submit an original guest article for editorial review.
+- [Press Release Distribution](https://securityblogs.com.au/publish-with-us/press-release/): Publish a security-industry press release on SecurityBlogs.
+- [Product Promotion](https://securityblogs.com.au/publish-with-us/product-promotion/): Reviews, comparisons and demo spotlights for security products.
+- [Pricing & Guidelines](https://securityblogs.com.au/publish-with-us/pricing-guidelines/): Editorial guidelines and pricing for all publishing options.
+
+## Tools
+
+- [Free AI Visibility Tools](https://securityblogs.com.au/free-tools/): Free checks to see how AI engines describe a security brand today.
+- [AI Visibility Center](https://securityblogs.com.au/ai-visibility-center/): Hub for AI visibility benchmarking, audits and reporting.
+- [Security Directory](https://securityblogs.com.au/security-directory/): Verified directory of Australian security companies.
+
+## Company
+
+- [About Us](https://securityblogs.com.au/about-us/): Who we are and how we work.
+- [Case Studies](https://securityblogs.com.au/case-studies/): Documented client outcomes across SEO, AIO, AEO, GEO and paid media.
+- [Contact](https://securityblogs.com.au/contact/): General enquiries and quote requests.
+- [Book a Strategy Call](https://securityblogs.com.au/book-strategy-call/): Schedule a free 30-minute AI visibility and SEO strategy call.
+
+## Optional
+
+- [Privacy Policy](https://securityblogs.com.au/privacy-policy/)
+- [Terms of Service](https://securityblogs.com.au/terms-of-service/)
+- [Content Guidelines](https://securityblogs.com.au/content-guidelines/)
+- [Career](https://securityblogs.com.au/career/)
+- [Advertise](https://securityblogs.com.au/publish-with-us/advertise/)

@@ -228,6 +228,17 @@ export default function GuestPostForm() {
 
       <input type="text" name="company_url" className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
+      <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.5 }}>
+        <input type="checkbox" name="consent" required style={{ marginTop: 3, flexShrink: 0 }} />
+        <span>
+          I confirm this article is 100% original and unpublished, and I consent to
+          my information being handled in line with the{' '}
+          <a href="/privacy-policy/" style={{ color: 'var(--blue)' }}>privacy policy</a>{' '}
+          and the{' '}
+          <a href="/content-guidelines/" style={{ color: 'var(--blue)' }}>content guidelines</a>. *
+        </span>
+      </label>
+
       {error && (
         <div style={{ color: 'var(--red)', fontSize: 13 }}>{error}</div>
       )}

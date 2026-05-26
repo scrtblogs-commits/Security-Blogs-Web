@@ -24,6 +24,7 @@ export default function AIVisibilityChallenge({ variant = 'full' }: { variant?: 
   const [challenge, setChallenge] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [consent, setConsent] = useState(false)
   const [result, setResult] = useState<number | null>(null)
 
   const computeScore = () => {
@@ -123,6 +124,19 @@ export default function AIVisibilityChallenge({ variant = 'full' }: { variant?: 
                 <input className="field" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
                 <input className="field" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="text" className="honeypot" tabIndex={-1} aria-hidden="true" />
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13, color: 'var(--text-soft)', lineHeight: 1.5 }}>
+                  <input
+                    type="checkbox"
+                    checked={consent}
+                    onChange={(e) => setConsent(e.target.checked)}
+                    style={{ marginTop: 3, flexShrink: 0 }}
+                  />
+                  <span>
+                    I agree to be contacted about my results and consent to my
+                    information being handled in line with the{' '}
+                    <a href="/privacy-policy/" style={{ color: 'var(--blue)' }}>privacy policy</a>. *
+                  </span>
+                </label>
               </div>
             </>
           )}
@@ -133,7 +147,7 @@ export default function AIVisibilityChallenge({ variant = 'full' }: { variant?: 
         <button className="btn btn-outline" onClick={() => setStep((s) => Math.max(1, s - 1))} disabled={step === 1} style={{ opacity: step === 1 ? 0.4 : 1 }}>← Back</button>
         {step < totalSteps
           ? <button className="btn btn-primary" onClick={() => setStep((s) => s + 1)}>Continue →</button>
-          : <button className="btn btn-primary" onClick={finish} disabled={!name || !email} style={{ opacity: !name || !email ? 0.5 : 1 }}>Get My Free AI Score →</button>}
+          : <button className="btn btn-primary" onClick={finish} disabled={!name || !email || !consent} style={{ opacity: (!name || !email || !consent) ? 0.5 : 1 }}>Get My Free AI Score →</button>}
       </div>
     </div>
   )

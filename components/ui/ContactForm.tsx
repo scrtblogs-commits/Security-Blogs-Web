@@ -64,6 +64,14 @@ export default function ContactForm({
         </div>
       ))}
       <input type="text" name="company_url" className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <label style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.5 }}>
+        <input type="checkbox" name="consent" required style={{ marginTop: 3, flexShrink: 0 }} />
+        <span>
+          I agree to be contacted about my enquiry and consent to my information
+          being handled in line with the{' '}
+          <a href="/privacy-policy/" style={{ color: 'var(--blue)' }}>privacy policy</a>. *
+        </span>
+      </label>
       {error && (
         <div style={{ gridColumn: '1 / -1', color: 'var(--red)', fontSize: 13 }}>{error}</div>
       )}

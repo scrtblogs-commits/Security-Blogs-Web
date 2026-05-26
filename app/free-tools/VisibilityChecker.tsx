@@ -107,6 +107,7 @@ export default function VisibilityChecker() {
   const [url, setUrl] = useState('')
   const [industry, setIndustry] = useState<Industry>('CCTV')
   const [email, setEmail] = useState('')
+  const [consent, setConsent] = useState(false)
 
   const [selectedQueries, setSelectedQueries] = useState<string[]>([])
   const [customQuery, setCustomQuery] = useState('')
@@ -117,7 +118,7 @@ export default function VisibilityChecker() {
   const presetQueries = QUERIES_BY_INDUSTRY[industry]
 
   const step1Valid =
-    brand.trim().length > 1 && url.trim().length > 3 && /\S+@\S+\.\S+/.test(email)
+    brand.trim().length > 1 && url.trim().length > 3 && /\S+@\S+\.\S+/.test(email) && consent
 
   const allQueries = useMemo(() => {
     const q = [...selectedQueries]
@@ -249,6 +250,19 @@ export default function VisibilityChecker() {
           </div>
           {/* honeypot */}
           <input className="honeypot" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+          <label style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginTop: 18, fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.5 }}>
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => setConsent(e.target.checked)}
+              style={{ marginTop: 3, flexShrink: 0 }}
+            />
+            <span>
+              I agree to be contacted about my results and consent to my information
+              being handled in line with the{' '}
+              <a href="/privacy-policy/" style={{ color: 'var(--blue)' }}>privacy policy</a>. *
+            </span>
+          </label>
           <div className="flex justify-between items-center" style={{ marginTop: 24 }}>
             <span className="text-dim" style={{ fontSize: 13 }}>No login. No credit card.</span>
             <button
