@@ -1,5 +1,8 @@
 import type { MetadataRoute } from 'next'
 
+// Required so Next.js 15 emits this as a static file under output: 'export'.
+export const dynamic = 'force-static'
+
 // Generates /sitemap.xml at build time. Lists ONLY new canonical URLs —
 // the 29 legacy redirect stubs (/aio/, /security-seo-service/, etc.) are
 // intentionally excluded because their pages are robots: { index: false }

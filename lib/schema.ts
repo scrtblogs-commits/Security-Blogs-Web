@@ -19,17 +19,13 @@ export const siteSchema = {
       '@id': `${SITE_URL}/#organization`,
       name: 'SecurityBlogs',
       url: `${SITE_URL}/`,
-      // TODO([[FILL: confirm logo URL]]) — /logo.png is not yet a file in
-      // public/. Either drop a 512×512 brand logo at public/logo.png, or
-      // change this URL to point at an existing asset.
-      logo: `${SITE_URL}/logo.png`,
+      logo: `${SITE_URL}/logo.svg`,
       founder: { '@id': `${SITE_URL}/#founder` },
-      // TODO([[FILL: real social profile URLs]]) — same set as Footer.tsx
       sameAs: [
-        // 'https://www.linkedin.com/company/securityblogs/',
-        // 'https://www.facebook.com/securityblogs/',
-        // 'https://www.instagram.com/securityblogs/',
-        // 'https://www.youtube.com/@securityblogs',
+        'https://www.linkedin.com/company/security-blogs/',
+        'https://www.facebook.com/people/Security-Blogs/61576725136537/',
+        'https://www.instagram.com/securityblogs/',
+        'https://www.youtube.com/@SecurityBlogs',
       ],
       areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
     },
@@ -56,9 +52,8 @@ export const siteSchema = {
       name: 'Yousif Jonaid',
       jobTitle: 'Founder & Director',
       worksFor: { '@id': `${SITE_URL}/#organization` },
-      // TODO([[FILL: Yousif Jonaid LinkedIn URL]])
       sameAs: [
-        // 'https://www.linkedin.com/in/yousif-jonaid/',
+        'https://www.linkedin.com/in/yousif-jonaid-55893b361',
       ],
     },
   ],

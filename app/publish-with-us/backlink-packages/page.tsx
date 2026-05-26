@@ -16,16 +16,12 @@ export const metadata = {
   openGraph: { url: '/publish-with-us/backlink-packages/' },
 }
 
-// TODO([[FILL: confirm sponsored placement pricing]]) — original prices were
-// $199 / $549 / $1,290 AUD. These were paired with DA guarantees and
-// "dofollow that passes authority" language that conflicts with Google's
-// link-spam policy. Pricing should be set against the new, policy-compliant
-// product (sponsored editorial placement, rel="sponsored") rather than
-// PageRank transfer.
+// Pricing set Phase 10. Sponsored-placement product (rel="sponsored",
+// disclosed editorial) — NOT link-authority-transfer.
 const plans = [
   {
     name: 'Starter',
-    price: 'TODO',
+    price: '$599',
     period: ' AUD',
     features: [
       '1 sponsored editorial placement',
@@ -39,7 +35,7 @@ const plans = [
   },
   {
     name: 'Growth',
-    price: 'TODO',
+    price: '$1,299',
     period: ' AUD',
     featured: true,
     badge: '⭐ Best Value',
@@ -56,7 +52,7 @@ const plans = [
   },
   {
     name: 'Authority',
-    price: 'TODO',
+    price: '$1,999',
     period: ' AUD',
     features: [
       '8 sponsored editorial placements',

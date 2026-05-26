@@ -1,5 +1,9 @@
 import type { MetadataRoute } from 'next'
 
+// Required so Next.js 15 emits this as a static file under output: 'export'.
+// Without it the build errors with: "export const dynamic ... not configured".
+export const dynamic = 'force-static'
+
 // Generates /robots.txt at build time. Order matters: '*' rule first so it's
 // the default; named bots after make their allow explicit (so a future
 // tightening of '*' doesn't accidentally cut them off).
