@@ -19,7 +19,7 @@ export async function submitForm({ formData, subject, extras }: SubmitOptions): 
 
   formData.set('access_key', WEB3FORMS_ACCESS_KEY)
   formData.set('subject', subject)
-  formData.set('from_name', 'Security Blogs Website')
+  formData.set('from_name', 'SecurityBlogs Website')
   if (extras) {
     for (const [k, v] of Object.entries(extras)) formData.set(k, String(v))
   }
