@@ -11,9 +11,11 @@ import { publishWithUs } from '@/lib/site'
 import TiltCard from './TiltCard'
 
 export const metadata = {
-  title: 'Publish With Us · SecurityBlogs',
+  title: 'Publish With Us',
   description:
     'Reach security-industry buyers, integrators and decision-makers. Guest posts, sponsored content, product promotion, press releases, backlinks and advertising on SecurityBlogs.',
+  alternates: { canonical: '/publish-with-us/' },
+  openGraph: { url: '/publish-with-us/' },
 }
 
 const icons: Record<string, string> = {

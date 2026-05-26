@@ -8,8 +8,10 @@ import Reveal from '@/components/ui/Reveal'
 import CaseGrid from './CaseGrid'
 
 export const metadata = {
-  title: 'Case Studies · SecurityBlogs',
+  title: 'Case Studies',
   description: 'Real results from security brands we have grown across SEO, Google Ads, AIO/AEO and GEO. Results that speak louder than rankings.',
+  alternates: { canonical: '/case-studies/' },
+  openGraph: { url: '/case-studies/' },
 }
 
 const journey = [

@@ -7,9 +7,11 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import { services } from '@/lib/site'
 
 export const metadata = {
-  title: 'AI-Powered Growth Services for Security Brands | SecurityBlogs',
+  title: 'AI-Powered Growth Services for Security Brands',
   description:
     'From SEO to AI citations, Google Ads to web design — every SecurityBlogs service is engineered exclusively for the security industry.',
+  alternates: { canonical: '/services/' },
+  openGraph: { url: '/services/' },
 }
 
 const benefits: Record<string, string[]> = {

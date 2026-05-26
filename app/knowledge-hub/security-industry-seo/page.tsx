@@ -9,8 +9,10 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Security Industry SEO · Knowledge Hub · SecurityBlogs',
+  title: 'Security Industry SEO · Knowledge Hub',
   description: 'The complete pillar on SEO for the security industry — local SEO, technical SEO, E-E-A-T, schema, link building and rank tracking for installers, integrators and SaaS.',
+  alternates: { canonical: '/knowledge-hub/security-industry-seo/' },
+  openGraph: { url: '/knowledge-hub/security-industry-seo/' },
 }
 
 const subtopics = [

@@ -1,8 +1,10 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 
 export const metadata = {
-  title: 'Privacy Policy · SecurityBlogs',
+  title: 'Privacy Policy',
   description: 'How SecurityBlogs collects, uses, stores and protects your personal information across our AI visibility and SEO services for the security industry.',
+  alternates: { canonical: '/privacy-policy/' },
+  openGraph: { url: '/privacy-policy/' },
 }
 
 const toc = [

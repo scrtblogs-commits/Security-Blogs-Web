@@ -8,9 +8,11 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Press Release Distribution · Publish With Us · SecurityBlogs',
+  title: 'Press Release Distribution · Publish With Us',
   description:
     'Distribute your security company press release to engaged industry readers, integrators and buyers. Editorial review within 2 business days.',
+  alternates: { canonical: '/publish-with-us/press-release/' },
+  openGraph: { url: '/publish-with-us/press-release/' },
 }
 
 const steps = [

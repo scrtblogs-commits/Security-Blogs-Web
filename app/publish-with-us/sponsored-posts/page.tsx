@@ -8,9 +8,11 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Sponsored Posts · Publish With Us · SecurityBlogs',
+  title: 'Sponsored Posts · Publish With Us',
   description:
     'Promote your security brand with sponsored posts on SecurityBlogs. Permanent placement, dofollow links and full editorial promotion from $149 AUD.',
+  alternates: { canonical: '/publish-with-us/sponsored-posts/' },
+  openGraph: { url: '/publish-with-us/sponsored-posts/' },
 }
 
 const plans = [

@@ -2,9 +2,11 @@ import ArticleLayout from '@/components/ui/ArticleLayout'
 import CTABand from '@/components/ui/CTABand'
 
 export const metadata = {
-  title: 'Pricing & Guidelines · Publish With Us · SecurityBlogs',
+  title: 'Pricing & Guidelines · Publish With Us',
   description:
     'Transparent pricing and editorial guidelines for guest posts, sponsored posts, press releases, backlinks, product promotion and advertising on SecurityBlogs.',
+  alternates: { canonical: '/publish-with-us/pricing-guidelines/' },
+  openGraph: { url: '/publish-with-us/pricing-guidelines/' },
 }
 
 const toc = [

@@ -1,8 +1,10 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 
 export const metadata = {
-  title: 'Terms of Service · SecurityBlogs',
+  title: 'Terms of Service',
   description: 'The terms and conditions governing your use of the SecurityBlogs website and our AI visibility and SEO services for the security industry.',
+  alternates: { canonical: '/terms-of-service/' },
+  openGraph: { url: '/terms-of-service/' },
 }
 
 const toc = [

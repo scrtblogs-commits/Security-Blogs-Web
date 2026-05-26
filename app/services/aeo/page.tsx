@@ -13,9 +13,11 @@ import AIChatDemo from '@/components/ui/AIChatDemo'
 const ACCENT = '#7f77dd'
 
 export const metadata = {
-  title: 'AEO — Become the Answer AI Recommends | SecurityBlogs',
+  title: 'AEO — Become the Answer AI Recommends',
   description:
     'Answer Engine Optimisation positions your security brand as the trusted, quotable answer AI assistants and search engines surface to buyers.',
+  alternates: { canonical: '/services/aeo/' },
+  openGraph: { url: '/services/aeo/' },
 }
 
 const capabilities = [

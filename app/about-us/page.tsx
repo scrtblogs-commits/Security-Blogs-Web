@@ -7,8 +7,10 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'About Us · SecurityBlogs',
+  title: 'About Us',
   description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the team that gets security brands found.',
+  alternates: { canonical: '/about-us/' },
+  openGraph: { url: '/about-us/' },
 }
 
 const team = [

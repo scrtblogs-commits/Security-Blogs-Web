@@ -7,9 +7,11 @@ import Reveal from '@/components/ui/Reveal'
 import GuestPostForm from './GuestPostForm'
 
 export const metadata = {
-  title: 'Guest Posting · Publish With Us · SecurityBlogs',
+  title: 'Guest Posting · Publish With Us',
   description:
     'Submit an original guest article to SecurityBlogs. Minimum 800 words, up to 2 dofollow links, original content. Editors respond within 3 business days.',
+  alternates: { canonical: '/publish-with-us/guest-posting/' },
+  openGraph: { url: '/publish-with-us/guest-posting/' },
 }
 
 const chips = ['Min 800 words', 'Max 2 dofollow links', '100% original content', 'Byline credited', 'Editor review in 3 days']

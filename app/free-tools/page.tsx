@@ -9,9 +9,11 @@ import Checklist from './Checklist'
 import GuidesTabs from './GuidesTabs'
 
 export const metadata = {
-  title: 'Free AI Visibility Tools for Security Brands | SecurityBlogs',
+  title: 'Free AI Visibility Tools for Security Brands',
   description:
     'Free AI visibility tools for security brands — check if AI cites you, score your readiness, and follow step-by-step Google & Bing ranking guides. No login required.',
+  alternates: { canonical: '/free-tools/' },
+  openGraph: { url: '/free-tools/' },
 }
 
 export default function FreeToolsPage() {

@@ -10,9 +10,11 @@ import PricingCards from '@/components/ui/PricingCards'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 
 export const metadata = {
-  title: "Australia's #1 AI-Verified Security Company Directory | SecurityBlogs",
+  title: "Australia's #1 AI-Verified Security Company Directory",
   description:
     'Find and compare verified Australian security companies ranked by AI visibility score, client reviews and industry authority.',
+  alternates: { canonical: '/security-directory/' },
+  openGraph: { url: '/security-directory/' },
 }
 
 const teasers = [

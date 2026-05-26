@@ -16,9 +16,11 @@ import AdPreviewCard from '@/components/ui/AdPreviewCard'
 const ACCENT = '#0078d4'
 
 export const metadata = {
-  title: 'Bing Ads for Security Companies | SecurityBlogs',
+  title: 'Bing Ads for Security Companies',
   description:
     'Microsoft Advertising campaigns that capture the B2B security buyers Google misses — lower CPCs, LinkedIn profile targeting and 41% of business decision-makers.',
+  alternates: { canonical: '/services/bing-ads/' },
+  openGraph: { url: '/services/bing-ads/' },
 }
 
 function MetricTile({ label, value, delta, positive = true }: { label: string; value: string; delta: string; positive?: boolean }) {

@@ -7,8 +7,10 @@ import CTABand from '@/components/ui/CTABand'
 import NewsTabs from './NewsTabs'
 
 export const metadata = {
-  title: 'Industry News · Knowledge Hub · SecurityBlogs',
+  title: 'Industry News · Knowledge Hub',
   description: 'The latest security industry news — acquisitions, product launches, regulation and AI developments shaping the market.',
+  alternates: { canonical: '/knowledge-hub/industry-news/' },
+  openGraph: { url: '/knowledge-hub/industry-news/' },
 }
 
 const monthSteps = [

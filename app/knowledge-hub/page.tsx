@@ -8,8 +8,10 @@ import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 import { knowledgeHub } from '@/lib/site'
 
 export const metadata = {
-  title: 'Knowledge Hub · SecurityBlogs',
+  title: 'Knowledge Hub',
   description: 'Guides, research, news and definitions on AI visibility, SEO and growth for the security industry — all in one place.',
+  alternates: { canonical: '/knowledge-hub/' },
+  openGraph: { url: '/knowledge-hub/' },
 }
 
 const hubIcons: Record<string, { icon: string; color: string; desc: string }> = {

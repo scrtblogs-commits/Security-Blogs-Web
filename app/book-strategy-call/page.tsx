@@ -8,8 +8,10 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Book a Strategy Call · SecurityBlogs',
+  title: 'Book a Strategy Call',
   description: 'Book your free 30-minute AI visibility strategy call. Get an audit, competitor gaps and a 90-day growth roadmap — no obligation.',
+  alternates: { canonical: '/book-strategy-call/' },
+  openGraph: { url: '/book-strategy-call/' },
 }
 
 const heroBullets = [

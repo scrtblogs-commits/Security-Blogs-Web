@@ -7,8 +7,10 @@ import CTABand from '@/components/ui/CTABand'
 import { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Research Reports · Knowledge Hub · SecurityBlogs',
+  title: 'Research Reports · Knowledge Hub',
   description: 'Downloadable research reports on AI visibility, SEO and growth benchmarks for the security industry — original data you can act on.',
+  alternates: { canonical: '/knowledge-hub/research-reports/' },
+  openGraph: { url: '/knowledge-hub/research-reports/' },
 }
 
 const reports = [

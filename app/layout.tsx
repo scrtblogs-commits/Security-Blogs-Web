@@ -23,11 +23,12 @@ export const metadata: Metadata = {
     'security marketing',
     'Google Ads security',
   ],
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
     description:
       'Be the answer AI gives. AI visibility, SEO and paid media for security brands.',
-    url: 'https://securityblogs.com.au',
+    url: '/',
     siteName: 'SecurityBlogs',
     type: 'website',
   },

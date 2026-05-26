@@ -9,9 +9,11 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Product Promotion · Publish With Us · SecurityBlogs',
+  title: 'Product Promotion · Publish With Us',
   description:
     'Promote your security product with reviews, comparisons, demo spotlights and buyer-guide inclusions on SecurityBlogs. Reach in-market buyers ready to purchase.',
+  alternates: { canonical: '/publish-with-us/product-promotion/' },
+  openGraph: { url: '/publish-with-us/product-promotion/' },
 }
 
 const howItWorks = [

@@ -9,9 +9,11 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Backlink Packages · Publish With Us · SecurityBlogs',
+  title: 'Backlink Packages · Publish With Us',
   description:
     'High-authority, niche-relevant backlinks from a trusted security domain. Dofollow links, editorial placement and transparent pricing in AUD.',
+  alternates: { canonical: '/publish-with-us/backlink-packages/' },
+  openGraph: { url: '/publish-with-us/backlink-packages/' },
 }
 
 const plans = [

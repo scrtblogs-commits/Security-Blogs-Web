@@ -10,9 +10,11 @@ import MagneticButton from '@/components/ui/MagneticButton'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Advertise · Publish With Us · SecurityBlogs',
+  title: 'Advertise · Publish With Us',
   description:
     'Advertise with SecurityBlogs. Reach 180K+ monthly security-industry readers via banners, newsletter sponsorships, category takeovers and sponsored content.',
+  alternates: { canonical: '/publish-with-us/advertise/' },
+  openGraph: { url: '/publish-with-us/advertise/' },
 }
 
 const placements = [

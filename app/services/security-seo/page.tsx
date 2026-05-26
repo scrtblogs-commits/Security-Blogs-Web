@@ -14,9 +14,11 @@ import SerpAnimation from '@/components/ui/SerpAnimation'
 const ACCENT = '#1e9e75'
 
 export const metadata = {
-  title: 'Security SEO — Rank #1 for Every Security Keyword | SecurityBlogs',
+  title: 'Security SEO — Rank #1 for Every Security Keyword',
   description:
     "From 'CCTV installation Melbourne' to 'enterprise access control systems' — we get your security business to the top of Google and keep it there.",
+  alternates: { canonical: '/services/security-seo/' },
+  openGraph: { url: '/services/security-seo/' },
 }
 
 const capabilities = [
