@@ -1,5 +1,7 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 import CTABand from '@/components/ui/CTABand'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Pricing & Guidelines · Publish With Us',
@@ -49,6 +51,12 @@ function PriceTable({ rows }: { rows: Row[] }) {
 export default function PricingGuidelinesPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Pricing and Editorial Guidelines',
+        description: 'Transparent pricing and editorial guidelines for guest posts, sponsored posts, press releases, backlinks, product promotion and advertising on SecurityBlogs.',
+        path: '/publish-with-us/pricing-guidelines/',
+        serviceType: 'Editorial Guidelines',
+      })} />
       <ArticleLayout
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Pricing Guidelines' }]}
         title="Pricing & Guidelines"

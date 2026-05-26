@@ -6,6 +6,8 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Press Release Distribution · Publish With Us',
@@ -43,6 +45,12 @@ const categories = [
 export default function PressReleasePage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Press Release Distribution',
+        description: 'Publish a security-industry press release on SecurityBlogs with editorial review and permanent placement on a niche security publication.',
+        path: '/publish-with-us/press-release/',
+        serviceType: 'Press Release Distribution',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Press Release' }]} />

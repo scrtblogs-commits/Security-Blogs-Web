@@ -8,6 +8,8 @@ import ContactForm from '@/components/ui/ContactForm'
 import CTABand from '@/components/ui/CTABand'
 import MagneticButton from '@/components/ui/MagneticButton'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Advertise · Publish With Us',
@@ -65,6 +67,12 @@ const faqs = [
 export default function AdvertisePage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Advertise on SecurityBlogs',
+        description: 'Advertise with SecurityBlogs. Reach 180K+ monthly security-industry readers via banners, newsletter sponsorships, category takeovers and sponsored content.',
+        path: '/publish-with-us/advertise/',
+        serviceType: 'Advertising',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Advertise' }]} />

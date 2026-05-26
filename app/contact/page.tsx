@@ -5,6 +5,8 @@ import ContactForm from '@/components/ui/ContactForm'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
 import Interactive3D from '@/components/ui/Interactive3D'
 import Reveal from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { contactPageSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Contact',
@@ -23,6 +25,13 @@ const details = [
 export default function ContactPage() {
   return (
     <>
+      <JsonLd data={contactPageSchema({
+        path: '/contact/',
+        email: 'info@securityblogs.com.au',
+        contactType: 'customer support',
+        areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
+        availableLanguage: ['en'],
+      })} />
       <HeroBg grid blobs>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>

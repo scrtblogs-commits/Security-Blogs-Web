@@ -5,6 +5,8 @@ import GlassCard from '@/components/ui/GlassCard'
 import AnimatedSVGTimeline from '@/components/ui/AnimatedSVGTimeline'
 import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { aboutPageSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'About Us',
@@ -12,6 +14,11 @@ export const metadata = {
   alternates: { canonical: '/about-us/' },
   openGraph: { url: '/about-us/' },
 }
+
+// AboutPage schema. team[] below carries display data only — NOT emitted as
+// Person schemas because we can't verify the names map to real, public
+// individuals. To add Person nodes here, confirm each team member is real
+// and provide a sameAs URL (LinkedIn etc.) for each.
 
 const team = [
   { name: 'Sarah Chen', role: 'AI Visibility Lead', initials: 'SC', color: 'var(--violet)', chips: ['AIO', 'AEO', 'Schema'] },
@@ -109,6 +116,10 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <JsonLd data={aboutPageSchema({
+        path: '/about-us/',
+        description: 'A specialist AI visibility and SEO agency built exclusively for the security industry.',
+      })} />
       <CTABand title="Work with a team that understands security." subtitle="Get a free AI visibility audit and a 90-day roadmap built specifically for your security brand." ctaHref="/book-strategy-call/" />
     </>
   )

@@ -7,6 +7,8 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Product Promotion · Publish With Us',
@@ -70,6 +72,12 @@ const faqs = [
 export default function ProductPromotionPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Product Promotion',
+        description: 'Promote your security product with reviews, comparisons, demo spotlights and buyer-guide inclusions on SecurityBlogs. Reach in-market buyers ready to purchase.',
+        path: '/publish-with-us/product-promotion/',
+        serviceType: 'Sponsored Content',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Product Promotion' }]} />

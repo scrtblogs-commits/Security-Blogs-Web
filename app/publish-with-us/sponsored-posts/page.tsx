@@ -6,6 +6,8 @@ import ProcessSteps from '@/components/ui/ProcessSteps'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Sponsored Posts · Publish With Us',
@@ -68,6 +70,12 @@ const faqs = [
 export default function SponsoredPostsPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Sponsored Posts',
+        description: 'Promote your security brand with sponsored posts on SecurityBlogs. Permanent placement, disclosed sponsored content with transparent labeling.',
+        path: '/publish-with-us/sponsored-posts/',
+        serviceType: 'Sponsored Content',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Posts' }]} />

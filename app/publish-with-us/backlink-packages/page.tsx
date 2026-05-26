@@ -7,6 +7,8 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Sponsored Editorial Placements · Publish With Us',
@@ -86,6 +88,12 @@ const faqs = [
 export default function BacklinkPackagesPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Sponsored Editorial Placements',
+        description: 'Sponsored editorial placements on a niche security publication. All placements are disclosed and use rel=sponsored per Google webmaster policy. Permanent on-page placement, transparent reporting.',
+        path: '/publish-with-us/backlink-packages/',
+        serviceType: 'Sponsored Content',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Backlink Packages' }]} />

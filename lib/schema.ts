@@ -19,7 +19,7 @@ export const siteSchema = {
       '@id': `${SITE_URL}/#organization`,
       name: 'SecurityBlogs',
       url: `${SITE_URL}/`,
-      logo: `${SITE_URL}/logo.svg`,
+      logo: `${SITE_URL}/logo.png`,
       founder: { '@id': `${SITE_URL}/#founder` },
       sameAs: [
         'https://www.linkedin.com/company/security-blogs/',
@@ -88,22 +88,29 @@ export function faqSchema(items: { q: string; a: string }[]) {
   }
 }
 
+// Service node. Defaults to /services/<slug>/ URL form for the main services
+// pages, but accepts an explicit `path` for services published elsewhere
+// (e.g. /publish-with-us/* sub-services).
 export function serviceSchema(opts: {
   name: string
   description: string
-  slug: string
+  slug?: string                   // shorthand for /services/<slug>/
+  path?: string                   // full route path, e.g. /publish-with-us/guest-posting/
   serviceType?: string
 }) {
+  const path =
+    opts.path ??
+    (opts.slug ? `/services/${opts.slug}/` : `/services/`)
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': `${SITE_URL}/services/${opts.slug}/#service`,
+    '@id': `${SITE_URL}${path}#service`,
     name: opts.name,
     description: opts.description,
     ...(opts.serviceType ? { serviceType: opts.serviceType } : {}),
     provider: { '@id': `${SITE_URL}/#organization` },
     areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
-    url: `${SITE_URL}/services/${opts.slug}/`,
+    url: `${SITE_URL}${path}`,
   }
 }
 
@@ -150,5 +157,148 @@ export function articleSchema(opts: {
     publisher: { '@id': `${SITE_URL}/#organization` },
     author: { '@id': `${SITE_URL}/#founder` },
     mainEntityOfPage: { '@id': `${SITE_URL}${opts.path}` },
+  }
+}
+
+// AboutPage for /about-us/. Lets Google understand the page's intent and
+// surfaces the page in About-the-organization queries.
+export function aboutPageSchema(opts: { path: string; description?: string }) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${SITE_URL}${opts.path}#aboutpage`,
+    url: `${SITE_URL}${opts.path}`,
+    name: 'About SecurityBlogs',
+    ...(opts.description ? { description: opts.description } : {}),
+    mainEntity: { '@id': `${SITE_URL}/#organization` },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+  }
+}
+
+// ContactPage for /contact/, with a ContactPoint so Google knows how to
+// reach SecurityBlogs (used for sitelinks / knowledge-panel contact info).
+export function contactPageSchema(opts: {
+  path: string
+  email?: string
+  contactType?: string
+  areaServed?: string[]
+  availableLanguage?: string[]
+}) {
+  const cp: Record<string, unknown> = {
+    '@type': 'ContactPoint',
+    contactType: opts.contactType ?? 'customer support',
+  }
+  if (opts.email) cp.email = opts.email
+  if (opts.areaServed) cp.areaServed = opts.areaServed
+  if (opts.availableLanguage) cp.availableLanguage = opts.availableLanguage
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${SITE_URL}${opts.path}#contactpage`,
+    url: `${SITE_URL}${opts.path}`,
+    name: 'Contact SecurityBlogs',
+    mainEntity: {
+      '@id': `${SITE_URL}/#organization`,
+      contactPoint: cp,
+    },
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+  }
+}
+
+// Person node (lighter than the founder graph entry). Used for /about-us/
+// team listings. memberOf links back to Organization.
+export function personSchema(opts: {
+  name: string
+  jobTitle?: string
+  knowsAbout?: string[]
+  sameAs?: string[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: opts.name,
+    ...(opts.jobTitle ? { jobTitle: opts.jobTitle } : {}),
+    ...(opts.knowsAbout ? { knowsAbout: opts.knowsAbout } : {}),
+    ...(opts.sameAs ? { sameAs: opts.sameAs } : {}),
+    worksFor: { '@id': `${SITE_URL}/#organization` },
+  }
+}
+
+// JobPosting for /career/ role listings. Eligible for Google for Jobs.
+// Dates default to today (datePosted) and 6 months out (validThrough) if
+// not provided, since the role data on /career/ doesn't carry dates.
+export function jobPostingSchema(opts: {
+  title: string
+  description: string
+  employmentType?: string
+  location?: string                // freeform city/region for AU-remote
+  baseSalaryAmount?: { min: number; max?: number; currency?: string }
+  datePosted?: string
+  validThrough?: string
+}) {
+  const today = new Date().toISOString().slice(0, 10)
+  const sixMonths = new Date()
+  sixMonths.setMonth(sixMonths.getMonth() + 6)
+  const validThrough = opts.validThrough ?? sixMonths.toISOString().slice(0, 10)
+  const node: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: opts.title,
+    description: opts.description,
+    datePosted: opts.datePosted ?? today,
+    validThrough,
+    employmentType: opts.employmentType ?? 'FULL_TIME',
+    hiringOrganization: { '@id': `${SITE_URL}/#organization` },
+    directApply: false,
+  }
+  if (opts.location) {
+    node.jobLocation = {
+      '@type': 'Place',
+      address: { '@type': 'PostalAddress', addressLocality: opts.location, addressCountry: 'AU' },
+    }
+    node.applicantLocationRequirements = { '@type': 'Country', name: 'Australia' }
+    node.jobLocationType = 'TELECOMMUTE'
+  } else {
+    node.jobLocationType = 'TELECOMMUTE'
+    node.applicantLocationRequirements = { '@type': 'Country', name: 'Australia' }
+  }
+  if (opts.baseSalaryAmount) {
+    node.baseSalary = {
+      '@type': 'MonetaryAmount',
+      currency: opts.baseSalaryAmount.currency ?? 'AUD',
+      value: {
+        '@type': 'QuantitativeValue',
+        ...(opts.baseSalaryAmount.max
+          ? { minValue: opts.baseSalaryAmount.min, maxValue: opts.baseSalaryAmount.max }
+          : { value: opts.baseSalaryAmount.min }),
+        unitText: 'YEAR',
+      },
+    }
+  }
+  return node
+}
+
+// Generic ItemList — used on overview/index pages (services, knowledge hub,
+// publish-with-us, free-tools) to enumerate child items so search engines
+// can model the section structure.
+export function itemListSchema(opts: {
+  name: string
+  path: string
+  items: { name: string; url: string; description?: string }[]
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${SITE_URL}${opts.path}#itemlist`,
+    name: opts.name,
+    url: `${SITE_URL}${opts.path}`,
+    numberOfItems: opts.items.length,
+    itemListElement: opts.items.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: it.name,
+      url: it.url.startsWith('http') ? it.url : `${SITE_URL}${it.url}`,
+      ...(it.description ? { description: it.description } : {}),
+    })),
   }
 }

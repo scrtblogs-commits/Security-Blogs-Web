@@ -9,6 +9,8 @@ import MagneticButton from '@/components/ui/MagneticButton'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 import { publishWithUs } from '@/lib/site'
 import TiltCard from './TiltCard'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Publish With Us',
@@ -56,6 +58,12 @@ const faqs = [
 export default function PublishHubPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Publish with SecurityBlogs',
+        description: 'Reach security-industry buyers, integrators and decision-makers. Guest posts, sponsored content, product promotion, press releases, backlinks and advertising on SecurityBlogs.',
+        path: '/publish-with-us/',
+        serviceType: 'Content Marketing',
+      })} />
       <HeroBg grid blobs>
         <div className="grid-2" style={{ alignItems: 'center', gap: 56 }}>
           <Reveal>

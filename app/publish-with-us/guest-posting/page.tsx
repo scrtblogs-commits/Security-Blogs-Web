@@ -5,6 +5,8 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import GuestPostForm from './GuestPostForm'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Guest Posting · Publish With Us',
@@ -26,6 +28,12 @@ const faqs = [
 export default function GuestPostingPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Guest Post Submission',
+        description: 'Submit an original guest article to SecurityBlogs. Minimum 800 words, up to 2 dofollow links, original content. Editors respond within 3 business days.',
+        path: '/publish-with-us/guest-posting/',
+        serviceType: 'Content Publishing',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Guest Posting' }]} />

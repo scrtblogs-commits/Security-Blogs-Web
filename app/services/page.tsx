@@ -4,6 +4,8 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
 import { services } from '@/lib/site'
 
 export const metadata = {
@@ -157,6 +159,15 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs services',
+        path: '/services/',
+        items: services.map(s => ({
+          name: s.title,
+          url: `/services/${s.slug}/`,
+          description: s.desc,
+        })),
+      })} />
       <CTABand
         title="Not sure which service you need?"
         subtitle="Get a free AI visibility audit and we'll show you exactly which channels will move the needle fastest for your security brand."

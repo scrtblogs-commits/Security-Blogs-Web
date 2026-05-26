@@ -5,6 +5,8 @@ import MarqueeStrip from '@/components/ui/MarqueeStrip'
 import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
 import { knowledgeHub } from '@/lib/site'
 
 export const metadata = {
@@ -115,6 +117,15 @@ export default function KnowledgeHubPage() {
         </div>
       </section>
 
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs Knowledge Hub',
+        path: '/knowledge-hub/',
+        items: knowledgeHub.map(s => ({
+          name: s.title,
+          url: s.href,
+          description: hubIcons[s.href]?.desc,
+        })),
+      })} />
       <CTABand />
     </>
   )
