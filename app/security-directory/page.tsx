@@ -8,6 +8,8 @@ import GlassCard from '@/components/ui/GlassCard'
 import AnimatedSkeleton from '@/components/ui/AnimatedSkeleton'
 import PricingCards from '@/components/ui/PricingCards'
 import ProcessSteps from '@/components/ui/ProcessSteps'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
   title: "Australia's #1 AI-Verified Security Company Directory",
@@ -67,6 +69,12 @@ const steps = [
 export default function SecurityDirectoryPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Security Directory Listing',
+        description: "AI-verified directory listing service for Australian security companies. Get your business listed, verified, scored on AI visibility and discovered by buyers on SecurityBlogs's directory.",
+        path: '/security-directory/',
+        serviceType: 'Business Directory Listing',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Directory' }]} />

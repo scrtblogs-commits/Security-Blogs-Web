@@ -6,6 +6,8 @@ import StatsStrip from '@/components/ui/StatsStrip'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import CaseGrid from './CaseGrid'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Case Studies',
@@ -32,9 +34,25 @@ const stats = [
   { num: '12', label: 'Countries reached' },
 ]
 
+// Mirror of the case data in ./CaseGrid.tsx — kept in sync for schema use.
+// If you change CaseGrid's `cases` array, update this list too.
+const caseStudyItems = [
+  { name: 'ShieldTech Security — Full Service', description: '+340% organic traffic; ranking #1 for 28 keywords; results within 8 months.' },
+  { name: 'ArmourGuard AU — Google Ads',        description: '3.8× ROAS, $9.40 CPC, +280% qualified leads.' },
+  { name: 'Nexus Security Group — AIO/AEO',     description: '91% AI citation rate; 47 AI mentions per month across 6 platforms.' },
+  { name: 'ClearVault CCTV — Security SEO',     description: '#1 for 28 keywords; +180% organic traffic; 94% client retention.' },
+  { name: 'BioEntry Systems — GEO',             description: 'Entity confirmed on 6 AI platforms; +220% brand searches; knowledge panel won.' },
+  { name: 'AccessPro AU — Full Service',        description: '+410% revenue; 2.1× ROAS; 89% citation rate.' },
+]
+
 export default function CaseStudiesPage() {
   return (
     <>
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs case studies',
+        path: '/case-studies/',
+        items: caseStudyItems.map(c => ({ name: c.name, url: '/case-studies/', description: c.description })),
+      })} />
       <HeroBg grid blobs>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>

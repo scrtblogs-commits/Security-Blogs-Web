@@ -7,6 +7,8 @@ import MarqueeStrip from '@/components/ui/MarqueeStrip'
 import VisibilityChecker from './VisibilityChecker'
 import Checklist from './Checklist'
 import GuidesTabs from './GuidesTabs'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Free AI Visibility Tools for Security Brands',
@@ -19,6 +21,15 @@ export const metadata = {
 export default function FreeToolsPage() {
   return (
     <>
+      <JsonLd data={itemListSchema({
+        name: 'Free AI Visibility Tools',
+        path: '/free-tools/',
+        items: [
+          { name: 'AI Visibility Checker', url: '/free-tools/#checker',   description: 'See whether ChatGPT, Perplexity, Gemini and friends actually mention your brand when buyers ask.' },
+          { name: 'AI Visibility Checklist', url: '/free-tools/#checklist', description: 'Tick off 20 essentials across technical SEO, content, authority and AI signals.' },
+          { name: 'Ranking Guides',         url: '/free-tools/#guides',    description: 'Step-by-step playbooks to rank on Google and Bing.' },
+        ],
+      })} />
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
         <SpiralAnimation tint="#1e5fe0" />
         <div className="container z1">
