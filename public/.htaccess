@@ -1,4 +1,4 @@
-# SecurityGrowth — static site config for Apache / Hostinger
+# SecurityBlogs — static site config for Apache / Hostinger
 
 ErrorDocument 404 /404.html
 DirectoryIndex index.html

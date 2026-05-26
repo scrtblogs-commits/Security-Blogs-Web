@@ -7,7 +7,7 @@ import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 import ApplicationForm from './ApplicationForm'
 
 export const metadata = {
-  title: 'Careers · SecurityGrowth',
+  title: 'Careers · SecurityBlogs',
   description: 'Work at the frontier of AI and security. Remote-first, flexible and AI-forward roles at a specialist security-industry growth agency.',
 }
 

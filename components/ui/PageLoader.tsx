@@ -17,7 +17,7 @@ export default function PageLoader() {
         >
           <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} style={{ display: 'flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 22 }}>
             <span style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, var(--blue), var(--violet))', color: '#fff', display: 'grid', placeItems: 'center' }}>S</span>
-            <span><span className="accent">Security</span>Growth</span>
+            <span><span className="accent">Security</span>Blogs</span>
           </motion.div>
         </motion.div>
       )}

@@ -13,7 +13,7 @@ import NeuralNetworkCanvas from '@/components/ui/NeuralNetworkCanvas'
 const ACCENT = '#6f4dff'
 
 export const metadata = {
-  title: 'AIO — Get Your Security Brand Cited by Every AI Platform | SecurityGrowth',
+  title: 'AIO — Get Your Security Brand Cited by Every AI Platform | SecurityBlogs',
   description:
     'AI Integration Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
 }

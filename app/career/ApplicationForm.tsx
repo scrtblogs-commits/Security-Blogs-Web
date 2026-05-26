@@ -73,7 +73,7 @@ export default function ApplicationForm() {
         <input id="portfolio" name="portfolio" type="text" className="field" placeholder="yoursite.com" />
       </div>
       <div style={{ gridColumn: '1 / -1' }}>
-        <label className="label" htmlFor="why">Why join SecurityGrowth?</label>
+        <label className="label" htmlFor="why">Why join SecurityBlogs?</label>
         <textarea
           id="why"
           name="why"

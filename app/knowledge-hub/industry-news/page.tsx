@@ -7,7 +7,7 @@ import CTABand from '@/components/ui/CTABand'
 import NewsTabs from './NewsTabs'
 
 export const metadata = {
-  title: 'Industry News · Knowledge Hub · SecurityGrowth',
+  title: 'Industry News · Knowledge Hub · SecurityBlogs',
   description: 'The latest security industry news — acquisitions, product launches, regulation and AI developments shaping the market.',
 }
 

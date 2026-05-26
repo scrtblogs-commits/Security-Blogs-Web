@@ -14,7 +14,7 @@ import DualSerp from './DualSerp'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'AI-Ready Security Website Design | SecurityGrowth',
+  title: 'AI-Ready Security Website Design | SecurityBlogs',
   description:
     'We build AI-optimised, schema-rich, conversion-focused security websites that rank on Google and Bing — and get cited by ChatGPT, Perplexity and every AI platform.',
 }

@@ -11,7 +11,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 19, marginBottom: 14 }}>
               <span style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg, var(--blue), var(--violet))', color: '#fff', display: 'grid', placeItems: 'center', fontSize: 16 }}>S</span>
-              <span><span className="accent">Security</span>Growth</span>
+              <span><span className="accent">Security</span>Blogs</span>
             </Link>
             <p className="text-soft" style={{ fontSize: 14, maxWidth: 280, marginBottom: 18 }}>
               The AI Visibility Platform for Security Brands.
@@ -30,7 +30,7 @@ export default function Footer() {
         </div>
 
         <div style={{ borderTop: '1px solid var(--line)', marginTop: 40, paddingTop: 22, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }} className="text-dim">
-          <span>© {new Date().getFullYear()} SecurityGrowth. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
           <div className="flex flex-wrap gap-3">
             <Link href="/privacy-policy/">Privacy Policy</Link>
             <Link href="/terms-of-service/">Terms of Service</Link>

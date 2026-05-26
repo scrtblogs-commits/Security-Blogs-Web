@@ -11,9 +11,9 @@ import { publishWithUs } from '@/lib/site'
 import TiltCard from './TiltCard'
 
 export const metadata = {
-  title: 'Publish With Us · SecurityGrowth',
+  title: 'Publish With Us · SecurityBlogs',
   description:
-    'Reach security-industry buyers, integrators and decision-makers. Guest posts, sponsored content, product promotion, press releases, backlinks and advertising on SecurityGrowth.',
+    'Reach security-industry buyers, integrators and decision-makers. Guest posts, sponsored content, product promotion, press releases, backlinks and advertising on SecurityBlogs.',
 }
 
 const icons: Record<string, string> = {
@@ -116,7 +116,7 @@ export default function PublishHubPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="Why SecurityGrowth" title="A trusted home for security-industry content." />
+          <SectionHead eyebrow="Why SecurityBlogs" title="A trusted home for security-industry content." />
           <div style={{ marginBottom: 40 }}>
             <StatsStrip
               items={[
@@ -149,7 +149,7 @@ export default function PublishHubPage() {
       </section>
 
       <CTABand
-        title="Ready to publish with SecurityGrowth?"
+        title="Ready to publish with SecurityBlogs?"
         subtitle="Pick a placement type, or talk to our editorial team about a custom campaign across multiple formats."
         ctaLabel="Get started →"
         ctaHref="/contact/"

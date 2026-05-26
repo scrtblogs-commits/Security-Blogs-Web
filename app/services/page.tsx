@@ -7,9 +7,9 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import { services } from '@/lib/site'
 
 export const metadata = {
-  title: 'AI-Powered Growth Services for Security Brands | SecurityGrowth',
+  title: 'AI-Powered Growth Services for Security Brands | SecurityBlogs',
   description:
-    'From SEO to AI citations, Google Ads to web design — every SecurityGrowth service is engineered exclusively for the security industry.',
+    'From SEO to AI citations, Google Ads to web design — every SecurityBlogs service is engineered exclusively for the security industry.',
 }
 
 const benefits: Record<string, string[]> = {
@@ -140,7 +140,7 @@ export default function ServicesPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="Why SecurityGrowth?" title="Built differently — for one industry, for the AI era." />
+          <SectionHead eyebrow="Why SecurityBlogs?" title="Built differently — for one industry, for the AI era." />
           <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
             {why.map((w) => (
               <Item key={w.title}>

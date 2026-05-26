@@ -1,8 +1,8 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 
 export const metadata = {
-  title: 'Content Guidelines · SecurityGrowth',
-  description: 'Editorial guidelines for contributors and guest authors writing for SecurityGrowth — covering originality, formatting, links, E-E-A-T, SEO requirements and our review process.',
+  title: 'Content Guidelines · SecurityBlogs',
+  description: 'Editorial guidelines for contributors and guest authors writing for SecurityBlogs — covering originality, formatting, links, E-E-A-T, SEO requirements and our review process.',
 }
 
 const toc = [
@@ -31,7 +31,7 @@ export default function ContentGuidelinesPage() {
     >
       <h2 id="overview">Overview</h2>
       <p>
-        Thank you for your interest in contributing to SecurityGrowth. We publish high-quality, original
+        Thank you for your interest in contributing to SecurityBlogs. We publish high-quality, original
         editorial content that helps security businesses grow their visibility across search engines and
         AI platforms. These guidelines set out what we expect from contributors and guest authors so that
         every piece we publish meets our editorial standards and serves our readers. Please read them in
@@ -66,7 +66,7 @@ export default function ContentGuidelinesPage() {
 
       <h2 id="originality">Originality &amp; Plagiarism</h2>
       <p>
-        Every submission must be 100% original and written exclusively for SecurityGrowth. We do not accept
+        Every submission must be 100% original and written exclusively for SecurityBlogs. We do not accept
         content that has been published elsewhere, spun, or substantially copied from other sources. All
         submissions are checked with plagiarism-detection tools. Quotes and statistics must be properly
         attributed and cited. Any submission found to contain plagiarised material will be rejected and the
@@ -150,7 +150,7 @@ export default function ContentGuidelinesPage() {
 
       <h2 id="editorial-rights">Editorial Rights</h2>
       <p>
-        SecurityGrowth reserves the right to edit submissions for clarity, accuracy, length, style, SEO and
+        SecurityBlogs reserves the right to edit submissions for clarity, accuracy, length, style, SEO and
         consistency with our editorial voice. We may add or adjust headings, internal links and media. We
         also reserve the right to decline, unpublish or update any content at our discretion. By submitting
         content, you grant us a licence to publish, edit and promote it across our website and channels.

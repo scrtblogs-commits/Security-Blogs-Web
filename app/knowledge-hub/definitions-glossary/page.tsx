@@ -2,7 +2,7 @@ import ArticleLayout from '@/components/ui/ArticleLayout'
 import CTABand from '@/components/ui/CTABand'
 
 export const metadata = {
-  title: 'Definitions & Glossary · Knowledge Hub · SecurityGrowth',
+  title: 'Definitions & Glossary · Knowledge Hub · SecurityBlogs',
   description: 'Plain-English definitions of AI visibility and SEO terms — AIO, AEO, GEO, SERP, schema, entity, E-E-A-T, citations and more for the security industry.',
 }
 

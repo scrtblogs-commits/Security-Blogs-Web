@@ -6,8 +6,8 @@ import Reveal from '@/components/ui/Reveal'
 import BlogGrid from './BlogGrid'
 
 export const metadata = {
-  title: 'Blog · Knowledge Hub · SecurityGrowth',
-  description: 'The SecurityGrowth blog — tactical reads on SEO, AIO, AEO, GEO and paid advertising for security industry brands.',
+  title: 'Blog · Knowledge Hub · SecurityBlogs',
+  description: 'The SecurityBlogs blog — tactical reads on SEO, AIO, AEO, GEO and paid advertising for security industry brands.',
 }
 
 export default function BlogsPage() {

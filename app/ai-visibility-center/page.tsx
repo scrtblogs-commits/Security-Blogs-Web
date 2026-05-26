@@ -13,7 +13,7 @@ import Interactive3D from '@/components/ui/Interactive3D'
 import OrbitalTimeline from './OrbitalTimeline'
 
 export const metadata = {
-  title: 'AI Visibility Center — How AI Sees Your Security Brand | SecurityGrowth',
+  title: 'AI Visibility Center — How AI Sees Your Security Brand | SecurityBlogs',
   description:
     '73% of B2B security buyers use AI to find and vet vendors. See how AI discovers, scores and cites your brand — and how to become the answer it gives.',
 }

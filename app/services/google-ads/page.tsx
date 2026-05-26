@@ -16,7 +16,7 @@ import AdPreviewCard from '@/components/ui/AdPreviewCard'
 const ACCENT = '#f6c715'
 
 export const metadata = {
-  title: 'Google Ads for Security Companies | SecurityGrowth',
+  title: 'Google Ads for Security Companies | SecurityBlogs',
   description:
     'High-converting Google Ads campaigns engineered for security buyers. 3.2× average ROAS, transparent reporting and conversion tracking built in.',
 }

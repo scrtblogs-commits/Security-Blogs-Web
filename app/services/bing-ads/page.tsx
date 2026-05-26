@@ -16,7 +16,7 @@ import AdPreviewCard from '@/components/ui/AdPreviewCard'
 const ACCENT = '#0078d4'
 
 export const metadata = {
-  title: 'Bing Ads for Security Companies | SecurityGrowth',
+  title: 'Bing Ads for Security Companies | SecurityBlogs',
   description:
     'Microsoft Advertising campaigns that capture the B2B security buyers Google misses — lower CPCs, LinkedIn profile targeting and 41% of business decision-makers.',
 }

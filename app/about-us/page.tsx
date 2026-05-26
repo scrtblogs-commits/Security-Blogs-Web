@@ -7,7 +7,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'About Us · SecurityGrowth',
+  title: 'About Us · SecurityBlogs',
   description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the team that gets security brands found.',
 }
 

@@ -10,9 +10,9 @@ import MagneticButton from '@/components/ui/MagneticButton'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Advertise · Publish With Us · SecurityGrowth',
+  title: 'Advertise · Publish With Us · SecurityBlogs',
   description:
-    'Advertise with SecurityGrowth. Reach 180K+ monthly security-industry readers via banners, newsletter sponsorships, category takeovers and sponsored content.',
+    'Advertise with SecurityBlogs. Reach 180K+ monthly security-industry readers via banners, newsletter sponsorships, category takeovers and sponsored content.',
 }
 
 const placements = [
@@ -71,7 +71,7 @@ export default function AdvertisePage() {
           </span>
           <h1 className="h1" style={{ maxWidth: 820, marginBottom: 18 }}>
             Advertise With{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityGrowth</span>.
+            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityBlogs</span>.
           </h1>
           <p className="lead" style={{ maxWidth: 640, marginBottom: 24 }}>
             Reach a focused, in-market audience of security buyers and decision-makers. Banners,

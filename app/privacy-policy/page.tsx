@@ -1,8 +1,8 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 
 export const metadata = {
-  title: 'Privacy Policy · SecurityGrowth',
-  description: 'How SecurityGrowth collects, uses, stores and protects your personal information across our AI visibility and SEO services for the security industry.',
+  title: 'Privacy Policy · SecurityBlogs',
+  description: 'How SecurityBlogs collects, uses, stores and protects your personal information across our AI visibility and SEO services for the security industry.',
 }
 
 const toc = [
@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
     >
       <h2 id="introduction">Introduction</h2>
       <p>
-        SecurityGrowth (&quot;SecurityGrowth&quot;, &quot;we&quot;, &quot;us&quot; or &quot;our&quot;) operates the website at
+        SecurityBlogs (&quot;SecurityBlogs&quot;, &quot;we&quot;, &quot;us&quot; or &quot;our&quot;) operates the website at
         securityblogs.com.au and provides AI visibility, search engine optimisation and digital
         marketing services tailored to the security industry. This Privacy Policy explains how we
         collect, use, disclose and safeguard your personal information when you visit our website,
@@ -146,7 +146,7 @@ export default function PrivacyPolicyPage() {
 
       <h2 id="international-transfers">International Transfers</h2>
       <p>
-        SecurityGrowth serves clients in Australia, the United States, the United Kingdom, the United
+        SecurityBlogs serves clients in Australia, the United States, the United Kingdom, the United
         Arab Emirates and Singapore. As a result, your personal information may be transferred to, stored
         in, or processed in countries other than the one in which you reside. Where we transfer personal
         information internationally, we take reasonable steps to ensure it receives an adequate level of

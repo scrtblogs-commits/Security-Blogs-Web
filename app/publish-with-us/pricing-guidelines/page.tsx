@@ -2,9 +2,9 @@ import ArticleLayout from '@/components/ui/ArticleLayout'
 import CTABand from '@/components/ui/CTABand'
 
 export const metadata = {
-  title: 'Pricing & Guidelines · Publish With Us · SecurityGrowth',
+  title: 'Pricing & Guidelines · Publish With Us · SecurityBlogs',
   description:
-    'Transparent pricing and editorial guidelines for guest posts, sponsored posts, press releases, backlinks, product promotion and advertising on SecurityGrowth.',
+    'Transparent pricing and editorial guidelines for guest posts, sponsored posts, press releases, backlinks, product promotion and advertising on SecurityBlogs.',
 }
 
 const toc = [
@@ -126,12 +126,12 @@ export default function PricingGuidelinesPage() {
           <li>Sponsored content is clearly disclosed to readers while still passing link value.</li>
           <li>We reserve the right to lightly edit for grammar, formatting, SEO and house style.</li>
           <li>All claims should be accurate; we may request sources for statistics or strong assertions.</li>
-          <li>Final editorial discretion on acceptance and placement rests with SecurityGrowth.</li>
+          <li>Final editorial discretion on acceptance and placement rests with SecurityBlogs.</li>
         </ul>
       </ArticleLayout>
 
       <CTABand
-        title="Ready to publish with SecurityGrowth?"
+        title="Ready to publish with SecurityBlogs?"
         subtitle="Choose a placement type or contact our team for a custom quote across multiple formats."
         ctaLabel="Get started →"
         ctaHref="/contact/"

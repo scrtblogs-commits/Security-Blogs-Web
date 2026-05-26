@@ -1,8 +1,8 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 
 export const metadata = {
-  title: 'Terms of Service · SecurityGrowth',
-  description: 'The terms and conditions governing your use of the SecurityGrowth website and our AI visibility and SEO services for the security industry.',
+  title: 'Terms of Service · SecurityBlogs',
+  description: 'The terms and conditions governing your use of the SecurityBlogs website and our AI visibility and SEO services for the security industry.',
 }
 
 const toc = [
@@ -33,20 +33,20 @@ export default function TermsOfServicePage() {
       <h2 id="introduction">Introduction &amp; Acceptance</h2>
       <p>
         These Terms of Service (&quot;Terms&quot;) govern your access to and use of the website at
-        securityblogs.com.au and the services provided by SecurityGrowth (&quot;SecurityGrowth&quot;,
+        securityblogs.com.au and the services provided by SecurityBlogs (&quot;SecurityBlogs&quot;,
         &quot;we&quot;, &quot;us&quot; or &quot;our&quot;). By accessing our website, engaging our
         services, or otherwise interacting with us, you agree to be bound by these Terms. If you do not
         agree, you must not use our website or services.
       </p>
       <p>
         These Terms operate alongside any separate written agreement, proposal or statement of work
-        between you and SecurityGrowth. Where there is a conflict, the terms of the signed engagement
+        between you and SecurityBlogs. Where there is a conflict, the terms of the signed engagement
         agreement will prevail.
       </p>
 
       <h2 id="definitions">Definitions</h2>
       <ul>
-        <li><strong>&quot;Client&quot;</strong> means any individual or organisation that engages SecurityGrowth to provide services.</li>
+        <li><strong>&quot;Client&quot;</strong> means any individual or organisation that engages SecurityBlogs to provide services.</li>
         <li><strong>&quot;Services&quot;</strong> means the AI visibility, search engine optimisation, content, web and digital marketing services we provide.</li>
         <li><strong>&quot;Deliverables&quot;</strong> means the reports, content, code, recommendations and other materials produced as part of an engagement.</li>
         <li><strong>&quot;Website&quot;</strong> means securityblogs.com.au and any associated subdomains and pages.</li>
@@ -85,7 +85,7 @@ export default function TermsOfServicePage() {
       <h2 id="intellectual-property">Intellectual Property</h2>
       <p>
         All content on our website, including text, graphics, logos, designs and software, is owned by or
-        licensed to SecurityGrowth and is protected by intellectual property laws. You may not reproduce,
+        licensed to SecurityBlogs and is protected by intellectual property laws. You may not reproduce,
         distribute or create derivative works without our prior written consent.
       </p>
       <p>
@@ -120,7 +120,7 @@ export default function TermsOfServicePage() {
 
       <h2 id="liability">Limitation of Liability</h2>
       <p>
-        To the maximum extent permitted by law, SecurityGrowth will not be liable for any indirect,
+        To the maximum extent permitted by law, SecurityBlogs will not be liable for any indirect,
         incidental, special, consequential or punitive damages, or for any loss of profits, revenue, data
         or goodwill, arising out of or in connection with your use of our website or Services. Where our
         liability cannot be excluded, our total aggregate liability is limited to the amount of fees paid
@@ -130,7 +130,7 @@ export default function TermsOfServicePage() {
 
       <h2 id="indemnification">Indemnification</h2>
       <p>
-        You agree to indemnify and hold harmless SecurityGrowth, its officers, employees and contractors
+        You agree to indemnify and hold harmless SecurityBlogs, its officers, employees and contractors
         from and against any claims, liabilities, damages, losses and expenses (including reasonable legal
         fees) arising out of your breach of these Terms, your misuse of the Services, or any content or
         materials you provide to us that infringe the rights of a third party.

@@ -9,8 +9,8 @@ import SiteBackground from '@/components/ui/SiteBackground'
 export const metadata: Metadata = {
   metadataBase: new URL('https://securityblogs.com.au'),
   title: {
-    default: 'SecurityGrowth — The AI Visibility Platform for Security Brands',
-    template: '%s | SecurityGrowth',
+    default: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
+    template: '%s | SecurityBlogs',
   },
   description:
     'AI visibility, SEO and paid media built exclusively for the security industry. Rank #1 on Google and get cited by ChatGPT, Perplexity, Gemini and every AI answer engine.',
@@ -24,11 +24,11 @@ export const metadata: Metadata = {
     'Google Ads security',
   ],
   openGraph: {
-    title: 'SecurityGrowth — The AI Visibility Platform for Security Brands',
+    title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
     description:
       'Be the answer AI gives. AI visibility, SEO and paid media for security brands.',
     url: 'https://securityblogs.com.au',
-    siteName: 'SecurityGrowth',
+    siteName: 'SecurityBlogs',
     type: 'website',
   },
 }

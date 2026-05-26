@@ -9,7 +9,7 @@ import Checklist from './Checklist'
 import GuidesTabs from './GuidesTabs'
 
 export const metadata = {
-  title: 'Free AI Visibility Tools for Security Brands | SecurityGrowth',
+  title: 'Free AI Visibility Tools for Security Brands | SecurityBlogs',
   description:
     'Free AI visibility tools for security brands — check if AI cites you, score your readiness, and follow step-by-step Google & Bing ranking guides. No login required.',
 }

@@ -14,7 +14,7 @@ import KnowledgeGraphCanvas from '@/components/ui/KnowledgeGraphCanvas'
 const ACCENT = '#e23744'
 
 export const metadata = {
-  title: "GEO — Build Your Security Brand's AI Knowledge Graph | SecurityGrowth",
+  title: "GEO — Build Your Security Brand's AI Knowledge Graph | SecurityBlogs",
   description:
     'GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.',
 }

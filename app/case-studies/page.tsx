@@ -8,7 +8,7 @@ import Reveal from '@/components/ui/Reveal'
 import CaseGrid from './CaseGrid'
 
 export const metadata = {
-  title: 'Case Studies · SecurityGrowth',
+  title: 'Case Studies · SecurityBlogs',
   description: 'Real results from security brands we have grown across SEO, Google Ads, AIO/AEO and GEO. Results that speak louder than rankings.',
 }
 

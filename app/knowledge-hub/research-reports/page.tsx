@@ -7,7 +7,7 @@ import CTABand from '@/components/ui/CTABand'
 import { Stagger, Item } from '@/components/ui/Reveal'
 
 export const metadata = {
-  title: 'Research Reports · Knowledge Hub · SecurityGrowth',
+  title: 'Research Reports · Knowledge Hub · SecurityBlogs',
   description: 'Downloadable research reports on AI visibility, SEO and growth benchmarks for the security industry — original data you can act on.',
 }
 

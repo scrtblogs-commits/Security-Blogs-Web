@@ -7,9 +7,9 @@ import Reveal from '@/components/ui/Reveal'
 import GuestPostForm from './GuestPostForm'
 
 export const metadata = {
-  title: 'Guest Posting · Publish With Us · SecurityGrowth',
+  title: 'Guest Posting · Publish With Us · SecurityBlogs',
   description:
-    'Submit an original guest article to SecurityGrowth. Minimum 800 words, up to 2 dofollow links, original content. Editors respond within 3 business days.',
+    'Submit an original guest article to SecurityBlogs. Minimum 800 words, up to 2 dofollow links, original content. Editors respond within 3 business days.',
 }
 
 const chips = ['Min 800 words', 'Max 2 dofollow links', '100% original content', 'Byline credited', 'Editor review in 3 days']
@@ -32,7 +32,7 @@ export default function GuestPostingPage() {
           </span>
           <h1 className="h1" style={{ maxWidth: 820, marginBottom: 18 }}>
             Guest Posting on{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityGrowth</span>.
+            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityBlogs</span>.
           </h1>
           <p className="lead" style={{ maxWidth: 640, marginBottom: 24 }}>
             Share your expertise with thousands of security buyers, integrators and decision-makers.
