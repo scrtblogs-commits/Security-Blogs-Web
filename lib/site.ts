@@ -42,9 +42,14 @@ export const companyLinks = [
   { title: 'Book Strategy Call', href: '/book-strategy-call/' },
 ]
 
+// TODO([[FILL: confirm these are real client outcomes or replace/remove]]) —
+// the four numbers (+180%, 3.2×, 87%, 50+) currently appear on the homepage
+// hero stats strip with no source attribution. Either back each with a real
+// case-study reference (and ideally cite a date range and sample size), or
+// soften the language ("Targeting +180% organic growth…") or remove.
 export const stats = [
   { num: '+180%', label: 'Average organic traffic growth' },
   { num: '3.2×', label: 'Average ROAS on Google Ads' },
-  { num: '87%', label: 'AI citation rate achieved' },
-  { num: '50+', label: 'Security brands served' },
+  { num: '87%',  label: 'AI citation rate achieved' },
+  { num: '50+',  label: 'Security brands served' },
 ]

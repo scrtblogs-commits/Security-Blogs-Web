@@ -1,11 +1,17 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
+// TODO([[FILL: confirm placeholder hero-dashboard values or replace with real data]])
+// The hero "AI Visibility Score 87/100", the four sub-scores below, and the
+// "↑ +180% organic" badge are currently decorative placeholders. Either wire
+// them to a real per-visitor / per-client lookup, or label the widget as a
+// "sample dashboard" / "what your dashboard looks like" so it isn't read as
+// a real-time live score for the visitor.
 const rows = [
-  { label: 'Content structure', value: 87, color: 'var(--blue)' },
-  { label: 'Entity authority', value: 72, color: 'var(--violet)' },
-  { label: 'Schema coverage', value: 91, color: 'var(--green)' },
-  { label: 'AI citation rate', value: 79, color: 'var(--red)' },
+  { label: 'Content structure', value: 87, color: 'var(--blue)'   },
+  { label: 'Entity authority',  value: 72, color: 'var(--violet)' },
+  { label: 'Schema coverage',   value: 91, color: 'var(--green)'  },
+  { label: 'AI citation rate',  value: 79, color: 'var(--red)'    },
 ]
 
 export default function AIVisibilityScore() {

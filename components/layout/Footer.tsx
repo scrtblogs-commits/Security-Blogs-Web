@@ -1,7 +1,15 @@
 import Link from 'next/link'
+import { Linkedin, Facebook, Instagram, Youtube } from 'lucide-react'
 import { services, knowledgeHub, publishWithUs, companyLinks } from '@/lib/site'
 
-const socials = ['LinkedIn', 'Facebook', 'Instagram', 'YouTube']
+// TODO([[FILL: real social profile URLs]]) — replace '#' placeholders with the
+// actual LinkedIn / Facebook / Instagram / YouTube URLs for SecurityBlogs.
+const socials: { name: string; href: string; Icon: typeof Linkedin }[] = [
+  { name: 'LinkedIn',  href: '#', Icon: Linkedin  },
+  { name: 'Facebook',  href: '#', Icon: Facebook  },
+  { name: 'Instagram', href: '#', Icon: Instagram },
+  { name: 'YouTube',   href: '#', Icon: Youtube   },
+]
 
 export default function Footer() {
   return (
@@ -17,8 +25,18 @@ export default function Footer() {
               The AI Visibility Platform for Security Brands.
             </p>
             <div className="flex gap-2">
-              {socials.map((s) => (
-                <span key={s} title={s} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', fontSize: 11, fontWeight: 600, color: 'var(--text-dim)' }}>{s[0]}</span>
+              {socials.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={name}
+                  title={name}
+                  style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', color: 'var(--text-dim)' }}
+                >
+                  <Icon size={16} aria-hidden="true" />
+                </a>
               ))}
             </div>
           </div>

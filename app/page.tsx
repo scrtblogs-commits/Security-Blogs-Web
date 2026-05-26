@@ -54,7 +54,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <CTABand />
+      <CTABand ctaHref="/contact/" />
     </>
   )
 }

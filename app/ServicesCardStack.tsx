@@ -32,13 +32,17 @@ function Face({ item, active }: { item: ServiceCard; active: boolean }) {
       <div style={{ position: 'relative' }}>
         <h3 style={{ color: '#fff', fontSize: 24, marginBottom: 8 }}>{item.title}</h3>
         <p style={{ color: 'rgba(255,255,255,0.88)', fontSize: 14.5, lineHeight: 1.5, marginBottom: 16, maxWidth: 380 }}>{item.description}</p>
-        {active && item.href ? (
-          <Link href={item.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#fff', color: item.color, fontWeight: 700, fontSize: 14, padding: '10px 18px', borderRadius: 10 }}>
+        {item.href ? (
+          <Link
+            href={item.href}
+            style={active
+              ? { display: 'inline-flex', alignItems: 'center', gap: 8, background: '#fff', color: item.color, fontWeight: 700, fontSize: 14, padding: '10px 18px', borderRadius: 10 }
+              : { display: 'inline-flex', alignItems: 'center', gap: 8, color: 'rgba(255,255,255,0.95)', fontWeight: 600, fontSize: 14, textDecoration: 'underline', textUnderlineOffset: 4 }
+            }
+          >
             Learn more →
           </Link>
-        ) : (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'rgba(255,255,255,0.9)', fontWeight: 600, fontSize: 14 }}>Learn more →</span>
-        )}
+        ) : null}
       </div>
     </div>
   )
