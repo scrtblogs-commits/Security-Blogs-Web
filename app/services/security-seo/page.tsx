@@ -10,6 +10,8 @@ import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import SerpAnimation from '@/components/ui/SerpAnimation'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#1e9e75'
 
@@ -56,6 +58,12 @@ const faqs = [
 export default function SecuritySeoPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Security SEO',
+        description: 'From \'CCTV installation Melbourne\' to \'enterprise access control systems\' — we get your security business to the top of Google and keep it there.',
+        slug: 'security-seo',
+        serviceType: 'SEO',
+      })} />
       <HeroBg grid blobs>
         <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
           <Reveal>

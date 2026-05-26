@@ -5,6 +5,8 @@ import Footer from '@/components/layout/Footer'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import CustomCursor from '@/components/ui/CustomCursor'
 import SiteBackground from '@/components/ui/SiteBackground'
+import JsonLd from '@/components/JsonLd'
+import { siteSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://securityblogs.com.au'),
@@ -41,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <JsonLd data={siteSchema} />
       </head>
       <body>
         <SiteBackground />

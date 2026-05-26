@@ -9,6 +9,8 @@ import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import NeuralNetworkCanvas from '@/components/ui/NeuralNetworkCanvas'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#6f4dff'
 
@@ -53,6 +55,12 @@ const faqs = [
 export default function AioPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'AIO — AI Optimisation',
+        description: 'AI Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
+        slug: 'aio',
+        serviceType: 'AI Optimisation',
+      })} />
       <HeroBg grid blobs>
         <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
           <Reveal>

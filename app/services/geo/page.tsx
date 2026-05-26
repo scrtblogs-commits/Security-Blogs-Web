@@ -10,6 +10,8 @@ import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
 import KnowledgeGraphCanvas from '@/components/ui/KnowledgeGraphCanvas'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#e23744'
 
@@ -54,6 +56,12 @@ const faqs = [
 export default function GeoPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'GEO — Generative Engine Optimisation',
+        description: 'GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.',
+        slug: 'geo',
+        serviceType: 'Generative Engine Optimisation',
+      })} />
       <HeroBg grid blobs>
         <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
           <Reveal>

@@ -12,6 +12,8 @@ import ContactForm from '@/components/ui/ContactForm'
 import ContainerScroll from '@/components/ui/ContainerScroll'
 import PlatformTabs from '@/components/ui/PlatformTabs'
 import AdPreviewCard from '@/components/ui/AdPreviewCard'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#f6c715'
 
@@ -231,6 +233,12 @@ const formFields = [
 export default function GoogleAdsPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Google Ads for Security',
+        description: 'High-converting Google Ads campaigns engineered for security buyers. 3.2x average ROAS, transparent reporting and conversion tracking built in.',
+        slug: 'google-ads',
+        serviceType: 'Search Engine Marketing',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Google Ads' }]} />

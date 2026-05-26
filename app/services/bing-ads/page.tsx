@@ -12,6 +12,8 @@ import ContactForm from '@/components/ui/ContactForm'
 import ContainerScroll from '@/components/ui/ContainerScroll'
 import PlatformTabs from '@/components/ui/PlatformTabs'
 import AdPreviewCard from '@/components/ui/AdPreviewCard'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#0078d4'
 
@@ -225,6 +227,12 @@ const formFields = [
 export default function BingAdsPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'Bing Ads for Security',
+        description: 'Microsoft Advertising campaigns that capture the B2B security buyers Google misses — lower CPCs, LinkedIn profile targeting and 41% of business decision-makers.',
+        slug: 'bing-ads',
+        serviceType: 'Search Engine Marketing',
+      })} />
       <HeroBg grid blobs>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Bing Ads' }]} />

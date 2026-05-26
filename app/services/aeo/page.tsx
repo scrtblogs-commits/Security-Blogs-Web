@@ -9,6 +9,8 @@ import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import AIChatDemo from '@/components/ui/AIChatDemo'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#7f77dd'
 
@@ -53,6 +55,12 @@ const faqs = [
 export default function AeoPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'AEO — Answer Engine Optimisation',
+        description: 'Answer Engine Optimisation positions your security brand as the trusted, quotable answer AI assistants and search engines surface to buyers.',
+        slug: 'aeo',
+        serviceType: 'Answer Engine Optimisation',
+      })} />
       <HeroBg grid blobs>
         <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
           <Reveal>

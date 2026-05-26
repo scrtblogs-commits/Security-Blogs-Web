@@ -1,5 +1,7 @@
 import ArticleLayout from '@/components/ui/ArticleLayout'
 import CTABand from '@/components/ui/CTABand'
+import JsonLd from '@/components/JsonLd'
+import { definedTermSetSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Definitions & Glossary · Knowledge Hub',
@@ -25,9 +27,31 @@ const toc = [
 
 const letters = ['A', 'C', 'E', 'F', 'G', 'K', 'N', 'S']
 
+// Each entry mirrors the H2/p pair in the page below — one-sentence definitions
+// suitable for structured-data consumption. Keep this in sync with the prose.
+const definedTerms = [
+  { id: 'aio',              name: 'AIO — AI Optimisation',                                  description: 'The practice of optimising a brand and its content to be surfaced and recommended by AI systems like ChatGPT, Perplexity and Google AI.' },
+  { id: 'aeo',              name: 'AEO — Answer Engine Optimisation',                       description: 'Optimising content to become the direct answer an engine returns — the quoted line in ChatGPT, Perplexity or Google AI Overviews.' },
+  { id: 'geo',              name: 'GEO — Generative Engine Optimisation',                   description: 'Building entity authority and trust so generative engines treat the brand as a reliable source for answers.' },
+  { id: 'serp',             name: 'SERP — Search Engine Results Page',                      description: 'The page a search engine returns for a query, blending classic blue links with AI Overviews, local packs, featured snippets and shopping units.' },
+  { id: 'schema',           name: 'Schema / Structured Data',                               description: 'A shared vocabulary of structured-data markup (schema.org) that helps engines understand the meaning of page content and surface it accurately.' },
+  { id: 'entity',           name: 'Entity',                                                 description: 'A distinct, identifiable thing — a company, person, product or concept — that engines track in their knowledge models.' },
+  { id: 'knowledge-graph',  name: 'Knowledge Graph',                                        description: 'A network of entities and the relationships between them, used by engines to understand and recommend brands.' },
+  { id: 'eeat',             name: 'E-E-A-T — Experience, Expertise, Authoritativeness, Trust', description: 'The quality framework engines use to assess content credibility, especially in trust-sensitive industries.' },
+  { id: 'featured-snippet', name: 'Featured Snippet',                                       description: 'The boxed answer that can appear at the top of a SERP, pulled directly from a page.' },
+  { id: 'citation',         name: 'Citation',                                               description: 'Any reference to a brand — a mention, link or source attribution — increasingly important as AI engines name brands in their answers.' },
+  { id: 'nap',              name: 'NAP — Name, Address, Phone',                             description: 'Core business contact details kept consistent across the site, directories and profiles for local SEO and AI identification.' },
+  { id: 'cwv',              name: 'Core Web Vitals',                                        description: "Google's metrics for real-world page experience: loading (LCP), interactivity (INP) and visual stability (CLS)." },
+]
+
 export default function GlossaryPage() {
   return (
     <>
+      <JsonLd data={definedTermSetSchema({
+        name: 'AI Visibility & SEO Definitions',
+        description: 'A living glossary of the terms that shape how security brands get found, cited and chosen by both search and AI answer engines.',
+        terms: definedTerms,
+      })} />
       <ArticleLayout
         breadcrumb={[{ label: 'Home', href: '/' }, { label: 'Knowledge Hub', href: '/knowledge-hub/' }, { label: 'Definitions & Glossary' }]}
         title="AI Visibility & SEO Definitions"

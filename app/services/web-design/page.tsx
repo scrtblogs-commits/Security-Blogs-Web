@@ -10,6 +10,8 @@ import ContactForm from '@/components/ui/ContactForm'
 import SpiralAnimation from '@/components/ui/SpiralAnimation'
 import CodeTypingAnimation from '@/components/ui/CodeTypingAnimation'
 import DualSerp from './DualSerp'
+import JsonLd from '@/components/JsonLd'
+import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#1e5fe0'
 
@@ -65,6 +67,12 @@ const formFields = [
 export default function WebDesignPage() {
   return (
     <>
+      <JsonLd data={serviceSchema({
+        name: 'AI-Ready Security Website Design',
+        description: 'We build AI-optimised, schema-rich, conversion-focused security websites that rank on Google and Bing — and get cited by ChatGPT, Perplexity and every AI platform.',
+        slug: 'web-design',
+        serviceType: 'Web Design & Development',
+      })} />
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
         <SpiralAnimation tint={ACCENT} />
         <div className="container z1">
