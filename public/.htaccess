@@ -37,3 +37,53 @@ Options -Indexes
     Header set Cache-Control "no-cache"
   </FilesMatch>
 </IfModule>
+
+# ============================================================================
+# 301 redirects — legacy WordPress URLs -> new build URLs.
+#
+# These rules are inactive on GitHub Pages (Pages ignores .htaccess). The
+# equivalent soft-301 (<meta http-equiv="refresh"> + canonical + JS replace)
+# is implemented in the Next.js build for each path below. If we migrate to
+# Hostinger / any Apache host in the future, the redirect stubs become
+# unnecessary and these rules become the canonical 301s.
+# ============================================================================
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Service pages
+  RedirectMatch 301 "^/security-seo-service/?$"       "/services/security-seo/"
+  RedirectMatch 301 "^/aio/?$"                        "/services/aio/"
+  RedirectMatch 301 "^/aeo/?$"                        "/services/aeo/"
+  RedirectMatch 301 "^/geo/?$"                        "/services/geo/"
+  RedirectMatch 301 "^/google-ads-security/?$"        "/services/google-ads/"
+  RedirectMatch 301 "^/microsoft-bing-ads/?$"         "/services/bing-ads/"
+  RedirectMatch 301 "^/web-design-development/?$"     "/services/web-design/"
+  RedirectMatch 301 "^/seo-ai-service/?$"             "/services/"
+
+  # Publish-with-us
+  RedirectMatch 301 "^/guest-posting/?$"              "/publish-with-us/guest-posting/"
+  RedirectMatch 301 "^/sponsored-posts/?$"            "/publish-with-us/sponsored-posts/"
+  RedirectMatch 301 "^/product-promotion/?$"          "/publish-with-us/product-promotion/"
+  RedirectMatch 301 "^/press-release-distribution/?$" "/publish-with-us/press-release/"
+  RedirectMatch 301 "^/backlink-packages/?$"          "/publish-with-us/backlink-packages/"
+  RedirectMatch 301 "^/pricing-guideline/?$"          "/publish-with-us/pricing-guidelines/"
+  RedirectMatch 301 "^/pricing-guidelines/?$"         "/publish-with-us/pricing-guidelines/"
+  RedirectMatch 301 "^/advertise/?$"                  "/publish-with-us/advertise/"
+
+  # Knowledge hub
+  RedirectMatch 301 "^/security-knowledge-hub/?$"     "/knowledge-hub/"
+  RedirectMatch 301 "^/blogs/?$"                      "/knowledge-hub/blogs/"
+  RedirectMatch 301 "^/security-industry-seo/?$"      "/knowledge-hub/security-industry-seo/"
+  RedirectMatch 301 "^/security-guides/?$"            "/knowledge-hub/security-guides/"
+  RedirectMatch 301 "^/industry-news/?$"              "/knowledge-hub/industry-news/"
+  RedirectMatch 301 "^/security-trends/?$"            "/knowledge-hub/security-trends-2026/"
+  RedirectMatch 301 "^/security-trends-2026/?$"       "/knowledge-hub/security-trends-2026/"
+  RedirectMatch 301 "^/definitions-glossary/?$"       "/knowledge-hub/definitions-glossary/"
+  RedirectMatch 301 "^/security-glossary/?$"          "/knowledge-hub/definitions-glossary/"
+  RedirectMatch 301 "^/research-reports/?$"           "/knowledge-hub/research-reports/"
+
+  # Tools / guides -> closest new home
+  RedirectMatch 301 "^/ai-visibility-checklist/?$"    "/free-tools/"
+  RedirectMatch 301 "^/seo-ranking-guide/?$"          "/knowledge-hub/security-guides/"
+  RedirectMatch 301 "^/bing-ranking-guide/?$"         "/knowledge-hub/security-guides/"
+</IfModule>
