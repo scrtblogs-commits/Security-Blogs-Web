@@ -15,7 +15,7 @@ const ACCENT = '#6f4dff'
 export const metadata = {
   title: 'AIO — Get Your Security Brand Cited by Every AI Platform',
   description:
-    'AI Integration Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
+    'AI Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
   alternates: { canonical: '/services/aio/' },
   openGraph: { url: '/services/aio/' },
 }
@@ -44,7 +44,7 @@ const stats = [
 ]
 
 const faqs = [
-  { q: 'What exactly is AIO?', a: 'AIO (AI Integration Optimisation) is the practice of structuring your brand, content and data so AI platforms like ChatGPT, Perplexity and Gemini can discover, trust and cite you in their answers.' },
+  { q: 'What exactly is AIO?', a: 'AIO (AI Optimisation) is the practice of structuring your brand, content and data so AI platforms like ChatGPT, Perplexity and Gemini can discover, trust and cite you in their answers.' },
   { q: 'How is AIO different from SEO?', a: 'SEO ranks pages in search results; AIO makes your brand the source AI engines pull from when generating answers. The two work together, but AIO targets the citation layer of AI responses.' },
   { q: 'Which AI platforms do you optimise for?', a: 'We target the six platforms that matter most for security buyers — ChatGPT, Perplexity, Gemini, Google AI Overviews, Bing Copilot and Claude.' },
   { q: 'How do you measure AI citations?', a: 'We continuously query each platform and track when, where and how your brand is mentioned, then report on your citation rate and mention volume each month.' },
@@ -58,14 +58,14 @@ export default function AioPage() {
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'AIO' }]} />
             <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}55`, background: `${ACCENT}14` }}>
-              <span className="dot dot-pulse" /> AI INTEGRATION OPTIMISATION
+              <span className="dot dot-pulse" /> AI OPTIMISATION
             </span>
             <h1 className="h1" style={{ marginBottom: 20 }}>
               Get Your Security Brand{' '}
               <span style={{ color: ACCENT, fontStyle: 'italic' }}>Cited by Every AI Platform</span>
             </h1>
             <p className="lead" style={{ maxWidth: 560, marginBottom: 28 }}>
-              AIO (AI Integration Optimisation) is the process of making your security brand discoverable, trustworthy and
+              AIO (AI Optimisation) is the process of making your security brand discoverable, trustworthy and
               citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.
             </p>
             <div className="flex flex-wrap gap-3">
