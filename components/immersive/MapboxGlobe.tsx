@@ -1,18 +1,21 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { MotionValue, useMotionValueEvent } from 'framer-motion'
 import { MAPBOX_TOKEN } from '@/lib/env'
 import { COUNTRIES, type Country } from './CountryPicker'
 import type { SuburbResult } from './StateSuburbForm'
 
-// Three-stage Mapbox map:
-//   Stage A (progress ~0.12 -> ~0.40): globe projection, world-level view.
-//   Stage B (0.40 -> 0.55): fly to selected country (zoom 3-5).
-//   Stage C (0.55 -> 0.70): fly to suburb (zoom 14, satellite).
-//   Stage D (0.70+): hold suburb framing.
-// Mapbox API uses easeTo / flyTo for smooth interpolation; we kick off a fresh
-// flyTo whenever the target inputs change. Style swaps to satellite-streets
-// once we cross zoom 8 so the imagery feels real at the destination.
+// Scroll-driven Mapbox globe. Uses `jumpTo` (not `easeTo`) for instant
+// 1:1 sync — animated transitions queue up and fight each other on
+// every scroll tick, which makes the camera stutter. With jumpTo the map
+// position is a pure function of scroll progress.
+//
+// Stage thresholds (matches ImmersiveServices scroll timing):
+//   < 0.12              hidden behind clouds, hold default globe centre
+//   0.12 -> 0.40        globe view, slow spin while idle
+//   0.40 -> 0.55        fly to selected country
+//   0.55 -> 0.70        fly to suburb (style swaps to satellite at z>=8)
+//   0.70+               hold close on suburb at z=16, tilted
 
 type Props = {
   progress: MotionValue<number>
@@ -20,127 +23,128 @@ type Props = {
   suburb: SuburbResult | null
 }
 
+type MapboxMap = {
+  remove: () => void
+  jumpTo: (o: unknown) => void
+  setStyle: (s: string) => void
+  setFog: (f: unknown) => void
+  getZoom: () => number
+  getCenter: () => { lng: number; lat: number }
+  setCenter: (c: [number, number]) => void
+  on: (event: string, fn: () => void) => void
+}
+
 export default function MapboxGlobe({ progress, country, suburb }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<unknown>(null)
+  const mapRef = useRef<MapboxMap | null>(null)
   const styleSatRef = useRef<boolean>(false)
-  // Latest desired view — recomputed every scroll tick.
-  const latestTargetRef = useRef<{ lng: number; lat: number; zoom: number; pitch: number; bearing: number; speed?: number } | null>(null)
-  const lastAppliedRef = useRef<number>(0)
+  const styleLoadedRef = useRef<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
 
   // Initialise map once on mount.
   useEffect(() => {
+    if (!containerRef.current) return
+    if (!MAPBOX_TOKEN) {
+      setError('Map token missing. Set NEXT_PUBLIC_MAPBOX_TOKEN in .env.local.')
+      return
+    }
+    let map: MapboxMap | null = null
+    let rafId = 0
     let cancelled = false
-    let m: unknown = null
+
     ;(async () => {
-      if (!containerRef.current || !MAPBOX_TOKEN) return
-      const mapbox = (await import('mapbox-gl')).default
-      // Load Mapbox CSS via injected <link> — avoids importing CSS in TS file.
-      if (!document.querySelector('link[data-mapbox-css]')) {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href = 'https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css'
-        link.setAttribute('data-mapbox-css', 'true')
-        document.head.appendChild(link)
-      }
-      mapbox.accessToken = MAPBOX_TOKEN
-      const map = new mapbox.Map({
-        container: containerRef.current,
-        style: 'mapbox://styles/mapbox/light-v11',
-        projection: 'globe',
-        center: [134, -25],
-        zoom: 1.4,
-        pitch: 0,
-        bearing: 0,
-        attributionControl: false,
-        antialias: true,
-      })
-      m = map
-      if (cancelled) {
-        map.remove()
-        return
-      }
-      mapRef.current = map
+      try {
+        const mod = await import('mapbox-gl')
+        const mapboxgl = mod.default
+        if (cancelled || !containerRef.current) return
+        mapboxgl.accessToken = MAPBOX_TOKEN
 
-      map.on('style.load', () => {
-        // Atmosphere for the globe view — soft blue halo.
-        ;(map as { setFog: (f: unknown) => void }).setFog({
-          color: 'rgb(220, 232, 255)',
-          'high-color': 'rgb(150, 180, 235)',
-          'horizon-blend': 0.04,
-          'space-color': 'rgb(8, 16, 35)',
-          'star-intensity': 0.15,
+        map = new mapboxgl.Map({
+          container: containerRef.current,
+          style: 'mapbox://styles/mapbox/light-v11',
+          projection: 'globe' as unknown as undefined,
+          center: [30, 18],
+          zoom: 1.4,
+          pitch: 0,
+          bearing: 0,
+          attributionControl: false,
+          antialias: true,
+        }) as unknown as MapboxMap
+
+        mapRef.current = map
+
+        map.on('style.load', () => {
+          styleLoadedRef.current = true
+          try {
+            map?.setFog({
+              color: 'rgb(220, 232, 255)',
+              'high-color': 'rgb(150, 180, 235)',
+              'horizon-blend': 0.04,
+              'space-color': 'rgb(8, 16, 35)',
+              'star-intensity': 0.15,
+            })
+          } catch { /* fog not supported on this style */ }
         })
-      })
 
-      // Drop pulsing markers on the 5 markets once the map is loaded.
-      map.on('load', () => {
-        COUNTRIES.forEach((c) => {
-          const el = document.createElement('div')
-          el.className = 'sb-globe-pin'
-          el.style.cssText =
-            'width:14px;height:14px;border-radius:50%;background:#1e5fe0;box-shadow:0 0 0 0 rgba(30,95,224,0.6);animation:sb-pulse 1.8s infinite;'
-          // Mapbox marker
-          new (mapbox as { Marker: new (o?: unknown) => { setLngLat: (c: [number, number]) => { addTo: (m: unknown) => void } } }).Marker({ element: el })
-            .setLngLat([c.lng, c.lat])
-            .addTo(map)
+        map.on('load', () => {
+          COUNTRIES.forEach((c) => {
+            const el = document.createElement('div')
+            el.className = 'sb-globe-pin'
+            el.style.cssText =
+              'width:14px;height:14px;border-radius:50%;background:#1e5fe0;box-shadow:0 0 0 0 rgba(30,95,224,0.6);animation:sb-pulse 1.8s infinite;'
+            new (mapboxgl as unknown as {
+              Marker: new (o?: unknown) => {
+                setLngLat: (c: [number, number]) => { addTo: (m: unknown) => void }
+              }
+            }).Marker({ element: el })
+              .setLngLat([c.lng, c.lat])
+              .addTo(map)
+          })
         })
-      })
 
-      // Continuous slow spin while in globe view (resets when we leave).
-      let rafId = 0
-      const spin = () => {
-        const map2 = mapRef.current as { getZoom: () => number; setCenter: (c: [number, number]) => void; getCenter: () => { lng: number; lat: number } } | null
-        if (!map2) return
-        if (map2.getZoom() < 3.5) {
-          const c = map2.getCenter()
-          map2.setCenter([c.lng + 0.06, c.lat])
+        // Slow spin while idle in globe view (z < 3.5).
+        const spin = () => {
+          if (!map) return
+          if (map.getZoom() < 3.5) {
+            const c = map.getCenter()
+            map.setCenter([c.lng + 0.04, c.lat])
+          }
+          rafId = requestAnimationFrame(spin)
         }
         rafId = requestAnimationFrame(spin)
-      }
-      rafId = requestAnimationFrame(spin)
-
-      return () => {
-        cancelAnimationFrame(rafId)
+      } catch (err) {
+        console.error('[Mapbox] failed to initialise', err)
+        setError('Could not load the map. Check your browser supports WebGL.')
       }
     })()
+
     return () => {
       cancelled = true
-      if (m) (m as { remove: () => void }).remove()
+      if (rafId) cancelAnimationFrame(rafId)
+      if (map) { try { map.remove() } catch {} }
       mapRef.current = null
     }
   }, [])
 
-  // Recompute desired target every time scroll progress / inputs change.
+  // 1:1 scroll-to-camera sync. jumpTo is instant — no animation queue.
   useMotionValueEvent(progress, 'change', (p) => {
     const target = computeTarget(p, country, suburb)
-    latestTargetRef.current = target
-    const map = mapRef.current as null | {
-      easeTo: (o: unknown) => void
-      getZoom: () => number
-      setStyle: (s: string) => void
-      jumpTo: (o: unknown) => void
-    }
-    if (!map || !target) return
-    // Throttle easeTo calls to 8/sec to avoid jank on scrub.
-    const now = performance.now()
-    if (now - lastAppliedRef.current < 120) return
-    lastAppliedRef.current = now
-    map.easeTo({
+    const map = mapRef.current
+    if (!map || !target || !styleLoadedRef.current) return
+    map.jumpTo({
       center: [target.lng, target.lat],
       zoom: target.zoom,
       pitch: target.pitch,
       bearing: target.bearing,
-      duration: 800,
-      essential: true,
     })
-    // Swap to satellite-streets once we cross zoom 8.
     const wantSat = target.zoom >= 8
     if (wantSat && !styleSatRef.current) {
       styleSatRef.current = true
+      styleLoadedRef.current = false // wait for new style to load
       map.setStyle('mapbox://styles/mapbox/satellite-streets-v12')
     } else if (!wantSat && styleSatRef.current) {
       styleSatRef.current = false
+      styleLoadedRef.current = false
       map.setStyle('mapbox://styles/mapbox/light-v11')
     }
   })
@@ -150,12 +154,30 @@ export default function MapboxGlobe({ progress, country, suburb }: Props) {
       <div
         ref={containerRef}
         style={{
-          position: 'absolute', inset: 0,
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
           zIndex: 3,
+          background: '#0a1428', // dark navy fallback while map loads
         }}
         aria-hidden
       />
-      {/* Pulsing marker keyframes — injected as a single global style block. */}
+      {error && (
+        <div
+          style={{
+            position: 'absolute', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'rgba(255,255,255,0.95)', color: '#0f2244',
+            padding: '14px 18px', borderRadius: 12,
+            fontSize: 13, fontFamily: 'system-ui, sans-serif',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.25)', zIndex: 50,
+            maxWidth: 360, textAlign: 'center',
+          }}
+        >
+          {error}
+        </div>
+      )}
       <style>{`
         @keyframes sb-pulse {
           0%   { box-shadow: 0 0 0 0   rgba(30,95,224,0.55); }
@@ -163,6 +185,7 @@ export default function MapboxGlobe({ progress, country, suburb }: Props) {
           100% { box-shadow: 0 0 0 0   rgba(30,95,224,0);    }
         }
         .mapboxgl-control-container { display: none !important; }
+        .mapboxgl-canvas { outline: none; }
       `}</style>
     </>
   )
@@ -173,29 +196,25 @@ function computeTarget(
   country: Country | null,
   suburb: SuburbResult | null,
 ): { lng: number; lat: number; zoom: number; pitch: number; bearing: number } | null {
-  // Map only becomes visible after the cloud opening. Before that, return null
-  // (we still want the map mounted underneath so it's ready to animate).
-  // Below progress 0.12 we just hold a default globe view.
   if (progress < 0.12) {
-    return { lng: 0, lat: 20, zoom: 1.2, pitch: 0, bearing: 0 }
+    return { lng: 30, lat: 18, zoom: 1.4, pitch: 0, bearing: 0 }
   }
-  // Globe stage: 0.12 -> 0.40, hold at ~zoom 1.6, slight tilt.
   if (progress < 0.40) {
-    return { lng: 30, lat: 18, zoom: 1.6, pitch: 0, bearing: 0 }
+    // Slight zoom in toward 1.8 as we approach the country stage.
+    const t = (progress - 0.12) / 0.28
+    return { lng: 30, lat: 18, zoom: lerp(1.4, 1.8, t), pitch: 0, bearing: 0 }
   }
-  // Country fly-in: 0.40 -> 0.55, ease to country center at country.zoom.
   if (progress < 0.55) {
     if (!country) return null
     const t = (progress - 0.40) / 0.15
     return {
-      lng: country.lng,
-      lat: country.lat,
-      zoom: lerp(1.6, country.zoom, t),
+      lng: lerp(30, country.lng, t),
+      lat: lerp(18, country.lat, t),
+      zoom: lerp(1.8, country.zoom, t),
       pitch: lerp(0, 25, t),
       bearing: 0,
     }
   }
-  // State+suburb fly-in: 0.55 -> 0.70.
   if (progress < 0.70) {
     if (!country) return null
     const t = (progress - 0.55) / 0.15
@@ -209,7 +228,6 @@ function computeTarget(
       bearing: lerp(0, suburb ? 25 : 0, t),
     }
   }
-  // Climax: hold close on the suburb.
   if (!country) return null
   return {
     lng: suburb?.lng ?? country.lng,

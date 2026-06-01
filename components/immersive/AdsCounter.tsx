@@ -1,8 +1,15 @@
 'use client'
-import { motion, MotionValue, useTransform } from 'framer-motion'
+import { useState } from 'react'
+import { motion, MotionValue, useMotionValueEvent, useTransform } from 'framer-motion'
 
-// Mini Google Ads "dashboard" panel: impressions, clicks and CPC tick up as
-// the user reaches the climax. Numbers are illustrative, not real account data.
+// Mini Google Ads "dashboard" panel. Pinned BOTTOM-RIGHT during the climax —
+// occupies its own corner so it doesn't overlap RankingClimb (top-right),
+// LocalPackEmbed (bottom-left) or ChatGPTCard (top-left).
+//
+// Number displays use explicit `useState` + `useMotionValueEvent` because
+// rendering a MotionValue directly as a text child isn't a reliable pattern
+// across all framer-motion v11 release builds — it sometimes shows the
+// initial value only and never updates.
 export default function AdsCounter({
   progress,
 }: {
@@ -18,8 +25,8 @@ export default function AdsCounter({
     <motion.div
       style={{
         opacity, y,
-        position: 'absolute', bottom: '8%', right: '4%',
-        width: 'min(280px, 32vw)',
+        position: 'absolute', bottom: '6%', right: '3%',
+        width: 'min(280px, 30vw)',
         background: 'rgba(15, 20, 30, 0.94)',
         color: '#e8efff',
         borderRadius: 14,
@@ -35,9 +42,9 @@ export default function AdsCounter({
         <div style={{ fontSize: 12.5, fontWeight: 600 }}>Google Ads · Last 30 days</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-        <Metric label="Impressions" value={impressions} suffix="" />
-        <Metric label="Clicks" value={clicks} suffix="" />
-        <Metric label="CPC" value={cpc} suffix="$" prefix decimals={2} />
+        <Metric label="Impressions" mv={impressions} decimals={0} />
+        <Metric label="Clicks" mv={clicks} decimals={0} />
+        <Metric label="CPC" mv={cpc} decimals={2} prefix="$" />
       </div>
       <div style={{ marginTop: 10, fontSize: 10.5, color: '#7c87a3', fontStyle: 'italic' }}>
         Illustrative — your numbers may differ
@@ -47,22 +54,29 @@ export default function AdsCounter({
 }
 
 function Metric({
-  label, value, suffix, prefix = false, decimals = 0,
+  label, mv, decimals = 0, prefix = '',
 }: {
   label: string
-  value: MotionValue<number>
-  suffix?: string
-  prefix?: boolean
+  mv: MotionValue<number>
   decimals?: number
+  prefix?: string
 }) {
-  const display = useTransform(value, (v) => {
-    const n = v.toLocaleString('en-AU', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })
-    return prefix ? `${suffix}${n}` : `${n}${suffix}`
+  const [text, setText] = useState(formatValue(mv.get(), decimals, prefix))
+  useMotionValueEvent(mv, 'change', (v) => {
+    setText(formatValue(v, decimals, prefix))
   })
   return (
     <div>
       <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: 0.4, color: '#7c87a3', marginBottom: 2 }}>{label}</div>
-      <motion.div style={{ fontSize: 17, fontWeight: 700, color: '#7eb6ff' }}>{display}</motion.div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: '#7eb6ff' }}>{text}</div>
     </div>
   )
+}
+
+function formatValue(v: number, decimals: number, prefix: string): string {
+  const n = v.toLocaleString('en-AU', {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals,
+  })
+  return `${prefix}${n}`
 }

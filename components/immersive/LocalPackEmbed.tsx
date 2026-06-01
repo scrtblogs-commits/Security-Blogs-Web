@@ -16,8 +16,10 @@ export default function LocalPackEmbed({
   suburb: string
   country: string
 }) {
+  // Visible across the suburb-landing + climax stages. Positioned bottom-LEFT
+  // so it doesn't overlap RankingClimb (top-right) or AdsCounter (bottom-right).
   const opacity = useTransform(progress, [0.66, 0.74, 0.99, 1], [0, 1, 1, 1])
-  const x = useTransform(progress, [0.66, 0.74], [120, 0])
+  const x = useTransform(progress, [0.66, 0.74], [-120, 0])
 
   const query = encodeURIComponent(`${service} in ${suburb} ${country}`.trim())
   const src = GMAPS_KEY
@@ -28,8 +30,8 @@ export default function LocalPackEmbed({
     <motion.div
       style={{
         opacity, x,
-        position: 'absolute', top: '10%', right: '4%',
-        width: 'min(420px, 40vw)', height: 'min(440px, 60vh)',
+        position: 'absolute', bottom: '6%', left: '3%',
+        width: 'min(360px, 36vw)', height: 'min(360px, 50vh)',
         background: '#fff',
         borderRadius: 16,
         padding: 8,

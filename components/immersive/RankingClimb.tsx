@@ -1,5 +1,6 @@
 'use client'
-import { motion, MotionValue, useTransform } from 'framer-motion'
+import { useState } from 'react'
+import { motion, MotionValue, useMotionValueEvent, useTransform } from 'framer-motion'
 
 // The headline overlay: an animated mock SERP where the user's brand row
 // slides up from below the visible list (page-2 territory) all the way to
@@ -43,10 +44,13 @@ export default function RankingClimb({
   // Featured-snippet card slides in at the very end
   const featuredOp = useTransform(progress, [0.95, 1.0], [0, 1])
   const featuredY = useTransform(progress, [0.95, 1.0], [-10, 0])
-  // Brand position label (1..11) — derived from the y to show current slot
-  const slotLabel = useTransform(brandY, (y) => {
+  // Brand position label (1..11) — subscribe explicitly so React always sees
+  // the latest value (passing a MotionValue<string> as a child isn't reliably
+  // updated across framer-motion v11 builds).
+  const [slotLabel, setSlotLabel] = useState('11')
+  useMotionValueEvent(brandY, 'change', (y) => {
     const slot = Math.max(0, Math.min(11, Math.round(11 - y / (ROW_H + ROW_GAP))))
-    return slot === 0 ? '★' : String(slot)
+    setSlotLabel(slot === 0 ? '★' : String(slot))
   })
 
   return (
@@ -137,9 +141,9 @@ export default function RankingClimb({
             zIndex: 2,
           }}
         >
-          <motion.span style={{ width: 18, fontWeight: 800, color: '#1e5fe0' }}>
+          <span style={{ width: 18, fontWeight: 800, color: '#1e5fe0' }}>
             {slotLabel}
-          </motion.span>
+          </span>
           <span style={{ color: '#1e5fe0', fontWeight: 700, fontSize: 12.5, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{brand}</span>
           <span style={{ marginLeft: 'auto', fontSize: 16 }}>↑</span>
         </motion.div>

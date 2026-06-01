@@ -12,6 +12,8 @@ export default function ChatGPTCard({
   brand: string
   question: string
 }) {
+  // Positioned TOP-LEFT to avoid overlap with RankingClimb (top-right),
+  // LocalPackEmbed (bottom-left), and AdsCounter (bottom-right).
   const opacity = useTransform(progress, [0.85, 0.9, 0.99, 1], [0, 1, 1, 1])
   const x = useTransform(progress, [0.85, 0.9], [-80, 0])
 
@@ -19,8 +21,8 @@ export default function ChatGPTCard({
     <motion.div
       style={{
         opacity, x,
-        position: 'absolute', bottom: '6%', left: '3%',
-        width: 'min(360px, 38vw)',
+        position: 'absolute', top: '6%', left: '3%',
+        width: 'min(340px, 34vw)',
         background: '#202124',
         color: '#ececf1',
         borderRadius: 16,

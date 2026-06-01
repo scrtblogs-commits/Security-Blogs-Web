@@ -119,12 +119,64 @@ export default function ImmersiveServices({ brand = 'Your Brand' }: { brand?: st
 
         {/* Persistent scroll hint at bottom, fades out late */}
         <ScrollHint progress={scrollYProgress} />
+
+        {/* Top progress bar — always visible, shows current stage */}
+        <StageProgress progress={scrollYProgress} />
       </div>
     </section>
   )
 }
 
-import { motion, MotionValue, useTransform } from 'framer-motion'
+import { motion, MotionValue, useMotionValueEvent, useTransform } from 'framer-motion'
+
+const STAGES = [
+  { key: 'opening',  label: 'Begin',    range: [0,    0.18] },
+  { key: 'globe',    label: 'Globe',    range: [0.18, 0.40] },
+  { key: 'country',  label: 'Country',  range: [0.40, 0.55] },
+  { key: 'suburb',   label: 'Suburb',   range: [0.55, 0.74] },
+  { key: 'climax',   label: 'Results',  range: [0.74, 1.00] },
+]
+
+function StageProgress({ progress }: { progress: MotionValue<number> }) {
+  const [active, setActive] = useState(0)
+  useMotionValueEvent(progress, 'change', (p) => {
+    const i = STAGES.findIndex((s) => p >= s.range[0] && p < s.range[1])
+    if (i >= 0) setActive(i)
+    else if (p >= 1) setActive(STAGES.length - 1)
+  })
+  return (
+    <div
+      style={{
+        position: 'absolute', top: 'calc(var(--nav-h, 64px) + 12px)',
+        left: '50%', transform: 'translateX(-50%)',
+        display: 'flex', alignItems: 'center', gap: 0,
+        background: 'rgba(15, 20, 30, 0.78)',
+        backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
+        padding: '8px 14px', borderRadius: 999,
+        zIndex: 25, pointerEvents: 'none',
+        fontFamily: 'var(--font-mono, monospace)',
+        fontSize: 11, letterSpacing: 1.2, color: '#e8efff',
+      }}
+    >
+      {STAGES.map((s, i) => (
+        <span key={s.key} style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+          <span
+            style={{
+              padding: '4px 10px', borderRadius: 999,
+              background: i === active ? 'rgba(30, 95, 224, 0.85)' : 'transparent',
+              color: i === active ? '#fff' : i < active ? '#7eb6ff' : '#9aa3b8',
+              fontWeight: i === active ? 700 : 500,
+              transition: 'background 0.25s, color 0.25s',
+            }}
+          >
+            {i + 1}. {s.label}
+          </span>
+          {i < STAGES.length - 1 && <span style={{ color: '#5f6f8a', margin: '0 2px' }}>›</span>}
+        </span>
+      ))}
+    </div>
+  )
+}
 
 function ClimaxCTA({ progress }: { progress: MotionValue<number> }) {
   const opacity = useTransform(progress, [0.92, 0.98], [0, 1])
