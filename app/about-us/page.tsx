@@ -6,24 +6,27 @@ import AnimatedSVGTimeline from '@/components/ui/AnimatedSVGTimeline'
 import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 import JsonLd from '@/components/JsonLd'
-import { aboutPageSchema, personSchema } from '@/lib/schema'
+import { aboutPageSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'About Us',
-  description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the team that gets security brands found.',
+  description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the founder behind SecurityBlogs.',
   alternates: { canonical: '/about-us/' },
   openGraph: { url: '/about-us/' },
 }
 
-// AboutPage + Person schemas. Team members confirmed real by user (Phase 11).
-// sameAs URLs are absent — add LinkedIn URLs per person when available.
-
-const team = [
-  { name: 'Sarah Chen', role: 'AI Visibility Lead', initials: 'SC', color: 'var(--violet)', chips: ['AIO', 'AEO', 'Schema'] },
-  { name: 'Marcus Webb', role: 'Security SEO Director', initials: 'MW', color: 'var(--blue)', chips: ['Technical SEO', 'Link Building', 'Local SEO'] },
-  { name: 'Priya Nair', role: 'Paid Media Strategist', initials: 'PN', color: 'var(--red)', chips: ['Google Ads', 'Bing Ads', 'Analytics'] },
-  { name: 'Jordan Blake', role: 'Web Architect', initials: 'JB', color: 'var(--green)', chips: ['Next.js', 'Core Web Vitals', 'AI Architecture'] },
-]
+// Single named founder per Phase B of seo-final-2026-05 (placeholder team
+// removed). The Person schema for Yousif Jonaid is already emitted sitewide
+// from app/layout.tsx via the siteSchema @graph (@id #founder), so we don't
+// re-emit it here — we just render the founder card UI.
+const founder = {
+  name: 'Yousif Jonaid',
+  title: 'Founder & Director, SecurityBlogs',
+  initials: 'YJ',
+  color: 'var(--blue)',
+  linkedin: 'https://www.linkedin.com/in/yousif-jonaid-55893b361',
+  bio: "Yousif Jonaid is the Founder and Director of SecurityBlogs, Australia's specialist AI visibility, SEO and authority publishing platform for the security industry. With a background spanning digital marketing and the physical and cyber security sectors, Yousif launched SecurityBlogs in 2025 to fill a critical gap: a dedicated growth platform built specifically for security companies, integrators, MSSPs and manufacturers. SecurityBlogs is Australian-incorporated and remote-first, serving clients across Australia, the USA, UK, UAE and Singapore.",
+}
 
 const timeline = [
   { phase: 'Foundation', title: 'Domain & Hosting Audit', desc: 'We inspect domain authority, hosting performance and crawl health before anything else.' },
@@ -67,26 +70,53 @@ export default function AboutPage() {
 
       <section className="section">
         <div className="container">
-          <SectionHead eyebrow="Who we are" title="A small, senior team. Zero hand-offs." sub="Every specialist you meet is the one doing the work — no juniors, no churn." />
-          <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 20 }}>
-            {team.map((m) => (
-              <Item key={m.name}>
-                <GlassCard tilt glow style={{ height: '100%', textAlign: 'center' }}>
-                  <div style={{ width: 78, height: 78, borderRadius: '50%', margin: '0 auto 16px', display: 'grid', placeItems: 'center', fontSize: 26, fontWeight: 800, color: '#fff', fontFamily: 'var(--font-display)', background: `linear-gradient(135deg, ${m.color}, var(--blue))` }}>
-                    {m.initials}
+          <SectionHead eyebrow="Leadership" title="Founder & Director" sub="One named owner. Direct, senior accountability on every brief." />
+          <Reveal>
+            <div style={{ maxWidth: 760, margin: '0 auto' }}>
+              <GlassCard glow>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 28, alignItems: 'flex-start' }}>
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      width: 120, height: 120, borderRadius: '50%',
+                      display: 'grid', placeItems: 'center',
+                      fontSize: 38, fontWeight: 800, color: '#fff',
+                      fontFamily: 'var(--font-display)',
+                      background: `linear-gradient(135deg, ${founder.color}, var(--violet))`,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {founder.initials}
                   </div>
-                  <h3 style={{ fontSize: 19, marginBottom: 4 }}>{m.name}</h3>
-                  <p className="accent" style={{ fontSize: 13.5, fontWeight: 600, marginBottom: 16 }}>{m.role}</p>
-                  <div className="flex flex-wrap justify-center gap-2" style={{ marginBottom: 18 }}>
-                    {m.chips.map((c) => <span key={c} className="chip">{c}</span>)}
+                  <div style={{ flex: '1 1 320px', minWidth: 0 }}>
+                    <h3 style={{ fontSize: 24, marginBottom: 6 }}>{founder.name}</h3>
+                    <p className="accent" style={{ fontSize: 14, fontWeight: 600, marginBottom: 16 }}>{founder.title}</p>
+                    <p className="text-soft" style={{ fontSize: 15, lineHeight: 1.7, marginBottom: 22 }}>
+                      {founder.bio}
+                    </p>
+                    <a
+                      href={founder.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${founder.name} on LinkedIn`}
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 10,
+                        padding: '10px 16px', borderRadius: 10,
+                        background: 'rgba(30,95,224,0.1)', color: 'var(--blue)',
+                        fontWeight: 600, fontSize: 14,
+                        border: '1px solid var(--line)',
+                      }}
+                    >
+                      <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor" aria-hidden="true">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                      </svg>
+                      Connect on LinkedIn
+                    </a>
                   </div>
-                  <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label={`${m.name} on LinkedIn`} style={{ display: 'inline-grid', placeItems: 'center', width: 34, height: 34, borderRadius: 9, background: 'rgba(30,95,224,0.1)', color: 'var(--blue)', fontWeight: 800, fontSize: 13, border: '1px solid var(--line)' }}>
-                    in
-                  </a>
-                </GlassCard>
-              </Item>
-            ))}
-          </Stagger>
+                </div>
+              </GlassCard>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -118,13 +148,6 @@ export default function AboutPage() {
         path: '/about-us/',
         description: 'A specialist AI visibility and SEO agency built exclusively for the security industry.',
       })} />
-      {team.map((m) => (
-        <JsonLd key={m.name} data={personSchema({
-          name: m.name,
-          jobTitle: m.role,
-          knowsAbout: m.chips,
-        })} />
-      ))}
       <CTABand title="Work with a team that understands security." subtitle="Get a free AI visibility audit and a 90-day roadmap built specifically for your security brand." ctaHref="/book-strategy-call/" />
     </>
   )
