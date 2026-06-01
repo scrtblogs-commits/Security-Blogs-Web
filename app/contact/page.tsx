@@ -17,6 +17,7 @@ export const metadata = {
 
 const details = [
   { icon: '📍', title: 'Australia', sub: 'Also serving US · UK · UAE · SG' },
+  { icon: '📞', title: '+61 411 212 418', sub: 'Mon to Fri, 9am–5pm AEST' },
   { icon: '📧', title: 'info@securityblogs.com.au', sub: 'Email us anytime' },
   { icon: '⏰', title: 'Response within 24 hours', sub: 'Real humans, fast replies' },
   { icon: '🔒', title: '100% confidential, no spam', sub: 'Your data stays private' },
@@ -28,9 +29,10 @@ export default function ContactPage() {
       <JsonLd data={contactPageSchema({
         path: '/contact/',
         email: 'info@securityblogs.com.au',
+        telephone: '+61411212418',
         contactType: 'customer support',
         areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
-        availableLanguage: ['en'],
+        availableLanguage: ['en-AU'],
       })} />
       <HeroBg grid blobs>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>

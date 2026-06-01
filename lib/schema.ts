@@ -20,6 +20,12 @@ export const siteSchema = {
       name: 'SecurityBlogs',
       url: `${SITE_URL}/`,
       logo: `${SITE_URL}/logo.png`,
+      email: 'info@securityblogs.com.au',
+      telephone: '+61411212418',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'AU',
+      },
       founder: { '@id': `${SITE_URL}/#founder` },
       sameAs: [
         'https://www.linkedin.com/company/security-blogs/',
@@ -28,6 +34,14 @@ export const siteSchema = {
         'https://www.youtube.com/@SecurityBlogs',
       ],
       areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        telephone: '+61411212418',
+        email: 'info@securityblogs.com.au',
+        areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
+        availableLanguage: ['en-AU'],
+      },
     },
     {
       '@type': 'WebSite',
@@ -36,6 +50,7 @@ export const siteSchema = {
       name: 'SecurityBlogs',
       description:
         'AI visibility, SEO and paid media built exclusively for the security industry.',
+      inLanguage: 'en-AU',
       publisher: { '@id': `${SITE_URL}/#organization` },
       potentialAction: {
         '@type': 'SearchAction',
@@ -188,7 +203,7 @@ export function articleSchema(opts: {
 }
 
 // AboutPage for /about-us/. Lets Google understand the page's intent and
-// surfaces the page in About-the-organization queries.
+// surfaces the page in About-the-organisation queries.
 export function aboutPageSchema(opts: { path: string; description?: string }) {
   return {
     '@context': 'https://schema.org',
@@ -207,6 +222,7 @@ export function aboutPageSchema(opts: { path: string; description?: string }) {
 export function contactPageSchema(opts: {
   path: string
   email?: string
+  telephone?: string
   contactType?: string
   areaServed?: string[]
   availableLanguage?: string[]
@@ -216,6 +232,7 @@ export function contactPageSchema(opts: {
     contactType: opts.contactType ?? 'customer support',
   }
   if (opts.email) cp.email = opts.email
+  if (opts.telephone) cp.telephone = opts.telephone
   if (opts.areaServed) cp.areaServed = opts.areaServed
   if (opts.availableLanguage) cp.availableLanguage = opts.availableLanguage
   return {

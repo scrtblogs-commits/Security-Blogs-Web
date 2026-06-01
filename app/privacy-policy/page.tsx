@@ -175,7 +175,8 @@ export default function PrivacyPolicyPage() {
       <p>
         If you have any questions, concerns or requests regarding this Privacy Policy or our handling of
         your personal information, please contact us at{' '}
-        <a href="mailto:hello@securityblogs.com.au">hello@securityblogs.com.au</a>. You can also reach us
+        <a href="mailto:info@securityblogs.com.au">info@securityblogs.com.au</a> or by phone on{' '}
+        <a href="tel:+61411212418">+61 411 212 418</a> (Mon to Fri, 9am–5pm AEST). You can also reach us
         through our <a href="/contact/">contact page</a>.
       </p>
     </ArticleLayout>

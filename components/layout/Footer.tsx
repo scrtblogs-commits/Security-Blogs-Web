@@ -68,8 +68,13 @@ export default function Footer() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo-footer.webp" alt="SecurityBlogs" style={{ width: 'min(220px, 100%)', height: 'auto', display: 'block' }} />
             </Link>
-            <p style={{ fontSize: 14, maxWidth: 280, marginBottom: 18, color: 'var(--text)' }}>
-              The AI Visibility Platform for Security Brands.
+            <p style={{ fontSize: 14, maxWidth: 280, marginBottom: 10, color: 'var(--text)' }}>
+              Australia&apos;s AI Visibility Platform for Security Brands.
+            </p>
+            <p style={{ fontSize: 14, marginBottom: 18, color: 'var(--text)' }}>
+              <a href="tel:+61411212418" style={{ color: 'var(--text)', textDecoration: 'none' }}>
+                📞 +61 411 212 418
+              </a>
             </p>
             <div className="flex gap-2">
               {socials.map(({ name, href, Icon }) => (

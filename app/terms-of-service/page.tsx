@@ -164,7 +164,8 @@ export default function TermsOfServicePage() {
       <h2 id="contact">Contact</h2>
       <p>
         If you have any questions about these Terms, please contact us at{' '}
-        <a href="mailto:hello@securityblogs.com.au">hello@securityblogs.com.au</a> or via our{' '}
+        <a href="mailto:info@securityblogs.com.au">info@securityblogs.com.au</a>, by phone on{' '}
+        <a href="tel:+61411212418">+61 411 212 418</a> (Mon to Fri, 9am–5pm AEST), or via our{' '}
         <a href="/contact/">contact page</a>.
       </p>
     </ArticleLayout>

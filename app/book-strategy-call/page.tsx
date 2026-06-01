@@ -80,7 +80,11 @@ export default function BookStrategyCallPage() {
                 <div className="flex flex-wrap gap-2" style={{ marginBottom: 18 }}>
                   {slots.map((s) => <button key={s} className="pill">{s}</button>)}
                 </div>
-                <p className="text-dim center" style={{ fontSize: 12.5, fontFamily: 'var(--font-mono)' }}>Live scheduling embeds here.</p>
+                <p className="text-soft center" style={{ fontSize: 13.5, marginBottom: 6 }}>
+                  Prefer to speak now? Call{' '}
+                  <a href="tel:+61411212418" style={{ color: 'var(--blue)', fontWeight: 600, textDecoration: 'none' }}>+61 411 212 418</a>
+                </p>
+                <p className="text-dim center" style={{ fontSize: 12.5, fontFamily: 'var(--font-mono)' }}>Mon to Fri, 9am–5pm AEST · Live scheduling embeds here.</p>
               </GlassCard>
             </Reveal>
           </div>

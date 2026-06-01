@@ -52,7 +52,7 @@ const themeInit = `(function(){try{var t=localStorage.getItem('sg-theme');if(t==
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-AU">
       <head>
         {/* Google Tag Manager */}
         <script dangerouslySetInnerHTML={{ __html: gtmHead }} />
