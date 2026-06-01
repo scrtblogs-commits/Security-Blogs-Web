@@ -56,7 +56,7 @@ export default function CaseStudiesPage() {
       <HeroBg grid blobs>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]} />
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]} currentPath="/case-studies/" />
             <span className="badge badge-blue" style={{ marginBottom: 22 }}>
               <span className="dot dot-pulse" /> PROVEN · MEASURABLE OUTCOMES
             </span>

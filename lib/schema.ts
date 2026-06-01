@@ -78,16 +78,30 @@ export const siteSchema = {
 // PER-PAGE GENERATORS
 // ============================================================================
 
-export function breadcrumbSchema(items: { label: string; href?: string }[]) {
+// breadcrumbSchema — emits BreadcrumbList JSON-LD.
+//
+// `currentPath` (optional) supplies an `item` URL for the LEAF entry even when
+// the caller passed `href: undefined` so the leaf renders as plain text (not a
+// link). Without it, GSC's strict validator flags the leaf as "missing field
+// item". When set, the leaf gets `item: SITE_URL + currentPath` in the schema
+// while the rendered HTML stays unchanged.
+export function breadcrumbSchema(
+  items: { label: string; href?: string }[],
+  currentPath?: string,
+) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: item.label,
-      ...(item.href ? { item: `${SITE_URL}${item.href}` } : {}),
-    })),
+    itemListElement: items.map((item, i) => {
+      const isLeaf = i === items.length - 1
+      const href = item.href ?? (isLeaf ? currentPath : undefined)
+      return {
+        '@type': 'ListItem',
+        position: i + 1,
+        name: item.label,
+        ...(href ? { item: `${SITE_URL}${href}` } : {}),
+      }
+    }),
   }
 }
 

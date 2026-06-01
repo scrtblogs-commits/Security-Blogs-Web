@@ -86,4 +86,20 @@ Options -Indexes
   RedirectMatch 301 "^/ai-visibility-checklist/?$"    "/free-tools/"
   RedirectMatch 301 "^/seo-ranking-guide/?$"          "/knowledge-hub/security-guides/"
   RedirectMatch 301 "^/bing-ranking-guide/?$"         "/knowledge-hub/security-guides/"
+
+  # Legacy WordPress /blog/ tree — order matters: specific patterns first,
+  # generic /blog/* catch-all last. Slug is preserved for post-style URLs;
+  # taxonomy/listing/author archives collapse to the closest hub.
+  RedirectMatch 301 "^/blog/news/(.+)$"               "/knowledge-hub/blogs/$1"
+  RedirectMatch 301 "^/blog/category/.*$"             "/knowledge-hub/blogs/"
+  RedirectMatch 301 "^/blog/tag/.*$"                  "/knowledge-hub/blogs/"
+  RedirectMatch 301 "^/blog/author/.*$"               "/about-us/"
+  RedirectMatch 301 "^/blog/?$"                        "/knowledge-hub/blogs/"
+  RedirectMatch 301 "^/blog/(.+)$"                     "/knowledge-hub/blogs/$1"
+
+  # Other legacy individual URLs found in Search Console / backlinks
+  RedirectMatch 301 "^/security-companies/?$"          "/security-directory/"
+  RedirectMatch 301 "^/security-seo-on-page/?$"        "/knowledge-hub/security-industry-seo/"
+  RedirectMatch 301 "^/crowd-safety-australia-tips/?$" "/knowledge-hub/blogs/"
+  RedirectMatch 301 "^/tag/.+$"                        "/knowledge-hub/blogs/"
 </IfModule>

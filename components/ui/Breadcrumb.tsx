@@ -2,10 +2,16 @@ import Link from 'next/link'
 import JsonLd from '@/components/JsonLd'
 import { breadcrumbSchema } from '@/lib/schema'
 
-export default function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
+export default function Breadcrumb({
+  items,
+  currentPath,
+}: {
+  items: { label: string; href?: string }[]
+  currentPath?: string
+}) {
   return (
     <>
-      <JsonLd data={breadcrumbSchema(items)} />
+      <JsonLd data={breadcrumbSchema(items, currentPath)} />
       <nav aria-label="Breadcrumb" style={{ marginBottom: 22 }}>
         <ol style={{ display: 'flex', flexWrap: 'wrap', gap: 8, listStyle: 'none', fontSize: 13.5, fontFamily: 'var(--font-mono)' }} className="text-dim">
           {items.map((it, i) => (
