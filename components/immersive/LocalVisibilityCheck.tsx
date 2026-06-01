@@ -29,13 +29,17 @@ const FALLBACK: Loc = {
 }
 
 export default function LocalVisibilityCheck({
-  service = 'security companies',
+  service: initialService = 'security companies',
 }: {
   service?: string
 }) {
   const [loc, setLoc] = useState<Loc | null>(null)
   const [override, setOverride] = useState(false)
   const [overrideVal, setOverrideVal] = useState('')
+  // Editable search query — user can type their business name or any
+  // service category and the embedded map updates instantly.
+  const [service, setService] = useState(initialService)
+  const [serviceDraft, setServiceDraft] = useState(initialService)
   const sectionRef = useRef<HTMLElement>(null)
   const inView = useInView(sectionRef, { once: true, margin: '0px 0px -20% 0px' })
 
@@ -221,6 +225,50 @@ export default function LocalVisibilityCheck({
             </form>
           )}
         </motion.div>
+
+        {/* Search row — user types their business name or service category */}
+        <motion.form
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.55, ease: 'easeOut', delay: 0.05 }}
+          onSubmit={(e) => { e.preventDefault(); setService(serviceDraft.trim() || 'security companies') }}
+          style={{
+            margin: '0 auto 28px',
+            maxWidth: 620,
+            display: 'flex',
+            gap: 10,
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(126, 182, 255, 0.25)',
+            borderRadius: 14,
+            padding: 8,
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+          }}
+        >
+          <span style={{ display: 'grid', placeItems: 'center', padding: '0 6px 0 12px', color: '#7eb6ff' }}>
+            🔎
+          </span>
+          <input
+            value={serviceDraft}
+            onChange={(e) => setServiceDraft(e.target.value)}
+            placeholder="Your business name or service (e.g. CCTV installer)"
+            style={{
+              flex: 1, minWidth: 0,
+              padding: '12px 6px', border: 0, background: 'transparent',
+              color: '#fff', fontSize: 15, outline: 'none',
+            }}
+          />
+          <button
+            type="submit"
+            style={{
+              padding: '10px 18px', borderRadius: 10,
+              border: 0, background: '#1e5fe0', color: '#fff', cursor: 'pointer',
+              fontSize: 14, fontWeight: 700, whiteSpace: 'nowrap',
+            }}
+          >
+            Show results
+          </button>
+        </motion.form>
 
         {/* Map + side panel */}
         <div className="lvc-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 28, alignItems: 'stretch' }}>
