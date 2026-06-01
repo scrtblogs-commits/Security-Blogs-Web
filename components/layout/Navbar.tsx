@@ -92,7 +92,7 @@ export default function Navbar() {
               {active === d.label && (
                 <div className="glass" style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, padding: 8, minWidth: 230, borderRadius: 14, display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {d.items.map((it) => (
-                    <Link key={it.href} href={it.href} style={{ padding: '9px 12px', borderRadius: 9, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }} onMouseEnter={(e) => { (e.currentTarget.style.background = 'var(--bg-card-2)'); e.currentTarget.style.color = 'var(--blue)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-soft)' }}>
+                    <Link key={it.href} href={it.href} style={{ padding: '9px 12px', borderRadius: 9, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }} onMouseEnter={(e) => { (e.currentTarget.style.background = 'var(--bg-card-2)'); e.currentTarget.style.color = 'var(--blue)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text)' }}>
                       {it.title}
                     </Link>
                   ))}
