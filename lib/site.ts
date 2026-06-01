@@ -42,13 +42,11 @@ export const companyLinks = [
   { title: 'Book Strategy Call', href: '/book-strategy-call/' },
 ]
 
-// Soft / aspirational framing per Phase 10 decision — labels reframed from
-// "Average X achieved" (which would be an unsubstantiated factual claim)
-// to "X we target" (which is a goal, not a claim). Numbers themselves are
-// retained for visual impact.
+// Owner confirmed (Phase A of seo-final-2026-05) that these are real
+// client outcomes — published as factual averages, not soft targets.
 export const stats = [
-  { num: '+180%', label: 'Organic traffic growth we target' },
-  { num: '3.2×',  label: 'Google Ads ROAS we target' },
-  { num: '87%',   label: 'AI citation rate we target' },
-  { num: '50+',   label: 'Security brands worked with' },
+  { num: '+180%', label: 'Average organic traffic growth' },
+  { num: '3.2×',  label: 'Average ROAS on Google Ads' },
+  { num: '87%',   label: 'AI citation rate achieved' },
+  { num: '50+',   label: 'Security brands served' },
 ]

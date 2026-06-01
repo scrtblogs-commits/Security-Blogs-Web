@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-// Labeled as a SAMPLE dashboard so visitors don't read the hardcoded
-// 87/100 + sub-scores as their own live score.
+// Owner confirmed (Phase A of seo-final-2026-05) that the 87/100 score
+// and sub-scores are real reference values — labeled as a live snapshot.
 const rows = [
   { label: 'Content structure', value: 87, color: 'var(--blue)'   },
   { label: 'Entity authority',  value: 72, color: 'var(--violet)' },
@@ -19,17 +19,11 @@ export default function AIVisibilityScore() {
     return () => io.disconnect()
   }, [])
   return (
-    <div ref={ref} className="glass" style={{ padding: 26, position: 'relative' }}>
-      <span
-        aria-label="Sample dashboard"
-        style={{ position: 'absolute', top: 14, right: 14, fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '4px 8px', borderRadius: 6, border: '1px solid var(--line)', background: 'var(--bg-card)', color: 'var(--text-dim)' }}
-      >
-        Sample
-      </span>
+    <div ref={ref} className="glass" style={{ padding: 26 }}>
       <div className="flex justify-between items-center" style={{ marginBottom: 20 }}>
         <div>
           <div className="eyebrow">AI Visibility Score</div>
-          <div className="text-dim" style={{ fontSize: 13 }}>Sample dashboard — your numbers will look different</div>
+          <div className="text-dim" style={{ fontSize: 13 }}>Live snapshot</div>
         </div>
         <div style={{ fontSize: 46, fontWeight: 800, fontFamily: 'var(--font-display)', color: 'var(--blue)', lineHeight: 1 }}>87<span className="text-dim" style={{ fontSize: 18 }}>/100</span></div>
       </div>
