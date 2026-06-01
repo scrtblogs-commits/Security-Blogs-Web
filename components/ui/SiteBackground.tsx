@@ -20,7 +20,7 @@ const options: { key: Variant; label: string }[] = [
   { key: 'none', label: 'None' },
 ]
 
-export default function SiteBackground({ defaultVariant = 'sky' as Variant }: { defaultVariant?: Variant }) {
+export default function SiteBackground({ defaultVariant = 'particles' as Variant }: { defaultVariant?: Variant }) {
   const [variant, setVariant] = useState<Variant>(defaultVariant)
   const [ready, setReady] = useState(false)
 

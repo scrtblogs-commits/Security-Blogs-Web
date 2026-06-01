@@ -7,6 +7,7 @@ import StatsStrip from '@/components/ui/StatsStrip'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import ServicesCardStack from './ServicesCardStack'
+import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 import { stats } from '@/lib/site'
 
 export default function HomePage() {
@@ -55,6 +56,11 @@ export default function HomePage() {
       </section>
 
       <CTABand ctaHref="/contact/" />
+
+      {/* Final section directly above the footer — auto-detects city via IP,
+          lets visitors type a business name or service, and renders the live
+          Google Maps local pack for that exact query. */}
+      <LocalVisibilityCheck service="security companies" />
     </>
   )
 }
