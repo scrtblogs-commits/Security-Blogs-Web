@@ -61,7 +61,37 @@ export default function Footer() {
           <FooterCol title="Company" links={companyLinks} />
         </div>
 
-        <div style={{ borderTop: '1px solid var(--line)', marginTop: 40, paddingTop: 22, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }} className="text-dim">
+        {/* Acknowledgement of Country */}
+        <div
+          className="sg-ack"
+          aria-label="Acknowledgement of Country"
+          style={{
+            borderTop: '1px solid var(--line)',
+            marginTop: 40,
+            paddingTop: 24,
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gap: 22,
+            alignItems: 'center',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/flags.png"
+            alt="Aboriginal flag and Torres Strait Islander flag"
+            style={{ height: 48, width: 'auto', display: 'block', flexShrink: 0 }}
+          />
+          <p style={{ fontSize: 13, lineHeight: 1.65, color: 'var(--text-soft)', margin: 0 }}>
+            Security Blogs proudly acknowledges the Traditional Custodians of the lands across
+            Australia where our readers, contributors, and industry partners live and work. We
+            honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and
+            continuing connection to Country. We pay our respects to Elders past, present, and
+            emerging and are committed to supporting a diverse, inclusive, and respectful
+            security industry for all Australians.
+          </p>
+        </div>
+
+        <div style={{ borderTop: '1px solid var(--line)', marginTop: 24, paddingTop: 22, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }} className="text-dim">
           <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
           <div className="flex flex-wrap gap-3">
             <Link href="/privacy-policy/">Privacy Policy</Link>
@@ -71,7 +101,10 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <style>{`@media (max-width: 900px){ .sg-footer-grid { grid-template-columns: 1fr 1fr !important; } }`}</style>
+      <style>{`
+        @media (max-width: 900px){ .sg-footer-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 640px){ .sg-ack { grid-template-columns: 1fr !important; text-align: left; gap: 16px !important; } }
+      `}</style>
     </footer>
   )
 }
