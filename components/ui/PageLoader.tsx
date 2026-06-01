@@ -17,7 +17,7 @@ export default function PageLoader() {
         >
           <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} style={{ display: 'flex', alignItems: 'center' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="SecurityBlogs" style={{ height: 72, width: 'auto', display: 'block' }} />
+            <img src="/logo.webp" alt="SecurityBlogs" style={{ height: 72, width: 'auto', display: 'block' }} />
           </motion.div>
         </motion.div>
       )}

@@ -33,7 +33,7 @@ export default function Footer() {
           <div>
             <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-block', marginBottom: 14, textDecoration: 'none' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="SecurityBlogs" style={{ height: 44, width: 'auto', display: 'block' }} />
+              <img src="/logo.webp" alt="SecurityBlogs" style={{ height: 44, width: 'auto', display: 'block' }} />
             </Link>
             <p className="text-soft" style={{ fontSize: 14, maxWidth: 280, marginBottom: 18 }}>
               The AI Visibility Platform for Security Brands.
