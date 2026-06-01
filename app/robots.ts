@@ -20,14 +20,14 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: '*', allow: '/' },
 
       // AI / answer-engine crawlers — explicit allow.
+      // Phase F (seo-final-2026-05) trimmed legacy Anthropic/Perplexity
+      // identifiers (Claude-Web, anthropic-ai, Perplexity-User). The active
+      // crawlers in 2026 are ClaudeBot and PerplexityBot respectively.
       { userAgent: 'GPTBot',            allow: '/' },
       { userAgent: 'ChatGPT-User',      allow: '/' },
       { userAgent: 'OAI-SearchBot',     allow: '/' },
       { userAgent: 'ClaudeBot',         allow: '/' },
-      { userAgent: 'Claude-Web',        allow: '/' },
-      { userAgent: 'anthropic-ai',      allow: '/' },
       { userAgent: 'PerplexityBot',     allow: '/' },
-      { userAgent: 'Perplexity-User',   allow: '/' },
       { userAgent: 'Google-Extended',   allow: '/' },
       { userAgent: 'Applebot-Extended', allow: '/' },
     ],

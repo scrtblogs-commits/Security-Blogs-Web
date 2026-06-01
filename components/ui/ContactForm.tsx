@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { submitForm } from '../../lib/submitForm'
 
 type FieldDef = { name: string; label: string; type?: string; required?: boolean; options?: string[]; full?: boolean; placeholder?: string }
@@ -13,13 +14,17 @@ const defaultFields: FieldDef[] = [
   { name: 'message', label: 'Message', type: 'textarea', required: true, full: true },
 ]
 
+// successMsg prop retained for backwards compatibility (some pages still
+// pass it) but no longer rendered — on success the form router.push()s to
+// /thank-you/ per Phase F of seo-final-2026-05.
 export default function ContactForm({
   fields = defaultFields,
   submitLabel = 'Send Message →',
-  successMsg = "✓ Message received! We'll be in touch within 24 hours.",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  successMsg,
   subject = 'New contact form submission',
 }: { fields?: FieldDef[]; submitLabel?: string; successMsg?: string; subject?: string }) {
-  const [sent, setSent] = useState(false)
+  const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -32,18 +37,8 @@ export default function ContactForm({
     setError(null)
     const result = await submitForm({ formData: fd, subject })
     setSubmitting(false)
-    if (result.ok) setSent(true)
+    if (result.ok) router.push('/thank-you/')
     else setError(result.error || 'Submission failed.')
-  }
-
-  if (sent) {
-    return (
-      <div className="card center" style={{ padding: 48 }}>
-        <div style={{ fontSize: 46, marginBottom: 12 }}>✓</div>
-        <h3 style={{ marginBottom: 8 }}>Thank you!</h3>
-        <p className="text-soft">{successMsg}</p>
-      </div>
-    )
   }
 
   return (
@@ -67,9 +62,9 @@ export default function ContactForm({
       <label style={{ gridColumn: '1 / -1', display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.5 }}>
         <input type="checkbox" name="consent" required style={{ marginTop: 3, flexShrink: 0 }} />
         <span>
-          I agree to be contacted about my enquiry and consent to my information
-          being handled in line with the{' '}
-          <a href="/privacy-policy/" style={{ color: 'var(--blue)' }}>privacy policy</a>. *
+          I agree to the{' '}
+          <a href="/privacy-policy/" style={{ color: 'var(--blue)' }}>privacy policy</a>
+          {' '}and to being contacted about my enquiry. *
         </span>
       </label>
       {error && (
