@@ -46,7 +46,7 @@ export default function Footer() {
           <img
             src="/flags.png"
             alt="Aboriginal flag and Torres Strait Islander flag"
-            style={{ height: 48, width: 'auto', display: 'block', flexShrink: 0 }}
+            style={{ height: 56, width: 'auto', display: 'block', flexShrink: 0, imageRendering: 'crisp-edges' }}
           />
           <p style={{ fontSize: 13, lineHeight: 1.65, color: 'var(--text)', margin: 0 }}>
             Security Blogs proudly acknowledges the Traditional Custodians of the lands across
