@@ -61,14 +61,12 @@ export default function Footer() {
           <FooterCol title="Company" links={companyLinks} />
         </div>
 
-        {/* Acknowledgement of Country */}
+        {/* Acknowledgement of Country — sits ABOVE the divider line */}
         <div
           className="sg-ack"
           aria-label="Acknowledgement of Country"
           style={{
-            borderTop: '1px solid var(--line)',
             marginTop: 40,
-            paddingTop: 24,
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
             gap: 22,
