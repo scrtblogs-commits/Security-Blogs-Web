@@ -144,6 +144,12 @@ export default function BacklinkPackagesPage() {
         description: "Disclosed, compliant, permanent sponsored editorial placements on Australia's specialist security publication. Every paid link uses rel='sponsored' per Google's published link policies.",
         path: '/publish-with-us/backlink-packages/',
         serviceType: 'Sponsored Content',
+        catalogName: 'Sponsored Editorial Placement Packages',
+        offers: [
+          { name: 'Starter',   price: '199',   priceCurrency: 'AUD', description: '1 sponsored editorial placement with visible Sponsored disclosure and rel="sponsored" link.' },
+          { name: 'Growth',    price: '549',   priceCurrency: 'AUD', description: '3 sponsored editorial placements with anchor-text preferences accommodated. Placement report included.' },
+          { name: 'Authority', price: '1290',  priceCurrency: 'AUD', description: '8 bespoke editorial articles with priority placement and detailed placement report. rel="sponsored" with anchor + URL strategy input.' },
+        ],
       })} />
       <HeroBg grid blobs>
         <Reveal>

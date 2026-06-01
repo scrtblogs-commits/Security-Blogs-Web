@@ -90,18 +90,29 @@ export function faqSchema(items: { q: string; a: string }[]) {
 
 // Service node. Defaults to /services/<slug>/ URL form for the main services
 // pages, but accepts an explicit `path` for services published elsewhere
-// (e.g. /publish-with-us/* sub-services).
+// (e.g. /publish-with-us/* sub-services). Accepts an optional offers array
+// to emit hasOfferCatalog where structured pricing exists.
+export type ServiceOffer = {
+  name: string                    // tier name (e.g. "Starter")
+  price: string                   // numeric string ("199") or "Free"
+  priceCurrency?: string          // ISO 4217, defaults to AUD
+  description?: string            // short blurb for the tier
+  url?: string                    // CTA URL for that tier
+}
+
 export function serviceSchema(opts: {
   name: string
   description: string
   slug?: string                   // shorthand for /services/<slug>/
   path?: string                   // full route path, e.g. /publish-with-us/guest-posting/
   serviceType?: string
+  offers?: ServiceOffer[]         // when present, emits hasOfferCatalog
+  catalogName?: string            // display name for the OfferCatalog
 }) {
   const path =
     opts.path ??
     (opts.slug ? `/services/${opts.slug}/` : `/services/`)
-  return {
+  const node: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Service',
     '@id': `${SITE_URL}${path}#service`,
@@ -112,6 +123,22 @@ export function serviceSchema(opts: {
     areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
     url: `${SITE_URL}${path}`,
   }
+  if (opts.offers && opts.offers.length > 0) {
+    node.hasOfferCatalog = {
+      '@type': 'OfferCatalog',
+      name: opts.catalogName ?? `${opts.name} Packages`,
+      itemListElement: opts.offers.map((o) => ({
+        '@type': 'Offer',
+        name: o.name,
+        price: o.price,
+        priceCurrency: o.priceCurrency ?? 'AUD',
+        ...(o.description ? { description: o.description } : {}),
+        ...(o.url ? { url: o.url.startsWith('http') ? o.url : `${SITE_URL}${o.url}` } : { url: `${SITE_URL}${path}` }),
+        availability: 'https://schema.org/InStock',
+      })),
+    }
+  }
+  return node
 }
 
 export function definedTermSetSchema(opts: {
