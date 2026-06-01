@@ -44,7 +44,11 @@ export default function Footer() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/flags.png"
+            // ?v=2 = cache-buster. /flags.png itself is served with a 30-day
+            // Cache-Control max-age via .htaccess, so without a version query
+            // every browser that ever hit the old file would keep the stale
+            // copy. Bump this number when /flags.png content changes.
+            src="/flags.png?v=2"
             alt="Aboriginal flag and Torres Strait Islander flag"
             style={{ height: 56, width: 'auto', display: 'block', flexShrink: 0, imageRendering: 'crisp-edges' }}
           />
