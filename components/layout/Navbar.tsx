@@ -86,13 +86,13 @@ export default function Navbar() {
         <nav className="sg-desktop-nav flex items-center" style={{ gap: 2 }}>
           {dropdowns.map((d) => (
             <div key={d.label} style={{ position: 'relative' }} onMouseEnter={() => setActive(d.label)} onMouseLeave={() => setActive(null)}>
-              <Link href={d.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text-soft)', display: 'inline-flex', gap: 5, alignItems: 'center', whiteSpace: 'nowrap' }}>
+              <Link href={d.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', display: 'inline-flex', gap: 5, alignItems: 'center', whiteSpace: 'nowrap' }}>
                 {d.label} <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
               </Link>
               {active === d.label && (
                 <div className="glass" style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, padding: 8, minWidth: 230, borderRadius: 14, display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {d.items.map((it) => (
-                    <Link key={it.href} href={it.href} style={{ padding: '9px 12px', borderRadius: 9, fontSize: 14, color: 'var(--text-soft)', whiteSpace: 'nowrap' }} onMouseEnter={(e) => { (e.currentTarget.style.background = 'var(--bg-card-2)'); e.currentTarget.style.color = 'var(--blue)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-soft)' }}>
+                    <Link key={it.href} href={it.href} style={{ padding: '9px 12px', borderRadius: 9, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }} onMouseEnter={(e) => { (e.currentTarget.style.background = 'var(--bg-card-2)'); e.currentTarget.style.color = 'var(--blue)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-soft)' }}>
                       {it.title}
                     </Link>
                   ))}
@@ -101,7 +101,7 @@ export default function Navbar() {
             </div>
           ))}
           {flat.map((f) => (
-            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text-soft)', whiteSpace: 'nowrap' }}>{f.label}</Link>
+            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>{f.label}</Link>
           ))}
         </nav>
 
@@ -127,7 +127,7 @@ export default function Navbar() {
               {acc === d.label && (
                 <div style={{ paddingBottom: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
                   {d.items.map((it) => (
-                    <Link key={it.href} href={it.href} onClick={() => setOpen(false)} style={{ padding: '8px 12px', fontSize: 14, color: 'var(--text-soft)' }}>{it.title}</Link>
+                    <Link key={it.href} href={it.href} onClick={() => setOpen(false)} style={{ padding: '8px 12px', fontSize: 14, color: 'var(--text)' }}>{it.title}</Link>
                   ))}
                 </div>
               )}

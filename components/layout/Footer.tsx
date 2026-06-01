@@ -27,15 +27,44 @@ const socials: { name: string; href: string; Icon: (p: BrandIconProps) => React.
 
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--line)', marginTop: 40 }}>
-      <div className="container" style={{ padding: '64px 24px 32px' }}>
+    <footer style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--line)', marginTop: 40, color: 'var(--text)' }}>
+      <div className="container" style={{ padding: '48px 24px 32px' }}>
+
+        {/* Acknowledgement of Country — first thing in the footer band */}
+        <div
+          className="sg-ack"
+          aria-label="Acknowledgement of Country"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr',
+            gap: 22,
+            alignItems: 'center',
+            marginBottom: 40,
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/flags.png"
+            alt="Aboriginal flag and Torres Strait Islander flag"
+            style={{ height: 48, width: 'auto', display: 'block', flexShrink: 0 }}
+          />
+          <p style={{ fontSize: 13, lineHeight: 1.65, color: 'var(--text)', margin: 0 }}>
+            Security Blogs proudly acknowledges the Traditional Custodians of the lands across
+            Australia where our readers, contributors, and industry partners live and work. We
+            honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and
+            continuing connection to Country. We pay our respects to Elders past, present, and
+            emerging and are committed to supporting a diverse, inclusive, and respectful
+            security industry for all Australians.
+          </p>
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr', gap: 32 }} className="sg-footer-grid">
           <div>
             <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-block', marginBottom: 14, textDecoration: 'none' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo-footer.webp" alt="SecurityBlogs" style={{ width: 'min(220px, 100%)', height: 'auto', display: 'block' }} />
             </Link>
-            <p className="text-soft" style={{ fontSize: 14, maxWidth: 280, marginBottom: 18 }}>
+            <p style={{ fontSize: 14, maxWidth: 280, marginBottom: 18, color: 'var(--text)' }}>
               The AI Visibility Platform for Security Brands.
             </p>
             <div className="flex gap-2">
@@ -47,7 +76,7 @@ export default function Footer() {
                   rel="noreferrer noopener"
                   aria-label={name}
                   title={name}
-                  style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', color: 'var(--text-dim)' }}
+                  style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', color: 'var(--text)' }}
                 >
                   <Icon size={16} />
                 </a>
@@ -61,41 +90,13 @@ export default function Footer() {
           <FooterCol title="Company" links={companyLinks} />
         </div>
 
-        {/* Acknowledgement of Country — sits ABOVE the divider line */}
-        <div
-          className="sg-ack"
-          aria-label="Acknowledgement of Country"
-          style={{
-            marginTop: 40,
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gap: 22,
-            alignItems: 'center',
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/flags.png"
-            alt="Aboriginal flag and Torres Strait Islander flag"
-            style={{ height: 48, width: 'auto', display: 'block', flexShrink: 0 }}
-          />
-          <p style={{ fontSize: 13, lineHeight: 1.65, color: 'var(--text-soft)', margin: 0 }}>
-            Security Blogs proudly acknowledges the Traditional Custodians of the lands across
-            Australia where our readers, contributors, and industry partners live and work. We
-            honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and
-            continuing connection to Country. We pay our respects to Elders past, present, and
-            emerging and are committed to supporting a diverse, inclusive, and respectful
-            security industry for all Australians.
-          </p>
-        </div>
-
-        <div style={{ borderTop: '1px solid var(--line)', marginTop: 24, paddingTop: 22, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center', fontSize: 13 }} className="text-dim">
+        <div style={{ borderTop: '1px solid var(--line)', marginTop: 40, paddingTop: 22, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center', fontSize: 13, color: 'var(--text)' }}>
           <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
           <div className="flex flex-wrap gap-3">
-            <Link href="/privacy-policy/">Privacy Policy</Link>
-            <Link href="/terms-of-service/">Terms of Service</Link>
-            <Link href="/content-guidelines/">Content Guidelines</Link>
-            <Link href="/publish-with-us/advertise/">Advertise</Link>
+            <Link href="/privacy-policy/" style={{ color: 'var(--text)' }}>Privacy Policy</Link>
+            <Link href="/terms-of-service/" style={{ color: 'var(--text)' }}>Terms of Service</Link>
+            <Link href="/content-guidelines/" style={{ color: 'var(--text)' }}>Content Guidelines</Link>
+            <Link href="/publish-with-us/advertise/" style={{ color: 'var(--text)' }}>Advertise</Link>
           </div>
         </div>
       </div>
@@ -110,9 +111,9 @@ export default function Footer() {
 function FooterCol({ title, links }: { title: string; links: { title: string; href: string }[] }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <strong style={{ fontSize: 13.5, fontFamily: 'var(--font-display)' }}>{title}</strong>
+      <strong style={{ fontSize: 13.5, fontFamily: 'var(--font-display)', color: 'var(--text)' }}>{title}</strong>
       {links.map((l) => (
-        <Link key={l.href} href={l.href} className="text-soft" style={{ fontSize: 13.5 }}>{l.title}</Link>
+        <Link key={l.href} href={l.href} style={{ fontSize: 13.5, color: 'var(--text)' }}>{l.title}</Link>
       ))}
     </div>
   )
