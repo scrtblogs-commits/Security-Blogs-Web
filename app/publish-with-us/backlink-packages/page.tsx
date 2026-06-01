@@ -10,26 +10,55 @@ import Reveal from '@/components/ui/Reveal'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
+// Re-used disclosure block. Rendered twice on the page per Phase D spec:
+// once between hero and pricing, once between contact form and final CTA.
+function DisclosureBlock() {
+  return (
+    <div
+      role="note"
+      aria-label="Sponsored-placement disclosure"
+      style={{
+        maxWidth: 820, marginInline: 'auto', padding: '16px 20px',
+        border: '1px solid var(--line)', borderRadius: 12,
+        background: 'var(--bg-soft)', fontSize: 13.5, color: 'var(--text-soft)',
+        lineHeight: 1.65,
+      }}
+    >
+      <strong style={{ color: 'var(--text)' }}>Disclosure.</strong>{' '}
+      All paid placements on SecurityBlogs are marked{' '}
+      <code style={{ margin: '0 2px' }}>rel=&quot;sponsored&quot;</code>{' '}
+      per Google&apos;s published link policies. We do not sell undisclosed dofollow links.
+      We do not guarantee Domain Authority, rankings or indexing — we publish editorial
+      content and let search engines do their job.
+    </div>
+  )
+}
+
 export const metadata = {
-  title: 'Sponsored Editorial Placements · Publish With Us',
+  // Layout's title template appends ' | SecurityBlogs' — keep this literal
+  // without the suffix to avoid the doubling bug fixed in Phase 2.
+  title: 'Sponsored Editorial Placements for Security Brands — Disclosed, Compliant, Permanent',
   description:
-    "Sponsored editorial placements on a niche security publication. All placements are disclosed and use rel=\"sponsored\" per Google's webmaster policy — permanent on-page placement, transparent reporting.",
+    "Disclosed, compliant, permanent sponsored editorial placements on Australia's specialist security publication. Every paid link uses rel=\"sponsored\" per Google's published link policies. No DA guarantees, no PBNs.",
   alternates: { canonical: '/publish-with-us/backlink-packages/' },
   openGraph: { url: '/publish-with-us/backlink-packages/' },
 }
 
-// Pricing set Phase 10. Sponsored-placement product (rel="sponsored",
-// disclosed editorial) — NOT link-authority-transfer.
+// Phase D (seo-final-2026-05): owner reset pricing to the original tier
+// figures ($199 / $549 / $1,290). DA guarantees and 'pass authority'
+// language removed throughout; every placement is now framed as a
+// disclosed, rel="sponsored" editorial placement.
 const plans = [
   {
     name: 'Starter',
-    price: '$599',
+    price: '$199',
     period: ' AUD',
     features: [
       '1 sponsored editorial placement',
-      'Niche-relevant editorial context',
+      'Editorially placed in relevant security content',
       'rel="sponsored" link to your URL',
-      'Permanent placement',
+      'Visible "Sponsored" disclosure on the article',
+      'Permanent placement, no expiry',
       'Live in ~5 business days',
     ],
     cta: 'Request a quote',
@@ -37,16 +66,17 @@ const plans = [
   },
   {
     name: 'Growth',
-    price: '$1,299',
+    price: '$549',
     period: ' AUD',
     featured: true,
     badge: '⭐ Best Value',
     features: [
       '3 sponsored editorial placements',
-      'Contextual editorial articles',
+      'Editorially placed in relevant security content',
       'rel="sponsored" links to your URLs',
+      'Visible "Sponsored" disclosure on each article',
       'Anchor-text preferences accommodated',
-      'Live in ~5 business days',
+      'Permanent placement, no expiry',
       'Placement report included',
     ],
     cta: 'Request a quote',
@@ -54,13 +84,15 @@ const plans = [
   },
   {
     name: 'Authority',
-    price: '$1,999',
+    price: '$1,290',
     period: ' AUD',
     features: [
       '8 sponsored editorial placements',
-      'Full bespoke editorial articles',
+      'Bespoke editorial articles, written or edited in-house',
       'rel="sponsored" links with anchor + URL strategy input',
+      'Visible "Sponsored" disclosure on each article',
       'Priority placement & scheduling',
+      'Permanent placement, no expiry',
       'Detailed placement report',
     ],
     cta: 'Request a quote',
@@ -69,65 +101,78 @@ const plans = [
 ]
 
 const whatYouGet = [
-  { icon: '✍️', title: 'Editorial placement', desc: 'Your brand featured in original, niche-relevant editorial content on a trusted security publication.' },
-  { icon: '🛡️', title: 'Niche relevance', desc: 'Placements live on genuinely security-related pages read by your target buyers.' },
-  { icon: '🏛️', title: 'Established publication', desc: 'Placements run on an established, indexed security publication with real readership.' },
-  { icon: '🔍', title: 'Contextual exposure', desc: 'Your brand surrounded by relevant, well-written editorial that drives qualified visits — not PageRank.' },
-  { icon: '♾️', title: 'Permanent placement', desc: 'Once published, your placement stays live — no rentals or expiry.' },
-  { icon: '📈', title: 'Transparent reporting', desc: 'You receive a clear report of every URL where your brand is placed.' },
+  { icon: '✍️', title: 'Editorial placement', desc: 'Editorially-placed sponsored placements in relevant security content — read by your target buyers, not link networks.' },
+  { icon: '🛡️', title: 'Niche relevance', desc: 'Established security-niche domain. Placements live on genuinely security-related pages, not generic high-DA hosts.' },
+  { icon: '🔖', title: 'Sponsored disclosure', desc: 'Every paid placement carries a visible "Sponsored" tag on the article and rel="sponsored" on the link.' },
+  { icon: '🔍', title: 'Contextual exposure', desc: 'Your brand surrounded by relevant, well-written editorial that drives qualified visits and AI-engine citations.' },
+  { icon: '♾️', title: 'Permanent placement', desc: 'Once published, your placement stays live indefinitely — no rentals, no expiry, no recurring fees.' },
+  { icon: '📈', title: 'Transparent reporting', desc: 'A clear placement report listing every URL, anchor and disclosure used in your campaign.' },
 ]
 
+// FAQ items per Phase D spec — five questions on rel="sponsored", SEO
+// impact, reader disclosure, authorship, and permanence. Answers stay in
+// the 40–70 word range and avoid making domain-authority or ranking
+// promises.
 const faqs = [
-  { q: 'Why is rel="sponsored" used on the links?', a: "Per Google's link-spam policy, paid or sponsored links must be marked with rel=\"sponsored\" (or rel=\"nofollow\") so they don't pass ranking signals. We apply this to every placement. The value of a sponsored placement is brand exposure, qualified referral traffic and audience reach — not PageRank manipulation. This protects both publishers and advertisers from manual actions." },
-  { q: 'Is this safe and policy-compliant?', a: "Yes. Every placement is a disclosed sponsored editorial post on a real, indexed page, with rel=\"sponsored\" on the placed link per Google's webmaster guidelines. We do not use PBNs, link farms or automated schemes." },
-  { q: 'Can I control anchor text?', a: 'On the Growth and Authority packages you can specify target URLs and preferred anchor text, subject to our editorial guidelines for natural placement. Final anchor wording remains an editorial decision.' },
-  { q: 'How long until placements go live?', a: 'Most placements are live within 5 business days. Authority packages with full bespoke articles may take slightly longer.' },
-  { q: 'Are the placements permanent?', a: 'Yes — placements are permanent. There are no recurring fees and we do not remove published articles or their links after placement.' },
+  {
+    q: "Why use rel='sponsored' instead of dofollow?",
+    a: "Google requires paid links to be marked with rel='sponsored' or rel='nofollow'. Selling undisclosed dofollow links is treated as a link scheme and can trigger a manual action against both publisher and advertiser. Marking placements rel='sponsored' keeps your brand and ours in good standing while still delivering exposure and qualified referral traffic to your site.",
+  },
+  {
+    q: "Does a rel='sponsored' link still help my SEO?",
+    a: "Indirectly, yes. The link itself doesn't pass ranking signals, but the placement does. A contextual mention on a relevant, indexed security publication builds entity recognition, earns referral traffic, and signals to AI engines — which read editorial content, not just link graphs — that your brand belongs in the conversation. We don't promise ranking or DA changes.",
+  },
+  {
+    q: 'Will my placement be labelled as sponsored to readers?',
+    a: "Yes. Every paid placement carries a visible 'Sponsored' tag near the byline, in line with consumer-protection disclosure rules and Google's reader-disclosure guidance. Readers always know they're seeing paid content. In our experience, transparent labelling improves trust and click-through on security topics, where buyers are already cautious about marketing claims.",
+  },
+  {
+    q: 'Can I write the article myself?',
+    a: "On the Growth and Authority tiers, yes. You submit a draft and we edit it to match our editorial style, fact-check claims, and place the rel='sponsored' link naturally. The Starter tier uses our in-house writers to keep turnaround fast. Either way, every published piece goes through editorial review for accuracy and tone before it goes live.",
+  },
+  {
+    q: 'Are placements permanent?',
+    a: "Yes. Once a sponsored placement is published it stays live on SecurityBlogs indefinitely — no rentals, no expiry, no recurring fees. The only time we'd remove a placement is if the linked destination becomes unsafe (malware, expired domain, redirect to spam), and we'd notify you first to either repoint the link or de-link the placement.",
+  },
 ]
 
 export default function BacklinkPackagesPage() {
   return (
     <>
       <JsonLd data={serviceSchema({
-        name: 'Sponsored Editorial Placements',
-        description: 'Sponsored editorial placements on a niche security publication. All placements are disclosed and use rel=sponsored per Google webmaster policy. Permanent on-page placement, transparent reporting.',
+        name: 'Sponsored Editorial Placements for Security Brands',
+        description: "Disclosed, compliant, permanent sponsored editorial placements on Australia's specialist security publication. Every paid link uses rel='sponsored' per Google's published link policies.",
         path: '/publish-with-us/backlink-packages/',
         serviceType: 'Sponsored Content',
       })} />
       <HeroBg grid blobs>
         <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Backlink Packages' }]} />
+          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Editorial Placements' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>
-            <span className="dot dot-pulse" /> BACKLINK PACKAGES
+            <span className="dot dot-pulse" /> SPONSORED EDITORIAL PLACEMENTS
           </span>
-          <h1 className="h1" style={{ maxWidth: 820, marginBottom: 18 }}>
-            Sponsored Editorial{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Placements</span>.
+          <h1 className="h1" style={{ maxWidth: 880, marginBottom: 18 }}>
+            Sponsored Editorial Placements for{' '}
+            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Security Brands</span>
           </h1>
           <p className="lead" style={{ maxWidth: 680 }}>
-            Your brand featured in original editorial articles on a niche security publication. Every
-            placement is disclosed and uses <code>rel=&quot;sponsored&quot;</code> per Google&apos;s webmaster
-            policy — earning exposure and qualified visits, not PageRank.
+            Disclosed, compliant, permanent. Your brand featured in original editorial articles on
+            Australia&apos;s specialist security publication. Every paid link uses{' '}
+            <code>rel=&quot;sponsored&quot;</code> per Google&apos;s published link policies — earning
+            qualified exposure, not PageRank manipulation.
           </p>
         </Reveal>
       </HeroBg>
 
       <section className="section" style={{ paddingTop: 32, paddingBottom: 0 }}>
         <div className="container">
-          <div role="note" aria-label="Disclosure" style={{ maxWidth: 820, marginInline: 'auto', padding: '14px 18px', border: '1px solid var(--line)', borderRadius: 12, background: 'var(--bg-soft)', fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.6 }}>
-            <strong style={{ color: 'var(--text)' }}>Disclosure.</strong>{' '}
-            SecurityBlogs is a paid-placement publisher. Placements purchased via these packages are
-            disclosed as sponsored editorial content, and the links placed for sponsors use
-            <code style={{ margin: '0 4px' }}>rel=&quot;sponsored&quot;</code> per
-            Google&apos;s link-spam policy. Sponsored placements deliver brand exposure and referral
-            traffic; they are not designed or sold to transfer PageRank.
-          </div>
+          <DisclosureBlock />
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <SectionHead eyebrow="Pricing" title="Choose your placement package." sub={`One-time pricing per placement. All placements are permanent, editorially published and use rel="sponsored" per Google policy.`} />
+          <SectionHead eyebrow="Pricing" title="Choose your placement package." sub={`One-time pricing per placement. Every placement is permanent, disclosed and uses rel="sponsored" per Google's published link policies. No DA guarantees, no indexing guarantees, no PBNs.`} />
           <PricingCards plans={plans} />
         </div>
       </section>
@@ -149,8 +194,10 @@ export default function BacklinkPackagesPage() {
                 Every placement is a disclosed sponsored editorial post on a real, indexed page. We
                 mark placed links with <code>rel=&quot;sponsored&quot;</code> per Google&apos;s webmaster
                 guidelines, never use private blog networks, link farms or automated link schemes, and
-                we reject placements for spam, adult, gambling or unrelated content. Compliance protects
-                both your brand and ours.
+                we reject placements for spam, adult, gambling or unrelated content. We don&apos;t
+                guarantee Domain Authority changes, ranking changes or indexing — we publish editorial
+                content and let search engines do their job. Compliance protects both your brand and
+                ours.
               </p>
             </div>
           </Reveal>
@@ -159,27 +206,33 @@ export default function BacklinkPackagesPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 760 }}>
-          <SectionHead eyebrow="FAQ" title="Backlink questions." />
+          <SectionHead eyebrow="FAQ" title="Sponsored placement questions." />
           <FAQAccordion items={faqs} />
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 720 }}>
-          <SectionHead eyebrow="Get a quote" title="Tell us about your link goals." />
+          <SectionHead eyebrow="Get a quote" title="Tell us about your placement goals." />
           <Reveal>
             <ContactForm
               fields={[
                 { name: 'name', label: 'Name', required: true },
                 { name: 'email', label: 'Email', type: 'email', required: true },
-                { name: 'website', label: 'Website to link to' },
+                { name: 'website', label: 'Destination URL for the sponsored link' },
                 { name: 'package', label: 'Package of interest', type: 'select', options: ['Starter', 'Growth', 'Authority', 'Custom / not sure'], full: true },
-                { name: 'message', label: 'Target pages & anchors', type: 'textarea', required: true, full: true, placeholder: 'Share the URLs you want to rank and any preferred anchor text.' },
+                { name: 'message', label: 'Target pages & anchor preferences', type: 'textarea', required: true, full: true, placeholder: 'Share the URLs you want placements to point at and any preferred anchor wording.' },
               ]}
               submitLabel="Request a quote →"
-              successMsg="✓ Received! We'll send a tailored backlink proposal within 1 business day."
+              successMsg="✓ Received! We'll send a tailored sponsored placement proposal within 1 business day."
             />
           </Reveal>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <DisclosureBlock />
         </div>
       </section>
 
