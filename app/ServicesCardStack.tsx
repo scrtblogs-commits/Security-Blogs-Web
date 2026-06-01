@@ -20,12 +20,25 @@ const SERVICE_IMAGES: Record<string, string> = {
   'web-design':   'https://images.unsplash.com/photo-1547658719-da2b51169166?w=720&q=70&auto=format&fit=crop',
 }
 
+// On-brand override — all cards use light blue / slate-gray tones instead of
+// the rainbow palette in lib/site.ts. Three values rotate across the seven
+// cards so adjacent cards never repeat.
+const SERVICE_CARD_COLORS: Record<string, string> = {
+  'security-seo': '#1e5fe0', // brand blue
+  'aio':          '#5b7a9e', // slate gray-blue
+  'aeo':          '#4a8cf0', // light blue
+  'geo':          '#1e5fe0',
+  'google-ads':   '#5b7a9e',
+  'bing-ads':     '#4a8cf0',
+  'web-design':   '#1e5fe0',
+}
+
 const items: ServiceCard[] = services.map((s) => ({
   id: s.slug,
   title: s.title,
   description: s.desc,
   href: `/services/${s.slug}/`,
-  color: s.color,
+  color: SERVICE_CARD_COLORS[s.slug] ?? '#1e5fe0',
   bgImage: SERVICE_IMAGES[s.slug] ?? '',
 }))
 
