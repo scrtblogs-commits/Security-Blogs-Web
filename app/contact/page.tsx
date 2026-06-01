@@ -34,7 +34,7 @@ export default function ContactPage() {
         areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
         availableLanguage: ['en-AU'],
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />

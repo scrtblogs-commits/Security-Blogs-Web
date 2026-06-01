@@ -50,7 +50,7 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />

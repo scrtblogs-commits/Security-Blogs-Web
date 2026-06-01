@@ -78,7 +78,7 @@ export default function ProductPromotionPage() {
         path: '/publish-with-us/product-promotion/',
         serviceType: 'Sponsored Content',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Product Promotion' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>

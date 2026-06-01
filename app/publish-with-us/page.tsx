@@ -64,7 +64,7 @@ export default function PublishHubPage() {
         path: '/publish-with-us/',
         serviceType: 'Content Marketing',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <div className="grid-2" style={{ alignItems: 'center', gap: 56 }}>
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us' }]} />

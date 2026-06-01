@@ -76,7 +76,7 @@ export default function SponsoredPostsPage() {
         path: '/publish-with-us/sponsored-posts/',
         serviceType: 'Sponsored Content',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Posts' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>

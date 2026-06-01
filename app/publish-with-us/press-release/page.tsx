@@ -51,7 +51,7 @@ export default function PressReleasePage() {
         path: '/publish-with-us/press-release/',
         serviceType: 'Press Release Distribution',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Press Release' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>

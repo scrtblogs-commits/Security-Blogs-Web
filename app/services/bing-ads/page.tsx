@@ -233,7 +233,7 @@ export default function BingAdsPage() {
         slug: 'bing-ads',
         serviceType: 'Search Engine Marketing',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Bing Ads' }]} />
           <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}66`, background: `${ACCENT}14` }}>

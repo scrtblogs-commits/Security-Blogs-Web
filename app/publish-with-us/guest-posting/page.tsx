@@ -34,7 +34,7 @@ export default function GuestPostingPage() {
         path: '/publish-with-us/guest-posting/',
         serviceType: 'Content Publishing',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Guest Posting' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>

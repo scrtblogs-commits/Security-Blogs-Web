@@ -61,7 +61,7 @@ export default function AioPage() {
         slug: 'aio',
         serviceType: 'AI Optimisation',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'AIO' }]} />

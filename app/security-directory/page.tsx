@@ -75,7 +75,7 @@ export default function SecurityDirectoryPage() {
         path: '/security-directory/',
         serviceType: 'Business Directory Listing',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Directory' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 22 }}>

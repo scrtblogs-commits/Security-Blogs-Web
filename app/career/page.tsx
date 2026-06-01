@@ -87,7 +87,7 @@ const values = [
 export default function CareerPage() {
   return (
     <>
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Career' }]} />
         <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
           <Reveal>

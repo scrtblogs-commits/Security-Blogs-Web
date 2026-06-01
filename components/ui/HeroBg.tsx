@@ -1,6 +1,9 @@
 import { ReactNode } from 'react'
 
-export default function HeroBg({ children, grid = true, blobs = true }: { children: ReactNode; grid?: boolean; blobs?: boolean }) {
+// Default is `blobs={false}` so heroes render on a clean white background
+// (matched with the sitewide particle-network background). Pages that still
+// want the colored gradient blobs can opt-in with `<HeroBg blobs>`.
+export default function HeroBg({ children, grid = true, blobs = false }: { children: ReactNode; grid?: boolean; blobs?: boolean }) {
   return (
     <section className="hero">
       {blobs && (

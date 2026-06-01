@@ -151,7 +151,7 @@ export default function BacklinkPackagesPage() {
           { name: 'Authority', price: '1290',  priceCurrency: 'AUD', description: '8 bespoke editorial articles with priority placement and detailed placement report. rel="sponsored" with anchor + URL strategy input.' },
         ],
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Editorial Placements' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>

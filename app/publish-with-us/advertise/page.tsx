@@ -73,7 +73,7 @@ export default function AdvertisePage() {
         path: '/publish-with-us/advertise/',
         serviceType: 'Advertising',
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Advertise' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 20 }}>

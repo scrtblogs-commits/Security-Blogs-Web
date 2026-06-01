@@ -53,7 +53,7 @@ export default function CaseStudiesPage() {
         path: '/case-studies/',
         items: caseStudyItems.map(c => ({ name: c.name, url: '/case-studies/', description: c.description })),
       })} />
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]} currentPath="/case-studies/" />

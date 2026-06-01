@@ -74,7 +74,7 @@ const why = [
 export default function ServicesPage() {
   return (
     <>
-      <HeroBg grid blobs>
+      <HeroBg grid>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services' }]} />
           <span className="badge badge-blue" style={{ marginBottom: 22 }}>

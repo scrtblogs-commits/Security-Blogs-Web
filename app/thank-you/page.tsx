@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function ThankYouPage() {
   return (
-    <HeroBg grid blobs>
+    <HeroBg grid>
       <div className="center mx-auto" style={{ maxWidth: 720 }}>
         <Reveal>
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Thank You' }]} />
