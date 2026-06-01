@@ -25,8 +25,10 @@ function Face({ item, active }: { item: ServiceCard; active: boolean }) {
       }}
     >
       <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 80% at 80% 0%, rgba(255,255,255,0.22), transparent 55%)', pointerEvents: 'none' }} />
-      <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <span style={{ width: 56, height: 56, borderRadius: 16, display: 'grid', placeItems: 'center', fontSize: 28, background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(6px)' }}>{item.icon}</span>
+      <div style={{ position: 'relative', display: 'flex', justifyContent: item.icon ? 'space-between' : 'flex-end', alignItems: 'flex-start' }}>
+        {item.icon && (
+          <span style={{ width: 56, height: 56, borderRadius: 16, display: 'grid', placeItems: 'center', fontSize: 28, background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(6px)' }}>{item.icon}</span>
+        )}
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.12em', color: 'rgba(255,255,255,0.85)', textTransform: 'uppercase' }}>Service</span>
       </div>
       <div style={{ position: 'relative' }}>

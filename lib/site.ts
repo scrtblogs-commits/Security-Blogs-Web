@@ -5,7 +5,7 @@ export const services = [
   { title: 'GEO', slug: 'geo', icon: '🌐', color: '#e23744', desc: 'Build entity authority so AI platforms trust your brand.' },
   { title: 'Google Ads', slug: 'google-ads', icon: '📢', color: '#f6c715', desc: 'High-converting PPC campaigns built for security buyers.' },
   { title: 'Bing Ads', slug: 'bing-ads', icon: '🔷', color: '#0078d4', desc: 'Capture 41% of B2B buyers searching on Microsoft Bing.' },
-  { title: 'Web Design', slug: 'web-design', icon: '🎨', color: '#1e5fe0', desc: 'AI-ready websites that rank, convert and get cited.' },
+  { title: 'Web Design', slug: 'web-design', icon: '', color: '#1e5fe0', desc: 'AI-ready websites that rank, convert and get cited.' },
 ]
 
 export const aiPlatforms = [
