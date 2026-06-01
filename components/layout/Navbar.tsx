@@ -5,24 +5,24 @@ import { services, knowledgeHub, publishWithUs } from '@/lib/site'
 
 type Drop = { label: string; href: string; items: { title: string; href: string }[] }
 
+// Duplicate "All Services" / "Overview" entries removed — the parent label
+// itself ("Services", "Knowledge Hub", "Publish With Us") already links to
+// the section index, so the dropdown only needs to list the children.
 const dropdowns: Drop[] = [
   {
     label: 'Services',
     href: '/services/',
-    items: [
-      { title: 'All Services', href: '/services/' },
-      ...services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
-    ],
+    items: services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
   },
   {
     label: 'Knowledge Hub',
     href: '/knowledge-hub/',
-    items: [{ title: 'Overview', href: '/knowledge-hub/' }, ...knowledgeHub],
+    items: knowledgeHub,
   },
   {
     label: 'Publish With Us',
     href: '/publish-with-us/',
-    items: [{ title: 'Overview', href: '/publish-with-us/' }, ...publishWithUs],
+    items: publishWithUs,
   },
 ]
 
@@ -77,22 +77,22 @@ export default function Navbar() {
       }}
     >
       <div className="container flex items-center justify-between" style={{ gap: 20 }}>
-        <Link href="/" className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 19 }}>
-          <span style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg, var(--blue), var(--violet))', color: '#fff', display: 'grid', placeItems: 'center', fontSize: 16 }}>S</span>
-          <span><span className="accent">Security</span>Blogs</span>
+        <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="SecurityBlogs" style={{ height: 48, width: 'auto', display: 'block' }} />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="sg-desktop-nav flex items-center" style={{ gap: 6 }}>
+        {/* Desktop nav — whiteSpace:nowrap so labels never wrap to a 2nd line */}
+        <nav className="sg-desktop-nav flex items-center" style={{ gap: 2 }}>
           {dropdowns.map((d) => (
             <div key={d.label} style={{ position: 'relative' }} onMouseEnter={() => setActive(d.label)} onMouseLeave={() => setActive(null)}>
-              <Link href={d.href} style={{ padding: '8px 12px', fontWeight: 500, fontSize: 14.5, color: 'var(--text-soft)', display: 'inline-flex', gap: 5, alignItems: 'center' }}>
+              <Link href={d.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text-soft)', display: 'inline-flex', gap: 5, alignItems: 'center', whiteSpace: 'nowrap' }}>
                 {d.label} <span style={{ fontSize: 9, opacity: 0.6 }}>▼</span>
               </Link>
               {active === d.label && (
                 <div className="glass" style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, padding: 8, minWidth: 230, borderRadius: 14, display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {d.items.map((it) => (
-                    <Link key={it.href} href={it.href} style={{ padding: '9px 12px', borderRadius: 9, fontSize: 14, color: 'var(--text-soft)' }} onMouseEnter={(e) => { (e.currentTarget.style.background = 'var(--bg-card-2)'); e.currentTarget.style.color = 'var(--blue)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-soft)' }}>
+                    <Link key={it.href} href={it.href} style={{ padding: '9px 12px', borderRadius: 9, fontSize: 14, color: 'var(--text-soft)', whiteSpace: 'nowrap' }} onMouseEnter={(e) => { (e.currentTarget.style.background = 'var(--bg-card-2)'); e.currentTarget.style.color = 'var(--blue)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-soft)' }}>
                       {it.title}
                     </Link>
                   ))}
@@ -101,7 +101,7 @@ export default function Navbar() {
             </div>
           ))}
           {flat.map((f) => (
-            <Link key={f.href} href={f.href} style={{ padding: '8px 12px', fontWeight: 500, fontSize: 14.5, color: 'var(--text-soft)' }}>{f.label}</Link>
+            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text-soft)', whiteSpace: 'nowrap' }}>{f.label}</Link>
           ))}
         </nav>
 
