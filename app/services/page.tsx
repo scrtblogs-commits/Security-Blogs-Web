@@ -7,6 +7,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { itemListSchema } from '@/lib/schema'
 import { services } from '@/lib/site'
+import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 
 export const metadata = {
   title: 'AI-Powered Growth Services for Security Brands',
@@ -174,6 +175,11 @@ export default function ServicesPage() {
         ctaLabel="Get your free audit →"
         ctaHref="/contact/"
       />
+
+      {/* Final section directly above the footer — auto-locates the visitor,
+          lets them type a business name / service, and renders the live
+          Google Maps local pack for that query in their area. */}
+      <LocalVisibilityCheck service="security companies" />
     </>
   )
 }

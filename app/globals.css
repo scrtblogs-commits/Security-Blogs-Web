@@ -2,6 +2,31 @@
 @import url('https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css');
 @import 'tailwindcss';
 
+/* Sky atmosphere keyframes — used by SkyAtmosphere (day/night background). */
+@keyframes sb-cloud-drift {
+  from { transform: translate3d(-360px, 0, 0); }
+  to   { transform: translate3d(calc(100vw + 360px), 0, 0); }
+}
+@keyframes sb-star-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 1; }
+}
+@keyframes sb-shooting-star {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+  6%   { opacity: 1; }
+  18%  { opacity: 1; }
+  30%  { transform: translate3d(680px, 240px, 0); opacity: 0; }
+  100% { transform: translate3d(680px, 240px, 0); opacity: 0; }
+}
+@keyframes sb-sun-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 0.75; transform: scale(1.04); }
+}
+@keyframes sb-moon-glow {
+  0%, 100% { box-shadow: 0 0 60px 10px rgba(255, 248, 220, 0.20); }
+  50%      { box-shadow: 0 0 90px 18px rgba(255, 248, 220, 0.32); }
+}
+
 :root {
   --blue: #1e5fe0;
   --blue-d: #1742a8;

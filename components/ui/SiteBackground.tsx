@@ -4,10 +4,15 @@ import AuroraBackground from './backgrounds/AuroraBackground'
 import MeshGradient from './backgrounds/MeshGradient'
 import DotNoise from './backgrounds/DotNoise'
 import ParticleField from './backgrounds/ParticleField'
+import SkyAtmosphere from './backgrounds/SkyAtmosphere'
 
-type Variant = 'aurora' | 'mesh' | 'particles' | 'dots' | 'none'
+type Variant = 'sky' | 'aurora' | 'mesh' | 'particles' | 'dots' | 'none'
 
+// Order matters for the (unused for now) variant switcher: most prominent
+// option first. 'sky' is the new sitewide default — daytime sky in light
+// mode, starry night in dark mode, animated continuously.
 const options: { key: Variant; label: string }[] = [
+  { key: 'sky', label: 'Sky' },
   { key: 'aurora', label: 'Aurora' },
   { key: 'mesh', label: 'Mesh' },
   { key: 'particles', label: 'Particles' },
@@ -15,7 +20,7 @@ const options: { key: Variant; label: string }[] = [
   { key: 'none', label: 'None' },
 ]
 
-export default function SiteBackground({ defaultVariant = 'aurora' as Variant }: { defaultVariant?: Variant }) {
+export default function SiteBackground({ defaultVariant = 'sky' as Variant }: { defaultVariant?: Variant }) {
   const [variant, setVariant] = useState<Variant>(defaultVariant)
   const [ready, setReady] = useState(false)
 
@@ -29,6 +34,7 @@ export default function SiteBackground({ defaultVariant = 'aurora' as Variant }:
 
   return (
     <div aria-hidden style={{ position: 'fixed', inset: 0, zIndex: -1, pointerEvents: 'none' }}>
+      {ready && variant === 'sky' && <SkyAtmosphere />}
       {ready && variant === 'aurora' && <AuroraBackground />}
       {ready && variant === 'mesh' && <MeshGradient />}
       {ready && variant === 'particles' && <ParticleField />}
