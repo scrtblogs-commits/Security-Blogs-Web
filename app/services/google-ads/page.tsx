@@ -42,7 +42,7 @@ function GoogleAdsDashboard() {
       <div className="flex items-center justify-between" style={{ padding: '14px 18px', borderBottom: '1px solid var(--line)' }}>
         <div className="flex items-center gap-2">
           <span style={{ width: 26, height: 26, borderRadius: 7, display: 'grid', placeItems: 'center', background: `${ACCENT}22`, fontSize: 14 }}>📢</span>
-          <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15 }}>Google Ads · Security Campaign</strong>
+          <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15 }}>Google Ads · securityblogs.com.au</strong>
         </div>
         <span className="chip" style={{ color: 'var(--green)', borderColor: 'var(--green)' }}>● Live</span>
       </div>
@@ -186,8 +186,8 @@ function LocalServicesAd() {
 const searchAd = {
   badge: 'Ad',
   badgeColor: '#1e9e75',
-  url: 'securitysolutions.com.au',
-  headline: 'Security Systems Sydney | 24/7 Monitoring From $49/mo',
+  url: 'securityblogs.com.au',
+  headline: "SecurityBlogs — Australia's AI Visibility Platform for Security Brands",
   headline2: 'Top-Rated CCTV & Access Control | Free Site Survey',
   desc: 'Protect your business with enterprise-grade security. AS2201 certified installers. 500+ installations. Get your free quote today.',
   desc2: 'CCTV • Access Control • Alarms • 24/7 Monitoring. Local experts, fast installation, ongoing support.',

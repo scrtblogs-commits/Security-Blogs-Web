@@ -10,7 +10,7 @@ const baseResults: Result[] = [
   { name: 'Apex Surveillance', url: 'apexsurveillance.com.au' },
   { name: 'Metro Security Systems', url: 'metrosecurity.com.au' },
   { name: 'Sentinel Protective', url: 'sentinelprotective.com.au' },
-  { name: 'Security Solutions', url: 'securitysolutions.com.au', brand: true },
+  { name: 'SecurityBlogs', url: 'securityblogs.com.au', brand: true },
 ]
 
 function rankedList(rank: number) {

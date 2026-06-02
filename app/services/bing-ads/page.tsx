@@ -97,7 +97,7 @@ function NativeArticleAd() {
         <h4 style={{ fontSize: 18, margin: '6px 0 8px' }}>Why Facility Managers Are Switching Security Providers in 2026</h4>
         <p className="text-soft" style={{ fontSize: 13.5 }}>The hidden cost of outdated access control — and how AS2201-certified systems are changing commercial site security.</p>
         <div className="flex items-center gap-2" style={{ marginTop: 12 }}>
-          <span className="chip">securitysolutions.com.au</span>
+          <span className="chip">securityblogs.com.au</span>
           <span className="chip" style={{ color: ACCENT, borderColor: ACCENT }}>Read more →</span>
         </div>
       </div>
@@ -170,7 +170,7 @@ function EdgeNewTabAd() {
         <div>
           <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15.5 }}>Upgrade Your Building Security in 2026</strong>
           <p className="text-soft" style={{ fontSize: 13, margin: '4px 0' }}>Enterprise CCTV & access control, monitored 24/7. Free site survey for NSW businesses.</p>
-          <span style={{ color: ACCENT, fontSize: 12.5, fontWeight: 600 }}>securitysolutions.com.au →</span>
+          <span style={{ color: ACCENT, fontSize: 12.5, fontWeight: 600 }}>securityblogs.com.au →</span>
         </div>
       </div>
     </div>
@@ -180,7 +180,7 @@ function EdgeNewTabAd() {
 const searchAd = {
   badge: 'Ad',
   badgeColor: '#0d1117',
-  url: 'securitysolutions.com.au',
+  url: 'securityblogs.com.au',
   headline: 'Commercial Security Sydney | 24/7 Monitoring From $49/mo',
   headline2: 'B2B CCTV & Access Control | Free Site Survey',
   desc: 'Trusted by 500+ Australian businesses. AS2201 certified installers, enterprise-grade systems and ongoing support. Request your quote.',

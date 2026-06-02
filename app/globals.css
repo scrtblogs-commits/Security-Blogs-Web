@@ -87,12 +87,30 @@
   content: '';
   position: absolute;
   inset: 0;
+  /* Two-stop radial — visible blue core, soft fade. Roughly 2x the
+     previous opacity so the drift actually reads as motion. */
   background: radial-gradient(
     circle at 50% 50%,
-    rgba(30, 95, 224, 0.08) 0%,
-    transparent 50%
+    rgba(30, 95, 224, 0.18) 0%,
+    rgba(30, 95, 224, 0.08) 35%,
+    transparent 65%
   );
   animation: sb-card-drift 22s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+/* Second drifting layer in a contrasting hue — cyan tint at a different
+   phase so the two highlights chase each other across the card */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(111, 77, 255, 0.12) 0%,
+    transparent 50%
+  );
+  animation: sb-card-drift 22s ease-in-out -11s infinite reverse;
   pointer-events: none;
   z-index: 0;
 }
