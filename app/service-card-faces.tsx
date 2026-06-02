@@ -224,6 +224,18 @@ export function GEOFace(p: CardProps) {
         />
       ))}
 
+      {/* Brand chip — uses SecurityBlogs as the live demo */}
+      <div style={{
+        position: 'absolute', top: 14, left: 16, zIndex: 4,
+        background: 'rgba(255,255,255,0.94)',
+        padding: '4px 10px', borderRadius: 999,
+        fontSize: 10.5, color: '#1a3661', fontWeight: 600,
+        border: '1px solid rgba(30,95,224,0.25)',
+        boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+      }}>
+        ● securityblogs.com.au · 8 capitals
+      </div>
+
       <CardCTA {...p} />
     </div>
   )
@@ -255,7 +267,7 @@ export function GoogleAdsFace(p: CardProps) {
       {/* Dashboard chrome */}
       <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
         <div style={{ width: 18, height: 18, borderRadius: 4, background: 'linear-gradient(135deg, #4285F4 0%, #34A853 50%, #FBBC04 75%, #EA4335 100%)' }} />
-        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#202124' }}>Google Ads · Live</span>
+        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#202124' }}>securityblogs.com.au · Live</span>
       </div>
 
       {/* Three KPI tiles */}
@@ -301,7 +313,7 @@ export function BingAdsFace(p: CardProps) {
           <span style={{ background: '#f25022' }} /><span style={{ background: '#7fba00' }} />
           <span style={{ background: '#00a4ef' }} /><span style={{ background: '#ffb900' }} />
         </div>
-        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#0d4b78' }}>Microsoft Ads · Live</span>
+        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#0d4b78' }}>securityblogs.com.au · Live</span>
       </div>
 
       <div style={{ position: 'absolute', top: 42, left: 16, right: 16, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -369,4 +381,35 @@ export function WebDesignFace(p: CardProps) {
       <CardCTA {...p} />
     </div>
   )
+}
+
+// =============================================================
+// ServiceFace — picks the right face by slug. Used by both the
+// homepage card stack AND the /services/ index grid so each card
+// renders the same live "what this service does" visual everywhere.
+// =============================================================
+export function ServiceFace({
+  slug,
+  title,
+  description,
+  href,
+  active = true,
+}: {
+  slug: string
+  title: string
+  description: string
+  href: string
+  active?: boolean
+}) {
+  const common = { title, description, href, active }
+  switch (slug) {
+    case 'security-seo': return <SEOFace {...common} />
+    case 'aio':          return <AIOFace {...common} />
+    case 'aeo':          return <AEOFace {...common} />
+    case 'geo':          return <GEOFace {...common} />
+    case 'google-ads':   return <GoogleAdsFace {...common} />
+    case 'bing-ads':     return <BingAdsFace {...common} />
+    case 'web-design':   return <WebDesignFace {...common} />
+    default:             return null
+  }
 }

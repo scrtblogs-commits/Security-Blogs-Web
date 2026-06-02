@@ -7,7 +7,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { itemListSchema } from '@/lib/schema'
 import { services } from '@/lib/site'
-import ServiceLiveIcon from '../service-live-icons'
+import { ServiceFace } from '../service-card-faces'
 
 export const metadata = {
   title: 'AI-Powered Growth Services for Security Brands',
@@ -106,28 +106,59 @@ export default function ServicesPage() {
           <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 22 }}>
             {services.map((s) => (
               <Item key={s.slug}>
-                <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ marginBottom: 18 }}>
-                    <ServiceLiveIcon slug={s.slug} />
-                  </div>
-                  <h3 style={{ fontSize: 22, marginBottom: 8 }}>{s.title}</h3>
-                  <p className="text-soft" style={{ fontSize: 14.5, marginBottom: 16 }}>{s.desc}</p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 9, marginBottom: 18 }}>
-                    {benefits[s.slug].map((b, i) => (
-                      <div key={i} className="flex items-center gap-2" style={{ fontSize: 14 }}>
-                        <span style={{ color: s.color }}>✓</span>
-                        <span className="text-soft">{b}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <span className="chip" style={{ marginBottom: 18 }}>📊 {statChip[s.slug]}</span>
-                  <div style={{ marginTop: 'auto' }}>
-                    <MagneticButton href={`/services/${s.slug}/`} className="btn btn-outline">Learn more →</MagneticButton>
-                  </div>
+                {/* Live face — same visual the homepage card stack shows.
+                    Renders its own background + title + description + CTA;
+                    we just give it the right slug and route. */}
+                <div
+                  style={{
+                    height: 320,
+                    borderRadius: 18,
+                    overflow: 'hidden',
+                    boxShadow: '0 12px 30px -10px rgba(18, 42, 86, 0.18)',
+                    border: '1px solid var(--line)',
+                  }}
+                >
+                  <ServiceFace
+                    slug={s.slug}
+                    title={s.title}
+                    description={s.desc}
+                    href={`/services/${s.slug}/`}
+                  />
                 </div>
               </Item>
             ))}
           </Stagger>
+
+          {/* Compact "what's included" strip — keeps the benefits + stat
+              info the old cards carried, without re-introducing visual
+              clutter on the live cards themselves. */}
+          <div style={{ marginTop: 36, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+            {services.map((s) => (
+              <div
+                key={s.slug}
+                style={{
+                  padding: 18,
+                  border: '1px solid var(--line)',
+                  borderRadius: 14,
+                  background: 'var(--bg-card)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                }}
+              >
+                <strong style={{ fontSize: 14, color: 'var(--text)' }}>{s.title}</strong>
+                <span className="chip" style={{ alignSelf: 'flex-start' }}>📊 {statChip[s.slug]}</span>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  {benefits[s.slug].map((b, i) => (
+                    <li key={i} style={{ fontSize: 13.5, color: 'var(--text-soft)', display: 'flex', alignItems: 'flex-start', gap: 6 }}>
+                      <span style={{ color: 'var(--blue)' }}>✓</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
