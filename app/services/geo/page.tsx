@@ -10,6 +10,7 @@ import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
 import KnowledgeGraphCanvas from '@/components/ui/KnowledgeGraphCanvas'
+import GeoMapDemo from './GeoMapDemo'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -91,6 +92,9 @@ export default function GeoPage() {
           </Reveal>
         </div>
       </HeroBg>
+
+      {/* Live AI-Maps demo — securityblogs at position 1 across capital cities */}
+      <GeoMapDemo />
 
       <section className="section">
         <div className="container">
