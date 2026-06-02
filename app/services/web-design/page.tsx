@@ -3,7 +3,7 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import Bento from '@/components/ui/Bento'
+import WebDesignCapabilities from './WebDesignCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
@@ -114,7 +114,7 @@ export default function WebDesignPage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="What we build" title="Everything your security brand needs online." />
-          <Bento cells={bento} cols={3} />
+          <WebDesignCapabilities />
         </div>
       </section>
 

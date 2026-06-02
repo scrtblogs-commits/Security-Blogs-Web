@@ -4,7 +4,7 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import Bento from '@/components/ui/Bento'
+import SeoCapabilities from './SeoCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
@@ -97,7 +97,7 @@ export default function SecuritySeoPage() {
             title="Everything your security brand needs to own page one."
             sub="A full-stack SEO programme purpose-built for the high-trust, compliance-driven security industry."
           />
-          <Bento cells={capabilities} cols={3} />
+          <SeoCapabilities />
         </div>
       </section>
 

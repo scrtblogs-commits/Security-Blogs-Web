@@ -4,7 +4,7 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import Bento from '@/components/ui/Bento'
+import AioCapabilities from './AioCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
@@ -98,7 +98,7 @@ export default function AioPage() {
             title="The full AIO stack for AI-era visibility."
             sub="Every signal AI platforms use to decide which security brands to trust — engineered, monitored and grown."
           />
-          <Bento cells={capabilities} cols={3} />
+          <AioCapabilities />
         </div>
       </section>
 

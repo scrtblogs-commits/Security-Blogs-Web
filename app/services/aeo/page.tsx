@@ -4,7 +4,7 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import Bento from '@/components/ui/Bento'
+import AeoCapabilities from './AeoCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
@@ -94,7 +94,7 @@ export default function AeoPage() {
             title="Everything it takes to own the answer."
             sub="We engineer the structured, authoritative content that AI assistants and search engines choose to surface."
           />
-          <Bento cells={capabilities} cols={3} />
+          <AeoCapabilities />
         </div>
       </section>
 

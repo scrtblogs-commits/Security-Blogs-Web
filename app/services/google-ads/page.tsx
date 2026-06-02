@@ -5,7 +5,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
-import Bento from '@/components/ui/Bento'
+import GoogleAdsCapabilities from './GoogleAdsCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
@@ -90,7 +90,7 @@ function BannerAd() {
         <span style={{ position: 'absolute', top: 10, right: 12, fontSize: 10, opacity: 0.7 }}>Ad · Display Network</span>
         <div className="flex items-center justify-between gap-4" style={{ flexWrap: 'wrap' }}>
           <div>
-            <div style={{ fontSize: 13, color: ACCENT, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>SECURITYSOLUTIONS.COM.AU</div>
+            <div style={{ fontSize: 13, color: ACCENT, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>SECURITYBLOGS.COM.AU</div>
             <div style={{ fontSize: 22, fontWeight: 800, fontFamily: 'var(--font-display)', margin: '6px 0' }}>24/7 Business Security From $49/mo</div>
             <div style={{ fontSize: 13.5, opacity: 0.85 }}>CCTV · Access Control · Monitoring · AS2201 Certified</div>
           </div>
@@ -296,7 +296,7 @@ export default function GoogleAdsPage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="What's included" title="Everything that makes the campaign convert." />
-          <Bento cells={bento} cols={3} />
+          <GoogleAdsCapabilities />
         </div>
       </section>
 
