@@ -4,7 +4,7 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import Bento from '@/components/ui/Bento'
+import GeoCapabilities from './GeoCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
@@ -97,7 +97,7 @@ export default function GeoPage() {
             title="The full GEO programme for entity authority."
             sub="We build, distribute and confirm the signals that turn your security brand into a trusted AI entity."
           />
-          <Bento cells={capabilities} cols={3} />
+          <GeoCapabilities />
         </div>
       </section>
 
