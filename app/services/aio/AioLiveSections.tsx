@@ -11,8 +11,26 @@ import { PREVIEW_SHELL } from '@/components/ui/CapabilityCard'
 // sb-* keyframes already in app/globals.css.
 
 // ────────────────────────────────────────────────────────────
-// AioHeroDemo — live AI Mode chat with brand cited
+// AioHeroDemo — 3-column flow showing the AIO pipeline:
+//   Brand inputs  →  AI engines (real platform marks)  →  Verified citations
+// Animated dashed lines flow left → right. Right column outputs are green
+// to signal a successful "cited" outcome. No abstract neural-net look —
+// every node represents something concrete in the AIO methodology.
 // ────────────────────────────────────────────────────────────
+
+const INPUTS = [
+  { label: 'Schema markup',   tone: '#1e5fe0', icon: <SchemaIcon /> },
+  { label: 'Citable content', tone: '#1e5fe0', icon: <DocIcon /> },
+  { label: 'Entity signals',  tone: '#1e5fe0', icon: <GraphIcon /> },
+]
+
+const ENGINES = [
+  { label: 'ChatGPT',    tone: '#10a37f', mono: 'AI' },
+  { label: 'Perplexity', tone: '#1FB8CD', mono: 'P' },
+  { label: 'Gemini',     tone: '#1a73e8', mono: 'G' },
+  { label: 'Claude',     tone: '#cc785c', mono: 'C' },
+]
+
 export function AioHeroDemo() {
   return (
     <div
@@ -20,77 +38,126 @@ export function AioHeroDemo() {
         position: 'relative',
         borderRadius: 16,
         overflow: 'hidden',
-        background: 'linear-gradient(180deg, #1a1f3a 0%, #0c1424 100%)',
-        color: '#e8efff',
-        padding: 18,
-        boxShadow: '0 18px 50px -22px rgba(18,42,86,0.40)',
+        background: '#fff',
         border: '1px solid var(--line)',
-        minHeight: 340,
-        display: 'flex', flexDirection: 'column', gap: 14,
+        boxShadow: '0 18px 50px -22px rgba(18,42,86,0.20)',
+        padding: '20px 18px',
         fontFamily: 'system-ui, -apple-system, sans-serif',
+        color: '#202124',
       }}
     >
-      {/* chrome */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ width: 22, height: 22, borderRadius: '50%', background: '#10a37f', color: '#fff', fontSize: 11, fontWeight: 700, display: 'grid', placeItems: 'center' }}>AI</span>
-        <span style={{ fontSize: 13.5, fontWeight: 600 }}>AI Mode</span>
-        <span style={{ marginLeft: 'auto', fontSize: 10.5, color: '#7eb6ff', fontFamily: 'var(--font-mono)' }}>● LIVE</span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+        <div style={{ fontSize: 11, letterSpacing: 1.4, color: '#1e5fe0', fontWeight: 700 }}>● HOW AIO WORKS · LIVE</div>
+        <div style={{ fontSize: 10.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● 4 engines · cited</div>
       </div>
 
-      {/* user prompt with typewriter */}
-      <div>
-        <div style={{ fontSize: 11, color: '#9aa3b8', marginBottom: 4 }}>You</div>
-        <div
-          className="sb-typewriter"
-          style={{
-            fontSize: 13.5, lineHeight: 1.5,
-            background: 'rgba(255,255,255,0.06)', padding: '8px 12px', borderRadius: 10,
-            border: '1px solid rgba(255,255,255,0.08)',
-            color: '#fff', display: 'inline-block', maxWidth: '100%',
-          }}
-        >
-          best security provider in australia?
-        </div>
-      </div>
+      <svg viewBox="0 0 600 320" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 'auto', minHeight: 280 }}>
+        <defs>
+          {/* dashed animated stroke for the connecting lines */}
+          <linearGradient id="aio-flow" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#1e5fe0" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#10a37f" stopOpacity="0.8" />
+          </linearGradient>
+        </defs>
 
-      {/* AI answer with brand highlighted */}
-      <div>
-        <div style={{ fontSize: 11, color: '#7eb6ff', marginBottom: 4 }}>AI Mode</div>
-        <div style={{ fontSize: 13, color: '#e8efff', lineHeight: 1.55 }}>
-          The most-cited Australian provider in this category is{' '}
-          <span
-            className="sb-highlight"
-            style={{
-              background: 'linear-gradient(120deg, rgba(126,182,255,0.4), rgba(126,182,255,0.15))',
-              padding: '1px 6px', borderRadius: 4, fontWeight: 700, color: '#7eb6ff',
-            }}
-          >
-            securityblogs.com.au
-          </span>
-          {' '}— widely cited for AI visibility methodology in the security industry.
-        </div>
-      </div>
+        {/* Column headers */}
+        <text x="80"  y="22" fontSize="11" fontWeight="700" fill="#5f6368" letterSpacing="1" textAnchor="middle">BRAND INPUTS</text>
+        <text x="300" y="22" fontSize="11" fontWeight="700" fill="#5f6368" letterSpacing="1" textAnchor="middle">AI ENGINES</text>
+        <text x="520" y="22" fontSize="11" fontWeight="700" fill="#10a37f" letterSpacing="1" textAnchor="middle">VERIFIED · CITED</text>
 
-      {/* citation chips per platform */}
-      <div style={{ marginTop: 4, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-        {[
-          { p: 'ChatGPT',    bg: '#10a37f' },
-          { p: 'Perplexity', bg: '#1FB8CD' },
-          { p: 'Gemini',     bg: '#1a73e8' },
-          { p: 'Claude',     bg: '#cc785c' },
-        ].map((c) => (
-          <span key={c.p} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '4px 9px', background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 999, fontSize: 10.5 }}>
-            <span style={{ width: 8, height: 8, borderRadius: 2, background: c.bg }} />
-            <span>{c.p}</span>
-            <span style={{ color: '#10a37f', fontWeight: 700 }}>✓</span>
-          </span>
+        {/* Flow lines (drawn first so they sit underneath the nodes) */}
+        {INPUTS.flatMap((_, i) =>
+          ENGINES.map((_, j) => (
+            <line
+              key={`l-in-${i}-${j}`}
+              x1="120" y1={70 + i * 90}
+              x2="260" y2={60 + j * 70}
+              stroke="url(#aio-flow)" strokeWidth="1.2" strokeDasharray="4 4" opacity="0.55"
+              className="sb-flow-dash"
+            />
+          ))
+        )}
+        {ENGINES.map((_, j) => (
+          <line
+            key={`l-out-${j}`}
+            x1="340" y1={60 + j * 70}
+            x2="480" y2={60 + j * 70}
+            stroke="#10a37f" strokeWidth="1.6" strokeDasharray="5 4"
+            className="sb-flow-dash"
+          />
         ))}
-      </div>
 
-      <div style={{ marginTop: 'auto', fontSize: 10.5, color: '#6b7280', fontStyle: 'italic' }}>
-        Live AI Mode demo · cited everywhere by design
+        {/* Column 1 — Brand inputs (blue) */}
+        {INPUTS.map((it, i) => (
+          <g key={it.label} transform={`translate(80 ${70 + i * 90})`}>
+            <circle r="22" fill="#fff" stroke={it.tone} strokeWidth="2" />
+            <foreignObject x="-14" y="-14" width="28" height="28">
+              <div style={{ width: 28, height: 28, display: 'grid', placeItems: 'center', color: it.tone }}>{it.icon}</div>
+            </foreignObject>
+            <text y="42" fontSize="10.5" textAnchor="middle" fill="#202124" fontFamily="system-ui">{it.label}</text>
+          </g>
+        ))}
+
+        {/* Column 2 — AI engines (real platform marks via colored chips) */}
+        {ENGINES.map((e, j) => (
+          <g key={e.label} transform={`translate(300 ${60 + j * 70})`}>
+            <circle r="20" fill={e.tone} className="sb-card-rank" />
+            <text y="4" fontSize="11.5" fontWeight="800" textAnchor="middle" fill="#fff" fontFamily="system-ui">{e.mono}</text>
+            <text y="38" fontSize="10" textAnchor="middle" fill="#202124" fontFamily="system-ui">{e.label}</text>
+          </g>
+        ))}
+
+        {/* Column 3 — Verified citations (green checks) */}
+        {ENGINES.map((e, j) => (
+          <g key={`v-${e.label}`} transform={`translate(520 ${60 + j * 70})`}>
+            <circle r="18" fill="#e6f4ea" stroke="#10a37f" strokeWidth="2" className="sb-pin" />
+            <text y="5" fontSize="14" fontWeight="800" textAnchor="middle" fill="#10a37f">✓</text>
+            <text y="36" fontSize="10" textAnchor="middle" fill="#10a37f" fontFamily="system-ui" fontWeight="700">CITED</text>
+          </g>
+        ))}
+      </svg>
+
+      <div style={{ marginTop: 10, padding: '10px 14px', background: 'linear-gradient(180deg, #f1f6ff 0%, #ffffff 100%)', border: '1.5px solid #1e5fe0', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} className="sb-card-rank">
+        <span style={{ fontSize: 12.5, color: '#1a0dab', fontWeight: 700 }}>★ securityblogs.com.au</span>
+        <span style={{ fontSize: 10.5, color: '#10a37f', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>4 / 4 engines</span>
       </div>
     </div>
+  )
+}
+
+// Inline SVG glyphs for the input column — render as foreignObject children
+function SchemaIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="6" rx="1" />
+      <rect x="3" y="14" width="10" height="6" rx="1" />
+      <rect x="16" y="14" width="5" height="6" rx="1" />
+    </svg>
+  )
+}
+function DocIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="8" y1="13" x2="16" y2="13" />
+      <line x1="8" y1="17" x2="13" y2="17" />
+    </svg>
+  )
+}
+function GraphIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <circle cx="4"  cy="6"  r="2" />
+      <circle cx="4"  cy="18" r="2" />
+      <circle cx="20" cy="6"  r="2" />
+      <circle cx="20" cy="18" r="2" />
+      <line x1="6"  y1="7"  x2="9.7" y2="10.5" />
+      <line x1="6"  y1="17" x2="9.7" y2="13.5" />
+      <line x1="18" y1="7"  x2="14.3" y2="10.5" />
+      <line x1="18" y1="17" x2="14.3" y2="13.5" />
+    </svg>
   )
 }
 

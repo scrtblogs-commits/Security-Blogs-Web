@@ -71,6 +71,16 @@
   animation: sb-scroll-loop 12s linear infinite;
 }
 
+/* Animated dashed flow for the AIO pipeline diagram —
+   the stroke-dashoffset shifts so dashes appear to move left -> right */
+@keyframes sb-flow-dash {
+  0%   { stroke-dashoffset: 0;  }
+  100% { stroke-dashoffset: -16; }
+}
+.sb-flow-dash {
+  animation: sb-flow-dash 1.6s linear infinite;
+}
+
 /* ============================================================
    Animated card backgrounds (Phase 5B)
    Subtle drifting radial highlight on every .card sitewide.
