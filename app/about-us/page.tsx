@@ -12,7 +12,7 @@ export const metadata = {
   title: 'About Us',
   description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the founder behind SecurityBlogs.',
   alternates: { canonical: '/about-us/' },
-  openGraph: { url: '/about-us/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/about-us/' },
 }
 
 // Single named founder per Phase B of seo-final-2026-05 (placeholder team

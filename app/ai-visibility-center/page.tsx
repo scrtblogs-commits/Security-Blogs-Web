@@ -17,7 +17,7 @@ export const metadata = {
   description:
     '73% of B2B security buyers use AI to find and vet vendors. See how AI discovers, scores and cites your brand — and how to become the answer it gives.',
   alternates: { canonical: '/ai-visibility-center/' },
-  openGraph: { url: '/ai-visibility-center/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/ai-visibility-center/' },
 }
 
 const timeline = [

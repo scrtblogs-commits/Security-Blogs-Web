@@ -10,7 +10,7 @@ export const metadata = {
   title: 'Careers',
   description: 'Work at the frontier of AI and security. Remote-first, flexible and AI-forward roles at a specialist security-industry growth agency.',
   alternates: { canonical: '/career/' },
-  openGraph: { url: '/career/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/career/' },
 }
 
 const roleBadges = ['AI Content Strategist', 'Security SEO Specialist', 'Paid Media Manager', 'Full-Stack Developer', 'GEO & Entity Specialist', 'Business Development']

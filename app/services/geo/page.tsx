@@ -20,7 +20,7 @@ export const metadata = {
   description:
     'GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.',
   alternates: { canonical: '/services/geo/' },
-  openGraph: { url: '/services/geo/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/geo/' },
 }
 
 const capabilities = [

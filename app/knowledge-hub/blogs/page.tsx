@@ -9,7 +9,7 @@ export const metadata = {
   title: 'Blog · Knowledge Hub',
   description: 'The SecurityBlogs blog — tactical reads on SEO, AIO, AEO, GEO and paid advertising for security industry brands.',
   alternates: { canonical: '/knowledge-hub/blogs/' },
-  openGraph: { url: '/knowledge-hub/blogs/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/blogs/' },
 }
 
 export default function BlogsPage() {

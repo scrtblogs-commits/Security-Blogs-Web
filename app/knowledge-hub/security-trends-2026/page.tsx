@@ -10,7 +10,7 @@ export const metadata = {
   title: 'Security Trends 2026 · Knowledge Hub',
   description: 'The trends defining 2026 across AI visibility, physical security, cyber, regulation and the security market — with data and analysis.',
   alternates: { canonical: '/knowledge-hub/security-trends-2026/' },
-  openGraph: { url: '/knowledge-hub/security-trends-2026/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/security-trends-2026/' },
 }
 
 const trendStats = [

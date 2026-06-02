@@ -4,7 +4,7 @@ export const metadata = {
   title: 'Content Guidelines',
   description: 'Editorial guidelines for contributors and guest authors writing for SecurityBlogs — covering originality, formatting, links, E-E-A-T, SEO requirements and our review process.',
   alternates: { canonical: '/content-guidelines/' },
-  openGraph: { url: '/content-guidelines/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/content-guidelines/' },
 }
 
 const toc = [

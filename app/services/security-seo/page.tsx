@@ -20,7 +20,7 @@ export const metadata = {
   description:
     "From 'CCTV installation Melbourne' to 'enterprise access control systems' — we get your security business to the top of Google and keep it there.",
   alternates: { canonical: '/services/security-seo/' },
-  openGraph: { url: '/services/security-seo/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/security-seo/' },
 }
 
 const capabilities = [

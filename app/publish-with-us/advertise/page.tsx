@@ -16,7 +16,7 @@ export const metadata = {
   description:
     'Advertise with SecurityBlogs. Reach 180K+ monthly security-industry readers via banners, newsletter sponsorships, category takeovers and sponsored content.',
   alternates: { canonical: '/publish-with-us/advertise/' },
-  openGraph: { url: '/publish-with-us/advertise/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/advertise/' },
 }
 
 const placements = [

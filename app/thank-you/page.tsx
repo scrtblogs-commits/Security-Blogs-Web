@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Thank You',
   description: 'Your enquiry has been received. We will be in touch within one business day.',
   alternates: { canonical: '/thank-you/' },
-  openGraph: { url: '/thank-you/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/thank-you/' },
   // Thank-you page is reachable only post-submit. It carries no
   // standalone search value, so we keep it out of the index but let
   // crawlers follow the outbound CTAs.

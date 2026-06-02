@@ -10,7 +10,7 @@ export const metadata = {
   title: 'Research Reports · Knowledge Hub',
   description: 'Downloadable research reports on AI visibility, SEO and growth benchmarks for the security industry — original data you can act on.',
   alternates: { canonical: '/knowledge-hub/research-reports/' },
-  openGraph: { url: '/knowledge-hub/research-reports/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/research-reports/' },
 }
 
 const reports = [

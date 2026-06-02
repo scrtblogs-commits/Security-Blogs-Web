@@ -13,7 +13,7 @@ export const metadata = {
   title: 'Knowledge Hub',
   description: 'Guides, research, news and definitions on AI visibility, SEO and growth for the security industry — all in one place.',
   alternates: { canonical: '/knowledge-hub/' },
-  openGraph: { url: '/knowledge-hub/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/' },
 }
 
 const hubIcons: Record<string, { icon: string; color: string; desc: string }> = {

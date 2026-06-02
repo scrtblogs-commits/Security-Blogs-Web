@@ -20,7 +20,7 @@ export const metadata = {
   description:
     'We build AI-optimised, schema-rich, conversion-focused security websites that rank on Google and Bing — and get cited by ChatGPT, Perplexity and every AI platform.',
   alternates: { canonical: '/services/web-design/' },
-  openGraph: { url: '/services/web-design/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/web-design/' },
 }
 
 const bento = [

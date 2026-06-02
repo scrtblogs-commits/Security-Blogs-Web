@@ -9,7 +9,7 @@ export const metadata = {
   title: 'Security Guides · Knowledge Hub',
   description: 'In-depth, step-by-step security marketing guides covering SEO, AI visibility, schema, paid ads and conversion for security industry brands.',
   alternates: { canonical: '/knowledge-hub/security-guides/' },
-  openGraph: { url: '/knowledge-hub/security-guides/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/security-guides/' },
 }
 
 const guides = [

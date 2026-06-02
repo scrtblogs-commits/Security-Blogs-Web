@@ -8,7 +8,7 @@ export const metadata = {
   description:
     'Transparent pricing and editorial guidelines for guest posts, sponsored posts, press releases, backlinks, product promotion and advertising on SecurityBlogs.',
   alternates: { canonical: '/publish-with-us/pricing-guidelines/' },
-  openGraph: { url: '/publish-with-us/pricing-guidelines/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/pricing-guidelines/' },
 }
 
 const toc = [

@@ -22,7 +22,7 @@ export const metadata = {
   description:
     'High-converting Google Ads campaigns engineered for security buyers. 3.2× average ROAS, transparent reporting and conversion tracking built in.',
   alternates: { canonical: '/services/google-ads/' },
-  openGraph: { url: '/services/google-ads/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/google-ads/' },
 }
 
 function MetricTile({ label, value, delta, positive = true }: { label: string; value: string; delta: string; positive?: boolean }) {

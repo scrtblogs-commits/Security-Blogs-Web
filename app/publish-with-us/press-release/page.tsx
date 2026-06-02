@@ -14,7 +14,7 @@ export const metadata = {
   description:
     'Distribute your security company press release to engaged industry readers, integrators and buyers. Editorial review within 2 business days.',
   alternates: { canonical: '/publish-with-us/press-release/' },
-  openGraph: { url: '/publish-with-us/press-release/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/press-release/' },
 }
 
 const steps = [

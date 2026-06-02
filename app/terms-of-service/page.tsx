@@ -4,7 +4,7 @@ export const metadata = {
   title: 'Terms of Service',
   description: 'The terms and conditions governing your use of the SecurityBlogs website and our AI visibility and SEO services for the security industry.',
   alternates: { canonical: '/terms-of-service/' },
-  openGraph: { url: '/terms-of-service/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/terms-of-service/' },
 }
 
 const toc = [

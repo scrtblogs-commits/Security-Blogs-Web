@@ -14,7 +14,7 @@ export const metadata = {
   description:
     'From SEO to AI citations, Google Ads to web design — every SecurityBlogs service is engineered exclusively for the security industry.',
   alternates: { canonical: '/services/' },
-  openGraph: { url: '/services/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/' },
 }
 
 const benefits: Record<string, string[]> = {

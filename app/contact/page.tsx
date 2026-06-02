@@ -12,7 +12,7 @@ export const metadata = {
   title: 'Contact',
   description: 'Get in touch with the AI visibility and SEO team built for the security industry. Response within 24 hours, 100% confidential.',
   alternates: { canonical: '/contact/' },
-  openGraph: { url: '/contact/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/contact/' },
 }
 
 const details = [

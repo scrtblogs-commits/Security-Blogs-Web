@@ -15,7 +15,7 @@ export const metadata = {
   description:
     'Free AI visibility tools for security brands — check if AI cites you, score your readiness, and follow step-by-step Google & Bing ranking guides. No login required.',
   alternates: { canonical: '/free-tools/' },
-  openGraph: { url: '/free-tools/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/free-tools/' },
 }
 
 export default function FreeToolsPage() {

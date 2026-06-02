@@ -7,7 +7,7 @@ export const metadata = {
   title: 'Definitions & Glossary · Knowledge Hub',
   description: 'Plain-English definitions of AI visibility and SEO terms — AIO, AEO, GEO, SERP, schema, entity, E-E-A-T, citations and more for the security industry.',
   alternates: { canonical: '/knowledge-hub/definitions-glossary/' },
-  openGraph: { url: '/knowledge-hub/definitions-glossary/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/definitions-glossary/' },
 }
 
 const toc = [

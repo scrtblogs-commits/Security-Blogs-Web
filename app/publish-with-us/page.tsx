@@ -17,7 +17,7 @@ export const metadata = {
   description:
     'Reach security-industry buyers, integrators and decision-makers. Guest posts, sponsored content, product promotion, press releases, backlinks and advertising on SecurityBlogs.',
   alternates: { canonical: '/publish-with-us/' },
-  openGraph: { url: '/publish-with-us/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/' },
 }
 
 const icons: Record<string, string> = {

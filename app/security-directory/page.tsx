@@ -16,7 +16,7 @@ export const metadata = {
   description:
     'Find and compare verified Australian security companies ranked by AI visibility score, client reviews and industry authority.',
   alternates: { canonical: '/security-directory/' },
-  openGraph: { url: '/security-directory/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/security-directory/' },
 }
 
 const teasers = [

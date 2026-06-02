@@ -19,7 +19,7 @@ export const metadata = {
   description:
     'Answer Engine Optimisation positions your security brand as the trusted, quotable answer AI assistants and search engines surface to buyers.',
   alternates: { canonical: '/services/aeo/' },
-  openGraph: { url: '/services/aeo/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/aeo/' },
 }
 
 const capabilities = [

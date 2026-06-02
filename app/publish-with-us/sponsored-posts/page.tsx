@@ -14,7 +14,7 @@ export const metadata = {
   description:
     'Promote your security brand with sponsored posts on SecurityBlogs. Permanent placement, dofollow links and full editorial promotion from $149 AUD.',
   alternates: { canonical: '/publish-with-us/sponsored-posts/' },
-  openGraph: { url: '/publish-with-us/sponsored-posts/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/sponsored-posts/' },
 }
 
 const plans = [

@@ -15,7 +15,7 @@ export const metadata = {
   description:
     'Promote your security product with reviews, comparisons, demo spotlights and buyer-guide inclusions on SecurityBlogs. Reach in-market buyers ready to purchase.',
   alternates: { canonical: '/publish-with-us/product-promotion/' },
-  openGraph: { url: '/publish-with-us/product-promotion/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/product-promotion/' },
 }
 
 const howItWorks = [

@@ -41,7 +41,7 @@ export const metadata = {
   description:
     "Disclosed, compliant, permanent sponsored editorial placements on Australia's specialist security publication. Every paid link uses rel=\"sponsored\" per Google's published link policies. No DA guarantees, no PBNs.",
   alternates: { canonical: '/publish-with-us/backlink-packages/' },
-  openGraph: { url: '/publish-with-us/backlink-packages/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/backlink-packages/' },
 }
 
 // Phase D (seo-final-2026-05): owner reset pricing to the original tier

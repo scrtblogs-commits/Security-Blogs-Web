@@ -19,7 +19,7 @@ export const metadata = {
   description:
     'AI Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
   alternates: { canonical: '/services/aio/' },
-  openGraph: { url: '/services/aio/' },
+  openGraph: { siteName: 'SecurityBlogs', url: '/services/aio/' },
 }
 
 const capabilities = [
