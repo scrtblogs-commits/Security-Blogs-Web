@@ -34,7 +34,7 @@ const socials: { name: string; href: string; Icon: (p: BrandIconProps) => React.
 export default function Footer() {
   return (
     <footer style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--line)', marginTop: 40, color: 'var(--text)' }}>
-      <div className="container" style={{ padding: '48px 24px 32px' }}>
+      <div className="container" style={{ padding: '36px 24px 22px' }}>
 
         {/* 1. Acknowledgement of Country */}
         <div
@@ -43,9 +43,9 @@ export default function Footer() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'auto 1fr',
-            gap: 22,
+            gap: 20,
             alignItems: 'center',
-            marginBottom: 40,
+            marginBottom: 28,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -70,8 +70,8 @@ export default function Footer() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 32,
-            marginBottom: 32,
+            gap: 28,
+            marginBottom: 22,
           }}
         >
           <FooterCol title="SEO & AI Services" links={services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
@@ -85,83 +85,92 @@ export default function Footer() {
           <FooterCol title="Company" links={companyLinks} />
         </div>
 
-        {/* 3. Brand row — tagline + email + phone + socials on LEFT, logo on RIGHT */}
+        {/* 3. Brand row
+              Desktop: contact info (email + phone + socials) on the LEFT,
+                       logo on the RIGHT with the tagline directly under it.
+              Mobile:  flex column-reverse — logo first, then tagline,
+                       then contact row underneath. */}
         <div
           className="sg-footer-brand"
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 28,
-            paddingTop: 28,
+            gap: 24,
+            paddingTop: 18,
             borderTop: '1px solid var(--line)',
           }}
         >
-          <div className="sg-brand-left" style={{ display: 'flex', flexDirection: 'column', gap: 14, minWidth: 0 }}>
-            <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)', margin: 0, lineHeight: 1.3 }}>
-              Australia&apos;s AI Visibility Platform for Security Brands.
-            </p>
-            <div
-              className="sg-contact-row"
-              style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}
+          {/* LEFT — contact info as a single tight row */}
+          <div
+            className="sg-contact-row"
+            style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', minWidth: 0 }}
+          >
+            <a
+              href="mailto:info@securityblogs.com.au"
+              style={{
+                color: 'var(--text)', textDecoration: 'none',
+                fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
+              }}
             >
-              <a
-                href="mailto:info@securityblogs.com.au"
-                style={{
-                  color: 'var(--text)', textDecoration: 'none',
-                  fontSize: 14, display: 'inline-flex', alignItems: 'center', gap: 6,
-                }}
-              >
-                ✉️ info@securityblogs.com.au
-              </a>
-              <a
-                href="tel:+61411212418"
-                style={{
-                  color: 'var(--text)', textDecoration: 'none',
-                  fontSize: 14, display: 'inline-flex', alignItems: 'center', gap: 6,
-                }}
-              >
-                📞 +61 411 212 418
-              </a>
-              <div className="sg-social-icons" style={{ display: 'flex', gap: 8 }}>
-                {socials.map(({ name, href, Icon }) => (
-                  <a
-                    key={name}
-                    href={href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={name}
-                    title={name}
-                    style={{
-                      width: 32, height: 32, borderRadius: 8,
-                      border: '1px solid var(--line)', background: 'var(--bg-card)',
-                      display: 'grid', placeItems: 'center', color: 'var(--text)',
-                    }}
-                  >
-                    <Icon size={14} />
-                  </a>
-                ))}
-              </div>
+              ✉️ info@securityblogs.com.au
+            </a>
+            <a
+              href="tel:+61411212418"
+              style={{
+                color: 'var(--text)', textDecoration: 'none',
+                fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
+              }}
+            >
+              📞 +61 411 212 418
+            </a>
+            <div className="sg-social-icons" style={{ display: 'flex', gap: 6 }}>
+              {socials.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={name}
+                  title={name}
+                  style={{
+                    width: 28, height: 28, borderRadius: 7,
+                    border: '1px solid var(--line)', background: 'var(--bg-card)',
+                    display: 'grid', placeItems: 'center', color: 'var(--text)',
+                  }}
+                >
+                  <Icon size={13} />
+                </a>
+              ))}
             </div>
           </div>
 
-          <Link
-            href="/"
-            aria-label="SecurityBlogs home"
-            className="sg-brand-logo"
-            style={{ flexShrink: 0, display: 'inline-block', textDecoration: 'none' }}
+          {/* RIGHT — logo with tagline directly underneath */}
+          <div
+            className="sg-brand-right"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo-footer.webp"
-              alt="SecurityBlogs"
-              style={{ width: 'min(200px, 100%)', height: 'auto', display: 'block' }}
-            />
-          </Link>
+            <Link
+              href="/"
+              aria-label="SecurityBlogs home"
+              className="sg-brand-logo"
+              style={{ display: 'inline-block', textDecoration: 'none' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo-footer.webp"
+                alt="SecurityBlogs"
+                style={{ width: 'min(150px, 100%)', height: 'auto', display: 'block' }}
+              />
+            </Link>
+            <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'right', lineHeight: 1.3 }}>
+              Australia&apos;s AI Visibility Platform for Security Brands.
+            </p>
+          </div>
         </div>
 
         {/* 4. Bottom — copyright + legal */}
-        <div style={{ borderTop: '1px solid var(--line)', marginTop: 24, paddingTop: 22, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center', fontSize: 13, color: 'var(--text)' }}>
+        <div style={{ borderTop: '1px solid var(--line)', marginTop: 18, paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'space-between', alignItems: 'center', fontSize: 12.5, color: 'var(--text)' }}>
           <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
           <div className="sg-legal" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/privacy-policy/" style={{ color: 'var(--text)' }}>Privacy Policy</Link>
@@ -175,28 +184,29 @@ export default function Footer() {
       <style>{`
         /* Tablet — 2x2 nav grid */
         @media (max-width: 900px) {
-          .sg-footer-nav { grid-template-columns: 1fr 1fr !important; gap: 28px 24px !important; }
+          .sg-footer-nav { grid-template-columns: 1fr 1fr !important; gap: 24px 24px !important; }
         }
-        /* Mobile — stack brand row, centre it; logo goes UNDER the contact info */
+        /* Mobile — logo+tagline first, contact row underneath, all centred */
         @media (max-width: 700px) {
           .sg-footer-brand {
-            flex-direction: column !important;
+            flex-direction: column-reverse !important;
             align-items: center !important;
             text-align: center;
-            gap: 22px !important;
+            gap: 18px !important;
           }
-          .sg-brand-left { align-items: center !important; text-align: center; }
-          .sg-contact-row { justify-content: center !important; gap: 14px !important; }
-          .sg-brand-logo img { margin: 0 auto; width: min(180px, 60vw) !important; }
+          .sg-brand-right { align-items: center !important; }
+          .sg-brand-right p { text-align: center !important; }
+          .sg-brand-logo img { margin: 0 auto; width: min(160px, 55vw) !important; }
+          .sg-contact-row { justify-content: center !important; gap: 12px !important; }
         }
         /* Phone — Acknowledgement stacks */
         @media (max-width: 640px) {
-          .sg-ack { grid-template-columns: 1fr !important; text-align: left; gap: 16px !important; }
+          .sg-ack { grid-template-columns: 1fr !important; text-align: left; gap: 14px !important; }
         }
-        /* Very small screens — even tighter nav spacing + contact stacks vertically */
+        /* Very small screens — contact row stacks vertically */
         @media (max-width: 480px) {
-          .sg-footer-nav { gap: 24px 16px !important; }
-          .sg-contact-row { flex-direction: column !important; gap: 12px !important; }
+          .sg-footer-nav { gap: 22px 16px !important; }
+          .sg-contact-row { flex-direction: column !important; gap: 10px !important; }
         }
       `}</style>
     </footer>
