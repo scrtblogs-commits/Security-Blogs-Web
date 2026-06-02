@@ -9,7 +9,7 @@ import {
   Search, Bot, MessageSquare, Globe, Megaphone, Palette, BarChart3, Shield,
   Zap, Infinity as InfinityIcon, Tag, Brain, FolderOpen, Link as LinkIcon,
   RefreshCw, Radio, Star, Briefcase, Rocket, Mail, Phone, Target, Map as MapIcon,
-  FileText, Gift, Unlock, Check, TrendingUp, Sparkles,
+  FileText, Gift, Unlock, Check, TrendingUp, Sparkles, Puzzle, Wrench,
 } from 'lucide-react'
 
 type IconCmp = React.ComponentType<{ size?: number; strokeWidth?: number; color?: string }>
@@ -44,6 +44,8 @@ const EMOJI_MAP: Record<string, IconCmp> = {
   '✓': Check,
   '📈': TrendingUp,
   '✨': Sparkles,
+  '🧩': Puzzle,
+  '🔧': Wrench,
 }
 
 // Brand-coloured 2x2 Microsoft-style tile, used where 🔷 appears for Bing/MS.

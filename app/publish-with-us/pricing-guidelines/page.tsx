@@ -97,13 +97,13 @@ export default function PricingGuidelinesPage() {
           ]}
         />
 
-        <h2 id="backlinks">Backlink Packages</h2>
-        <p>White-hat, niche-relevant dofollow links from established security domains.</p>
+        <h2 id="backlinks">Sponsored Editorial Placements</h2>
+        <p>Editorially-placed sponsored placements in relevant security content. Every paid link uses <code>rel=&quot;sponsored&quot;</code> per Google&apos;s link policies. We do not guarantee Domain Authority, rankings or indexing.</p>
         <PriceTable
           rows={[
-            { tier: 'Starter', price: '$199', includes: '1 dofollow link, DA 60+, niche-relevant, permanent' },
-            { tier: 'Growth', price: '$549', includes: '3 dofollow links, DA 65+, anchor control, reporting' },
-            { tier: 'Authority', price: '$1,290', includes: '8 dofollow links, DA 68+, full editorial articles, detailed report' },
+            { tier: 'Starter',   price: '$199',   includes: '1 sponsored placement on an established security-niche domain, permanent' },
+            { tier: 'Growth',    price: '$549',   includes: '3 sponsored placements on established security-niche pages, anchor control, reporting' },
+            { tier: 'Authority', price: '$1,290', includes: '8 sponsored placements in full editorial articles on established security-niche pages, detailed report' },
           ]}
         />
 
