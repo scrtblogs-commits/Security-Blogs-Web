@@ -64,14 +64,17 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* 2. Nav grid — 4 cols desktop, 2x2 mobile */}
+        {/* 2. Nav grid — 4 cols + LOGO as the 5th column on desktop.
+              On tablet/mobile the grid collapses to 2 cols and the logo
+              cell spans both columns. */}
         <div
           className="sg-footer-nav"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: '1fr 1fr 1fr 1fr 170px',
             gap: 28,
-            marginBottom: 22,
+            marginBottom: 18,
+            alignItems: 'start',
           }}
         >
           <FooterCol title="SEO & AI Services" links={services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
@@ -83,72 +86,11 @@ export default function Footer() {
             { title: 'Directory', href: '/security-directory/' },
           ]} />
           <FooterCol title="Company" links={companyLinks} />
-        </div>
 
-        {/* 3. Brand row
-              Desktop: contact info (email + phone + socials) on the LEFT,
-                       logo on the RIGHT with the tagline directly under it.
-              Mobile:  flex column-reverse — logo first, then tagline,
-                       then contact row underneath. */}
-        <div
-          className="sg-footer-brand"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 24,
-            paddingTop: 18,
-            borderTop: '1px solid var(--line)',
-          }}
-        >
-          {/* LEFT — contact info as a single tight row */}
+          {/* 5th cell — logo + tagline directly underneath */}
           <div
-            className="sg-contact-row"
-            style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', minWidth: 0 }}
-          >
-            <a
-              href="mailto:info@securityblogs.com.au"
-              style={{
-                color: 'var(--text)', textDecoration: 'none',
-                fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
-              }}
-            >
-              ✉️ info@securityblogs.com.au
-            </a>
-            <a
-              href="tel:+61411212418"
-              style={{
-                color: 'var(--text)', textDecoration: 'none',
-                fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
-              }}
-            >
-              📞 +61 411 212 418
-            </a>
-            <div className="sg-social-icons" style={{ display: 'flex', gap: 6 }}>
-              {socials.map(({ name, href, Icon }) => (
-                <a
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={name}
-                  title={name}
-                  style={{
-                    width: 28, height: 28, borderRadius: 7,
-                    border: '1px solid var(--line)', background: 'var(--bg-card)',
-                    display: 'grid', placeItems: 'center', color: 'var(--text)',
-                  }}
-                >
-                  <Icon size={13} />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          {/* RIGHT — logo with tagline directly underneath */}
-          <div
-            className="sg-brand-right"
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}
+            className="sg-brand-cell"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
           >
             <Link
               href="/"
@@ -163,9 +105,57 @@ export default function Footer() {
                 style={{ width: 'min(150px, 100%)', height: 'auto', display: 'block' }}
               />
             </Link>
-            <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'right', lineHeight: 1.3 }}>
+            <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'center', lineHeight: 1.35 }}>
               Australia&apos;s AI Visibility Platform for Security Brands.
             </p>
+          </div>
+        </div>
+
+        {/* 3. Contact row — email, phone, socials on the LEFT */}
+        <div
+          className="sg-contact-row"
+          style={{
+            display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap',
+            paddingTop: 16, marginBottom: 14,
+            borderTop: '1px solid var(--line)',
+          }}
+        >
+          <a
+            href="mailto:info@securityblogs.com.au"
+            style={{
+              color: 'var(--text)', textDecoration: 'none',
+              fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
+            }}
+          >
+            ✉️ info@securityblogs.com.au
+          </a>
+          <a
+            href="tel:+61411212418"
+            style={{
+              color: 'var(--text)', textDecoration: 'none',
+              fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
+            }}
+          >
+            📞 +61 411 212 418
+          </a>
+          <div className="sg-social-icons" style={{ display: 'flex', gap: 6 }}>
+            {socials.map(({ name, href, Icon }) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={name}
+                title={name}
+                style={{
+                  width: 28, height: 28, borderRadius: 7,
+                  border: '1px solid var(--line)', background: 'var(--bg-card)',
+                  display: 'grid', placeItems: 'center', color: 'var(--text)',
+                }}
+              >
+                <Icon size={13} />
+              </a>
+            ))}
           </div>
         </div>
 
@@ -182,22 +172,20 @@ export default function Footer() {
       </div>
 
       <style>{`
-        /* Tablet — 2x2 nav grid */
+        /* Tablet + mobile — 2-col nav grid; logo cell spans both cols
+           and uses order:-1 to appear ABOVE the nav columns. */
         @media (max-width: 900px) {
-          .sg-footer-nav { grid-template-columns: 1fr 1fr !important; gap: 24px 24px !important; }
-        }
-        /* Mobile — logo+tagline first, contact row underneath, all centred */
-        @media (max-width: 700px) {
-          .sg-footer-brand {
-            flex-direction: column-reverse !important;
-            align-items: center !important;
-            text-align: center;
-            gap: 18px !important;
+          .sg-footer-nav {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 24px 22px !important;
           }
-          .sg-brand-right { align-items: center !important; }
-          .sg-brand-right p { text-align: center !important; }
-          .sg-brand-logo img { margin: 0 auto; width: min(160px, 55vw) !important; }
-          .sg-contact-row { justify-content: center !important; gap: 12px !important; }
+          .sg-brand-cell {
+            grid-column: 1 / -1 !important;
+            order: -1;
+            margin-bottom: 6px;
+          }
+          .sg-brand-logo img { width: min(160px, 50vw) !important; }
+          .sg-contact-row { justify-content: center !important; }
         }
         /* Phone — Acknowledgement stacks */
         @media (max-width: 640px) {
@@ -206,7 +194,11 @@ export default function Footer() {
         /* Very small screens — contact row stacks vertically */
         @media (max-width: 480px) {
           .sg-footer-nav { gap: 22px 16px !important; }
-          .sg-contact-row { flex-direction: column !important; gap: 10px !important; }
+          .sg-contact-row {
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 10px !important;
+          }
         }
       `}</style>
     </footer>

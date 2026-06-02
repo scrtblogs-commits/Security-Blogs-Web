@@ -7,6 +7,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import JsonLd from '@/components/JsonLd'
 import { itemListSchema } from '@/lib/schema'
 import { services } from '@/lib/site'
+import ServiceLiveIcon from '../service-live-icons'
 
 export const metadata = {
   title: 'AI-Powered Growth Services for Security Brands',
@@ -106,20 +107,8 @@ export default function ServicesPage() {
             {services.map((s) => (
               <Item key={s.slug}>
                 <div className="card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <div
-                    style={{
-                      width: 60,
-                      height: 60,
-                      borderRadius: 16,
-                      display: 'grid',
-                      placeItems: 'center',
-                      fontSize: 30,
-                      background: `${s.color}1a`,
-                      border: `1px solid ${s.color}33`,
-                      marginBottom: 18,
-                    }}
-                  >
-                    {s.icon}
+                  <div style={{ marginBottom: 18 }}>
+                    <ServiceLiveIcon slug={s.slug} />
                   </div>
                   <h3 style={{ fontSize: 22, marginBottom: 8 }}>{s.title}</h3>
                   <p className="text-soft" style={{ fontSize: 14.5, marginBottom: 16 }}>{s.desc}</p>

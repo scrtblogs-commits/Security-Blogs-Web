@@ -85,6 +85,56 @@
 }
 .sb-highlight { animation: sb-highlight-pulse 2.4s ease-in-out infinite; }
 
+/* Live-icon animations — used by app/service-live-icons.tsx (sb-li-*) */
+@keyframes sb-li-dot-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30%          { transform: translateY(-3px); }
+}
+.sb-li-dot-1 { animation: sb-li-dot-bounce 1.2s ease-in-out infinite;        transform-box: fill-box; transform-origin: center; }
+.sb-li-dot-2 { animation: sb-li-dot-bounce 1.2s ease-in-out 0.15s infinite;  transform-box: fill-box; transform-origin: center; }
+.sb-li-dot-3 { animation: sb-li-dot-bounce 1.2s ease-in-out 0.30s infinite;  transform-box: fill-box; transform-origin: center; }
+
+@keyframes sb-li-rise-fade {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
+}
+.sb-li-rise { animation: sb-li-rise-fade 2s ease-in-out infinite; }
+
+@keyframes sb-li-pulse-scale {
+  0%, 100% { transform: scale(1);    filter: brightness(1); }
+  50%      { transform: scale(1.12); filter: brightness(1.15); }
+}
+.sb-li-pulse { animation: sb-li-pulse-scale 2.4s ease-in-out infinite; }
+
+@keyframes sb-li-bar-grow {
+  0%, 100% { transform: scaleY(0.55); }
+  50%      { transform: scaleY(1);    }
+}
+.sb-li-bar-1 { animation: sb-li-bar-grow 1.8s ease-in-out infinite;        }
+.sb-li-bar-2 { animation: sb-li-bar-grow 1.8s ease-in-out 0.15s infinite;  }
+.sb-li-bar-3 { animation: sb-li-bar-grow 1.8s ease-in-out 0.30s infinite;  }
+.sb-li-bar-4 { animation: sb-li-bar-grow 1.8s ease-in-out 0.45s infinite;  }
+
+@keyframes sb-li-line-draw {
+  0%   { stroke-dashoffset: 70; }
+  60%  { stroke-dashoffset: 0;  }
+  100% { stroke-dashoffset: 0;  }
+}
+.sb-li-line-draw { animation: sb-li-line-draw 2.4s ease-out infinite; }
+
+@keyframes sb-li-pin-pulse {
+  0%   { transform: scale(1);   filter: drop-shadow(0 0 0   rgba(30,95,224,0.7)); }
+  70%  { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(30,95,224,0));   }
+  100% { transform: scale(1);   filter: drop-shadow(0 0 0   rgba(30,95,224,0));   }
+}
+.sb-li-pin { animation: sb-li-pin-pulse 2s ease-out infinite; }
+
+@keyframes sb-li-scroll {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+.sb-li-scroll { animation: sb-li-scroll 3s ease-in-out infinite; }
+
 :root {
   --blue: #1e5fe0;
   --blue-d: #1742a8;

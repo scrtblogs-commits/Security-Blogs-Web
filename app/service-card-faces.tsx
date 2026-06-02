@@ -182,14 +182,15 @@ export function AEOFace(p: CardProps) {
 // =============================================================
 export function GEOFace(p: CardProps) {
   // Centered on Australia at zoom 4.0; 600x408 image matches the card's
-  // 440x300 aspect (~1.47), so the satellite tiles fill the card with no
-  // crop and pin positions stay accurate.
+  // 440x300 aspect (~1.47), so the tiles fill the card with no crop and
+  // pin positions stay accurate. Light style (mapbox/light-v11) makes the
+  // continent + state borders pop on a white background.
   const url = MAPBOX_TOKEN
-    ? `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/134,-27,4,0/600x408@2x?access_token=${MAPBOX_TOKEN}`
+    ? `https://api.mapbox.com/styles/v1/mapbox/light-v11/static/134,-27,4,0/600x408@2x?access_token=${MAPBOX_TOKEN}`
     : ''
   return (
-    <div style={{ ...SHELL, background: '#0a1428' }}>
-      <span style={SERVICE_TAG}>Service</span>
+    <div style={{ ...SHELL, background: '#f4f8fc' }}>
+      <span style={{ ...SERVICE_TAG, color: '#1a3661', textShadow: '0 1px 3px rgba(255,255,255,0.7)' }}>Service</span>
 
       {url ? (
         <div
@@ -197,17 +198,14 @@ export function GEOFace(p: CardProps) {
             position: 'absolute', inset: 0,
             backgroundImage: `url(${url})`,
             backgroundSize: 'cover', backgroundPosition: 'center',
-            opacity: 0.9,
+            opacity: 1,
           }}
         />
       ) : (
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 60% 60%, #1e5fe0 0%, transparent 55%)', opacity: 0.45 }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 60% 60%, rgba(30,95,224,0.18) 0%, transparent 55%)' }} />
       )}
 
-      {/* Subtle dark vignette at the top so the SERVICE tag stays legible */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,20,40,0.5) 0%, transparent 25%)' }} />
-
-      {/* Pulsing pins on every Australian capital */}
+      {/* Pulsing pins on every Australian capital — brand blue on white */}
       {AU_CAPITALS.map((c, i) => (
         <span
           key={c.name}
@@ -217,10 +215,10 @@ export function GEOFace(p: CardProps) {
             position: 'absolute',
             top: `${c.top}%`,
             left: `${c.left}%`,
-            width: 9, height: 9, borderRadius: '50%',
-            background: '#7eb6ff',
+            width: 10, height: 10, borderRadius: '50%',
+            background: '#1e5fe0',
             transform: 'translate(-50%, -50%)',
-            boxShadow: '0 0 0 0 rgba(126,182,255,0.65)',
+            boxShadow: '0 0 0 0 rgba(30,95,224,0.55), 0 0 0 2px #fff',
             animationDelay: `${i * 0.25}s`,
           }}
         />
