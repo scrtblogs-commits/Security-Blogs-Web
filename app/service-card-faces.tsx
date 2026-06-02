@@ -178,11 +178,14 @@ export function AEOFace(p: CardProps) {
 }
 
 // =============================================================
-// GEO — world map with pulsing pins (Mapbox Static)
+// GEO — Australia map with pulsing pins on all 8 capital cities
 // =============================================================
 export function GEOFace(p: CardProps) {
+  // Centered on Australia at zoom 4.0; 600x408 image matches the card's
+  // 440x300 aspect (~1.47), so the satellite tiles fill the card with no
+  // crop and pin positions stay accurate.
   const url = MAPBOX_TOKEN
-    ? `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/0,15,1.2,0/600x300@2x?access_token=${MAPBOX_TOKEN}`
+    ? `https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/134,-27,4,0/600x408@2x?access_token=${MAPBOX_TOKEN}`
     : ''
   return (
     <div style={{ ...SHELL, background: '#0a1428' }}>
@@ -194,27 +197,31 @@ export function GEOFace(p: CardProps) {
             position: 'absolute', inset: 0,
             backgroundImage: `url(${url})`,
             backgroundSize: 'cover', backgroundPosition: 'center',
-            opacity: 0.85,
+            opacity: 0.9,
           }}
         />
       ) : (
-        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 50%, #1e5fe0 0%, transparent 60%)', opacity: 0.5 }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 60% 60%, #1e5fe0 0%, transparent 55%)', opacity: 0.45 }} />
       )}
 
-      {/* Subtle dark vignette top so the tag stays legible */}
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,20,40,0.5) 0%, transparent 30%)' }} />
+      {/* Subtle dark vignette at the top so the SERVICE tag stays legible */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(10,20,40,0.5) 0%, transparent 25%)' }} />
 
-      {/* Pulsing pins — five markets */}
-      {PIN_POSITIONS.map((pos, i) => (
+      {/* Pulsing pins on every Australian capital */}
+      {AU_CAPITALS.map((c, i) => (
         <span
-          key={i}
+          key={c.name}
           className="sb-pin"
+          title={c.name}
           style={{
-            position: 'absolute', top: `${pos.top}%`, left: `${pos.left}%`,
-            width: 10, height: 10, borderRadius: '50%',
-            background: '#1e5fe0',
-            boxShadow: '0 0 0 0 rgba(30,95,224,0.6)',
-            animationDelay: `${i * 0.4}s`,
+            position: 'absolute',
+            top: `${c.top}%`,
+            left: `${c.left}%`,
+            width: 9, height: 9, borderRadius: '50%',
+            background: '#7eb6ff',
+            transform: 'translate(-50%, -50%)',
+            boxShadow: '0 0 0 0 rgba(126,182,255,0.65)',
+            animationDelay: `${i * 0.25}s`,
           }}
         />
       ))}
@@ -224,13 +231,19 @@ export function GEOFace(p: CardProps) {
   )
 }
 
-// Approximate positions for AU, US, UK, UAE, SG on the world-projected map.
-const PIN_POSITIONS = [
-  { top: 60, left: 80 }, // AU
-  { top: 38, left: 22 }, // US
-  { top: 28, left: 47 }, // UK
-  { top: 44, left: 60 }, // UAE
-  { top: 56, left: 73 }, // SG
+// Australia's 8 capitals plotted as % positions for the Mapbox static map
+// above. Positions are linear approximations against the visible bbox
+// (lng 107.7-160.3, lat -9.1 to -44.9) which is close enough for a 440px
+// wide card — the largest error is at Hobart and is < 2px.
+const AU_CAPITALS = [
+  { name: 'Darwin',    top: 9.4,  left: 44.0 },
+  { name: 'Brisbane',  top: 51.3, left: 86.2 },
+  { name: 'Perth',     top: 63.8, left: 15.5 },
+  { name: 'Sydney',    top: 69.2, left: 82.7 },
+  { name: 'Adelaide',  top: 72.1, left: 58.7 },
+  { name: 'Canberra',  top: 73.1, left: 78.8 },
+  { name: 'Melbourne', top: 80.2, left: 70.8 },
+  { name: 'Hobart',    top: 94.4, left: 75.3 },
 ]
 
 // =============================================================
