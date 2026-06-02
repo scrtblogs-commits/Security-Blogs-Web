@@ -102,4 +102,7 @@ Options -Indexes
   RedirectMatch 301 "^/security-seo-on-page/?$"        "/knowledge-hub/security-industry-seo/"
   RedirectMatch 301 "^/crowd-safety-australia-tips/?$" "/knowledge-hub/blogs/"
   RedirectMatch 301 "^/tag/.+$"                        "/knowledge-hub/blogs/"
+
+  # Phase 4 alias — new label, same destination
+  RedirectMatch 301 "^/publish-with-us/sponsored-placements/?$" "/publish-with-us/backlink-packages/"
 </IfModule>

@@ -55,8 +55,13 @@ export default function GuestPostForm() {
       extras: { wordCount: words, linkCount: links },
     })
     setSubmitting(false)
-    if (result.ok) setSent(true)
-    else setError(result.error || 'Submission failed.')
+    if (result.ok) {
+      // Redirect to the dedicated thank-you page (per Phase 7 spec) so
+      // every form on the site ends up at the same confirmation URL.
+      window.location.href = '/thank-you/'
+      return
+    }
+    setError(result.error || 'Submission failed.')
   }
 
   const onPreview = () => {
