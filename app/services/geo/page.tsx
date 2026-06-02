@@ -9,7 +9,6 @@ import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
-import KnowledgeGraphCanvas from '@/components/ui/KnowledgeGraphCanvas'
 import GeoMapDemo from './GeoMapDemo'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
@@ -84,17 +83,12 @@ export default function GeoPage() {
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="card" style={{ padding: 14 }}>
-              <div style={{ minHeight: 360 }}>
-                <KnowledgeGraphCanvas />
-              </div>
-            </div>
+            {/* Live AI-Maps demo replaces the orbital diagram — Australia
+                with pulsing capitals + SecurityBlogs at position 1 */}
+            <GeoMapDemo />
           </Reveal>
         </div>
       </HeroBg>
-
-      {/* Live AI-Maps demo — securityblogs at position 1 across capital cities */}
-      <GeoMapDemo />
 
       <section className="section">
         <div className="container">
