@@ -27,6 +27,64 @@
   50%      { box-shadow: 0 0 90px 18px rgba(255, 248, 220, 0.32); }
 }
 
+/* Service card face animations — used by app/service-card-faces.tsx */
+@keyframes sb-pin-pulse {
+  0%   { box-shadow: 0 0 0 0   rgba(30, 95, 224, 0.65); }
+  70%  { box-shadow: 0 0 0 14px rgba(30, 95, 224, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(30, 95, 224, 0);   }
+}
+.sb-pin { animation: sb-pin-pulse 2s infinite; }
+
+/* Typewriter for AIO/AEO chat cards */
+@keyframes sb-typewriter {
+  0%   { width: 0; }
+  60%  { width: 100%; }
+  100% { width: 100%; }
+}
+@keyframes sb-blink-caret {
+  50% { border-right-color: transparent; }
+}
+.sb-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid rgba(255,255,255,0.7);
+  animation: sb-typewriter 5s steps(40, end) infinite, sb-blink-caret 0.8s step-end infinite;
+}
+
+/* Bar chart growth for Google Ads card */
+@keyframes sb-bar-grow {
+  0%   { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+.sb-bar {
+  transform-origin: bottom;
+  animation: sb-bar-grow 1.2s ease-out forwards;
+}
+
+/* Scrolling preview for Web Design card */
+@keyframes sb-scroll-loop {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.sb-scroll-loop {
+  animation: sb-scroll-loop 12s linear infinite;
+}
+
+/* Featured-answer card subtle glow */
+@keyframes sb-rank-pulse {
+  0%, 100% { box-shadow: 0 6px 20px rgba(30,95,224,0.18); }
+  50%      { box-shadow: 0 8px 28px rgba(30,95,224,0.30); }
+}
+.sb-card-rank { animation: sb-rank-pulse 3s ease-in-out infinite; }
+
+/* Highlight pulse on the cited brand name */
+@keyframes sb-highlight-pulse {
+  0%, 100% { filter: brightness(1); }
+  50%      { filter: brightness(1.25); }
+}
+.sb-highlight { animation: sb-highlight-pulse 2.4s ease-in-out infinite; }
+
 :root {
   --blue: #1e5fe0;
   --blue-d: #1742a8;
