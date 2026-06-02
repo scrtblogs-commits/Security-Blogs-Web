@@ -1,3 +1,4 @@
+import Glyph from '@/components/ui/Glyph'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
 import SpiralAnimation from '@/components/ui/SpiralAnimation'
@@ -98,7 +99,7 @@ export default function BookStrategyCallPage() {
             {expect.map((e) => (
               <Item key={e.title}>
                 <div className="card" style={{ height: '100%' }}>
-                  <div style={{ fontSize: 28, marginBottom: 12 }}>{e.icon}</div>
+                  <div style={{ fontSize: 28, marginBottom: 12 }}><Glyph icon={e.icon} size={22} /></div>
                   <h3 style={{ fontSize: 18, marginBottom: 8 }}>{e.title}</h3>
                   <p className="text-soft" style={{ fontSize: 14 }} dangerouslySetInnerHTML={{ __html: e.desc }} />
                 </div>
@@ -121,7 +122,7 @@ export default function BookStrategyCallPage() {
             {benefits.map((b) => (
               <Item key={b.label}>
                 <div className="glass center" style={{ padding: 26 }}>
-                  <div style={{ fontSize: 30, marginBottom: 10 }}>{b.icon}</div>
+                  <div style={{ fontSize: 30, marginBottom: 10 }}><Glyph icon={b.icon} size={22} /></div>
                   <div style={{ fontWeight: 600, fontSize: 15 }}>{b.label}</div>
                 </div>
               </Item>

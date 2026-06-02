@@ -1,3 +1,4 @@
+import Glyph from '@/components/ui/Glyph'
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
@@ -169,7 +170,7 @@ export default function ServicesPage() {
             {why.map((w) => (
               <Item key={w.title}>
                 <div className="glass" style={{ padding: 26, height: '100%' }}>
-                  <div style={{ fontSize: 30, marginBottom: 14 }}>{w.icon}</div>
+                  <div style={{ fontSize: 30, marginBottom: 14 }}><Glyph icon={w.icon} size={22} /></div>
                   <h4 style={{ fontSize: 18, marginBottom: 8 }}>{w.title}</h4>
                   <p className="text-soft" style={{ fontSize: 14 }}>{w.desc}</p>
                 </div>

@@ -1,3 +1,4 @@
+import Glyph from '@/components/ui/Glyph'
 import Link from 'next/link'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -141,7 +142,7 @@ export default function PublishHubPage() {
             {benefits.map((b, i) => (
               <Reveal key={b.title} delay={i * 0.08}>
                 <div className="card" style={{ height: '100%' }}>
-                  <div style={{ fontSize: 26, marginBottom: 12 }}>{b.icon}</div>
+                  <div style={{ fontSize: 26, marginBottom: 12 }}><Glyph icon={b.icon} size={22} /></div>
                   <h4 style={{ fontSize: 16, marginBottom: 6 }}>{b.title}</h4>
                   <p className="text-soft" style={{ fontSize: 13.5 }}>{b.desc}</p>
                 </div>

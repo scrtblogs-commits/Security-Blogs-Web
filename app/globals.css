@@ -71,6 +71,45 @@
   animation: sb-scroll-loop 12s linear infinite;
 }
 
+/* ============================================================
+   Animated card backgrounds (Phase 5B)
+   Subtle drifting radial highlight on every .card sitewide.
+   - Pure CSS keyframes (no JS, browser pauses off-screen automatically)
+   - prefers-reduced-motion stops the animation
+   - Cards that paint their own backgrounds (live service faces) are
+     unaffected because their internal layers sit on top of ::before.
+   ============================================================ */
+.card {
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(30, 95, 224, 0.08) 0%,
+    transparent 50%
+  );
+  animation: sb-card-drift 22s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+@keyframes sb-card-drift {
+  0%   { transform: translate3d(-22%, -14%, 0) scale(1.00); }
+  33%  { transform: translate3d( 18%,   8%, 0) scale(1.18); }
+  66%  { transform: translate3d( -8%,  24%, 0) scale(0.96); }
+  100% { transform: translate3d(-22%, -14%, 0) scale(1.00); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card::before { animation: none; transform: none; }
+}
+
 /* Featured-answer card subtle glow */
 @keyframes sb-rank-pulse {
   0%, 100% { box-shadow: 0 6px 20px rgba(30,95,224,0.18); }

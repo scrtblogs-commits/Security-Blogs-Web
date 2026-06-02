@@ -1,4 +1,5 @@
 'use client'
+import Glyph from '@/components/ui/Glyph'
 import { useState } from 'react'
 
 type Step = { icon: string; title: string; desc: string }
@@ -75,7 +76,7 @@ export default function GuidesTabs() {
             </div>
             <div>
               <h4 style={{ fontSize: 15.5, marginBottom: 4 }}>
-                <span style={{ marginRight: 6 }}>{s.icon}</span>
+                <span style={{ marginRight: 6 }}><Glyph icon={s.icon} size={22} /></span>
                 {s.title}
               </h4>
               <p className="text-soft" style={{ fontSize: 13.5 }}>{s.desc}</p>

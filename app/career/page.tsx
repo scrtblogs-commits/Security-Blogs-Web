@@ -1,3 +1,4 @@
+import Glyph from '@/components/ui/Glyph'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
@@ -155,7 +156,7 @@ export default function CareerPage() {
             {values.map((v) => (
               <Item key={v.title}>
                 <GlassCard tilt glow style={{ height: '100%' }}>
-                  <div style={{ fontSize: 30, marginBottom: 14 }}>{v.icon}</div>
+                  <div style={{ fontSize: 30, marginBottom: 14 }}><Glyph icon={v.icon} size={22} /></div>
                   <h3 style={{ fontSize: 20, marginBottom: 8 }}>{v.title}</h3>
                   <p className="text-soft" style={{ fontSize: 14.5 }}>{v.desc}</p>
                 </GlassCard>

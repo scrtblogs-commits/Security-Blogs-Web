@@ -1,3 +1,4 @@
+import Glyph from '@/components/ui/Glyph'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
@@ -114,7 +115,7 @@ export default function AdvertisePage() {
             {placements.map((p) => (
               <Item key={p.title}>
                 <div className="card" style={{ height: '100%' }}>
-                  <div style={{ fontSize: 26, marginBottom: 12 }}>{p.icon}</div>
+                  <div style={{ fontSize: 26, marginBottom: 12 }}><Glyph icon={p.icon} size={22} /></div>
                   <h4 style={{ fontSize: 16, marginBottom: 6 }}>{p.title}</h4>
                   <p className="text-soft" style={{ fontSize: 13.5, marginBottom: 12 }}>{p.desc}</p>
                   <span className="chip">{p.price}</span>

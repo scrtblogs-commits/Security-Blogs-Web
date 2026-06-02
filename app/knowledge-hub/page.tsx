@@ -1,3 +1,4 @@
+import Glyph from '@/components/ui/Glyph'
 import Link from 'next/link'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -84,7 +85,7 @@ export default function KnowledgeHubPage() {
               return (
                 <Item key={h.href}>
                   <Link href={h.href} className="card" style={{ display: 'block', height: '100%' }}>
-                    <div style={{ width: 52, height: 52, borderRadius: 14, display: 'grid', placeItems: 'center', fontSize: 26, background: `${meta.color}18`, marginBottom: 16 }}>{meta.icon}</div>
+                    <div style={{ width: 52, height: 52, borderRadius: 14, display: 'grid', placeItems: 'center', fontSize: 26, background: `${meta.color}18`, marginBottom: 16 }}><Glyph icon={meta.icon} size={26} /></div>
                     <h3 style={{ fontSize: 20, marginBottom: 8 }}>{h.title}</h3>
                     <p className="text-soft" style={{ fontSize: 14.5, marginBottom: 14 }}>{meta.desc}</p>
                     <span style={{ color: meta.color, fontWeight: 600, fontSize: 14 }}>Explore →</span>

@@ -1,4 +1,5 @@
 'use client'
+import Glyph from '@/components/ui/Glyph'
 import { useState } from 'react'
 import GaugeRing, { tierFor } from '@/components/ui/GaugeRing'
 import MagneticButton from '@/components/ui/MagneticButton'
@@ -90,7 +91,7 @@ export default function Checklist() {
         {GROUPS.map((g) => (
           <div key={g.title} className="card">
             <div className="flex items-center gap-2" style={{ marginBottom: 14 }}>
-              <span style={{ fontSize: 20 }}>{g.icon}</span>
+              <span style={{ fontSize: 20 }}><Glyph icon={g.icon} size={20} /></span>
               <h4 style={{ fontSize: 16 }}>{g.title}</h4>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
