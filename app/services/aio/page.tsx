@@ -5,10 +5,8 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import AioCapabilities from './AioCapabilities'
-import ProcessSteps from '@/components/ui/ProcessSteps'
-import StatsStrip from '@/components/ui/StatsStrip'
+import { AioHeroDemo, AioJourney, AioResults } from './AioLiveSections'
 import FAQAccordion from '@/components/ui/FAQAccordion'
-import NeuralNetworkCanvas from '@/components/ui/NeuralNetworkCanvas'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -82,11 +80,9 @@ export default function AioPage() {
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <div className="card" style={{ padding: 14 }}>
-              <div style={{ height: 340 }}>
-                <NeuralNetworkCanvas />
-              </div>
-            </div>
+            {/* Live AI Mode chat showing securityblogs.com.au cited
+                (replaces the generic NeuralNetworkCanvas) */}
+            <AioHeroDemo />
           </Reveal>
         </div>
       </HeroBg>
@@ -105,14 +101,14 @@ export default function AioPage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="How it works" title="From invisible to consistently cited." />
-          <ProcessSteps steps={steps} />
+          <AioJourney />
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="The results" title="What AIO delivers for security brands." />
-          <StatsStrip items={stats} />
+          <AioResults />
         </div>
       </section>
 
