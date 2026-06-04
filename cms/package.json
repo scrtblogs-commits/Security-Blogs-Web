@@ -10,7 +10,14 @@
     "lint": "next lint",
     "generate:types": "payload generate:types",
     "payload": "payload",
-    "seed:admin": "tsx src/seed/admin.ts"
+    "seed:admin": "tsx src/seed/admin.ts",
+    "seed:settings": "tsx src/seed/settings.ts",
+    "seed:services": "tsx src/seed/services.ts",
+    "seed:case-studies": "tsx src/seed/case-studies.ts",
+    "seed:partners": "tsx src/seed/partners.ts",
+    "seed:pages": "tsx src/seed/pages.ts",
+    "seed:redirects": "tsx src/seed/redirects.ts",
+    "seed:all": "tsx src/seed/all.ts"
   },
   "dependencies": {
     "payload": "^3.0.0",

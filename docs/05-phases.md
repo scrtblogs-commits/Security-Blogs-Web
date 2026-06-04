@@ -95,40 +95,97 @@ with the date below.
 
 ---
 
-## Phase B — Content Migration
+## Phase B — Content Migration  *(current branch)*
 
-### Scope
+### Scope (this delivery)
 
-- Add Pages, Services, CaseStudies, Glossary, Jobs, Directory,
-  LegalPages, Settings, Redirects, AuditLog collections
-- Seed scripts that import every page's hard-coded content from the
-  existing TSX files into the CMS
-- Visual-parity verification against production
+- Add **Services**, **CaseStudies**, **Partners**, **Pages**, **Redirects** collections
+- Add **Settings** global (Payload Global, single-row sitewide config)
+- Seed scripts that import current production content into each collection
+- Updated `payload.config.ts` registering the new collections + global
+- Updated `cms/package.json` with `seed:*` npm scripts per collection
+- This documentation update
 
-### Phase B will deliver
+### Files delivered in Phase B
 
-| Collection | Purpose |
-|---|---|
-| `pages` | Home, About, Contact, Knowledge Hub index, Free Tools, AI Visibility Center, Book Strategy Call, Career index, Security Directory index, Thank You, Publish With Us + 7 sub-pages |
-| `services` | The 7 service offerings (with capabilities, process steps, faqs, AI visibility) |
-| `case_studies` | The 6 client case studies + per-case body content |
-| `glossary` | Defined Terms entries |
-| `jobs` | Open roles for /career/ |
-| `directory_listings` | Security Directory entries |
-| `legal_pages` | Privacy, Terms, Content Guidelines |
-| `settings` | Sitewide config (logos, contact, footer, social, GTM, etc.) |
-| `redirects` | The ~30 `.htaccess` 301s, editable from admin |
-| `audit_log` | Append-only log of every admin action |
+```
+cms/src/collections/Partners.ts
+cms/src/collections/Services.ts
+cms/src/collections/CaseStudies.ts
+cms/src/collections/Pages.ts
+cms/src/collections/Redirects.ts
+cms/src/globals/Settings.ts
+cms/src/seed/settings.ts
+cms/src/seed/services.ts
+cms/src/seed/case-studies.ts
+cms/src/seed/partners.ts
+cms/src/seed/pages.ts
+cms/src/seed/redirects.ts
+cms/src/seed/all.ts
+cms/payload.config.ts          ← modified
+cms/package.json               ← modified
+docs/05-phases.md              ← this file, updated
+```
 
-Plus 14 documentation guides updated.
+The existing marketing site (`app/`, `components/`, etc.) is untouched.
+Production deploys continue to work as before.
 
-### Phase B validation
+### Phase B validation checklist
 
-- Every visible page on production has an equivalent CMS record
-- Click-through audit: open production and staging side-by-side, verify
-  word-for-word match on all 36 indexed URLs
-- AI Visibility fields populated for the top 12 priority pages
-- Audit log shows every change made during the migration
+After Phase A's stack is running (`docker compose up -d` + `pnpm dev`):
+
+1. Pull this branch + restart dev server (Payload picks up the new collections automatically).
+2. Run migrations to add new tables:
+   ```bash
+   cd cms && pnpm payload migrate
+   ```
+3. Run the seed pipeline:
+   ```bash
+   pnpm seed:all
+   ```
+   Expected console output (idempotent — re-running shows "Updated" instead of "Created"):
+   ```
+   ✓ Settings seeded
+   + Created service: security-seo
+   + Created service: aio
+   + Created service: aeo
+   + Created service: geo
+   + Created service: google-ads
+   + Created service: bing-ads
+   + Created service: web-design
+   ✓ 7 services seeded.
+   + Created case study: shieldtech-security
+   ... (6 case studies)
+   + Created partner: shieldtech-security
+   ... (6 partners)
+   + Created page: home
+   ... (10 pages)
+   Parsed 40 RedirectMatch rules from .htaccess
+   ✓ Redirects: 40 created, 0 updated.
+   ```
+4. Open admin → walk the sidebar:
+   - [ ] **Settings** (global) shows brand/contact/social/footer + GTM ID populated
+   - [ ] **Services** lists 7 entries (Security SEO, AIO, AEO, GEO, Google Ads, Bing Ads, Web Design) all `published`
+   - [ ] **Case Studies** lists 6 entries with `service` rel populated
+   - [ ] **Partners** lists 6 entries with `caseStudy` + `services` rels populated
+   - [ ] **Pages** lists at least 10 entries (home, about-us, contact, case-studies, free-tools, ai-visibility-center, book-strategy-call, career, security-directory, thank-you)
+   - [ ] **Redirects** lists ~40 entries imported from `public/.htaccess`
+5. Open a Service record (e.g. `security-seo`) and confirm:
+   - Tabs: Overview, Capabilities, Process, Stats & Results, FAQs, Benefits
+   - All arrays populated with current production data
+   - **AI Visibility** sidebar tab is present (empty — fill from admin going forward)
+6. Open a Page record (e.g. `home`):
+   - `modules` shows ordered blocks: hero, stats, cta-band
+   - Each block edits with correct field shape
+7. Run `pnpm seed:all` a second time. Expected: every line shows `Updated` instead of `Created` (idempotency check).
+8. Open a Redirect entry, change `isActive` to `false`, save. Reopen — change persisted.
+
+When every checkbox passes — **Phase B is signed off**.
+
+### Sign-off
+
+- Validated locally on: ________________
+- Validated by: ________________
 
 ---
 
