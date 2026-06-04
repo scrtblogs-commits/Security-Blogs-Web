@@ -29,3 +29,13 @@ next-env.d.ts
 
 # build artifacts
 *.zip
+
+# cms (Payload) — local dev artefacts
+/cms/node_modules
+/cms/.next
+/cms/.payload
+/cms/dist
+/cms/media-uploads
+
+# docker dev volumes
+/pgdata
