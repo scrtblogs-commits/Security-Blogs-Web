@@ -1,0 +1,48 @@
+# Local development stack for SecurityBlogs.
+#
+# Spins up:
+#   - postgres 16        on localhost:5432  (volume: pgdata)
+#   - mailhog            on localhost:8025  (catches every outbound email
+#                                            so we never actually send during dev)
+#
+# The CMS itself is run directly on the host (faster reload than running
+# inside Docker for daily dev). To run it:
+#     cd cms && pnpm install && pnpm dev
+# It binds to localhost:3001 and connects to the postgres container above.
+#
+# The marketing Next.js site (this repo's root) is unaffected by this file.
+#
+# Production deployment uses a separate compose file (ops/docker-compose.prod.yml,
+# delivered in Phase D).
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: securityblogs-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: securityblogs
+      POSTGRES_PASSWORD: securityblogs
+      POSTGRES_DB: securityblogs
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U securityblogs']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mail:
+    image: mailhog/mailhog:latest
+    container_name: securityblogs-mailhog
+    restart: unless-stopped
+    ports:
+      - '1025:1025'  # SMTP for the CMS to send to
+      - '8025:8025'  # Web UI at http://localhost:8025 to view caught messages
+
+volumes:
+  pgdata:
+    driver: local

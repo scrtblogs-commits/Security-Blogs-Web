@@ -1,0 +1,6 @@
+/* Admin UI tweaks. Keep small — Payload's default styles are good.
+   Phase A: just nudge the brand colour to match SecurityBlogs blue. */
+:root {
+  --theme-elevation-1000: #0f2244;
+  --theme-success-600: #1e5fe0;
+}
