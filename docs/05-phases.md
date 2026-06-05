@@ -189,26 +189,173 @@ When every checkbox passes — **Phase B is signed off**.
 
 ---
 
-## Phase C — Frontend Rewire
+## Phase C — Frontend Rewire **(this delivery — C.1 plumbing)**
 
-### Scope
+### Scope (this delivery)
 
-- Marketing site (`app/`) switched from `output: 'export'` to ISR
-- Page TSX files refactored to fetch from CMS (typed Payload client)
-- New dynamic routes: `/services/[slug]`, `/case-studies/[slug]`,
-  `/knowledge-hub/[category]/[slug]`
-- `lib/submitForm.ts` → `/api/leads` (own endpoint) instead of Web3Forms
-- Cloudflare Turnstile wired into the 5 public forms
-- Sitemap, robots.txt, llms.txt generated from CMS data
-- Frontend tests pass at staging URL
+Phase C is split in two: **C.1 plumbing** (this branch) and **C.2
+per-page migration** (a separate later branch). C.1 ships the
+infrastructure that lets any page fetch from the CMS; C.2 walks through
+each hand-built page and swaps its hard-coded content for a CMS read.
 
-### Phase C validation
+C.1 in detail:
 
-- Every page on `staging.securityblogs.com.au` renders identical to
-  `securityblogs.com.au` (text + layout + meta + JSON-LD)
-- Submitting the contact form lands in the Leads collection within 2 seconds
-- Career application form upload works end-to-end
-- Newsletter / visibility-challenge / visibility-checker forms all reach the CMS
+- `next.config.mjs` flipped off `output: 'export'` → standard Next.js
+  server rendering with ISR. **This breaks the static-export tar deploy
+  pipeline**, so this branch is NOT deployable to the existing
+  LiteSpeed shared host. Production keeps serving the last static
+  build until Phase D's VPS cut-over.
+- `lib/cms.ts` — typed Payload REST client. All page fetches go through
+  here. Per-call ISR revalidate, fail-soft errors, cache tags per
+  collection for surgical purges.
+- `lib/cmsTypes.ts` — hand-maintained TS read-shape mirror of the
+  collection schemas.
+- `app/api/leads/route.ts` — Lead submission endpoint replacing
+  Web3Forms. Validates, Turnstile-verifies, rate-limits, creates the
+  Lead via the CMS local API.
+- `lib/submitForm.ts` rewired from Web3Forms to `/api/leads`. Public
+  signature unchanged so all 5 existing forms keep working.
+- `components/Turnstile.tsx` — drop-in Cloudflare Turnstile widget.
+- `middleware.ts` — CMS-driven redirects (literal + regex), cached 60s,
+  fires hit-counter to `/api/redirects/:id/hit`.
+- `components/modules/ModuleRenderer.tsx` + 9 block components +
+  `LexicalRenderer.tsx` — read-time renderers for every block type the
+  Pages collection supports.
+- Dynamic route shells:
+  - `app/services/[slug]/page.tsx` — fetches CmsService, ISR 60s
+  - `app/case-studies/[slug]/page.tsx` — fetches CmsCaseStudy, ISR 60s
+  - `app/knowledge-hub/[category]/[slug]/page.tsx` — fetches CmsPost, ISR 60s
+  - All three coexist with the legacy hand-built routes (static
+    sub-segments shadow `[slug]` in the App Router); legacy routes are
+    removed one at a time in Phase C.2.
+- `app/sitemap.ts` — now generated from CMS + hand-built path list.
+- `app/robots.ts` — reads `Settings.maintenance.enabled` from the CMS.
+- `app/llms.txt/route.ts` — generated from CMS (services, studies,
+  posts grouped by category, contact details).
+- `public/llms.txt` removed (was the static-export version).
+- `.env.example` updated with `CMS_URL`, `PAYLOAD_API_KEY`,
+  `TURNSTILE_SECRET_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`,
+  `NEXT_PUBLIC_SITE_URL`.
+
+### What is NOT in C.1 (deferred to C.2)
+
+- The home page (`app/page.tsx`) and the 10 other top-level pages still
+  read from `lib/site.ts` constants and hard-coded JSX. C.2 swaps each
+  to render the CMS `Page` record + `ModuleRenderer`.
+- The 7 hand-built service pages (`app/services/aio/`, etc.) still
+  exist. C.2 deletes each one (folder by folder) so the dynamic
+  `[slug]` route takes over.
+- The 8 hand-built knowledge-hub category landings still exist. C.2
+  rewires each to fetch its post list from the CMS.
+- Multipart file uploads (CV uploads in `ApplicationForm`) — `/api/leads`
+  currently records the filename as a string in the lead's meta. C.2
+  adds a multipart `/api/upload` endpoint that stores the file in the
+  Media collection and links it to the lead.
+- Turnstile widget is *available* but not yet rendered inside the 5
+  form components. C.2 adds `<Turnstile />` to each form.
+
+### Files delivered in Phase C.1
+
+```
+next.config.mjs              ← modified (output:'export' removed)
+.env.example                 ← modified (CMS_URL, TURNSTILE_*, PAYLOAD_API_KEY)
+public/llms.txt              ← deleted
+app/robots.ts                ← modified (reads Settings.maintenance)
+app/sitemap.ts               ← modified (now reads CMS)
+app/api/leads/route.ts       ← new (form submission endpoint)
+app/llms.txt/route.ts        ← new (dynamic /llms.txt from CMS)
+app/services/[slug]/page.tsx                    ← new
+app/case-studies/[slug]/page.tsx                ← new
+app/knowledge-hub/[category]/[slug]/page.tsx    ← new
+middleware.ts                ← new (CMS-driven redirects)
+lib/cms.ts                   ← new (typed CMS client)
+lib/cmsTypes.ts              ← new (read-shape types)
+lib/submitForm.ts            ← rewired (Web3Forms → /api/leads)
+components/Turnstile.tsx     ← new
+components/modules/ModuleRenderer.tsx           ← new
+components/modules/LexicalRenderer.tsx          ← new
+components/modules/blocks/HeroBlock.tsx         ← new
+components/modules/blocks/CapabilitiesBlock.tsx ← new
+components/modules/blocks/StatsBlock.tsx        ← new
+components/modules/blocks/FaqsBlock.tsx         ← new
+components/modules/blocks/CtaBandBlock.tsx      ← new
+components/modules/blocks/RichTextBlock.tsx     ← new
+components/modules/blocks/ImageBlock.tsx        ← new
+components/modules/blocks/ProcessStepsBlock.tsx ← new
+components/modules/blocks/ValuesBlock.tsx       ← new
+docs/05-phases.md            ← this file, updated
+docs/06-frontend-data-flow.md ← new (architecture reference)
+```
+
+Existing static service pages, knowledge-hub landings, and top-level
+pages are untouched and keep rendering as before.
+
+### Phase C.1 validation checklist
+
+Pre-req: Phase A + B running locally (`docker compose up -d`, CMS at
+`localhost:3001`, `pnpm seed:all` complete).
+
+1. Set marketing-site env vars in `.env.local` at repo root:
+   ```
+   CMS_URL=http://localhost:3001
+   PAYLOAD_API_KEY=<paste from Payload admin → Users → API Key>
+   TURNSTILE_SECRET_KEY=          # leave empty for local dev
+   NEXT_PUBLIC_TURNSTILE_SITE_KEY= # leave empty for local dev
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
+   ```
+2. Pull this branch + start marketing site:
+   ```bash
+   git fetch && git checkout phase-c-frontend-rewire
+   pnpm install
+   pnpm dev                       # boots on :3000
+   ```
+3. Smoke-test existing pages still render:
+   - [ ] `localhost:3000/` — home renders identical to current production
+   - [ ] `localhost:3000/aio/` — legacy hand-built page renders
+   - [ ] `localhost:3000/case-studies/` — index renders
+4. New CMS-driven routes:
+   - [ ] `localhost:3000/services/security-seo/` — renders from CMS
+         (tabs: hero, capabilities, process, stats, faqs)
+   - [ ] `localhost:3000/services/web-design/` — renders from CMS
+   - [ ] `localhost:3000/case-studies/shieldtech-security/` — renders
+         from CMS, including results metrics
+   - [ ] `localhost:3000/knowledge-hub/blog/<slug-of-any-seeded-post>/`
+         — renders Lexical body, metadata, author
+5. SEO files come from CMS:
+   - [ ] `curl localhost:3000/sitemap.xml` lists every service + study +
+         post URL from the CMS
+   - [ ] `curl localhost:3000/robots.txt` shows the normal allow rules
+         (flip `Settings.maintenance.enabled = true` in admin → wait
+         600s or run with `revalidate=0` → confirm it switches to
+         `Disallow: /`)
+   - [ ] `curl localhost:3000/llms.txt` shows brand header + sections
+         per service / case-study / posts-by-category
+6. Form submission:
+   - [ ] Open `localhost:3000/contact/`, fill + submit
+   - [ ] Admin → Leads — new entry appears within 2s
+   - [ ] MailHog at `localhost:8025` — assigned-to notification email
+         landed if the form picked an assignee
+   - [ ] Resubmit 16 times within 15 minutes from the same IP — 16th
+         attempt returns HTTP 429
+7. Redirect middleware:
+   - [ ] `curl -I localhost:3000/aio` (no trailing slash) — should 301
+         per the seeded `.htaccess` rule
+   - [ ] Admin → Redirects → open the rule that just fired → `hitCount`
+         incremented by 1
+   - [ ] Toggle `isActive = false` on a rule, wait 60s, confirm
+         middleware stops serving it
+8. ISR purge:
+   - [ ] Edit a Service's `heroDescription` in admin, save
+   - [ ] Wait 60s, refresh `/services/<slug>/` — new text appears
+         without a redeploy
+
+When every checkbox passes — **Phase C.1 is signed off**. Phase C.2
+(per-page migration) begins on a new branch.
+
+### Sign-off
+
+- Validated locally on: ________________
+- Validated by: ________________
 
 ---
 
