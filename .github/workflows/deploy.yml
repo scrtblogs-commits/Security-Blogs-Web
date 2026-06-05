@@ -55,3 +55,7 @@ jobs:
             **/node_modules/**
             .well-known/**
             cgi-bin/**
+            logo.png
+            logo*.png
+            logo*.svg
+            favicon.*

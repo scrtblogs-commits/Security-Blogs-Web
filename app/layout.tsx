@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     url: 'https://securityblogs.com.au',
     siteName: 'SecurityGrowth',
     type: 'website',
+    images: ['/logo.png'],
+  },
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
   },
 }
 

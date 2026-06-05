@@ -13,9 +13,9 @@ export default function Footer() {
       <div className="container" style={{ padding: '64px 24px 32px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr', gap: 32 }} className="sg-footer-grid">
           <div>
-            <Link href="/" className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 19, marginBottom: 14 }}>
-              <span style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg, var(--blue), var(--violet))', color: '#fff', display: 'grid', placeItems: 'center', fontSize: 16 }}>S</span>
-              <span><span className="accent">Security</span>Growth</span>
+            <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-flex', alignItems: 'center', marginBottom: 14 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.png" alt="SecurityBlogs" style={{ height: 48, width: 'auto', display: 'block' }} />
             </Link>
             <p className="text-soft" style={{ fontSize: 14, maxWidth: 280, marginBottom: 18 }}>
               {SITE.footer.tagline}

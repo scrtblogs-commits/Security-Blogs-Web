@@ -77,9 +77,9 @@ export default function Navbar() {
       }}
     >
       <div className="container flex items-center justify-between" style={{ gap: 20 }}>
-        <Link href="/" className="flex items-center gap-2" style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 19 }}>
-          <span style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg, var(--blue), var(--violet))', color: '#fff', display: 'grid', placeItems: 'center', fontSize: 16 }}>S</span>
-          <span><span className="accent">Security</span>Growth</span>
+        <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-flex', alignItems: 'center' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="SecurityBlogs" style={{ height: 44, width: 'auto', display: 'block' }} />
         </Link>
 
         {/* Desktop nav */}
