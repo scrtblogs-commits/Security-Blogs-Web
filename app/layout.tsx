@@ -55,11 +55,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-AU">
       <head>
+        {/* Theme init — inline in <head> so it runs before first paint, no flash */}
+        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={siteSchema} />
       </head>
       <body>
-        {/* Theme init — runs before paint to avoid flash */}
-        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInit }} />
         {/* Google Tag Manager */}
         <Script id="gtm-head" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: gtmHead }} />
         <noscript dangerouslySetInnerHTML={{ __html: gtmNoscript }} />
