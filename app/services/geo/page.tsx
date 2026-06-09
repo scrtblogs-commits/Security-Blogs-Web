@@ -5,7 +5,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import GeoCapabilities from './GeoCapabilities'
-import ProcessSteps from '@/components/ui/ProcessSteps'
+import GeoHowItWorks from './GeoHowItWorks'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
@@ -102,12 +102,7 @@ export default function GeoPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="How it works" title="From unknown to AI-recommended." />
-          <ProcessSteps steps={steps} />
-        </div>
-      </section>
+      <GeoHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
