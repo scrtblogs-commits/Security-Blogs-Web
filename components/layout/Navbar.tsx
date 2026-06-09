@@ -32,7 +32,7 @@ const dropdowns: Drop[] = [
 ]
 
 const flatLinks = [
-  { label: 'Pricing', href: '/pricing/' },
+  { label: 'Pricing', href: '/publish-with-us/product-promotion/' },
   { label: 'About',   href: '/about-us/' },
 ]
 
@@ -53,11 +53,12 @@ export default function Navbar() {
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, height: 'var(--nav-h)',
       display: 'flex', alignItems: 'center',
-      background: scrolled ? 'color-mix(in srgb, var(--bg) 78%, transparent)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(14px) saturate(160%)' : 'none',
-      WebkitBackdropFilter: scrolled ? 'blur(14px) saturate(160%)' : 'none',
-      borderBottom: scrolled ? '1px solid var(--line)' : '1px solid transparent',
-      transition: 'all 0.25s ease',
+      background: 'rgba(255,255,255,0.96)',
+      backdropFilter: 'blur(16px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+      borderBottom: '1px solid rgba(18,42,86,0.09)',
+      boxShadow: scrolled ? '0 4px 24px -8px rgba(18,42,86,0.10)' : '0 1px 0 rgba(18,42,86,0.06)',
+      transition: 'box-shadow 0.25s ease',
     }}>
       <div className="container flex items-center justify-between" style={{ gap: 20 }}>
 
