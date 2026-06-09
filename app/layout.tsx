@@ -49,18 +49,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 const gtmNoscript = `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS9SXB2K" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
 
-const themeInit = `(function(){try{var t=localStorage.getItem('sg-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-AU">
       <head>
-        {/* Theme init — inline in <head> so it runs before first paint, no flash */}
-        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={siteSchema} />
       </head>
       <body>
+        {/* Theme init — external src avoids React 19 inline-script warning */}
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
         {/* Google Tag Manager */}
         <Script id="gtm-head" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: gtmHead }} />
         <noscript dangerouslySetInnerHTML={{ __html: gtmNoscript }} />
