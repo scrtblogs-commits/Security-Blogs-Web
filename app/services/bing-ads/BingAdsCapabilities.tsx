@@ -1,5 +1,6 @@
 'use client'
 import type React from 'react'
+import { Fragment } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 
@@ -242,7 +243,7 @@ function JourneyPreview({ hovered, accent }: { hovered: boolean; accent: string 
       <div style={{ fontSize: 8.5, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.1em', fontFamily: 'var(--font-mono)' }}>SEQUENTIAL JOURNEY</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
         {steps.map((s, i) => (
-          <React.Fragment key={s.n}>
+          <Fragment key={s.n}>
             <motion.div
               animate={hovered ? { scale: 1.05, boxShadow: `0 0 16px -4px ${accent}88` } : { scale: 1 }}
               transition={{ delay: i * 0.08, duration: 0.3 }}
@@ -255,7 +256,7 @@ function JourneyPreview({ hovered, accent }: { hovered: boolean; accent: string 
             {i < steps.length - 1 && (
               <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 14, flexShrink: 0 }}>→</span>
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
       <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)', marginTop: 4, fontFamily: 'var(--font-mono)' }}>Avg 3-touch journey to convert B2B buyer</div>
