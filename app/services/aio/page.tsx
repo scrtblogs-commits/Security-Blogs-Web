@@ -5,7 +5,8 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import AioCapabilities from './AioCapabilities'
-import { AioJourney, AioResults } from './AioLiveSections'
+import { AioResults } from './AioLiveSections'
+import AioHowItWorks from './AioHowItWorks'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
@@ -109,12 +110,7 @@ export default function AioPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="How it works" title="From invisible to consistently cited." />
-          <AioJourney />
-        </div>
-      </section>
+      <AioHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
