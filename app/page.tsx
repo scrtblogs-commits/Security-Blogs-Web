@@ -91,7 +91,7 @@ export default function HomePage() {
       {/* ─────────────────────────────────────────
           5. STATS
       ───────────────────────────────────────── */}
-      <section className="section" id="stats" style={{ paddingTop: 0 }}>
+      <section className="section" id="stats" style={{ background: '#fff' }}>
         <div className="container">
           <SectionHead eyebrow="The results" title="Numbers our clients brag about." />
           <StatsStrip items={stats} />
