@@ -12,6 +12,7 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 import SeoHeroVisual from './SeoHeroVisual'
 import SeoGlobeNetwork from './SeoGlobeNetwork'
+import SeoCapabilitiesScroll from './SeoCapabilitiesScroll'
 
 const ACCENT = '#1e9e75'
 
@@ -97,6 +98,9 @@ export default function SecuritySeoPage() {
             title="Everything your security brand needs to own page one."
             sub="A full-stack SEO programme purpose-built for the high-trust, compliance-driven security industry."
           />
+        </div>
+        <SeoCapabilitiesScroll items={capabilities} accent={ACCENT} />
+        <div className="container" style={{ marginTop: 56 }}>
           <SeoGlobeNetwork />
         </div>
       </section>
