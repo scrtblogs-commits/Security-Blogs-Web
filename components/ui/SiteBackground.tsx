@@ -5,8 +5,9 @@ import MeshGradient from './backgrounds/MeshGradient'
 import DotNoise from './backgrounds/DotNoise'
 import ParticleField from './backgrounds/ParticleField'
 import SkyAtmosphere from './backgrounds/SkyAtmosphere'
+import GlowBackground from './backgrounds/GlowBackground'
 
-type Variant = 'sky' | 'aurora' | 'mesh' | 'particles' | 'dots' | 'none'
+type Variant = 'sky' | 'aurora' | 'mesh' | 'particles' | 'dots' | 'glow' | 'none'
 
 // Order matters for the (unused for now) variant switcher: most prominent
 // option first. 'sky' is the new sitewide default — daytime sky in light
@@ -20,7 +21,7 @@ const options: { key: Variant; label: string }[] = [
   { key: 'none', label: 'None' },
 ]
 
-export default function SiteBackground({ defaultVariant = 'particles' as Variant }: { defaultVariant?: Variant }) {
+export default function SiteBackground({ defaultVariant = 'glow' as Variant }: { defaultVariant?: Variant }) {
   const [variant, setVariant] = useState<Variant>(defaultVariant)
   const [ready, setReady] = useState(false)
 
@@ -39,6 +40,7 @@ export default function SiteBackground({ defaultVariant = 'particles' as Variant
       {ready && variant === 'mesh' && <MeshGradient />}
       {ready && variant === 'particles' && <ParticleField />}
       {ready && variant === 'dots' && <DotNoise />}
+      {ready && variant === 'glow' && <GlowBackground />}
     </div>
   )
 }
