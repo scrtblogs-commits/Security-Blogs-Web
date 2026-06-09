@@ -15,6 +15,7 @@ import AdPreviewCard from '@/components/ui/AdPreviewCard'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 import PromoVideoSection from '@/components/ui/PromoVideoSection'
+import GoogleAdsHeroVisual from './GoogleAdsHeroVisual'
 
 const ACCENT = '#f6c715'
 
@@ -241,24 +242,29 @@ export default function GoogleAdsPage() {
         serviceType: 'Search Engine Marketing',
       })} />
       <HeroBg grid>
-        <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Google Ads' }]} />
-          <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}66`, background: `${ACCENT}14` }}>
-            <span className="dot dot-pulse" style={{ background: ACCENT }} /> GOOGLE ADS · SECURITY INDUSTRY
-          </span>
-          <h1 className="h1" style={{ marginBottom: 20, maxWidth: 900 }}>
-            Google Ads That Convert{' '}
-            <span style={{ color: ACCENT, fontStyle: 'italic' }}>Security Buyers</span>
-          </h1>
-          <p className="lead" style={{ maxWidth: 640, marginBottom: 28 }}>
-            High-intent search campaigns engineered for security installers and providers — every dollar
-            tracked to a lead, every lead tied to revenue.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
-            <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
-          </div>
-        </Reveal>
+        <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
+          <Reveal>
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Google Ads' }]} />
+            <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}66`, background: `${ACCENT}14` }}>
+              <span className="dot dot-pulse" style={{ background: ACCENT }} /> GOOGLE ADS · SECURITY INDUSTRY
+            </span>
+            <h1 className="h1" style={{ marginBottom: 20, maxWidth: 900 }}>
+              Google Ads That Convert{' '}
+              <span style={{ color: ACCENT, fontStyle: 'italic' }}>Security Buyers</span>
+            </h1>
+            <p className="lead" style={{ maxWidth: 560, marginBottom: 28 }}>
+              High-intent search campaigns engineered for security installers and providers — every dollar
+              tracked to a lead, every lead tied to revenue.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
+              <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <GoogleAdsHeroVisual />
+          </Reveal>
+        </div>
       </HeroBg>
 
       <section className="section" style={{ paddingTop: 0 }}>
