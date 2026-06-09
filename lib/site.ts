@@ -17,17 +17,13 @@ export const knowledgeHub = [
   { title: 'Blog', href: '/knowledge-hub/blogs/' },
   { title: 'Security Industry SEO', href: '/knowledge-hub/security-industry-seo/' },
   { title: 'Security Guides', href: '/knowledge-hub/security-guides/' },
-  { title: 'Industry News', href: '/knowledge-hub/industry-news/' },
   { title: 'Security Trends 2026', href: '/knowledge-hub/security-trends-2026/' },
-  { title: 'Definitions & Glossary', href: '/knowledge-hub/definitions-glossary/' },
-  { title: 'Research Reports', href: '/knowledge-hub/research-reports/' },
 ]
 
 export const publishWithUs = [
   { title: 'Guest Posting', href: '/publish-with-us/guest-posting/' },
   { title: 'Sponsored Posts', href: '/publish-with-us/sponsored-posts/' },
   { title: 'Product Promotion', href: '/publish-with-us/product-promotion/' },
-  { title: 'Press Release', href: '/publish-with-us/press-release/' },
   { title: 'Backlink Packages', href: '/publish-with-us/backlink-packages/' },
   { title: 'Pricing Guidelines', href: '/publish-with-us/pricing-guidelines/' },
   { title: 'Advertise', href: '/publish-with-us/advertise/' },
