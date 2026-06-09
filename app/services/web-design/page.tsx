@@ -4,7 +4,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import WebDesignCapabilities from './WebDesignCapabilities'
-import ProcessSteps from '@/components/ui/ProcessSteps'
+import WebDesignHowItWorks from './WebDesignHowItWorks'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import SpiralAnimation from '@/components/ui/SpiralAnimation'
@@ -119,12 +119,7 @@ export default function WebDesignPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="Our process" title="A clear path from idea to launch." />
-          <ProcessSteps steps={steps} />
-        </div>
-      </section>
+      <WebDesignHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
