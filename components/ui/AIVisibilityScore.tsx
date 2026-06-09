@@ -182,10 +182,11 @@ export default function AIVisibilityScore() {
   // ── Mouse-tracking tilt ──────────────────────────────────────────────────
   const mouseX      = useMotionValue(0)
   const mouseY      = useMotionValue(0)
-  const videoTarget = useMotionValue(0)          // 0 = hidden, 1 = visible
+  // Video is always visible (0.28 rest, 1.0 on hover)
+  const videoTarget = useMotionValue(0.28)
 
-  const rotateX    = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 20 })
-  const rotateY    = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 })
+  const rotateX      = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 20 })
+  const rotateY      = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 })
   const videoOpacity = useSpring(videoTarget, { stiffness: 80, damping: 18 })
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
@@ -198,7 +199,7 @@ export default function AIVisibilityScore() {
     mouseX.set(0)
     mouseY.set(0)
     setHovered(false)
-    videoTarget.set(0)
+    videoTarget.set(0.28)
   }, [mouseX, mouseY, videoTarget])
 
   return (
@@ -213,7 +214,7 @@ export default function AIVisibilityScore() {
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => { setHovered(true); videoTarget.set(1) }}
+        onMouseEnter={() => { setHovered(true); videoTarget.set(1.0) }}
         onMouseLeave={handleMouseLeave}
         initial={{ opacity: 0, y: 36 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -255,7 +256,7 @@ export default function AIVisibilityScore() {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              opacity: 0.55,
+              opacity: 1,
             }}
             src="/score-bg.mp4"
           />

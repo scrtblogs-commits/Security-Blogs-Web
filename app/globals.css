@@ -210,8 +210,8 @@
   --green: #1e9e75;
   --violet: #6f4dff;
 
-  --bg: #ffffff;
-  --bg-soft: #f6f8fc;
+  --bg: #f6f6f6;
+  --bg-soft: #eef3fb;
   --bg-card: #ffffff;
   --bg-card-2: #f3f6fc;
   --line: rgba(18, 42, 86, 0.12);
@@ -434,6 +434,19 @@ a {
   padding-top: calc(var(--nav-h) + 64px);
   padding-bottom: 80px;
   background: transparent;
+}
+
+/* Sitewide light-blue ambient glow — fixed behind everything */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 20%,  rgba(30, 95, 224, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 85% 75%,  rgba(111,77,255, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 50%,  rgba(30, 95, 224, 0.04) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 /* ---------- Meters ---------- */
