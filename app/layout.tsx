@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     siteName: 'SecurityBlogs',
     type: 'website',
   },
+  verification: {
+    google: 'Raa890785NPKf-PneFnw5fMfDYIQWur4CLNb0q-wyvE',
+  },
 }
 
 // Google Tag Manager — container ID GTM-KS9SXB2K. The head snippet must
