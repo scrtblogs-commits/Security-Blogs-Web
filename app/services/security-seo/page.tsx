@@ -4,14 +4,14 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import SeoCapabilities from './SeoCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
-import SerpAnimation from '@/components/ui/SerpAnimation'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
+import SeoHeroVisual from './SeoHeroVisual'
+import SeoGlobeNetwork from './SeoGlobeNetwork'
 
 const ACCENT = '#1e9e75'
 
@@ -85,7 +85,7 @@ export default function SecuritySeoPage() {
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <SerpAnimation />
+            <SeoHeroVisual />
           </Reveal>
         </div>
       </HeroBg>
@@ -97,7 +97,7 @@ export default function SecuritySeoPage() {
             title="Everything your security brand needs to own page one."
             sub="A full-stack SEO programme purpose-built for the high-trust, compliance-driven security industry."
           />
-          <SeoCapabilities />
+          <SeoGlobeNetwork />
         </div>
       </section>
 
