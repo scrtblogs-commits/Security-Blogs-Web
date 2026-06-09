@@ -1,5 +1,5 @@
 'use client'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import {
   motion,
   useScroll,
@@ -45,6 +45,14 @@ export default function AIScoreWithVideo() {
   // ── Scroll hint fades out once flipping starts ───────────────────────────
   const hintOp = useTransform(scrollYProgress, [0, 0.12], [1, 0])
 
+  // ── Trigger card counters only once user scrolls into this section ────────
+  const [cardStarted, setCardStarted] = useState(false)
+  useEffect(() => {
+    return scrollYProgress.on('change', v => {
+      if (v > 0.04) setCardStarted(true)
+    })
+  }, [scrollYProgress])
+
   return (
     <div
       ref={outerRef}
@@ -61,7 +69,17 @@ export default function AIScoreWithVideo() {
         overflow: 'hidden',
         perspective: 1500,
         perspectiveOrigin: '50% 48%',
+        background: 'linear-gradient(160deg, #060d1f 0%, #0b1530 55%, #080f22 100%)',
       }}>
+
+        {/* ── Dark section grid texture ── */}
+        <div aria-hidden style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
+          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)',
+          backgroundSize: '36px 36px',
+          maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
+        }} />
 
         {/* ── Animated ambient orbs in background ── */}
         <motion.div
@@ -139,7 +157,7 @@ export default function AIScoreWithVideo() {
               padding: 4,
             }}>
               <div style={{ width: '100%' }}>
-                <AIVisibilityScore />
+                <AIVisibilityScore externalStarted={cardStarted} />
               </div>
             </div>
           </div>

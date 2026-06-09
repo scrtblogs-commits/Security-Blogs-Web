@@ -68,12 +68,13 @@ export default function HomePage() {
           Card and video are two separate elements.
           Video slides out from behind the card.
       ───────────────────────────────────────── */}
-      <section className="section" id="ai-score">
+      <section id="ai-score" style={{ background: '#060d1f', paddingTop: 80, paddingBottom: 0 }}>
         <div className="container">
           <SectionHead
             eyebrow="Live score"
             title="See how visible you are to AI."
             sub="Our engine checks 10+ AI platforms and scores your brand's citation rate in real time."
+            dark
           />
           <AIScoreWithVideo />
         </div>

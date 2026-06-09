@@ -124,18 +124,25 @@ function MetricBox({ metric, started }: { metric: Metric; started: boolean }) {
   )
 }
 
-export default function AIVisibilityScore() {
+export default function AIVisibilityScore({ externalStarted }: { externalStarted?: boolean } = {}) {
   const cardRef = useRef<HTMLDivElement>(null)
   const [started, setStarted] = useState(false)
 
+  // If a parent passes externalStarted, use it directly (bypasses IntersectionObserver
+  // which fires too early when the card is inside a sticky scroll section).
   useEffect(() => {
+    if (externalStarted) setStarted(true)
+  }, [externalStarted])
+
+  useEffect(() => {
+    if (externalStarted !== undefined) return   // parent controls it
     const io = new IntersectionObserver(
       (e) => { if (e[0].isIntersecting) setStarted(true) },
-      { threshold: 0.25 },
+      { threshold: 0.4 },
     )
     if (cardRef.current) io.observe(cardRef.current)
     return () => io.disconnect()
-  }, [])
+  }, [externalStarted])
 
   // Mouse-tracking 3D tilt
   const mouseX = useMotionValue(0)
