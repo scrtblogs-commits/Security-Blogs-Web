@@ -5,10 +5,12 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import AioCapabilities from './AioCapabilities'
-import { AioHeroDemo, AioJourney, AioResults } from './AioLiveSections'
+import { AioJourney, AioResults } from './AioLiveSections'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
+import AioSearchVisual from './AioSearchVisual'
+import AioAnalyticsDashboard from './AioAnalyticsDashboard'
 
 const ACCENT = '#6f4dff'
 
@@ -80,12 +82,21 @@ export default function AioPage() {
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            {/* Live AI Mode chat showing securityblogs.com.au cited
-                (replaces the generic NeuralNetworkCanvas) */}
-            <AioHeroDemo />
+            <AioSearchVisual />
           </Reveal>
         </div>
       </HeroBg>
+
+      <section className="section" style={{ background: '#f6f8fd' }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="Live analytics"
+            title="Real growth. Measurable results."
+            sub="See exactly how AIO moves the needle — traffic, AI citations, conversions and acquisition channels, all in one live dashboard."
+          />
+          <AioAnalyticsDashboard />
+        </div>
+      </section>
 
       <section className="section">
         <div className="container">
