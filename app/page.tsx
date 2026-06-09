@@ -84,18 +84,8 @@ export default function HomePage() {
           4. SERVICES — scroll-sticky card stack
           Cards slide up one by one as you scroll
       ───────────────────────────────────────── */}
-      <section className="section" id="services" style={{ paddingBottom: 0 }}>
-        <div className="container">
-          <SectionHead
-            eyebrow="What we do"
-            title="One growth engine. Every channel that matters."
-            sub="From classic search to AI answer engines, we own every surface where security buyers discover, compare and choose vendors."
-          />
-        </div>
-        {/* ScrollStackSection is full-width intentionally */}
-        <div className="container">
-          <ScrollStackSection />
-        </div>
+      <section id="services" style={{ paddingBottom: 0 }}>
+        <ScrollStackSection />
       </section>
 
       {/* ─────────────────────────────────────────
