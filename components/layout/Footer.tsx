@@ -1,10 +1,8 @@
 import Link from 'next/link'
 import { services, knowledgeHub, publishWithUs, companyLinks } from '@/lib/site'
 
-// Brand icons inlined as SVG paths (sourced from simple-icons). lucide-react
-// stopped shipping brand/logo icons due to trademark concerns, so we draw
-// them ourselves rather than pull a second icon library for four glyphs.
 type BrandIconProps = { size?: number }
+
 const LinkedinIcon = ({ size = 16 }: BrandIconProps) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
 )
@@ -18,187 +16,202 @@ const YoutubeIcon = ({ size = 16 }: BrandIconProps) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
 )
 
-const socials: { name: string; href: string; Icon: (p: BrandIconProps) => React.ReactElement }[] = [
+const socials = [
   { name: 'LinkedIn',  href: 'https://www.linkedin.com/company/security-blogs/',               Icon: LinkedinIcon  },
   { name: 'Facebook',  href: 'https://www.facebook.com/people/Security-Blogs/61576725136537/', Icon: FacebookIcon  },
   { name: 'Instagram', href: 'https://www.instagram.com/securityblogs/',                       Icon: InstagramIcon },
   { name: 'YouTube',   href: 'https://www.youtube.com/@SecurityBlogs',                         Icon: YoutubeIcon   },
 ]
 
-// Layout order:
-//   1. Acknowledgement of Country (flags + text)
-//   2. Nav grid — 4 cols desktop, 2x2 tablet/mobile (SEO | Publish | Resources | Company)
-//   3. Brand row — tagline + email + phone + socials on LEFT, logo on RIGHT
-//      (stacks centered on mobile)
-//   4. Copyright + legal strip
 export default function Footer() {
   return (
-    <footer style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--line)', marginTop: 40, color: 'var(--text)' }}>
-      <div className="container" style={{ padding: '36px 24px 22px' }}>
+    <footer style={{ background: '#080f1e', color: '#c8d4e8', marginTop: 0 }}>
 
-        {/* 1. Acknowledgement of Country */}
-        <div
-          className="sg-ack"
-          aria-label="Acknowledgement of Country"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gap: 20,
-            alignItems: 'center',
-            marginBottom: 28,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/flags.png?v=2"
-            alt="Aboriginal flag and Torres Strait Islander flag"
-            style={{ height: 56, width: 'auto', display: 'block', flexShrink: 0, imageRendering: 'crisp-edges' }}
-          />
-          <p style={{ fontSize: 13, lineHeight: 1.65, color: 'var(--text)', margin: 0 }}>
-            Security Blogs proudly acknowledges the Traditional Custodians of the lands across
-            Australia where our readers, contributors, and industry partners live and work. We
-            honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and
-            continuing connection to Country. We pay our respects to Elders past, present, and
-            emerging and are committed to supporting a diverse, inclusive, and respectful
-            security industry for all Australians.
-          </p>
-        </div>
-
-        {/* 2. Nav grid — 4 cols + LOGO as the 5th column on desktop.
-              On tablet/mobile the grid collapses to 2 cols and the logo
-              cell spans both columns. */}
-        <div
-          className="sg-footer-nav"
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr 170px',
-            gap: 28,
-            marginBottom: 18,
-            alignItems: 'start',
-          }}
-        >
-          <FooterCol title="SEO & AI Services" links={services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
-          <FooterCol title="Publish With Us" links={publishWithUs} />
-          <FooterCol title="Resources" links={[
-            { title: 'Knowledge Hub', href: '/knowledge-hub/' },
-            ...knowledgeHub.slice(0, 3),
-            { title: 'Free Tools', href: '/free-tools/' },
-            { title: 'Directory', href: '/security-directory/' },
-          ]} />
-          <FooterCol title="Company" links={companyLinks} />
-
-          {/* 5th cell — logo + tagline directly underneath */}
-          <div
-            className="sg-brand-cell"
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}
+      {/* ── Top band: CTA + newsletter ── */}
+      <div style={{
+        background: 'linear-gradient(135deg, #1e5fe0 0%, #6f4dff 100%)',
+        padding: 'clamp(36px,5vw,56px) 24px',
+      }}>
+        <div className="container" style={{
+          display: 'flex', flexWrap: 'wrap',
+          alignItems: 'center', justifyContent: 'space-between', gap: 28,
+        }}>
+          <div style={{ maxWidth: 480 }}>
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', marginBottom: 10 }}>
+              Stay Ahead of AI Search
+            </div>
+            <h3 style={{ fontSize: 'clamp(20px,3vw,28px)', fontFamily: 'var(--font-display)', fontWeight: 700, color: '#fff', lineHeight: 1.2, margin: 0 }}>
+              Get the weekly AI visibility edge.<br />Free. No spam.
+            </h3>
+          </div>
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}
           >
-            <Link
-              href="/"
-              aria-label="SecurityBlogs home"
-              className="sg-brand-logo"
-              style={{ display: 'inline-block', textDecoration: 'none' }}
+            <input
+              type="email"
+              placeholder="Your work email"
+              style={{
+                padding: '12px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.25)',
+                background: 'rgba(255,255,255,0.12)', color: '#fff', fontSize: 14,
+                fontFamily: 'var(--font-body)', minWidth: 220, outline: 'none',
+              }}
+            />
+            <button
+              type="submit"
+              style={{
+                padding: '12px 24px', borderRadius: 10, border: 'none',
+                background: '#fff', color: 'var(--blue)',
+                fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: 14,
+                cursor: 'pointer', whiteSpace: 'nowrap',
+              }}
             >
+              Subscribe →
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* ── Acknowledgement of Country ── */}
+      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '28px 24px' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 18, alignItems: 'center' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/flags.png?v=2"
+              alt="Aboriginal flag and Torres Strait Islander flag"
+              style={{ height: 48, width: 'auto', display: 'block', flexShrink: 0, imageRendering: 'crisp-edges', opacity: 0.9 }}
+            />
+            <p style={{ fontSize: 12.5, lineHeight: 1.65, color: 'rgba(200,212,232,0.7)', margin: 0 }}>
+              Security Blogs proudly acknowledges the Traditional Custodians of the lands across Australia where our readers, contributors, and industry partners live and work. We honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and continuing connection to Country. We pay our respects to Elders past, present, and emerging.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Main nav grid ── */}
+      <div className="container" style={{ padding: '48px 24px 36px' }}>
+        <div className="ft-grid">
+
+          {/* Brand column */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-block' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/logo-footer.webp"
                 alt="SecurityBlogs"
-                style={{ width: 'min(150px, 100%)', height: 'auto', display: 'block' }}
+                style={{ width: 140, height: 'auto', display: 'block', filter: 'brightness(0) invert(1)', opacity: 0.9 }}
               />
             </Link>
-            <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'center', lineHeight: 1.35 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.65, color: 'rgba(200,212,232,0.65)', maxWidth: 220, margin: 0 }}>
               Australia&apos;s AI Visibility Platform for Security Brands.
             </p>
-          </div>
-        </div>
-
-        {/* 3. Contact row — email, phone, socials on the LEFT */}
-        <div
-          className="sg-contact-row"
-          style={{
-            display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap',
-            paddingTop: 16, marginBottom: 14,
-            borderTop: '1px solid var(--line)',
-          }}
-        >
-          <a
-            href="mailto:info@securityblogs.com.au"
-            style={{
-              color: 'var(--text)', textDecoration: 'none',
-              fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
-            }}
-          >
-            ✉️ info@securityblogs.com.au
-          </a>
-          <a
-            href="tel:+61411212418"
-            style={{
-              color: 'var(--text)', textDecoration: 'none',
-              fontSize: 13.5, display: 'inline-flex', alignItems: 'center', gap: 6,
-            }}
-          >
-            📞 +61 411 212 418
-          </a>
-          <div className="sg-social-icons" style={{ display: 'flex', gap: 6 }}>
-            {socials.map(({ name, href, Icon }) => (
-              <a
-                key={name}
-                href={href}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label={name}
-                title={name}
-                style={{
-                  width: 28, height: 28, borderRadius: 7,
-                  border: '1px solid var(--line)', background: 'var(--bg-card)',
-                  display: 'grid', placeItems: 'center', color: 'var(--text)',
-                }}
-              >
-                <Icon size={13} />
+            {/* Socials */}
+            <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
+              {socials.map(({ name, href, Icon }) => (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={name}
+                  title={name}
+                  style={{
+                    width: 34, height: 34, borderRadius: 9,
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: 'rgba(255,255,255,0.06)',
+                    display: 'grid', placeItems: 'center',
+                    color: '#c8d4e8',
+                    transition: 'background 0.18s, border-color 0.18s',
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.background = 'rgba(30,95,224,0.35)'
+                    el.style.borderColor = 'rgba(30,95,224,0.6)'
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLAnchorElement
+                    el.style.background = 'rgba(255,255,255,0.06)'
+                    el.style.borderColor = 'rgba(255,255,255,0.12)'
+                  }}
+                >
+                  <Icon size={14} />
+                </a>
+              ))}
+            </div>
+            {/* Contact */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 4 }}>
+              <a href="mailto:info@securityblogs.com.au" style={{ fontSize: 13, color: 'rgba(200,212,232,0.7)', textDecoration: 'none' }}>
+                ✉ info@securityblogs.com.au
               </a>
-            ))}
+              <a href="tel:+61411212418" style={{ fontSize: 13, color: 'rgba(200,212,232,0.7)', textDecoration: 'none' }}>
+                ✆ +61 411 212 418
+              </a>
+            </div>
           </div>
-        </div>
 
-        {/* 4. Bottom — copyright + legal */}
-        <div style={{ borderTop: '1px solid var(--line)', marginTop: 18, paddingTop: 16, display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'space-between', alignItems: 'center', fontSize: 12.5, color: 'var(--text)' }}>
+          {/* Nav columns */}
+          <FooterCol title="SEO & AI Services" links={services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
+          <FooterCol title="Publish With Us" links={publishWithUs} />
+          <FooterCol title="Resources" links={[
+            { title: 'Knowledge Hub',  href: '/knowledge-hub/' },
+            ...knowledgeHub.slice(0, 3),
+            { title: 'Free Tools',     href: '/free-tools/' },
+            { title: 'Directory',      href: '/security-directory/' },
+          ]} />
+          <FooterCol title="Company" links={companyLinks} />
+        </div>
+      </div>
+
+      {/* ── Bottom strip: copyright + legal ── */}
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '18px 24px' }}>
+        <div className="container" style={{
+          display: 'flex', flexWrap: 'wrap', gap: 14,
+          justifyContent: 'space-between', alignItems: 'center',
+          fontSize: 12.5, color: 'rgba(200,212,232,0.5)',
+        }}>
           <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
-          <div className="sg-legal" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-            <Link href="/privacy-policy/" style={{ color: 'var(--text)' }}>Privacy Policy</Link>
-            <Link href="/terms-of-service/" style={{ color: 'var(--text)' }}>Terms of Service</Link>
-            <Link href="/content-guidelines/" style={{ color: 'var(--text)' }}>Content Guidelines</Link>
-            <Link href="/publish-with-us/advertise/" style={{ color: 'var(--text)' }}>Advertise</Link>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+            {[
+              { label: 'Privacy Policy',      href: '/privacy-policy/' },
+              { label: 'Terms of Service',    href: '/terms-of-service/' },
+              { label: 'Content Guidelines',  href: '/content-guidelines/' },
+              { label: 'Advertise',           href: '/publish-with-us/advertise/' },
+            ].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                style={{ color: 'rgba(200,212,232,0.5)', transition: 'color 0.15s' }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#fff' }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(200,212,232,0.5)' }}
+              >
+                {l.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
 
       <style>{`
-        /* Tablet + mobile — 2-col nav grid; logo cell spans both cols
-           and uses order:-1 to appear ABOVE the nav columns. */
-        @media (max-width: 900px) {
-          .sg-footer-nav {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 24px 22px !important;
-          }
-          .sg-brand-cell {
-            grid-column: 1 / -1 !important;
-            order: -1;
-            margin-bottom: 6px;
-          }
-          .sg-brand-logo img { width: min(160px, 50vw) !important; }
-          .sg-contact-row { justify-content: center !important; }
+        .ft-grid {
+          display: grid;
+          grid-template-columns: 220px repeat(4, 1fr);
+          gap: 36px 28px;
+          align-items: start;
         }
-        /* Phone — Acknowledgement stacks */
-        @media (max-width: 640px) {
-          .sg-ack { grid-template-columns: 1fr !important; text-align: left; gap: 14px !important; }
-        }
-        /* Very small screens — contact row stacks vertically */
-        @media (max-width: 480px) {
-          .sg-footer-nav { gap: 22px 16px !important; }
-          .sg-contact-row {
-            flex-direction: column !important;
-            align-items: center !important;
-            gap: 10px !important;
+        @media (max-width: 960px) {
+          .ft-grid {
+            grid-template-columns: 1fr 1fr 1fr;
           }
+          .ft-grid > :first-child { grid-column: 1 / -1; }
+        }
+        @media (max-width: 600px) {
+          .ft-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+        @media (max-width: 420px) {
+          .ft-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </footer>
@@ -207,10 +220,27 @@ export default function Footer() {
 
 function FooterCol({ title, links }: { title: string; links: { title: string; href: string }[] }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <strong style={{ fontSize: 13.5, fontFamily: 'var(--font-display)', color: 'var(--text)' }}>{title}</strong>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+      <strong style={{
+        fontSize: 12,
+        fontFamily: 'var(--font-mono)',
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        color: 'rgba(200,212,232,0.45)',
+        marginBottom: 2,
+      }}>
+        {title}
+      </strong>
       {links.map((l) => (
-        <Link key={l.href} href={l.href} style={{ fontSize: 13.5, color: 'var(--text)' }}>{l.title}</Link>
+        <Link
+          key={l.href}
+          href={l.href}
+          style={{ fontSize: 13.5, color: 'rgba(200,212,232,0.75)', textDecoration: 'none', transition: 'color 0.15s' }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#fff' }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(200,212,232,0.75)' }}
+        >
+          {l.title}
+        </Link>
       ))}
     </div>
   )
