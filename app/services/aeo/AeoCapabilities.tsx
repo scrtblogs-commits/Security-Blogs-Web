@@ -230,7 +230,7 @@ function FeaturedSnippetPreview({ color, active }: { color: string; active: bool
   const [idx, setIdx] = useState(0)
   useEffect(() => {
     if (!active) return
-    const iv = setInterval(() => setIdx(p => Math.min(p + 1, SERP_RESULTS.length)), 500)
+    const iv = setInterval(() => setIdx((p: number) => Math.min(p + 1, SERP_RESULTS.length)), 500)
     return () => clearInterval(iv)
   }, [active])
 

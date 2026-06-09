@@ -5,11 +5,12 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import AeoCapabilities from './AeoCapabilities'
-import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
-import AIChatDemo from '@/components/ui/AIChatDemo'
 import JsonLd from '@/components/JsonLd'
+import AeoHeroVisual from './AeoHeroVisual'
+import AeoHowItWorks from './AeoHowItWorks'
+import PromoVideoSection from '@/components/ui/PromoVideoSection'
 import { serviceSchema } from '@/lib/schema'
 
 const ACCENT = '#7f77dd'
@@ -21,22 +22,6 @@ export const metadata = {
   alternates: { canonical: '/services/aeo/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/aeo/' },
 }
-
-const capabilities = [
-  { icon: '✅', title: 'Answer Optimisation', desc: 'Content structured as clear, authoritative answers AI engines can lift and present verbatim.' },
-  { icon: '⭐', title: 'Featured Snippets', desc: 'Format and target the question-led queries that win position-zero snippets on Google.' },
-  { icon: '❓', title: 'FAQ Schema', desc: 'Marked-up Q&A that feeds AI assistants and voice results with crisp, citable responses.' },
-  { icon: '🎙️', title: 'Voice Search Ready', desc: 'Natural-language content tuned for the conversational queries voice and AI assistants handle.' },
-  { icon: '🤖', title: 'AI Snippet Capture', desc: 'Engineer the passages AI overviews and chat assistants extract when buyers ask about your services.' },
-  { icon: '🛡️', title: 'Brand Authority Signals', desc: 'E-E-A-T, reviews and trust markers that make AI confident enough to recommend you by name.' },
-]
-
-const steps = [
-  { title: 'Question & Intent Mapping', desc: 'We identify the exact questions security buyers ask AI assistants and search engines.' },
-  { title: 'Answer-First Content', desc: 'Restructure and create content that answers those questions cleanly and authoritatively.' },
-  { title: 'Schema & Snippet Targeting', desc: 'Apply FAQ schema and formatting that wins featured snippets and AI extractions.' },
-  { title: 'Track & Expand', desc: 'Monitor answer appearances and snippet wins, then expand into adjacent question clusters.' },
-]
 
 const stats = [
   { num: '+340%', label: 'AI answer appearances' },
@@ -82,7 +67,7 @@ export default function AeoPage() {
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            <AIChatDemo />
+            <AeoHeroVisual />
           </Reveal>
         </div>
       </HeroBg>
@@ -98,12 +83,7 @@ export default function AeoPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="How it works" title="From ranked link to recommended answer." />
-          <ProcessSteps steps={steps} />
-        </div>
-      </section>
+      <AeoHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -118,6 +98,13 @@ export default function AeoPage() {
           <FAQAccordion items={faqs} />
         </div>
       </section>
+
+      <PromoVideoSection
+        eyebrow="See AEO in action"
+        title="Watch your brand become the AI answer"
+        subtitle="Our AEO framework structures your security brand's content so AI assistants and Google feature it as the definitive answer — in snippets, voice results and AI-generated responses."
+        accent={ACCENT}
+      />
 
       <CTABand
         title="Get quoted by AI →"

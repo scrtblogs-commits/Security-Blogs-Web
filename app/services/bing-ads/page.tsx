@@ -14,6 +14,7 @@ import PlatformTabs from '@/components/ui/PlatformTabs'
 import AdPreviewCard from '@/components/ui/AdPreviewCard'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
+import PromoVideoSection from '@/components/ui/PromoVideoSection'
 
 const ACCENT = '#0078d4'
 
@@ -318,6 +319,13 @@ export default function BingAdsPage() {
           />
         </div>
       </section>
+
+      <PromoVideoSection
+        eyebrow="See Bing Ads in action"
+        title="Capture the B2B security buyers Google misses"
+        subtitle="Microsoft Advertising reaches 41% of business decision-makers your competitors ignore on Google — with lower CPCs, LinkedIn profile targeting, and campaigns built for security brands."
+        accent={ACCENT}
+      />
 
       <CTABand
         title="Capture the buyers your competitors ignore →"

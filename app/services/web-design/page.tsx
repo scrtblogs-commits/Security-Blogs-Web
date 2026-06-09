@@ -12,6 +12,7 @@ import CodeTypingAnimation from '@/components/ui/CodeTypingAnimation'
 import DualSerp from './DualSerp'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
+import PromoVideoSection from '@/components/ui/PromoVideoSection'
 
 const ACCENT = '#1e5fe0'
 
@@ -155,6 +156,13 @@ export default function WebDesignPage() {
           />
         </div>
       </section>
+
+      <PromoVideoSection
+        eyebrow="See our web design in action"
+        title="AI-ready security websites that rank, convert and get cited"
+        subtitle="Every security website we build is engineered for green Core Web Vitals, schema markup, and AI-citation readiness — turning visitors into qualified leads from day one."
+        accent={ACCENT}
+      />
 
       <CTABand
         title="Ready for a security website that works as hard as you do?"

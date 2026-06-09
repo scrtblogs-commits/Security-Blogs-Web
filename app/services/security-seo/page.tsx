@@ -12,6 +12,7 @@ import { serviceSchema } from '@/lib/schema'
 import SeoHeroVisual from './SeoHeroVisual'
 import SeoGlobeNetwork from './SeoGlobeNetwork'
 import SeoHowItWorks from './SeoHowItWorks'
+import PromoVideoSection from '@/components/ui/PromoVideoSection'
 
 const ACCENT = '#1e9e75'
 
@@ -140,6 +141,13 @@ export default function SecuritySeoPage() {
           </div>
         </div>
       </section>
+
+      <PromoVideoSection
+        eyebrow="See Security SEO in action"
+        title="Rank #1 for every security keyword that matters"
+        subtitle="Our SEO framework is built exclusively for security brands — from CCTV installers to monitoring firms — engineering the content and authority signals that dominate Google and AI search."
+        accent={ACCENT}
+      />
 
       <CTABand
         title="Ready to dominate security search?"

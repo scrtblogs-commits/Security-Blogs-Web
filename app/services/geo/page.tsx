@@ -12,6 +12,7 @@ import BeforeAfter from '@/components/ui/BeforeAfter'
 import GeoMapDemo from './GeoMapDemo'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
+import PromoVideoSection from '@/components/ui/PromoVideoSection'
 
 const ACCENT = '#e23744'
 
@@ -133,6 +134,13 @@ export default function GeoPage() {
           <FAQAccordion items={faqs} />
         </div>
       </section>
+
+      <PromoVideoSection
+        eyebrow="See GEO in action"
+        title="Build the AI knowledge graph that makes your brand unmissable"
+        subtitle="GEO builds your security brand as a recognised entity across every AI platform — so ChatGPT, Gemini and Perplexity consistently recommend you by name."
+        accent={ACCENT}
+      />
 
       <CTABand
         title="Get my GEO audit →"

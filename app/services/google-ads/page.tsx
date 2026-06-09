@@ -14,6 +14,7 @@ import PlatformTabs from '@/components/ui/PlatformTabs'
 import AdPreviewCard from '@/components/ui/AdPreviewCard'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
+import PromoVideoSection from '@/components/ui/PromoVideoSection'
 
 const ACCENT = '#f6c715'
 
@@ -324,6 +325,13 @@ export default function GoogleAdsPage() {
           />
         </div>
       </section>
+
+      <PromoVideoSection
+        eyebrow="See Google Ads in action"
+        title="High-converting Google Ads for security companies"
+        subtitle="We engineer Google Ads campaigns specifically for security buyers — from CCTV installers to monitoring firms — with conversion tracking, transparent reporting and 3.2× average ROAS."
+        accent={ACCENT}
+      />
 
       <CTABand
         title="Ready to turn search clicks into security contracts?"
