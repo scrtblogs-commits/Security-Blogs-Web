@@ -3,63 +3,68 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import AIVisibilityScore from '@/components/ui/AIVisibilityScore'
 
-// Two completely separate elements stacked in a relative container:
+// Layout:
+//   Left  → AI Visibility Card (tilts on scroll, NO video inside)
+//   Right → Promo video slides UP from below as you scroll past the card
 //
-//   ┌──────────────────────────────┐
-//   │  [VIDEO]  ← z-index: 0      │  slides out from behind on scroll
-//   │  [CARD ]  ← z-index: 2      │  sits on top, fully independent
-//   └──────────────────────────────┘
-//
-// On page load the video sits directly behind the card (invisible).
-// As the section scrolls into view the video slides out to the right
-// and down, revealing itself as a standalone promo element.
+// Both elements are fully independent — card never touches the video.
 
 export default function AIScoreWithVideo() {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start end', 'center center'],
+    offset: ['start end', 'end start'],
   })
 
-  // Video slides from behind card → fully revealed beside/below it
-  const rawX = useTransform(scrollYProgress, [0, 1], [0, 260])
-  const rawY = useTransform(scrollYProgress, [0, 1], [0, 80])
-  const rawS = useTransform(scrollYProgress, [0, 1], [0.88, 1])
-  const rawO = useTransform(scrollYProgress, [0, 0.3, 1], [0, 0.6, 1])
+  // ── Card tilt driven by scroll (not hover) ──────────────────────────────
+  // As the section enters the viewport the card tips forward, then levels off
+  const rawTiltX = useTransform(scrollYProgress, [0, 0.45, 0.7], [18, 4, 0])
+  const rawTiltY = useTransform(scrollYProgress, [0, 0.45, 0.7], [-6, -2, 0])
+  const cardTiltX = useSpring(rawTiltX, { stiffness: 50, damping: 16 })
+  const cardTiltY = useSpring(rawTiltY, { stiffness: 50, damping: 16 })
 
-  const videoX = useSpring(rawX, { stiffness: 60, damping: 20 })
-  const videoY = useSpring(rawY, { stiffness: 60, damping: 20 })
-  const videoScale   = useSpring(rawS, { stiffness: 60, damping: 20 })
-  const videoOpacity = useSpring(rawO, { stiffness: 60, damping: 20 })
+  // ── Video slides UP from below as you scroll ────────────────────────────
+  // Starts 120px below its final position, invisible → rises into view
+  const rawVideoY  = useTransform(scrollYProgress, [0.25, 0.65], [140, 0])
+  const rawVideoOp = useTransform(scrollYProgress, [0.25, 0.55], [0, 1])
+  const videoY  = useSpring(rawVideoY,  { stiffness: 55, damping: 18 })
+  const videoOp = useSpring(rawVideoOp, { stiffness: 55, damping: 18 })
 
   return (
     <div
       ref={sectionRef}
       style={{
-        position: 'relative',
-        maxWidth: 700,
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 40,
+        alignItems: 'center',
+        maxWidth: 1000,
         margin: '0 auto',
-        // Height accommodates card + video sliding down
-        minHeight: 480,
       }}
     >
-      {/* ── ELEMENT 1: Promotional video (behind, slides out) ── */}
+      {/* ── LEFT: AI Visibility Card — tilts on scroll, clean, no video ── */}
+      <div style={{ perspective: 1200 }}>
+        <motion.div
+          style={{
+            rotateX: cardTiltX,
+            rotateY: cardTiltY,
+            transformStyle: 'preserve-3d',
+          }}
+        >
+          <AIVisibilityScore />
+        </motion.div>
+      </div>
+
+      {/* ── RIGHT: Promo video — completely separate, slides up on scroll ── */}
       <motion.div
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          maxWidth: 440,
+          y: videoY,
+          opacity: videoOp,
           borderRadius: 20,
           overflow: 'hidden',
-          zIndex: 0,
-          x: videoX,
-          y: videoY,
-          scale: videoScale,
-          opacity: videoOpacity,
-          boxShadow: '0 24px 64px -16px rgba(18,42,86,0.28)',
+          boxShadow: '0 28px 72px -16px rgba(18,42,86,0.26)',
+          position: 'relative',
         }}
       >
         <video
@@ -67,46 +72,48 @@ export default function AIScoreWithVideo() {
           muted
           loop
           playsInline
-          style={{
-            width: '100%',
-            display: 'block',
-            borderRadius: 20,
-          }}
+          style={{ width: '100%', display: 'block', borderRadius: 20 }}
           src="/score-bg.mp4"
         />
-        {/* Promo label on the video */}
+
+        {/* Overlay label at bottom */}
         <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '20px 18px 16px',
-          background: 'linear-gradient(to top, rgba(8,15,30,0.85) 0%, transparent 100%)',
+          position: 'absolute', bottom: 0, left: 0, right: 0,
+          padding: '32px 20px 18px',
+          background: 'linear-gradient(to top, rgba(8,15,30,0.88) 0%, transparent 100%)',
           borderRadius: '0 0 20px 20px',
         }}>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 7,
             background: 'rgba(255,255,255,0.12)',
-            border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: 999,
-            padding: '4px 12px',
-            marginBottom: 8,
+            border: '1px solid rgba(255,255,255,0.22)',
+            borderRadius: 999, padding: '4px 12px', marginBottom: 8,
           }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#e23744', display: 'inline-block', animation: 'pulse 1.6s ease-in-out infinite' }} />
-            <span style={{ color: '#fff', fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 600, letterSpacing: '0.08em' }}>
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%',
+              background: '#e23744', display: 'inline-block',
+              animation: 'pulse 1.6s ease-in-out infinite',
+            }} />
+            <span style={{
+              color: '#fff', fontSize: 11,
+              fontFamily: 'var(--font-mono)', fontWeight: 600,
+              letterSpacing: '0.08em',
+            }}>
               PROMOTIONAL VIDEO
             </span>
           </div>
-          <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13, margin: 0, fontFamily: 'var(--font-body)' }}>
-            Client spotlight — your brand here
+          <p style={{ color: 'rgba(255,255,255,0.82)', fontSize: 13, margin: 0 }}>
+            Client spotlight · your brand here
           </p>
         </div>
       </motion.div>
 
-      {/* ── ELEMENT 2: AI Visibility Card (on top, fully independent) ── */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
-        <AIVisibilityScore />
-      </div>
+      {/* Responsive: stack on mobile */}
+      <style>{`
+        @media (max-width: 720px) {
+          .ai-score-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }
