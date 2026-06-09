@@ -1,9 +1,9 @@
 'use client'
 import Link from 'next/link'
+import { useState } from 'react'
 import { services, knowledgeHub, publishWithUs, companyLinks } from '@/lib/site'
 
 type BrandIconProps = { size?: number }
-
 const LinkedinIcon = ({ size = 16 }: BrandIconProps) => (
   <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
 )
@@ -24,195 +24,258 @@ const socials = [
   { name: 'YouTube',   href: 'https://www.youtube.com/@SecurityBlogs',                         Icon: YoutubeIcon   },
 ]
 
-export default function Footer() {
+const avatars = ['JR', 'SM', 'DK', 'LT', 'MP']
+
+function GetStartedForm() {
+  const [email, setEmail]     = useState('')
+  const [message, setMessage] = useState('')
   return (
-    <footer style={{ background: '#080f1e', color: '#c8d4e8', marginTop: 0 }}>
-
-      {/* ── Top band: CTA + newsletter ── */}
-      <div style={{
-        background: 'linear-gradient(135deg, #1e5fe0 0%, #6f4dff 100%)',
-        padding: 'clamp(36px,5vw,56px) 24px',
-      }}>
-        <div className="container" style={{
-          display: 'flex', flexWrap: 'wrap',
-          alignItems: 'center', justifyContent: 'space-between', gap: 28,
+    <div style={{
+      background: '#fff',
+      border: '1px solid var(--line)',
+      borderRadius: 20,
+      padding: 28,
+      boxShadow: '0 8px 32px -8px rgba(18,42,86,0.10)',
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: 20 }}>
+        <div style={{
+          width: 48, height: 48, borderRadius: '50%',
+          background: 'linear-gradient(135deg, var(--blue), var(--violet))',
+          margin: '0 auto 12px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          <div style={{ maxWidth: 480 }}>
-            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', marginBottom: 10 }}>
-              Stay Ahead of AI Search
-            </div>
-            <h3 style={{ fontSize: 'clamp(20px,3vw,28px)', fontFamily: 'var(--font-display)', fontWeight: 700, color: '#fff', lineHeight: 1.2, margin: 0 }}>
-              Get the weekly AI visibility edge.<br />Free. No spam.
-            </h3>
-          </div>
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}
-          >
-            <input
-              type="email"
-              placeholder="Your work email"
-              style={{
-                padding: '12px 18px', borderRadius: 10, border: '1px solid rgba(255,255,255,0.25)',
-                background: 'rgba(255,255,255,0.12)', color: '#fff', fontSize: 14,
-                fontFamily: 'var(--font-body)', minWidth: 220, outline: 'none',
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: '12px 24px', borderRadius: 10, border: 'none',
-                background: '#fff', color: 'var(--blue)',
-                fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: 14,
-                cursor: 'pointer', whiteSpace: 'nowrap',
-              }}
-            >
-              Subscribe →
-            </button>
-          </form>
+          <span style={{ color: '#fff', fontSize: 22 }}>✦</span>
         </div>
+        <h4 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, margin: 0 }}>
+          Get Started
+        </h4>
       </div>
-
-      {/* ── Acknowledgement of Country ── */}
-      <div style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', padding: '28px 24px' }}>
-        <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 18, alignItems: 'center' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/flags.png?v=2"
-              alt="Aboriginal flag and Torres Strait Islander flag"
-              style={{ height: 48, width: 'auto', display: 'block', flexShrink: 0, imageRendering: 'crisp-edges', opacity: 0.9 }}
-            />
-            <p style={{ fontSize: 12.5, lineHeight: 1.65, color: 'rgba(200,212,232,0.7)', margin: 0 }}>
-              Security Blogs proudly acknowledges the Traditional Custodians of the lands across Australia where our readers, contributors, and industry partners live and work. We honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and continuing connection to Country. We pay our respects to Elders past, present, and emerging.
-            </p>
-          </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div>
+          <label className="label">Email</label>
+          <input
+            type="email"
+            className="field"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
+        <div>
+          <label className="label">Message</label>
+          <textarea
+            className="field"
+            placeholder="What do you say?"
+            rows={3}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            style={{ resize: 'none' }}
+          />
+        </div>
+        <button
+          onClick={() => {}}
+          style={{
+            width: '100%', padding: '13px', borderRadius: 12,
+            background: 'var(--blue)', color: '#fff', border: 'none',
+            fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: 15,
+            cursor: 'pointer',
+          }}
+        >
+          Request Demo
+        </button>
+        <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-dim)', margin: 0 }}>
+          → Start Free Trial
+        </p>
       </div>
+    </div>
+  )
+}
 
-      {/* ── Main nav grid ── */}
-      <div className="container" style={{ padding: '48px 24px 36px' }}>
-        <div className="ft-grid">
+export default function Footer() {
+  const [email, setEmail] = useState('')
 
-          {/* Brand column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-block' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo-footer.webp"
-                alt="SecurityBlogs"
-                style={{ width: 140, height: 'auto', display: 'block', filter: 'brightness(0) invert(1)', opacity: 0.9 }}
-              />
-            </Link>
-            <p style={{ fontSize: 13, lineHeight: 1.65, color: 'rgba(200,212,232,0.65)', maxWidth: 220, margin: 0 }}>
-              Australia&apos;s AI Visibility Platform for Security Brands.
-            </p>
-            {/* Socials */}
-            <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
-              {socials.map(({ name, href, Icon }) => (
-                <a
-                  key={name}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={name}
-                  title={name}
+  return (
+    <footer style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--line)', color: 'var(--text)' }}>
+
+      {/* ── People are Saying + Get Started ── */}
+      <div style={{ borderBottom: '1px solid var(--line)' }}>
+        <div className="container" style={{ padding: 'clamp(40px,6vw,72px) 24px' }}>
+          <div className="ft-top-grid">
+
+            {/* Left — People are saying */}
+            <div>
+              <h2 style={{
+                fontFamily: 'var(--font-display)', fontWeight: 800,
+                fontSize: 'clamp(24px,3.5vw,36px)', lineHeight: 1.2,
+                marginBottom: 16,
+              }}>
+                People are Saying<br />
+                <span style={{ color: 'var(--blue)' }}>About SecurityBlogs</span>
+              </h2>
+              <p style={{ fontSize: 14.5, lineHeight: 1.7, color: 'var(--text-soft)', maxWidth: 400, marginBottom: 24 }}>
+                Security Blogs proudly acknowledges the Traditional Custodians of the lands
+                across Australia where our readers, contributors, and industry partners
+                live and work. We honour Aboriginal and Torres Strait Islander peoples,
+                their cultures, histories, and continuing connection to Country.
+              </p>
+
+              {/* Flags */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/flags.png?v=2"
+                  alt="Aboriginal and Torres Strait Islander flags"
+                  style={{ height: 40, width: 'auto', imageRendering: 'crisp-edges' }}
+                />
+              </div>
+
+              {/* Avatar stack + social proof */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
+                <div style={{ display: 'flex' }}>
+                  {avatars.map((a, i) => (
+                    <div key={a} style={{
+                      width: 36, height: 36, borderRadius: '50%',
+                      background: `hsl(${220 + i * 25}, 70%, 52%)`,
+                      border: '2px solid var(--bg-soft)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#fff', fontSize: 11, fontWeight: 700,
+                      marginLeft: i > 0 ? -10 : 0,
+                      zIndex: avatars.length - i,
+                      position: 'relative',
+                    }}>
+                      {a}
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div style={{ display: 'flex', gap: 2 }}>
+                    {'★★★★★'.split('').map((s, i) => (
+                      <span key={i} style={{ color: 'var(--yellow)', fontSize: 14 }}>{s}</span>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 2 }}>50+ security brands trust us</div>
+                </div>
+              </div>
+
+              {/* Logo */}
+              <Link href="/" aria-label="SecurityBlogs home">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logo-footer.webp"
+                  alt="SecurityBlogs"
+                  style={{ width: 140, height: 'auto', display: 'block', marginBottom: 14 }}
+                />
+              </Link>
+
+              {/* Subscribe row */}
+              <div style={{ display: 'flex', gap: 8, maxWidth: 360 }}>
+                <input
+                  type="email"
+                  className="field"
+                  placeholder="Enter your email here"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{ flex: 1, fontSize: 13, padding: '10px 14px' }}
+                />
+                <button
+                  onClick={() => {}}
                   style={{
-                    width: 34, height: 34, borderRadius: 9,
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    background: 'rgba(255,255,255,0.06)',
-                    display: 'grid', placeItems: 'center',
-                    color: '#c8d4e8',
-                    transition: 'background 0.18s, border-color 0.18s',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.background = 'rgba(30,95,224,0.35)'
-                    el.style.borderColor = 'rgba(30,95,224,0.6)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.background = 'rgba(255,255,255,0.06)'
-                    el.style.borderColor = 'rgba(255,255,255,0.12)'
+                    width: 38, height: 38, borderRadius: 10,
+                    background: 'var(--blue)', border: 'none',
+                    color: '#fff', cursor: 'pointer', fontSize: 16,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0,
                   }}
                 >
-                  <Icon size={14} />
-                </a>
-              ))}
+                  →
+                </button>
+              </div>
             </div>
-            {/* Contact */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 4 }}>
-              <a href="mailto:info@securityblogs.com.au" style={{ fontSize: 13, color: 'rgba(200,212,232,0.7)', textDecoration: 'none' }}>
-                ✉ info@securityblogs.com.au
-              </a>
-              <a href="tel:+61411212418" style={{ fontSize: 13, color: 'rgba(200,212,232,0.7)', textDecoration: 'none' }}>
-                ✆ +61 411 212 418
-              </a>
-            </div>
-          </div>
 
-          {/* Nav columns */}
-          <FooterCol title="SEO & AI Services" links={services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
-          <FooterCol title="Publish With Us" links={publishWithUs} />
-          <FooterCol title="Resources" links={[
-            { title: 'Knowledge Hub',  href: '/knowledge-hub/' },
-            ...knowledgeHub.slice(0, 3),
-            { title: 'Free Tools',     href: '/free-tools/' },
-            { title: 'Directory',      href: '/security-directory/' },
-          ]} />
-          <FooterCol title="Company" links={companyLinks} />
+            {/* Right — Get Started form */}
+            <GetStartedForm />
+          </div>
         </div>
       </div>
 
-      {/* ── Bottom strip: copyright + legal ── */}
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '18px 24px' }}>
+      {/* ── Nav grid ── */}
+      <div className="container" style={{ padding: '40px 24px 28px' }}>
+        <div className="ft-nav-grid">
+          <FooterCol title="Help centre"          links={[{ title: 'Knowledge Hub', href: '/knowledge-hub/' }, { title: 'Free Tools', href: '/free-tools/' }, { title: 'About Us', href: '/about-us/' }, { title: 'Contact', href: '/contact/' }]} />
+          <FooterCol title="Talk to support"      links={[{ title: 'Book Strategy Call', href: '/book-strategy-call/' }, { title: 'Email Us', href: 'mailto:info@securityblogs.com.au' }, { title: 'Client responds', href: '/contact/' }]} />
+          <FooterCol title="SEO & AI Services"    links={services.slice(0, 4).map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
+          <FooterCol title="Publish With Us"      links={publishWithUs.slice(0, 4)} />
+          <FooterCol title="Pricing"              links={[{ title: 'Pricing Guidelines', href: '/pricing-guidelines/' }, { title: 'Advertise', href: '/publish-with-us/advertise/' }, { title: 'Backlink Packages', href: '/publish-with-us/backlink-packages/' }]} />
+        </div>
+      </div>
+
+      {/* ── Social + contact ── */}
+      <div style={{ borderTop: '1px solid var(--line)', padding: '16px 24px' }}>
         <div className="container" style={{
           display: 'flex', flexWrap: 'wrap', gap: 14,
-          justifyContent: 'space-between', alignItems: 'center',
-          fontSize: 12.5, color: 'rgba(200,212,232,0.5)',
+          alignItems: 'center',
         }}>
-          <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-            {[
-              { label: 'Privacy Policy',      href: '/privacy-policy/' },
-              { label: 'Terms of Service',    href: '/terms-of-service/' },
-              { label: 'Content Guidelines',  href: '/content-guidelines/' },
-              { label: 'Advertise',           href: '/publish-with-us/advertise/' },
-            ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                style={{ color: 'rgba(200,212,232,0.5)', transition: 'color 0.15s' }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#fff' }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(200,212,232,0.5)' }}
+          <a href="mailto:info@securityblogs.com.au" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>
+            ✉ info@securityblogs.com.au
+          </a>
+          <a href="tel:+61411212418" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>
+            ✆ +61 411 212 418
+          </a>
+          <div style={{ display: 'flex', gap: 6, marginLeft: 'auto' }}>
+            {socials.map(({ name, href, Icon }) => (
+              <a
+                key={name} href={href}
+                target="_blank" rel="noreferrer noopener"
+                aria-label={name} title={name}
+                style={{
+                  width: 30, height: 30, borderRadius: 8,
+                  border: '1px solid var(--line)', background: 'var(--bg-card)',
+                  display: 'grid', placeItems: 'center', color: 'var(--text)',
+                  transition: 'border-color 0.15s, color 0.15s',
+                }}
               >
-                {l.label}
-              </Link>
+                <Icon size={13} />
+              </a>
             ))}
           </div>
         </div>
       </div>
 
+      {/* ── Copyright ── */}
+      <div style={{ borderTop: '1px solid var(--line)', padding: '14px 24px' }}>
+        <div className="container" style={{
+          display: 'flex', flexWrap: 'wrap', gap: 14,
+          justifyContent: 'space-between', alignItems: 'center',
+          fontSize: 12.5, color: 'var(--text-dim)',
+        }}>
+          <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
+          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
+            <Link href="/terms-of-service/"    style={{ color: 'var(--text-dim)' }}>Terms and Conditions</Link>
+            <Link href="/privacy-policy/"      style={{ color: 'var(--text-dim)' }}>Privacy Policy</Link>
+            <Link href="/content-guidelines/"  style={{ color: 'var(--text-dim)' }}>Content Guidelines</Link>
+          </div>
+        </div>
+      </div>
+
       <style>{`
-        .ft-grid {
+        .ft-top-grid {
           display: grid;
-          grid-template-columns: 220px repeat(4, 1fr);
-          gap: 36px 28px;
+          grid-template-columns: 1fr 360px;
+          gap: 48px;
           align-items: start;
         }
-        @media (max-width: 960px) {
-          .ft-grid {
-            grid-template-columns: 1fr 1fr 1fr;
-          }
-          .ft-grid > :first-child { grid-column: 1 / -1; }
+        .ft-nav-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 24px 20px;
+          align-items: start;
+        }
+        @media (max-width: 900px) {
+          .ft-top-grid { grid-template-columns: 1fr !important; }
+          .ft-nav-grid  { grid-template-columns: repeat(3,1fr) !important; }
         }
         @media (max-width: 600px) {
-          .ft-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-        @media (max-width: 420px) {
-          .ft-grid { grid-template-columns: 1fr; }
+          .ft-nav-grid { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
     </footer>
@@ -221,25 +284,16 @@ export default function Footer() {
 
 function FooterCol({ title, links }: { title: string; links: { title: string; href: string }[] }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       <strong style={{
-        fontSize: 12,
-        fontFamily: 'var(--font-mono)',
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase',
-        color: 'rgba(200,212,232,0.45)',
-        marginBottom: 2,
+        fontSize: 12, fontFamily: 'var(--font-mono)',
+        letterSpacing: '0.08em', textTransform: 'uppercase',
+        color: 'var(--text-dim)', marginBottom: 2,
       }}>
         {title}
       </strong>
       {links.map((l) => (
-        <Link
-          key={l.href}
-          href={l.href}
-          style={{ fontSize: 13.5, color: 'rgba(200,212,232,0.75)', textDecoration: 'none', transition: 'color 0.15s' }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#fff' }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(200,212,232,0.75)' }}
-        >
+        <Link key={l.href} href={l.href} style={{ fontSize: 13.5, color: 'var(--text-soft)', textDecoration: 'none' }}>
           {l.title}
         </Link>
       ))}
