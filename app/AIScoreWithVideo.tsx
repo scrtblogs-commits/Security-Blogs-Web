@@ -115,8 +115,8 @@ export default function AIScoreWithVideo() {
             scale,
             rotateY: flip,
             transformStyle: 'preserve-3d',
-            width: 'min(560px, 88vw)',
-            height: 'min(500px, 76vh)',
+            width: 'min(740px, 92vw)',
+            height: 'min(640px, 88vh)',
             position: 'relative',
             zIndex: 5,
           }}
