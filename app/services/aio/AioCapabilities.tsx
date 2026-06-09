@@ -167,14 +167,6 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
           <p style={{ fontSize: 13.5, lineHeight: 1.6, color: 'var(--text-dim)', margin: 0 }}>{card.desc}</p>
 
           {/* Bottom "learn more" row */}
-          <motion.div
-            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 6 }}
-            transition={{ duration: 0.25 }}
-            style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 12, fontSize: 12, fontWeight: 700, color: card.color }}
-          >
-            <span>Explore</span>
-            <motion.span animate={{ x: hovered ? 4 : 0 }} transition={{ duration: 0.25 }}>→</motion.span>
-          </motion.div>
         </div>
       </motion.div>
     </motion.div>
