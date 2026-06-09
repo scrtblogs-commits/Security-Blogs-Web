@@ -180,12 +180,13 @@ export default function AIVisibilityScore() {
   }, [])
 
   // ── Mouse-tracking tilt ──────────────────────────────────────────────────
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
+  const mouseX      = useMotionValue(0)
+  const mouseY      = useMotionValue(0)
+  const videoTarget = useMotionValue(0)          // 0 = hidden, 1 = visible
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 20 })
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 })
-  const videoOpacity = useSpring(hovered ? 1 : 0, { stiffness: 80, damping: 18 })
+  const rotateX    = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 20 })
+  const rotateY    = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 })
+  const videoOpacity = useSpring(videoTarget, { stiffness: 80, damping: 18 })
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -197,7 +198,8 @@ export default function AIVisibilityScore() {
     mouseX.set(0)
     mouseY.set(0)
     setHovered(false)
-  }, [mouseX, mouseY])
+    videoTarget.set(0)
+  }, [mouseX, mouseY, videoTarget])
 
   return (
     <div
@@ -211,7 +213,7 @@ export default function AIVisibilityScore() {
       <motion.div
         ref={cardRef}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => setHovered(true)}
+        onMouseEnter={() => { setHovered(true); videoTarget.set(1) }}
         onMouseLeave={handleMouseLeave}
         initial={{ opacity: 0, y: 36 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -253,16 +255,16 @@ export default function AIVisibilityScore() {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              opacity: 0.18,
+              opacity: 0.55,
             }}
             src="/score-bg.mp4"
           />
           {/* Frosted glass overlay so card content stays readable */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'rgba(255,255,255,0.72)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
+            background: 'rgba(255,255,255,0.45)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
           }} />
         </motion.div>
 
