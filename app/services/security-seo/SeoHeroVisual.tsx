@@ -9,10 +9,10 @@ import { useEffect, useRef, useState } from 'react'
 
 const SERP_ITEMS = [
   { domain: 'securityblogs.com.au', title: 'Security SEO Australia | AI Visibility for Security Brands', top: true },
-  { domain: 'genericsecurity.com.au', title: 'Security Camera Installation Melbourne', top: false },
-  { domain: 'safeguard-systems.com', title: 'CCTV & Access Control Systems', top: false },
-  { domain: 'cctv-deals.com.au', title: 'Cheap Security Cameras Australia', top: false },
-  { domain: 'lockit-access.com', title: 'Access Control Solutions', top: false },
+  { domain: 'securityblogs.com.au › services', title: 'CCTV Installation Melbourne | Security Camera Experts', top: false },
+  { domain: 'securityblogs.com.au › guides', title: 'Access Control Systems Australia — Full Buyer Guide', top: false },
+  { domain: 'securityblogs.com.au › local', title: 'Security Companies Near Me | Local Pack #1', top: false },
+  { domain: 'securityblogs.com.au › blog', title: 'Best Security Monitoring Services 2026 — Expert Review', top: false },
 ]
 
 function float(delay = 0, range = 8) {
@@ -159,9 +159,9 @@ export default function SeoHeroVisual() {
                   </div>
                 )}
                 <div style={{ fontSize: 10, color: '#34a853', fontFamily: 'var(--font-mono)', marginBottom: 1 }}>
-                  {item.domain} ›
+                  {item.domain}
                 </div>
-                <div style={{ fontSize: 12.5, fontWeight: isTop ? 700 : 500, color: isTop ? '#1a0dab' : '#70757a', lineHeight: 1.3 }}>
+                <div style={{ fontSize: 12.5, fontWeight: isTop ? 700 : 500, color: '#1a0dab', lineHeight: 1.3 }}>
                   {item.title}
                 </div>
               </motion.div>

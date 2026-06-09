@@ -10,12 +10,12 @@ const ACCENT = '#1e9e75'
 
 // Node layout (percentage positions in the container)
 const NODES = [
-  { id: 'onpage',    label: 'On-Page SEO',      desc: 'Titles, headings, meta — optimised for security buyer intent.', x: 50,  y: 12,  r: 52, primary: false },
-  { id: 'technical', label: 'Technical SEO',     desc: 'Core Web Vitals, schema, crawlability — engineered to rank.', x: 18,  y: 38,  r: 70, primary: true  },
-  { id: 'local',     label: 'Local SEO',         desc: 'Google Maps, citations — dominate every city you serve.',      x: 82,  y: 38,  r: 52, primary: false },
-  { id: 'content',   label: 'Content Strategy',  desc: 'E-E-A-T content that ranks and gets cited by AI engines.',     x: 50,  y: 62,  r: 70, primary: true  },
-  { id: 'links',     label: 'Link Building',      desc: 'Industry backlinks that build domain authority fast.',         x: 18,  y: 80,  r: 48, primary: false },
-  { id: 'tracking',  label: 'Rank Tracking',      desc: 'Monthly reports on every keyword — transparent results.',     x: 82,  y: 80,  r: 48, primary: false },
+  { id: 'onpage',    label: 'On-Page SEO',      desc: 'Titles, headings, meta — optimised for security buyer intent.', x: 50,  y: 10,  r: 80,  primary: false },
+  { id: 'technical', label: 'Technical SEO',     desc: 'Core Web Vitals, schema, crawlability — engineered to rank.', x: 16,  y: 36,  r: 110, primary: true  },
+  { id: 'local',     label: 'Local SEO',         desc: 'Google Maps, citations — dominate every city you serve.',      x: 84,  y: 36,  r: 80,  primary: false },
+  { id: 'content',   label: 'Content Strategy',  desc: 'E-E-A-T content that ranks and gets cited by AI engines.',     x: 50,  y: 64,  r: 110, primary: true  },
+  { id: 'links',     label: 'Link Building',      desc: 'Industry backlinks that build domain authority fast.',         x: 16,  y: 86,  r: 76,  primary: false },
+  { id: 'tracking',  label: 'Rank Tracking',      desc: 'Monthly reports on every keyword — transparent results.',     x: 84,  y: 86,  r: 76,  primary: false },
 ]
 
 // Signal arcs: [from, to, activates at scroll pct]
@@ -231,7 +231,7 @@ export default function SeoGlobeNetwork() {
     <div ref={outerRef} style={{ position: 'relative' }}>
       <div
         ref={containerRef}
-        style={{ position: 'relative', width: '100%', height: 620, userSelect: 'none' }}
+        style={{ position: 'relative', width: '100%', height: 860, userSelect: 'none' }}
       >
         {/* SVG layer for arcs */}
         <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', overflow: 'visible', pointerEvents: 'none' }}>
