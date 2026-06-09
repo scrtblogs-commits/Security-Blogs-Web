@@ -7,8 +7,9 @@ import ParticleField from './backgrounds/ParticleField'
 import SkyAtmosphere from './backgrounds/SkyAtmosphere'
 import GlowBackground from './backgrounds/GlowBackground'
 import WebWireframeBackground from './backgrounds/WebWireframeBackground'
+import GlobalSignalBackground from './backgrounds/GlobalSignalBackground'
 
-type Variant = 'sky' | 'aurora' | 'mesh' | 'particles' | 'dots' | 'glow' | 'wireframe' | 'none'
+type Variant = 'sky' | 'aurora' | 'mesh' | 'particles' | 'dots' | 'glow' | 'wireframe' | 'signal' | 'none'
 
 // Order matters for the (unused for now) variant switcher: most prominent
 // option first. 'sky' is the new sitewide default — daytime sky in light
@@ -22,7 +23,7 @@ const options: { key: Variant; label: string }[] = [
   { key: 'none', label: 'None' },
 ]
 
-export default function SiteBackground({ defaultVariant = 'wireframe' as Variant }: { defaultVariant?: Variant }) {
+export default function SiteBackground({ defaultVariant = 'signal' as Variant }: { defaultVariant?: Variant }) {
   const [variant, setVariant] = useState<Variant>(defaultVariant)
   const [ready, setReady] = useState(false)
 
@@ -43,6 +44,7 @@ export default function SiteBackground({ defaultVariant = 'wireframe' as Variant
       {ready && variant === 'dots' && <DotNoise />}
       {ready && variant === 'glow' && <GlowBackground />}
       {ready && variant === 'wireframe' && <WebWireframeBackground />}
+      {ready && variant === 'signal' && <GlobalSignalBackground />}
     </div>
   )
 }
