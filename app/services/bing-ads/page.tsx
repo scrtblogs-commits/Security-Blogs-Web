@@ -6,7 +6,7 @@ import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
 import BingAdsCapabilities from './BingAdsCapabilities'
-import ProcessSteps from '@/components/ui/ProcessSteps'
+import BingAdsHowItWorks from './BingAdsHowItWorks'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import ContainerScroll from '@/components/ui/ContainerScroll'
@@ -295,12 +295,7 @@ export default function BingAdsPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="How it works" title="From Google import to B2B scale." />
-          <ProcessSteps steps={steps} />
-        </div>
-      </section>
+      <BingAdsHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
