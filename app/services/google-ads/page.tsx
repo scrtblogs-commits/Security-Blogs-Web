@@ -6,7 +6,7 @@ import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
 import GoogleAdsCapabilities from './GoogleAdsCapabilities'
-import ProcessSteps from '@/components/ui/ProcessSteps'
+import GoogleAdsHowItWorks from './GoogleAdsHowItWorks'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import ContainerScroll from '@/components/ui/ContainerScroll'
@@ -301,12 +301,7 @@ export default function GoogleAdsPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="How it works" title="From audit to scale in four steps." />
-          <ProcessSteps steps={steps} />
-        </div>
-      </section>
+      <GoogleAdsHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
