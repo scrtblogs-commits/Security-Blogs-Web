@@ -65,11 +65,11 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
         style={{
           rotateX: rotX, rotateY: rotY, transformStyle: 'preserve-3d',
           borderRadius: 20, overflow: 'hidden',
-          background: 'linear-gradient(145deg, #0e1829 0%, #0a1220 100%)',
-          border: `1px solid ${ACCENT}22`,
+          background: '#ffffff',
+          border: `1px solid ${ACCENT}33`,
           boxShadow: hovered
-            ? `0 0 60px -10px ${ACCENT}55, 0 0 0 1px ${ACCENT}44, 0 30px 60px -20px rgba(0,0,0,0.5)`
-            : '0 4px 24px rgba(0,0,0,0.18)',
+            ? `0 0 40px -8px ${ACCENT}44, 0 0 0 1px ${ACCENT}44, 0 20px 40px -12px rgba(0,0,0,0.15)`
+            : '0 2px 16px rgba(0,0,0,0.08)',
           transition: 'box-shadow 0.3s ease',
           cursor: 'default',
         }}
@@ -85,7 +85,7 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
         }} />
 
         {/* Preview area */}
-        <div style={{ position: 'relative', height: 160, overflow: 'hidden', background: '#060d1c' }}>
+        <div style={{ position: 'relative', height: 160, overflow: 'hidden', background: '#f4f8fc' }}>
           <card.Preview hovered={hovered} accent={ACCENT} />
         </div>
 
@@ -98,8 +98,8 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
           >
             {card.icon}
           </motion.div>
-          <h3 style={{ fontSize: 17, fontWeight: 700, color: '#fff', marginBottom: 8, lineHeight: 1.3 }}>{card.title}</h3>
-          <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>{card.desc}</p>
+          <h3 style={{ fontSize: 17, fontWeight: 700, color: '#0f2244', marginBottom: 8, lineHeight: 1.3 }}>{card.title}</h3>
+          <p style={{ fontSize: 13.5, color: '#46546e', lineHeight: 1.6 }}>{card.desc}</p>
         </div>
       </motion.div>
     </motion.div>
