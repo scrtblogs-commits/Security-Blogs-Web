@@ -13,6 +13,7 @@ import { siteConfig } from '@/lib/siteConfig'
 import HeroAIIcons from './HeroAIIcons'
 import ScrollStackSection from './ScrollStackSection'
 import TestimonialsSection from './TestimonialsSection'
+import AIScoreWithVideo from './AIScoreWithVideo'
 
 export default function HomePage() {
   return (
@@ -63,10 +64,9 @@ export default function HomePage() {
       <MarqueeStrip />
 
       {/* ─────────────────────────────────────────
-          3. AI VISIBILITY SCORE
-          Tilts on scroll + video behind it +
-          glassmorphism overlay as you scroll
-          ⚠️ Add your video at: public/score-bg.mp4
+          3. AI VISIBILITY SCORE + PROMO VIDEO
+          Card and video are two separate elements.
+          Video slides out from behind the card.
       ───────────────────────────────────────── */}
       <section className="section" id="ai-score">
         <div className="container">
@@ -75,7 +75,7 @@ export default function HomePage() {
             title="See how visible you are to AI."
             sub="Our engine checks 10+ AI platforms and scores your brand's citation rate in real time."
           />
-          <AIVisibilityScore />
+          <AIScoreWithVideo />
         </div>
       </section>
 
