@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -54,16 +55,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-AU">
       <head>
-        {/* Google Tag Manager */}
-        <script dangerouslySetInnerHTML={{ __html: gtmHead }} />
-        {/* End Google Tag Manager */}
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={siteSchema} />
       </head>
       <body>
-        {/* Google Tag Manager (noscript) */}
+        {/* Theme init — runs before paint to avoid flash */}
+        <Script id="theme-init" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: themeInit }} />
+        {/* Google Tag Manager */}
+        <Script id="gtm-head" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: gtmHead }} />
         <noscript dangerouslySetInnerHTML={{ __html: gtmNoscript }} />
-        {/* End Google Tag Manager (noscript) */}
+        {/* End Google Tag Manager */}
         <SiteBackground />
         <ScrollProgress />
         <CustomCursor />
