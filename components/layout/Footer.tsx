@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { services, knowledgeHub, publishWithUs, companyLinks } from '@/lib/site'
 
