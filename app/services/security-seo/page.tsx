@@ -4,7 +4,6 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
@@ -12,7 +11,7 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 import SeoHeroVisual from './SeoHeroVisual'
 import SeoGlobeNetwork from './SeoGlobeNetwork'
-import SeoCapabilitiesScroll from './SeoCapabilitiesScroll'
+import SeoHowItWorks from './SeoHowItWorks'
 
 const ACCENT = '#1e9e75'
 
@@ -98,19 +97,11 @@ export default function SecuritySeoPage() {
             title="Everything your security brand needs to own page one."
             sub="A full-stack SEO programme purpose-built for the high-trust, compliance-driven security industry."
           />
-        </div>
-        <SeoCapabilitiesScroll items={capabilities} accent={ACCENT} />
-        <div className="container" style={{ marginTop: 56 }}>
           <SeoGlobeNetwork />
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="How it works" title="A proven four-step path to #1." />
-          <ProcessSteps steps={steps} />
-        </div>
-      </section>
+      <SeoHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
