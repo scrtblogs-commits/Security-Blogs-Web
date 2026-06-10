@@ -32,6 +32,18 @@ export const metadata: Metadata = {
     'AI visibility for security brands',
   ],
   alternates: { canonical: '/' },
+  icons: {
+    icon: [
+      { url: '/favicon.ico',    sizes: 'any',        type: 'image/x-icon' },
+      { url: '/favicon-32.png', sizes: '32x32',      type: 'image/png' },
+      { url: '/icon-192.png',   sizes: '192x192',    type: 'image/png' },
+      { url: '/icon-512.png',   sizes: '512x512',    type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180',    type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
     description:
@@ -41,6 +53,12 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_AU',
     images: [
+      {
+        url: '/icon-512.png',
+        width: 512,
+        height: 512,
+        alt: 'SecurityBlogs Australia',
+      },
       {
         url: '/logo.png',
         width: 1200,
@@ -85,6 +103,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-AU">
       <head>
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#1e5fe0" />
         <JsonLd data={siteSchema} />
         {/*
           dangerouslySetInnerHTML on a <script> inside <head> is the only way to get
