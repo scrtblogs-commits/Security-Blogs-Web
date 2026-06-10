@@ -183,10 +183,10 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
 }
 
 const STEPS: WorkflowStep[] = [
-  { step: '01', tag: 'RESEARCH', title: 'Audit & Keyword Research', color: '#f6c715', glow: 'rgba(246,199,21,0.45)', Scene: Scene1 },
-  { step: '02', tag: 'LAUNCH',   title: 'Build & Launch',           color: '#f97316', glow: 'rgba(249,115,22,0.45)',  Scene: Scene2 },
-  { step: '03', tag: 'OPTIMISE', title: 'Optimise & Scale',         color: '#22c55e', glow: 'rgba(34,197,94,0.45)',   Scene: Scene3 },
-  { step: '04', tag: 'REPORT',   title: 'Report & Refine',          color: '#0ea5e9', glow: 'rgba(14,165,233,0.45)', Scene: Scene4 },
+  { step: '01', tag: 'RESEARCH', title: 'Audit & Keyword Research', color: '#4285f4', glow: 'rgba(66,133,244,0.45)', Scene: Scene1 },
+  { step: '02', tag: 'LAUNCH',   title: 'Build & Launch',           color: '#fa7b17', glow: 'rgba(250,123,23,0.45)', Scene: Scene2 },
+  { step: '03', tag: 'OPTIMISE', title: 'Optimise & Scale',         color: '#34a853', glow: 'rgba(52,168,83,0.45)',  Scene: Scene3 },
+  { step: '04', tag: 'REPORT',   title: 'Report & Refine',          color: '#fbbc04', glow: 'rgba(251,188,4,0.45)', Scene: Scene4 },
 ]
 
 export default function GoogleAdsHowItWorks() {

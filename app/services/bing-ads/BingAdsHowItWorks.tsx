@@ -240,9 +240,9 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
 
 const STEPS = [
   { step: '01', tag: 'IMPORT', title: 'Import & Audit', color: '#0078d4', glow: 'rgba(0,120,212,0.45)', Scene: Scene1 },
-  { step: '02', tag: 'LAYER', title: 'Layer LinkedIn Targeting', color: '#0ea5e9', glow: 'rgba(14,165,233,0.45)', Scene: Scene2 },
-  { step: '03', tag: 'LAUNCH', title: 'Launch & Track', color: '#22c55e', glow: 'rgba(34,197,94,0.45)', Scene: Scene3 },
-  { step: '04', tag: 'SCALE', title: 'Optimise & Expand', color: '#a855f7', glow: 'rgba(168,85,247,0.45)', Scene: Scene4 },
+  { step: '02', tag: 'LAYER', title: 'Layer LinkedIn Targeting', color: '#0a66c2', glow: 'rgba(10,102,194,0.45)', Scene: Scene2 },
+  { step: '03', tag: 'LAUNCH', title: 'Launch & Track', color: '#107c10', glow: 'rgba(16,124,16,0.45)', Scene: Scene3 },
+  { step: '04', tag: 'SCALE', title: 'Optimise & Expand', color: '#5c2d91', glow: 'rgba(92,45,145,0.45)', Scene: Scene4 },
 ] satisfies WorkflowStep[]
 
 export default function BingAdsHowItWorks() {

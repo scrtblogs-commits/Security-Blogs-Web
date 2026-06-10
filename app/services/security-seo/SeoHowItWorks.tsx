@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
 const STEPS: WorkflowStep[] = [
-  { step: '01', tag: 'FOUNDATION', title: 'SEO Audit & Keyword Research', color: '#1e5fe0', glow: 'rgba(30,95,224,0.45)',   Scene: Scene1 },
-  { step: '02', tag: 'OPTIMISE',   title: 'Technical Fixes & On-Page',   color: '#1e9e75', glow: 'rgba(30,158,117,0.45)', Scene: Scene2 },
-  { step: '03', tag: 'AUTHORITY',  title: 'Content & Link Building',     color: '#0ea5e9', glow: 'rgba(14,165,233,0.45)', Scene: Scene3 },
-  { step: '04', tag: 'RESULTS',    title: 'Monitor & Scale',             color: '#f59e0b', glow: 'rgba(245,158,11,0.45)', Scene: Scene4 },
+  { step: '01', tag: 'FOUNDATION', title: 'SEO Audit & Keyword Research', color: '#1a73e8', glow: 'rgba(26,115,232,0.45)',  Scene: Scene1 },
+  { step: '02', tag: 'OPTIMISE',   title: 'Technical Fixes & On-Page',   color: '#188038', glow: 'rgba(24,128,56,0.45)',  Scene: Scene2 },
+  { step: '03', tag: 'AUTHORITY',  title: 'Content & Link Building',     color: '#e37400', glow: 'rgba(227,116,0,0.45)',  Scene: Scene3 },
+  { step: '04', tag: 'RESULTS',    title: 'Monitor & Scale',             color: '#d93025', glow: 'rgba(217,48,37,0.45)', Scene: Scene4 },
 ]
 
 export default function SeoHowItWorks() {

@@ -6,10 +6,10 @@ import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/Service
 const COLOR = '#7f77dd'
 
 const STEPS: WorkflowStep[] = [
-  { step: '01', tag: 'DISCOVER',  title: 'Question & Intent Mapping',    color: '#7f77dd', glow: 'rgba(127,119,221,0.45)',  Scene: DiscoverScene  },
-  { step: '02', tag: 'CREATE',    title: 'Answer-First Content',          color: '#1e5fe0', glow: 'rgba(30,95,224,0.45)',   Scene: CreateScene    },
-  { step: '03', tag: 'SCHEMA',    title: 'Schema & Snippet Targeting',    color: '#1e9e75', glow: 'rgba(30,158,117,0.45)',  Scene: SchemaScene    },
-  { step: '04', tag: 'TRACK',     title: 'Track & Expand',                color: '#f59e0b', glow: 'rgba(245,158,11,0.45)', Scene: TrackScene     },
+  { step: '01', tag: 'DISCOVER',  title: 'Question & Intent Mapping',    color: '#1a73e8', glow: 'rgba(26,115,232,0.45)',  Scene: DiscoverScene  },
+  { step: '02', tag: 'CREATE',    title: 'Answer-First Content',          color: '#0f9d58', glow: 'rgba(15,157,88,0.45)',  Scene: CreateScene    },
+  { step: '03', tag: 'SCHEMA',    title: 'Schema & Snippet Targeting',    color: '#f29900', glow: 'rgba(242,153,0,0.45)',  Scene: SchemaScene    },
+  { step: '04', tag: 'TRACK',     title: 'Track & Expand',                color: '#e91e63', glow: 'rgba(233,30,99,0.45)', Scene: TrackScene     },
 ]
 
 export default function AeoHowItWorks() {

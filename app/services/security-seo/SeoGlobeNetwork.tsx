@@ -220,13 +220,13 @@ const [sigProgress, setSigProgress] = useState(0)
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
-        background: 'linear-gradient(160deg, #060d1f 0%, #0b1530 60%, #06100a 100%)',
+        background: '#ffffff',
       }}>
 
-        {/* Subtle star-dot texture */}
+        {/* Subtle dot texture */}
         <div aria-hidden style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(30,95,224,0.07) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
           maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
           WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%)',
@@ -238,7 +238,7 @@ const [sigProgress, setSigProgress] = useState(0)
         >
           <span style={{
             fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em',
-            color: ACCENT, textTransform: 'uppercase', opacity: 0.8,
+            color: '#1e5fe0', textTransform: 'uppercase', opacity: 0.7,
           }}>
             SEO builds a global network · scroll to see it grow
           </span>
@@ -283,13 +283,13 @@ const [sigProgress, setSigProgress] = useState(0)
                   <div style={{ textAlign: 'center' }}>
                     <div style={{
                       fontFamily: 'var(--font-display)', fontWeight: 700,
-                      fontSize: 15, color: '#fff', marginBottom: 4,
+                      fontSize: 15, color: '#0f2244', marginBottom: 4,
                     }}>
                       {g.label}
                     </div>
                     <div style={{
                       fontFamily: 'var(--font-mono)', fontSize: 10.5,
-                      color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em',
+                      color: '#6b7a99', letterSpacing: '0.04em',
                     }}>
                       {g.sub}
                     </div>
@@ -313,17 +313,17 @@ const [sigProgress, setSigProgress] = useState(0)
             transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               width: 24, height: 38, borderRadius: 999,
-              border: `1.5px solid ${ACCENT}60`,
+              border: `1.5px solid #1e5fe060`,
               display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: 5,
             }}
           >
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ width: 5, height: 5, borderRadius: '50%', background: ACCENT }}
+              style={{ width: 5, height: 5, borderRadius: '50%', background: '#1e5fe0' }}
             />
           </motion.div>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: ACCENT, opacity: 0.6, letterSpacing: '0.1em' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#1e5fe0', opacity: 0.6, letterSpacing: '0.1em' }}>
             SCROLL
           </span>
         </motion.div>

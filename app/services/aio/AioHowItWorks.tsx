@@ -5,10 +5,10 @@ import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/Service
 
 // ─── AIO Workflow: 4 scroll-driven scenes ───────────────────────────────────
 const STEPS: WorkflowStep[] = [
-  { step: '01', tag: 'DISCOVERY',  title: 'AI Visibility Audit',     color: '#6f4dff', glow: 'rgba(111,77,255,0.45)',    Scene: AuditScene   },
-  { step: '02', tag: 'BUILD',      title: 'Schema & Structure',      color: '#1e5fe0', glow: 'rgba(30,95,224,0.45)',     Scene: SchemaScene  },
-  { step: '03', tag: 'CREATE',     title: 'Citable Content Build',   color: '#1e9e75', glow: 'rgba(30,158,117,0.45)',   Scene: ContentScene },
-  { step: '04', tag: 'OPTIMISE',   title: 'Monitor & Optimise',      color: '#f59e0b', glow: 'rgba(245,158,11,0.45)',   Scene: MonitorScene },
+  { step: '01', tag: 'DISCOVERY',  title: 'AI Visibility Audit',     color: '#7c3aed', glow: 'rgba(124,58,237,0.45)',  Scene: AuditScene   },
+  { step: '02', tag: 'BUILD',      title: 'Schema & Structure',      color: '#2563eb', glow: 'rgba(37,99,235,0.45)',   Scene: SchemaScene  },
+  { step: '03', tag: 'CREATE',     title: 'Citable Content Build',   color: '#0891b2', glow: 'rgba(8,145,178,0.45)',   Scene: ContentScene },
+  { step: '04', tag: 'OPTIMISE',   title: 'Monitor & Optimise',      color: '#059669', glow: 'rgba(5,150,105,0.45)',   Scene: MonitorScene },
 ]
 
 export default function AioHowItWorks() {

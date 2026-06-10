@@ -240,10 +240,10 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
 }
 
 const STEPS: WorkflowStep[] = [
-  { step: '01', tag: 'STRATEGY', title: 'Discovery & UX Strategy', color: '#1e5fe0', glow: 'rgba(30,95,224,0.45)', Scene: Scene1 },
-  { step: '02', tag: 'DESIGN', title: 'Design & Brand System', color: '#8b5cf6', glow: 'rgba(139,92,246,0.45)', Scene: Scene2 },
-  { step: '03', tag: 'BUILD', title: 'Development & Testing', color: '#0ea5e9', glow: 'rgba(14,165,233,0.45)', Scene: Scene3 },
-  { step: '04', tag: 'LAUNCH', title: 'Launch & Optimisation', color: '#10b981', glow: 'rgba(16,185,129,0.45)', Scene: Scene4 },
+  { step: '01', tag: 'STRATEGY', title: 'Discovery & UX Strategy', color: '#146ef5', glow: 'rgba(20,110,245,0.45)', Scene: Scene1 },
+  { step: '02', tag: 'DESIGN', title: 'Design & Brand System', color: '#a259ff', glow: 'rgba(162,89,255,0.45)', Scene: Scene2 },
+  { step: '03', tag: 'BUILD', title: 'Development & Testing', color: '#1abcfe', glow: 'rgba(26,188,254,0.45)', Scene: Scene3 },
+  { step: '04', tag: 'LAUNCH', title: 'Launch & Optimisation', color: '#0acf83', glow: 'rgba(10,207,131,0.45)', Scene: Scene4 },
 ]
 
 export default function WebDesignHowItWorks() {
