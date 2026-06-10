@@ -41,13 +41,13 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 18 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 01</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>AI Visibility<br />Audit</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>AI Visibility<br />Audit</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Platform tests */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 4, letterSpacing: '0.1em' }}>AI PLATFORM SCAN</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4, letterSpacing: '0.1em' }}>AI PLATFORM SCAN</div>
           {AI_TESTS.map((t, i) => (
             <motion.div key={t.platform}
               initial={{ opacity: 0, x: -14 }}
@@ -55,13 +55,13 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
               transition={{ duration: 0.3 }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 9,
-                background: 'rgba(255,255,255,0.03)', borderRadius: 10,
+                background: 'rgba(15,34,68,0.03)', borderRadius: 10,
                 padding: '7px 10px', border: `1px solid ${t.c}18`,
               }}>
-              <div style={{ width: 22, height: 22, borderRadius: 7, background: t.c, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#fff', flexShrink: 0 }}>{t.platform[0]}</div>
+              <div style={{ width: 22, height: 22, borderRadius: 7, background: t.c, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#0f2244', flexShrink: 0 }}>{t.platform[0]}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 11, fontWeight: 600, color: '#fff' }}>{t.platform}</div>
-                <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)' }}>Visibility score: {t.score}/100</div>
+                <div style={{ fontSize: 11, fontWeight: 600, color: '#0f2244' }}>{t.platform}</div>
+                <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)' }}>Visibility score: {t.score}/100</div>
               </div>
               <motion.div
                 initial={{ scale: 0 }}
@@ -82,28 +82,28 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
 
         {/* Score + gap summary */}
         <div style={{ width: 168, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '14px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 6, letterSpacing: '0.1em' }}>CURRENT SCORE</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '14px', textAlign: 'center' }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 6, letterSpacing: '0.1em' }}>CURRENT SCORE</div>
             <div style={{ position: 'relative', width: 64, height: 64, margin: '0 auto 8px' }}>
               <svg viewBox="0 0 64 64" style={{ width: 64, height: 64, transform: 'rotate(-90deg)' }}>
-                <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="6" />
+                <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(15,34,68,0.07)" strokeWidth="6" />
                 <motion.circle cx="32" cy="32" r="26" fill="none" stroke={color} strokeWidth="6" strokeLinecap="round"
                   strokeDasharray={`${2 * Math.PI * 26}`}
                   initial={{ strokeDashoffset: 2 * Math.PI * 26 }}
                   animate={active ? { strokeDashoffset: 2 * Math.PI * 26 * 0.58 } : {}}
                   transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 0.8, 0.2, 1] }} />
               </svg>
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 900, color: '#fff' }}>42</div>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 900, color: '#0f2244' }}>42</div>
             </div>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#ef4444' }}>BEFORE AIO</div>
           </div>
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>GAPS FOUND</div>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>GAPS FOUND</div>
             {['No schema markup', 'Missing entities', 'Low citation rate', 'Thin content'].map((g, i) => (
               <motion.div key={g}
                 initial={{ opacity: 0 }} animate={idx >= 3 ? { opacity: 1 } : {}}
                 transition={{ delay: i * 0.1 }}
-                style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginBottom: 5, fontSize: 10, color: 'rgba(255,255,255,0.65)' }}>
+                style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginBottom: 5, fontSize: 10, color: 'rgba(15,34,68,0.65)' }}>
                 <span style={{ color: '#ef4444', flexShrink: 0 }}>✗</span>{g}
               </motion.div>
             ))}
@@ -120,10 +120,10 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
       >
         <span style={{ fontSize: 16 }}>🔍</span>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>Audit complete — 3 platforms not citing you</div>
-          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)' }}>Recommended fix: Schema + Entity signals + Citable content</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#0f2244' }}>Audit complete — 3 platforms not citing you</div>
+          <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.45)', fontFamily: 'var(--font-mono)' }}>Recommended fix: Schema + Entity signals + Citable content</div>
         </div>
-        <div style={{ marginLeft: 'auto', background: color, color: '#fff', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999, flexShrink: 0 }}>START →</div>
+        <div style={{ marginLeft: 'auto', background: color, color: '#0f2244', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999, flexShrink: 0 }}>START →</div>
       </motion.div>
     </div>
   )
@@ -169,15 +169,15 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 02</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Schema &<br />Structure</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Schema &<br />Structure</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Code editor */}
-        <div style={{ flex: 1, borderRadius: 14, overflow: 'hidden', background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', gap: 5, padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ flex: 1, borderRadius: 14, overflow: 'hidden', background: '#0d1117', border: '1px solid rgba(15,34,68,0.08)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', gap: 5, padding: '8px 12px', background: 'rgba(15,34,68,0.03)', borderBottom: '1px solid rgba(15,34,68,0.07)' }}>
             {['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
-            <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.3)', marginLeft: 4 }}>schema.json</span>
+            <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.3)', marginLeft: 4 }}>schema.json</span>
           </div>
           <div style={{ padding: '10px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: 3 }}>
             {SCHEMA_LINES.map((l, i) => (
@@ -198,8 +198,8 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
 
         {/* Validation panel */}
         <div style={{ width: 178, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>SCHEMA VALIDATOR</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>SCHEMA VALIDATOR</div>
             {SCHEMA_TYPES.map(t => (
               <div key={t.name} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                 <motion.div
@@ -209,17 +209,17 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
                   style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
                     background: t.validated ? '#1e9e75' : '#ef4444',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 9, color: '#fff', fontWeight: 700 }}>
+                    fontSize: 9, color: '#0f2244', fontWeight: 700 }}>
                   {t.validated ? '✓' : '✗'}
                 </motion.div>
-                <span style={{ fontSize: 10.5, color: t.validated ? '#fff' : 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)' }}>{t.name}</span>
+                <span style={{ fontSize: 10.5, color: t.validated ? '#fff' : 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>{t.name}</span>
               </div>
             ))}
           </div>
 
           {/* AI engine readiness */}
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 6 }}>AI READINESS</div>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 6 }}>AI READINESS</div>
             <motion.div
               initial={{ opacity: 0 }} animate={validIn ? { opacity: 1 } : {}} transition={{ delay: 1.2 }}
               style={{ fontSize: 36, fontWeight: 900, color, lineHeight: 1 }}>96</motion.div>
@@ -237,8 +237,8 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
       >
         <span style={{ fontSize: 14 }}>✅</span>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>Schema deployed — 4 types active</div>
-          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)' }}>AI engines can now parse and trust your entity data</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#0f2244' }}>Schema deployed — 4 types active</div>
+          <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.45)', fontFamily: 'var(--font-mono)' }}>AI engines can now parse and trust your entity data</div>
         </div>
       </motion.div>
     </div>
@@ -271,13 +271,13 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 03</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Citable Content<br />Build</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Citable Content<br />Build</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Article structure */}
-        <div style={{ flex: 1, background: 'rgba(255,255,255,0.02)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ background: `${color}15`, borderBottom: `1px solid ${color}20`, padding: '7px 12px', fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em' }}>
+        <div style={{ flex: 1, background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: `${color}15`, borderBottom: `1px solid ${color}20`, padding: '7px 12px', fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.5)', letterSpacing: '0.08em' }}>
             ARTICLE BUILDER · AI-CITABLE
           </div>
           <div style={{ padding: '12px 14px', flex: 1, display: 'flex', flexDirection: 'column', gap: 7 }}>
@@ -288,7 +288,7 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
             {[0.9, 1.0, 0.75].map((w, i) => (
               <motion.div key={i} initial={{ width: 0 }} animate={artIn ? { width: `${w * 100}%` } : {}}
                 transition={{ duration: 0.4, delay: 0.25 + i * 0.09 }}
-                style={{ height: 5, background: 'rgba(255,255,255,0.12)', borderRadius: 3 }} />
+                style={{ height: 5, background: 'rgba(15,34,68,0.12)', borderRadius: 3 }} />
             ))}
             {/* H2 */}
             <motion.div initial={{ width: 0 }} animate={artIn ? { width: '65%' } : {}} transition={{ duration: 0.4, delay: 0.55 }}
@@ -296,7 +296,7 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
             {[0.95, 0.82, 0.7, 0.88].map((w, i) => (
               <motion.div key={i} initial={{ width: 0 }} animate={artIn ? { width: `${w * 100}%` } : {}}
                 transition={{ duration: 0.4, delay: 0.65 + i * 0.08 }}
-                style={{ height: 5, background: 'rgba(255,255,255,0.09)', borderRadius: 3 }} />
+                style={{ height: 5, background: 'rgba(15,34,68,0.09)', borderRadius: 3 }} />
             ))}
             {/* Stats callout */}
             <motion.div initial={{ opacity: 0, y: 5 }} animate={artIn ? { opacity: 1, y: 0 } : {}} transition={{ delay: 1.1 }}
@@ -305,7 +305,7 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
             </motion.div>
           </div>
           {/* E-E-A-T badges */}
-          <div style={{ padding: '8px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 5 }}>
+          <div style={{ padding: '8px 14px', borderTop: '1px solid rgba(15,34,68,0.05)', display: 'flex', gap: 5 }}>
             {['Experience','Expertise','Authority','Trust'].map((tag, i) => (
               <motion.div key={tag} initial={{ opacity: 0, scale: 0.7 }} animate={artIn ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: 1.0 + i * 0.08, duration: 0.3 }}
@@ -318,22 +318,22 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
 
         {/* AI quote preview */}
         <div style={{ width: 184, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>AI IS NOW CITING</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>AI IS NOW CITING</div>
             {AI_QUOTES.map((q, i) => (
               <motion.div key={q.platform}
                 initial={{ opacity: 0, y: 10 }}
                 animate={quoteIdx >= i ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.4 }}
-                style={{ marginBottom: 10, background: 'rgba(255,255,255,0.04)', borderRadius: 10, padding: '8px 9px', border: `1px solid ${color}18` }}>
+                style={{ marginBottom: 10, background: 'rgba(15,34,68,0.04)', borderRadius: 10, padding: '8px 9px', border: `1px solid ${color}18` }}>
                 <div style={{ fontSize: 9.5, fontWeight: 700, color, marginBottom: 5, fontFamily: 'var(--font-mono)' }}>{q.platform}</div>
-                <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, fontStyle: 'italic' }}>{q.quote}</div>
+                <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.6)', lineHeight: 1.5, fontStyle: 'italic' }}>{q.quote}</div>
               </motion.div>
             ))}
           </div>
 
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 4 }}>CITATION DENSITY</div>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4 }}>CITATION DENSITY</div>
             <motion.div
               initial={{ opacity: 0 }} animate={quoteIdx >= 0 ? { opacity: 1 } : {}} transition={{ delay: 0.3 }}
               style={{ fontSize: 34, fontWeight: 900, color, lineHeight: 1 }}>87<span style={{ fontSize: 14 }}>%</span></motion.div>
@@ -384,22 +384,22 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 04</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Monitor &<br />Optimise</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Monitor &<br />Optimise</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Platform citation scores */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 2 }}>CITATION RATES · AFTER AIO</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 2 }}>CITATION RATES · AFTER AIO</div>
           {MONITOR_PLATFORMS.map((p, i) => (
             <div key={p.name}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
-                <div style={{ width: 22, height: 22, borderRadius: 7, background: p.c, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#fff', flexShrink: 0 }}>{p.name[0]}</div>
-                <span style={{ fontSize: 10.5, color: '#fff', flex: 1 }}>{p.name}</span>
-                <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.4)' }}>{p.prev}%</span>
+                <div style={{ width: 22, height: 22, borderRadius: 7, background: p.c, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#0f2244', flexShrink: 0 }}>{p.name[0]}</div>
+                <span style={{ fontSize: 10.5, color: '#0f2244', flex: 1 }}>{p.name}</span>
+                <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.4)' }}>{p.prev}%</span>
                 <span style={{ fontSize: 10, color: '#1e9e75', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>→ {p.curr}%</span>
               </div>
-              <div style={{ height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 999, overflow: 'hidden' }}>
+              <div style={{ height: 5, background: 'rgba(15,34,68,0.06)', borderRadius: 999, overflow: 'hidden' }}>
                 <motion.div
                   initial={{ width: `${p.prev}%` }}
                   animate={phase >= 1 ? { width: `${p.curr}%` } : {}}
@@ -414,8 +414,8 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
         {/* Trend chart + alerts */}
         <div style={{ width: 192, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {/* Trend */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>CITATION TREND · 12M</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px' }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>CITATION TREND · 12M</div>
             <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 56, overflow: 'visible' }}>
               <defs>
                 <linearGradient id="mt-grad" x1="0" y1="0" x2="0" y2="1">
@@ -437,8 +437,8 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
           </div>
 
           {/* Alert feed */}
-          <div style={{ background: 'rgba(255,255,255,0.02)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', padding: '10px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>ALERTS</div>
+          <div style={{ background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', padding: '10px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>ALERTS</div>
             {ALERTS.map((a, i) => (
               <motion.div key={a.text}
                 initial={{ opacity: 0, x: 10 }}
@@ -447,8 +447,8 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
                 style={{ display: 'flex', gap: 6, alignItems: 'flex-start', marginBottom: 8 }}>
                 <span style={{ fontSize: 12, flexShrink: 0 }}>{a.icon}</span>
                 <div>
-                  <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.75)', lineHeight: 1.4 }}>{a.text}</div>
-                  <div style={{ fontSize: 8.5, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)', marginTop: 1 }}>{a.time}</div>
+                  <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.75)', lineHeight: 1.4 }}>{a.text}</div>
+                  <div style={{ fontSize: 8.5, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)', marginTop: 1 }}>{a.time}</div>
                 </div>
               </motion.div>
             ))}

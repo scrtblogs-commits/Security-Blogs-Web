@@ -40,14 +40,14 @@ export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] 
     <div ref={outerRef} style={{ height: `${total * 100}vh`, position: 'relative' }}>
       <div style={{
         position: 'sticky', top: 0, height: '100vh', overflow: 'hidden',
-        background: 'linear-gradient(160deg, #060d1f 0%, #0b1530 60%, #080f22 100%)',
+        background: '#ffffff',
         display: 'flex', flexDirection: 'column',
       }}>
-        {/* Grid lines */}
+        {/* Subtle dot grid */}
         <div aria-hidden style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          backgroundImage: 'linear-gradient(rgba(30,95,224,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(30,95,224,0.05) 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
+          backgroundImage: 'radial-gradient(circle, rgba(30,95,224,0.08) 1px, transparent 1px)',
+          backgroundSize: '36px 36px',
           maskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%)',
           WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%)',
         }} />
@@ -56,7 +56,7 @@ export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] 
 
         {/* Header */}
         <div style={{ textAlign: 'center', paddingTop: 42, flexShrink: 0, position: 'relative', zIndex: 2 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', color: 'rgba(120,160,255,0.65)', textTransform: 'uppercase' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', color: '#8896af', textTransform: 'uppercase' }}>
             How It Works
           </span>
           <div style={{ position: 'relative', height: 34, marginTop: 6 }}>
@@ -87,11 +87,11 @@ export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] 
             animate={{ opacity: [0.4, 1, 0.4] }} transition={{ duration: 2.2, repeat: Infinity }}
             style={{ display: 'flex', alignItems: 'center', gap: 6 }}
           >
-            <span style={{ fontSize: 9.5, color: 'rgba(120,160,255,0.55)', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>
+            <span style={{ fontSize: 9.5, color: '#a0adc0', fontFamily: 'var(--font-mono)', letterSpacing: '0.1em' }}>
               SCROLL THROUGH JOURNEY
             </span>
             <motion.span animate={{ x: [0, 6, 0] }} transition={{ duration: 1.3, repeat: Infinity }}
-              style={{ color: 'rgba(120,160,255,0.5)', fontSize: 13 }}>→</motion.span>
+              style={{ color: '#a0adc0', fontSize: 13 }}>→</motion.span>
           </motion.div>
         </div>
       </div>
@@ -113,7 +113,7 @@ function GlowOrb({ floatIdx, steps }: { floatIdx: MotionValue<number>; steps: Wo
       position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%,-50%)',
       width: 600, height: 600, borderRadius: '50%',
       background: col, filter: 'blur(140px)',
-      opacity: 0.12, transition: 'background 0.8s ease', pointerEvents: 'none', zIndex: 0,
+      opacity: 0.07, transition: 'background 0.8s ease', pointerEvents: 'none', zIndex: 0,
     }} />
   )
 }
@@ -123,9 +123,9 @@ function ActiveTitle({ index, floatIdx, step }: { key?: React.Key; index: number
   const y       = useTransform(floatIdx, (fi: number) => Math.abs(index - fi) < 0.45 ? 0 : 8)
   return (
     <motion.div style={{ position: 'absolute', inset: 0, opacity, y, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: step.color, opacity: 0.8 }}>{step.tag}</span>
-      <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
-      <span style={{ fontSize: 18, fontWeight: 700, color: '#fff' }}>{step.title}</span>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: step.color, opacity: 0.9 }}>{step.tag}</span>
+      <span style={{ color: 'rgba(15,34,68,0.18)' }}>·</span>
+      <span style={{ fontSize: 18, fontWeight: 700, color: '#0f2244' }}>{step.title}</span>
     </motion.div>
   )
 }
@@ -140,9 +140,9 @@ function StepPill({ index, floatIdx, step }: { key?: React.Key; index: number; f
     <div style={{
       padding: '5px 12px', borderRadius: 999, fontSize: 10, fontFamily: 'var(--font-mono)',
       fontWeight: 700, letterSpacing: '0.08em', transition: 'all 0.4s ease',
-      background: active ? step.color : 'rgba(255,255,255,0.05)',
-      color: active ? '#fff' : 'rgba(255,255,255,0.3)',
-      border: `1px solid ${active ? step.color : 'rgba(255,255,255,0.08)'}`,
+      background: active ? step.color : 'rgba(15,34,68,0.05)',
+      color: active ? '#fff' : '#8896af',
+      border: `1px solid ${active ? step.color : 'rgba(15,34,68,0.10)'}`,
       boxShadow: active ? `0 0 20px -4px ${step.glow}` : 'none',
     }}>
       {step.step}
@@ -164,8 +164,8 @@ function SceneCard({ index, floatIdx, data, cardH, cardW }: {
   const opacity = useTransform(floatIdx, (fi: number) => { const d = Math.abs(index - fi); return d < 0.05 ? 1 : d < 1.5 ? 1 - d * 0.28 : 0.22 })
   const shadow  = useTransform(floatIdx, (fi: number) =>
     Math.abs(index - fi) < 0.3
-      ? `0 0 80px -10px ${data.glow}, 0 0 0 1px ${data.color}35, 0 40px 80px -20px rgba(0,0,0,0.6)`
-      : '0 10px 40px -12px rgba(0,0,0,0.5)'
+      ? `0 0 60px -20px ${data.glow}, 0 0 0 1.5px ${data.color}30, 0 24px 60px -16px rgba(18,42,86,0.14)`
+      : '0 4px 32px -8px rgba(18,42,86,0.09), 0 0 0 1px rgba(18,42,86,0.07)'
   )
 
   const { Scene } = data
@@ -175,22 +175,28 @@ function SceneCard({ index, floatIdx, data, cardH, cardW }: {
       <motion.div style={{
         width: cardW, height: cardH, borderRadius: 28, overflow: 'hidden',
         boxShadow: shadow,
-        background: 'rgba(8,15,34,0.85)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        border: `1px solid ${data.color}22`,
+        background: '#ffffff',
+        border: `1px solid ${data.color}20`,
         position: 'relative',
       }}>
+        {/* Accent top bar */}
         <div style={{
-          position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+          position: 'absolute', top: 0, left: 0, right: 0, height: 3,
           background: `linear-gradient(90deg, transparent 5%, ${data.color} 50%, transparent 95%)`,
-          opacity: active ? 1 : 0.2, transition: 'opacity 0.5s',
+          opacity: active ? 1 : 0.25, transition: 'opacity 0.5s',
         }} />
+        {/* Very subtle colour wash behind card content */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: `linear-gradient(160deg, ${data.color}06 0%, transparent 55%)`,
+          pointerEvents: 'none',
+        }} />
+        {/* Tag badge */}
         <div style={{
           position: 'absolute', top: 18, right: 18, zIndex: 10,
           fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700,
           color: data.color, letterSpacing: '0.1em',
-          background: `${data.color}15`, border: `1px solid ${data.color}35`,
+          background: `${data.color}12`, border: `1px solid ${data.color}30`,
           borderRadius: 8, padding: '4px 9px',
         }}>
           {data.tag}

@@ -12,7 +12,7 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
   ]
   return (
     <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
+      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
         KEYWORD RESEARCH · BUYER INTENT AUDIT
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7, flex: 1 }}>
@@ -20,13 +20,13 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
           <div key={k.kw} style={{
             display: 'flex', alignItems: 'center', gap: 10,
             padding: '9px 12px', borderRadius: 10,
-            background: i === 0 ? `${color}14` : 'rgba(255,255,255,0.04)',
-            border: `1px solid ${i === 0 ? color + '44' : 'rgba(255,255,255,0.07)'}`,
+            background: i === 0 ? `${color}14` : 'rgba(15,34,68,0.04)',
+            border: `1px solid ${i === 0 ? color + '44' : 'rgba(15,34,68,0.07)'}`,
             opacity: active ? 1 : 0.5,
             transition: `opacity 0.4s ${i * 0.06}s`,
           }}>
-            <span style={{ flex: 1, fontSize: 12.5, color: i === 0 ? color : 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-mono)' }}>{k.kw}</span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)' }}>{k.vol}/mo</span>
+            <span style={{ flex: 1, fontSize: 12.5, color: i === 0 ? color : 'rgba(15,34,68,0.7)', fontFamily: 'var(--font-mono)' }}>{k.kw}</span>
+            <span style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>{k.vol}/mo</span>
             <span style={{
               fontSize: 9.5, fontWeight: 700, padding: '2px 7px', borderRadius: 4,
               background: k.cmp === 'HIGH' ? color : k.cmp === 'MED' ? '#f97316' : '#22c55e',
@@ -37,9 +37,9 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
       </div>
       <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
         {[{ l: 'Keywords found', v: '2,840' }, { l: 'Buyer intent', v: '347' }, { l: 'Negative list', v: '92' }].map(m => (
-          <div key={m.l} style={{ flex: 1, padding: '10px 12px', borderRadius: 10, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', textAlign: 'center' }}>
+          <div key={m.l} style={{ flex: 1, padding: '10px 12px', borderRadius: 10, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.07)', textAlign: 'center' }}>
             <div style={{ fontSize: 18, fontWeight: 800, color, fontFamily: 'var(--font-mono)' }}>{m.v}</div>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{m.l}</div>
+            <div style={{ fontSize: 10, color: 'rgba(15,34,68,0.4)', marginTop: 2 }}>{m.l}</div>
           </div>
         ))}
       </div>
@@ -56,7 +56,7 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
   ]
   return (
     <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
+      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
         CAMPAIGN STRUCTURE · LIVE
       </div>
       {/* Campaign box */}
@@ -67,24 +67,24 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
             <div key={ag.name} style={{
               display: 'flex', alignItems: 'center', gap: 10,
               padding: '7px 10px', borderRadius: 8,
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'rgba(15,34,68,0.05)',
+              border: '1px solid rgba(15,34,68,0.08)',
               opacity: active ? 1 : 0.5,
               transition: `opacity 0.4s ${i * 0.1}s`,
             }}>
-              <span style={{ flex: 1, fontSize: 12.5, color: 'rgba(255,255,255,0.8)' }}>{ag.name}</span>
+              <span style={{ flex: 1, fontSize: 12.5, color: 'rgba(15,34,68,0.8)' }}>{ag.name}</span>
               <span style={{ fontSize: 10, color: color, fontFamily: 'var(--font-mono)' }}>{ag.ads} ads</span>
-              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)' }}>{ag.kws} kws</span>
+              <span style={{ fontSize: 10, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>{ag.kws} kws</span>
             </div>
           ))}
         </div>
       </div>
       {/* Headline preview */}
-      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>AD PREVIEW</div>
+      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.08)' }}>
+        <div style={{ fontSize: 10, color: 'rgba(15,34,68,0.35)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>AD PREVIEW</div>
         <div style={{ fontSize: 13, color: '#4ade80', fontWeight: 700 }}>securityblogs.com.au</div>
         <div style={{ fontSize: 14, color, fontWeight: 700, margin: '4px 0' }}>Commercial CCTV Install Sydney | Free Site Survey</div>
-        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)' }}>AS2201 Certified · 500+ Installs · 24/7 Monitoring Available</div>
+        <div style={{ fontSize: 12, color: 'rgba(15,34,68,0.55)' }}>AS2201 Certified · 500+ Installs · 24/7 Monitoring Available</div>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
         <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
@@ -101,12 +101,12 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
   const maxCpc = 18
   return (
     <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
+      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
         OPTIMISATION · 12 WEEKS
       </div>
       {/* ROAS chart */}
-      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', flex: 1 }}>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>ROAS — rising week on week</div>
+      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.08)', flex: 1 }}>
+        <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>ROAS — rising week on week</div>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 90 }}>
           {weeks.map((w, i) => (
             <div key={i} style={{
@@ -116,13 +116,13 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
             }} />
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)', marginTop: 6 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)', marginTop: 6 }}>
           <span>W1 · 1.8×</span><span>W6 · 2.4×</span><span>W12 · 3.2×</span>
         </div>
       </div>
       {/* CPC chart */}
-      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>CPC — falling as quality improves</div>
+      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.08)' }}>
+        <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>CPC — falling as quality improves</div>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 52 }}>
           {cpcs.map((c, i) => (
             <div key={i} style={{
@@ -132,7 +132,7 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
             }} />
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)', marginTop: 5 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)', marginTop: 5 }}>
           <span>$18</span><span>$14</span><span>$10 ↓</span>
         </div>
       </div>
@@ -151,7 +151,7 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
   return (
     <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 12 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em' }}>
           MONTHLY REPORT · MAY 2026
         </div>
         <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', padding: '3px 8px', borderRadius: 5, background: `${color}18`, border: `1px solid ${color}44`, color }}>PDF READY</span>
@@ -160,12 +160,12 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
         {metrics.map((m, i) => (
           <div key={m.l} style={{
             padding: '12px 14px', borderRadius: 12,
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.07)',
+            background: 'rgba(15,34,68,0.04)',
+            border: '1px solid rgba(15,34,68,0.07)',
             opacity: active ? 1 : 0.4,
             transition: `opacity 0.4s ${i * 0.1}s`,
           }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 5 }}>{m.l}</div>
+            <div style={{ fontSize: 10, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 5 }}>{m.l}</div>
             <div style={{ fontSize: 24, fontWeight: 800, color, fontFamily: 'var(--font-mono)', lineHeight: 1 }}>{m.v}</div>
             <div style={{ fontSize: 10.5, color: '#22c55e', fontWeight: 600, marginTop: 4 }}>▲ {m.d}</div>
           </div>
@@ -174,7 +174,7 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
       {/* Insight strip */}
       <div style={{ marginTop: 4, padding: '12px 14px', borderRadius: 12, background: `${color}0a`, border: `1px solid ${color}30` }}>
         <div style={{ fontSize: 11, color, fontWeight: 700, fontFamily: 'var(--font-mono)', marginBottom: 5 }}>💡 INSIGHT THIS MONTH</div>
-        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, margin: 0 }}>
+        <p style={{ fontSize: 12, color: 'rgba(15,34,68,0.65)', lineHeight: 1.5, margin: 0 }}>
           "Intruder alarm" +broad drove 23 irrelevant clicks. Moved to EXACT and reallocated $180 to CCTV campaigns. Expect CPL to drop further next month.
         </p>
       </div>

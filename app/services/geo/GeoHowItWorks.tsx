@@ -31,12 +31,12 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
         <div style={{
           background: '#161b22', borderRadius: '12px 12px 0 0',
           padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8,
-          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          borderBottom: '1px solid rgba(15,34,68,0.07)',
         }}>
           <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#ff5f57', display: 'inline-block' }} />
           <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#febc2e', display: 'inline-block' }} />
           <span style={{ width: 11, height: 11, borderRadius: '50%', background: '#28c840', display: 'inline-block' }} />
-          <span style={{ flex: 1, textAlign: 'center', fontSize: 10.5, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)' }}>
+          <span style={{ flex: 1, textAlign: 'center', fontSize: 10.5, color: 'rgba(15,34,68,0.35)', fontFamily: 'var(--font-mono)' }}>
             entity.jsonld
           </span>
         </div>
@@ -45,9 +45,9 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
         <div style={{
           background: '#0d1117', borderRadius: '0 0 12px 12px',
           padding: '16px 18px', fontFamily: 'var(--font-mono)', fontSize: 12.5,
-          color: '#c9d1d9', border: '1px solid rgba(255,255,255,0.07)', borderTop: 'none',
+          color: '#c9d1d9', border: '1px solid rgba(15,34,68,0.07)', borderTop: 'none',
         }}>
-          <div style={{ color: 'rgba(255,255,255,0.3)', marginBottom: 10 }}>{'{'}</div>
+          <div style={{ color: 'rgba(15,34,68,0.3)', marginBottom: 10 }}>{'{'}</div>
           {fields.map((f, i) => (
             <motion.div
               key={f.label}
@@ -57,11 +57,11 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
               style={{ display: 'flex', gap: 8, paddingLeft: 16, marginBottom: 7 }}
             >
               <span style={{ color: '#d2a8ff' }}>&quot;{f.label}&quot;</span>
-              <span style={{ color: 'rgba(255,255,255,0.3)' }}>:</span>
+              <span style={{ color: 'rgba(15,34,68,0.3)' }}>:</span>
               <span style={{ color: f.valueColor }}>{f.value}</span>
             </motion.div>
           ))}
-          <div style={{ color: 'rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{ color: 'rgba(15,34,68,0.3)', display: 'flex', alignItems: 'center', gap: 4 }}>
             {'}'}
             <span style={{
               display: 'inline-block', width: 2, height: 14, background: color,
@@ -152,7 +152,7 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
           width: 64, height: 64, borderRadius: 16,
           background: `linear-gradient(135deg, ${color}, #ff6b7a)`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 22, fontWeight: 900, color: '#fff',
+          fontSize: 22, fontWeight: 900, color: '#0f2244',
           boxShadow: active ? `0 0 30px -4px ${color}88` : 'none',
           transition: 'box-shadow 0.5s',
           zIndex: 2,
@@ -184,9 +184,9 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
               transition={{ delay: i * 0.1 + 0.3, duration: 0.4 }}
               style={{
                 position: 'absolute', left, top,
-                background: '#0e1829', border: `1px solid ${color}33`,
+                background: '#f8faff', border: `1px solid ${color}33`,
                 borderRadius: 8, padding: '4px 8px',
-                fontSize: 9.5, color: 'rgba(255,255,255,0.75)',
+                fontSize: 9.5, color: 'rgba(15,34,68,0.75)',
                 fontFamily: 'system-ui, sans-serif', whiteSpace: 'nowrap',
               }}
             >{name}</motion.div>
@@ -233,24 +233,24 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
         {/* Stats row */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 20 }}>
           <div style={{
-            background: 'rgba(255,255,255,0.04)', borderRadius: 12,
+            background: 'rgba(15,34,68,0.04)', borderRadius: 12,
             padding: '14px 16px', border: `1px solid ${color}22`,
           }}>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 4, fontFamily: 'system-ui' }}>Total Citations</div>
+            <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', marginBottom: 4, fontFamily: 'system-ui' }}>Total Citations</div>
             <motion.div style={{ fontSize: 38, fontWeight: 800, color, lineHeight: 1 }}>
               {count}
             </motion.div>
           </div>
           <div style={{
-            background: 'rgba(255,255,255,0.04)', borderRadius: 12,
+            background: 'rgba(15,34,68,0.04)', borderRadius: 12,
             padding: '14px 16px', border: '1px solid rgba(34,197,94,0.22)',
           }}>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 4, fontFamily: 'system-ui' }}>Authority Score</div>
+            <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', marginBottom: 4, fontFamily: 'system-ui' }}>Authority Score</div>
             <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4 }}>
               <motion.div style={{ fontSize: 38, fontWeight: 800, color: '#22c55e', lineHeight: 1 }}>
                 {score}
               </motion.div>
-              <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', paddingBottom: 4 }}>/100</span>
+              <span style={{ fontSize: 13, color: 'rgba(15,34,68,0.3)', paddingBottom: 4 }}>/100</span>
             </div>
           </div>
         </div>
@@ -265,13 +265,13 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
             style={{
               display: 'flex', alignItems: 'center', gap: 10,
               padding: '8px 0',
-              borderBottom: i < citations.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+              borderBottom: i < citations.length - 1 ? '1px solid rgba(15,34,68,0.05)' : 'none',
               fontFamily: 'system-ui, sans-serif',
             }}
           >
-            <span style={{ flex: 1, fontSize: 12, color: 'rgba(255,255,255,0.75)' }}>{c.source}</span>
-            <span style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.35)', background: 'rgba(255,255,255,0.05)', borderRadius: 4, padding: '2px 6px' }}>{c.type}</span>
-            <div style={{ width: 80, height: 5, borderRadius: 3, background: 'rgba(255,255,255,0.07)', overflow: 'hidden' }}>
+            <span style={{ flex: 1, fontSize: 12, color: 'rgba(15,34,68,0.75)' }}>{c.source}</span>
+            <span style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.35)', background: 'rgba(15,34,68,0.05)', borderRadius: 4, padding: '2px 6px' }}>{c.type}</span>
+            <div style={{ width: 80, height: 5, borderRadius: 3, background: 'rgba(15,34,68,0.07)', overflow: 'hidden' }}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={active ? { width: `${c.strength}%` } : { width: 0 }}
@@ -312,8 +312,8 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
       <div style={{ width: '100%', maxWidth: 440 }}>
         {/* Header */}
         <div style={{ marginBottom: 16, fontFamily: 'system-ui, sans-serif' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 3 }}>Entity Confirmation Status</div>
-          <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.4)' }}>securityblogs.com.au · Updated live</div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#0f2244', marginBottom: 3 }}>Entity Confirmation Status</div>
+          <div style={{ fontSize: 10.5, color: 'rgba(15,34,68,0.4)' }}>securityblogs.com.au · Updated live</div>
         </div>
 
         {/* Platform rows */}
@@ -326,17 +326,17 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
             style={{
               display: 'flex', alignItems: 'center', gap: 10,
               padding: '9px 12px', borderRadius: 10,
-              background: 'rgba(255,255,255,0.03)',
+              background: 'rgba(15,34,68,0.03)',
               border: `1px solid ${p.status === 'confirmed' ? 'rgba(34,197,94,0.15)' : 'rgba(251,191,36,0.12)'}`,
               marginBottom: 7, fontFamily: 'system-ui, sans-serif',
             }}
           >
             <span style={{
               width: 28, height: 28, borderRadius: 8, background: p.bg,
-              color: '#fff', fontSize: 11, fontWeight: 700,
+              color: '#0f2244', fontSize: 11, fontWeight: 700,
               display: 'grid', placeItems: 'center', flexShrink: 0,
             }}>{p.logo}</span>
-            <span style={{ flex: 1, fontSize: 12.5, color: 'rgba(255,255,255,0.8)' }}>{p.name}</span>
+            <span style={{ flex: 1, fontSize: 12.5, color: 'rgba(15,34,68,0.8)' }}>{p.name}</span>
             {p.status === 'confirmed' ? (
               <span style={{
                 display: 'inline-flex', alignItems: 'center', gap: 5,

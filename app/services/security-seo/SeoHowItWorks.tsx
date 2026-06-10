@@ -55,14 +55,14 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 18 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 01</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>SEO Audit &<br />Keyword Research</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>SEO Audit &<br />Keyword Research</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
 
         {/* Audit checklist */}
         <div style={{ flex: '0 0 auto', width: 258, display: 'flex', flexDirection: 'column', gap: 7 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 2, letterSpacing: '0.1em' }}>SITE AUDIT</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 2, letterSpacing: '0.1em' }}>SITE AUDIT</div>
           {AUDIT_ITEMS.map((item, i) => (
             <motion.div
               key={item.label}
@@ -71,14 +71,14 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
               transition={{ duration: 0.3 }}
               style={{
                 display: 'flex', alignItems: 'center', gap: 8,
-                background: 'rgba(255,255,255,0.03)', borderRadius: 10,
+                background: 'rgba(15,34,68,0.03)', borderRadius: 10,
                 padding: '7px 9px', border: `1px solid ${color}18`,
               }}
             >
               <div style={{ width: 24, height: 24, borderRadius: 7, background: `${color}18`, border: `1px solid ${color}35`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, flexShrink: 0 }}>{item.icon}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 11, fontWeight: 600, color: '#fff' }}>{item.label}</div>
-                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.38)', fontFamily: 'var(--font-mono)' }}>{item.note}</div>
+                <div style={{ fontSize: 11, fontWeight: 600, color: '#0f2244' }}>{item.label}</div>
+                <div style={{ fontSize: 9, color: 'rgba(15,34,68,0.38)', fontFamily: 'var(--font-mono)' }}>{item.note}</div>
               </div>
               <motion.span
                 initial={{ scale: 0, rotate: -45 }}
@@ -91,8 +91,8 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
         </div>
 
         {/* Keyword universe */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0, borderRadius: 14, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', overflow: 'hidden' }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', padding: '9px 12px', borderBottom: '1px solid rgba(255,255,255,0.05)', letterSpacing: '0.1em' }}>KEYWORD UNIVERSE · 280 mapped</div>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0, borderRadius: 14, background: 'rgba(15,34,68,0.02)', border: '1px solid rgba(15,34,68,0.05)', overflow: 'hidden' }}>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', padding: '9px 12px', borderBottom: '1px solid rgba(15,34,68,0.05)', letterSpacing: '0.1em' }}>KEYWORD UNIVERSE · 280 mapped</div>
           <div style={{ padding: '10px 12px 0', display: 'flex', flexWrap: 'wrap', gap: 5, flex: 1 }}>
             {KWDS.map((kw, i) => (
               <motion.span
@@ -104,9 +104,9 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
                   fontSize: i === 0 ? 12 : i < 3 ? 11 : 9.5,
                   fontWeight: i < 2 ? 700 : 500,
                   padding: '3px 7px', borderRadius: 6, whiteSpace: 'nowrap',
-                  background: i === 0 ? `${color}20` : 'rgba(255,255,255,0.04)',
-                  color: i === 0 ? color : i < 3 ? `${color}bb` : 'rgba(255,255,255,0.45)',
-                  border: `1px solid ${i === 0 ? color + '40' : 'rgba(255,255,255,0.07)'}`,
+                  background: i === 0 ? `${color}20` : 'rgba(15,34,68,0.04)',
+                  color: i === 0 ? color : i < 3 ? `${color}bb` : 'rgba(15,34,68,0.45)',
+                  border: `1px solid ${i === 0 ? color + '40' : 'rgba(15,34,68,0.07)'}`,
                 }}
               >{kw.t}</motion.span>
             ))}
@@ -147,7 +147,7 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
             }}
           >
             <div style={{ fontSize: 22, fontWeight: 800, color, lineHeight: 1 }}>{s.v}</div>
-            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', marginTop: 3 }}>{s.l}</div>
+            <div style={{ fontSize: 9, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', letterSpacing: '0.06em', marginTop: 3 }}>{s.l}</div>
           </motion.div>
         ))}
       </div>
@@ -193,17 +193,17 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 02</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Technical Fixes<br />&amp; On-Page SEO</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Technical Fixes<br />&amp; On-Page SEO</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Code editor */}
-        <div style={{ flex: 1, borderRadius: 14, overflow: 'hidden', background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.03)' }}>
+        <div style={{ flex: 1, borderRadius: 14, overflow: 'hidden', background: '#0d1117', border: '1px solid rgba(15,34,68,0.08)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 12px', borderBottom: '1px solid rgba(15,34,68,0.07)', background: 'rgba(15,34,68,0.03)' }}>
             <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#ff5f57' }} />
             <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#febc2e' }} />
             <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#28c840' }} />
-            <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.3)', marginLeft: 4 }}>index.html — optimised</span>
+            <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.3)', marginLeft: 4 }}>index.html — optimised</span>
           </div>
           <div style={{ padding: '10px 14px', flex: 1, display: 'flex', flexDirection: 'column', gap: 4 }}>
             {CODE_LINES.map((line, i) => (
@@ -230,11 +230,11 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
         {/* Right panel */}
         <div style={{ width: 180, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {/* Speed score */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '14px 14px 10px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 8 }}>SPEED SCORE</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '14px 14px 10px', textAlign: 'center' }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 8 }}>SPEED SCORE</div>
             <div style={{ position: 'relative', width: 70, height: 70, margin: '0 auto 8px' }}>
               <svg viewBox="0 0 70 70" style={{ width: 70, height: 70, transform: 'rotate(-90deg)' }}>
-                <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="6" />
+                <circle cx="35" cy="35" r="28" fill="none" stroke="rgba(15,34,68,0.06)" strokeWidth="6" />
                 <motion.circle
                   cx="35" cy="35" r="28" fill="none" stroke={color} strokeWidth="6"
                   strokeLinecap="round"
@@ -243,19 +243,19 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
                   transition={{ duration: 0.1 }}
                 />
               </svg>
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 800, color: '#fff' }}>{speed}</div>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 800, color: '#0f2244' }}>{speed}</div>
             </div>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: color }}>23 → {speed} ↑</div>
           </div>
 
           {/* Core Web Vitals */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', padding: '12px 12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 10 }}>CORE WEB VITALS</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', padding: '12px 12px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 10 }}>CORE WEB VITALS</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
               {VITALS.map((v, i) => (
                 <div key={v.label}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 600, color: '#fff', fontFamily: 'var(--font-mono)' }}>{v.label}</span>
+                    <span style={{ fontSize: 10, fontWeight: 600, color: '#0f2244', fontFamily: 'var(--font-mono)' }}>{v.label}</span>
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={vitalsIn ? { opacity: 1 } : { opacity: 0 }}
@@ -263,7 +263,7 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
                       style={{ fontSize: 9.5, color: color, fontFamily: 'var(--font-mono)', fontWeight: 700 }}
                     >{v.after} ✓</motion.span>
                   </div>
-                  <div style={{ height: 5, borderRadius: 999, background: 'rgba(255,255,255,0.07)', overflow: 'hidden' }}>
+                  <div style={{ height: 5, borderRadius: 999, background: 'rgba(15,34,68,0.07)', overflow: 'hidden' }}>
                     <motion.div
                       initial={{ width: 0 }}
                       animate={vitalsIn ? { width: `${v.pct}%` } : { width: 0 }}
@@ -287,10 +287,10 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
       >
         <span style={{ fontSize: 16 }}>📋</span>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>Schema Markup Applied</div>
-          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)' }}>LocalBusiness · FAQPage · BreadcrumbList · Service</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#0f2244' }}>Schema Markup Applied</div>
+          <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.45)', fontFamily: 'var(--font-mono)' }}>LocalBusiness · FAQPage · BreadcrumbList · Service</div>
         </div>
-        <div style={{ marginLeft: 'auto', background: color, color: '#fff', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999 }}>LIVE ✓</div>
+        <div style={{ marginLeft: 'auto', background: color, color: '#0f2244', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999 }}>LIVE ✓</div>
       </motion.div>
     </div>
   )
@@ -328,15 +328,15 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 03</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Content &<br />Link Building</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Content &<br />Link Building</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Article visual */}
-        <div style={{ flex: 1, background: 'rgba(255,255,255,0.02)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           <div style={{ background: `${color}15`, borderBottom: `1px solid ${color}20`, padding: '8px 12px', display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ fontSize: 11 }}>✍️</span>
-            <span style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em' }}>NEW ARTICLE PUBLISHING</span>
+            <span style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.5)', letterSpacing: '0.08em' }}>NEW ARTICLE PUBLISHING</span>
           </div>
           <div style={{ padding: '12px 14px', flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
             {/* Title bar */}
@@ -346,7 +346,7 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
             {[0.9, 1.0, 0.7, 0.85, 0.6].map((w, i) => (
               <motion.div key={i} initial={{ width: 0 }} animate={active ? { width: `${w * 100}%` } : { width: 0 }}
                 transition={{ duration: 0.5, delay: 0.35 + i * 0.1 }}
-                style={{ height: 6, background: 'rgba(255,255,255,0.12)', borderRadius: 3 }} />
+                style={{ height: 6, background: 'rgba(15,34,68,0.12)', borderRadius: 3 }} />
             ))}
             {/* Sub-heading */}
             <motion.div initial={{ width: 0 }} animate={active ? { width: '60%' } : { width: 0 }} transition={{ duration: 0.4, delay: 0.9 }}
@@ -354,11 +354,11 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
             {[0.95, 0.8, 0.7].map((w, i) => (
               <motion.div key={i} initial={{ width: 0 }} animate={active ? { width: `${w * 100}%` } : { width: 0 }}
                 transition={{ duration: 0.4, delay: 1.0 + i * 0.09 }}
-                style={{ height: 6, background: 'rgba(255,255,255,0.09)', borderRadius: 3 }} />
+                style={{ height: 6, background: 'rgba(15,34,68,0.09)', borderRadius: 3 }} />
             ))}
           </div>
           {/* E-E-A-T badges */}
-          <div style={{ padding: '8px 14px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          <div style={{ padding: '8px 14px', borderTop: '1px solid rgba(15,34,68,0.05)', display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {EEAT.map((tag, i) => (
               <motion.div key={tag} initial={{ opacity: 0, scale: 0.7 }} animate={eeIn ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
                 transition={{ delay: i * 0.1, duration: 0.3 }}
@@ -371,15 +371,15 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
         {/* Backlinks + DR */}
         <div style={{ width: 196, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {/* DR meter */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 6 }}>DOMAIN RATING</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', textAlign: 'center' }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 6 }}>DOMAIN RATING</div>
             <div style={{ fontSize: 38, fontWeight: 900, color, lineHeight: 1 }}>{dr}</div>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.4)', marginTop: 3 }}>12 → {dr} ↑</div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.4)', marginTop: 3 }}>12 → {dr} ↑</div>
           </div>
 
           {/* Backlink list */}
-          <div style={{ background: 'rgba(255,255,255,0.02)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', padding: '8px 10px', borderBottom: '1px solid rgba(255,255,255,0.05)', letterSpacing: '0.08em' }}>NEW BACKLINKS</div>
+          <div style={{ background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', overflow: 'hidden', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', padding: '8px 10px', borderBottom: '1px solid rgba(15,34,68,0.05)', letterSpacing: '0.08em' }}>NEW BACKLINKS</div>
             <div style={{ padding: '6px 0' }}>
               {BACKLINKS.map((bl, i) => (
                 <motion.div key={bl.domain} initial={{ opacity: 0, x: 12 }} animate={blIdx >= i ? { opacity: 1, x: 0 } : { opacity: 0, x: 12 }}
@@ -387,8 +387,8 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
                   style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 10px', gap: 6 }}
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 9.5, color: '#fff', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bl.domain}</div>
-                    <div style={{ fontSize: 8.5, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)' }}>DA {bl.da} · {bl.type}</div>
+                    <div style={{ fontSize: 9.5, color: '#0f2244', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bl.domain}</div>
+                    <div style={{ fontSize: 8.5, color: 'rgba(15,34,68,0.35)', fontFamily: 'var(--font-mono)' }}>DA {bl.da} · {bl.type}</div>
                   </div>
                   <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color, fontWeight: 700, flexShrink: 0 }}>+1</div>
                 </motion.div>
@@ -445,28 +445,28 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 04</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Monitor, Scale<br />&amp; AI Visibility</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Monitor, Scale<br />&amp; AI Visibility</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* SERP ranking table */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0, background: 'rgba(255,255,255,0.02)', borderRadius: 14, border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden' }}>
-          <div style={{ padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.05)', fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>SERP POSITIONS</div>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 0, background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', overflow: 'hidden' }}>
+          <div style={{ padding: '8px 12px', borderBottom: '1px solid rgba(15,34,68,0.05)', fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em' }}>SERP POSITIONS</div>
           <div style={{ flex: 1, overflow: 'hidden' }}>
             {SERP_ROWS.map((row, ri) => {
               const curPos = phase === 0 ? row.pos[0] : phase === 1 ? row.pos[1] : phase === 2 ? row.pos[2] : row.pos[3]
               const isOne = curPos === 1 || curPos <= 3
               return (
-                <div key={row.kw} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                <div key={row.kw} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', borderBottom: '1px solid rgba(15,34,68,0.04)' }}>
                   <motion.div
-                    animate={{ color: isOne ? color : '#fff', scale: isOne ? 1.1 : 1 }}
+                    animate={{ color: isOne ? color : '#0f2244', scale: isOne ? 1.1 : 1 }}
                     transition={{ duration: 0.4 }}
                     style={{ fontFamily: 'var(--font-mono)', fontWeight: 900, fontSize: 18, width: 28, textAlign: 'center', flexShrink: 0 }}
                   >#{curPos}</motion.div>
-                  <div style={{ flex: 1, fontSize: 10, color: 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.kw}</div>
+                  <div style={{ flex: 1, fontSize: 10, color: 'rgba(15,34,68,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{row.kw}</div>
                   {isOne && (
                     <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                      style={{ fontSize: 8.5, fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#fff', background: color, padding: '2px 7px', borderRadius: 999, flexShrink: 0 }}>
+                      style={{ fontSize: 8.5, fontFamily: 'var(--font-mono)', fontWeight: 700, color: '#0f2244', background: color, padding: '2px 7px', borderRadius: 999, flexShrink: 0 }}>
                       TOP {curPos}
                     </motion.div>
                   )}
@@ -475,8 +475,8 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
             })}
           </div>
           {/* Traffic sparkline */}
-          <div style={{ padding: '8px 12px 10px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.3)', marginBottom: 5 }}>ORGANIC TRAFFIC · +180%</div>
+          <div style={{ padding: '8px 12px 10px', borderTop: '1px solid rgba(15,34,68,0.05)' }}>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.3)', marginBottom: 5 }}>ORGANIC TRAFFIC · +180%</div>
             <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 50, overflow: 'visible' }}>
               <defs>
                 <linearGradient id="tg4" x1="0" y1="0" x2="0" y2="1">
@@ -501,13 +501,13 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
         {/* Right: AI citations + leads */}
         <div style={{ width: 178, display: 'flex', flexDirection: 'column', gap: 10 }}>
           {/* AI platforms */}
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 10 }}>AI CITATIONS</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 10 }}>AI CITATIONS</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
               {AI_PLATFORMS.map((p, i) => (
                 <div key={p.name}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                    <span style={{ fontSize: 10, fontWeight: 600, color: '#fff' }}>{p.name}</span>
+                    <span style={{ fontSize: 10, fontWeight: 600, color: '#0f2244' }}>{p.name}</span>
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={phase >= 2 ? { opacity: 1 } : { opacity: 0 }}
@@ -515,7 +515,7 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
                       style={{ fontSize: 9.5, color: p.c, fontFamily: 'var(--font-mono)', fontWeight: 700 }}
                     >{p.pct}%</motion.span>
                   </div>
-                  <div style={{ height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.07)', overflow: 'hidden' }}>
+                  <div style={{ height: 4, borderRadius: 999, background: 'rgba(15,34,68,0.07)', overflow: 'hidden' }}>
                     <motion.div
                       initial={{ width: 0 }}
                       animate={phase >= 2 ? { width: `${p.pct}%` } : { width: 0 }}
@@ -530,7 +530,7 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
 
           {/* Leads counter */}
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '14px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 6 }}>LEADS THIS MONTH</div>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 6 }}>LEADS THIS MONTH</div>
             <div style={{ fontSize: 42, fontWeight: 900, color, lineHeight: 1 }}>{leads}</div>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: `${color}bb`, marginTop: 4 }}>↑ 3.2× vs last month</div>
           </div>

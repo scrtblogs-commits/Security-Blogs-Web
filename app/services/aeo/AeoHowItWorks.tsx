@@ -51,23 +51,23 @@ function DiscoverScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 01</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Question &<br />Intent Mapping</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Question &<br />Intent Mapping</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Question list */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 4, letterSpacing: '0.1em' }}>BUYERS SEARCHING AI · REAL QUERIES</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4, letterSpacing: '0.1em' }}>BUYERS SEARCHING AI · REAL QUERIES</div>
           {QUESTIONS.map((q, i) => (
             <motion.div key={q.q}
               initial={{ opacity: 0, x: -14 }}
               animate={qIdx >= i ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.3 }}
-              style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 10, padding: '7px 10px', border: `1px solid ${q.c}18`, display: 'flex', gap: 8, alignItems: 'flex-start' }}
+              style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 10, padding: '7px 10px', border: `1px solid ${q.c}18`, display: 'flex', gap: 8, alignItems: 'flex-start' }}
             >
               <span style={{ fontSize: 11, flexShrink: 0, marginTop: 1 }}>❓</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.8)', lineHeight: 1.35 }}>{q.q}</div>
+                <div style={{ fontSize: 10.5, color: 'rgba(15,34,68,0.8)', lineHeight: 1.35 }}>{q.q}</div>
                 <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', marginTop: 2 }}>
                   <span style={{ background: `${q.c}20`, color: q.c, padding: '1px 6px', borderRadius: 999, border: `1px solid ${q.c}35` }}>{q.intent}</span>
                 </div>
@@ -78,16 +78,16 @@ function DiscoverScene({ active, color }: { active: boolean; color: string }) {
 
         {/* Intent map */}
         <div style={{ width: 175, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>INTENT CATEGORIES</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>INTENT CATEGORIES</div>
             {INTENT_CATS.map((cat, i) => (
               <div key={cat.label} style={{ marginBottom: 10 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 3 }}>
-                  <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)' }}>{cat.label}</span>
+                  <span style={{ fontSize: 10, color: 'rgba(15,34,68,0.7)' }}>{cat.label}</span>
                   <motion.span initial={{ opacity: 0 }} animate={showMap ? { opacity: 1 } : {}} transition={{ delay: i * 0.12 }}
                     style={{ fontSize: 10, fontFamily: 'var(--font-mono)', fontWeight: 700, color: cat.c }}>{cat.count}%</motion.span>
                 </div>
-                <div style={{ height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 999, overflow: 'hidden' }}>
+                <div style={{ height: 5, background: 'rgba(15,34,68,0.06)', borderRadius: 999, overflow: 'hidden' }}>
                   <motion.div initial={{ width: 0 }} animate={showMap ? { width: `${cat.count}%` } : {}}
                     transition={{ delay: i * 0.12, duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
                     style={{ height: '100%', background: cat.c, borderRadius: 999 }} />
@@ -97,7 +97,7 @@ function DiscoverScene({ active, color }: { active: boolean; color: string }) {
           </div>
 
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 4 }}>QUESTIONS MAPPED</div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4 }}>QUESTIONS MAPPED</div>
             <motion.div initial={{ opacity: 0 }} animate={showMap ? { opacity: 1 } : {}} transition={{ delay: 0.6 }}
               style={{ fontSize: 34, fontWeight: 900, color, lineHeight: 1 }}>247</motion.div>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: `${color}bb`, marginTop: 3 }}>buyer intent signals</div>
@@ -109,10 +109,10 @@ function DiscoverScene({ active, color }: { active: boolean; color: string }) {
         style={{ background: `${color}12`, borderRadius: 12, padding: '10px 14px', border: `1px solid ${color}30`, display: 'flex', gap: 10, alignItems: 'center' }}>
         <span style={{ fontSize: 16 }}>🗺️</span>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>247 questions mapped across 4 intent clusters</div>
-          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)' }}>AI-Search intent: highest opportunity for AEO wins</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#0f2244' }}>247 questions mapped across 4 intent clusters</div>
+          <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.45)', fontFamily: 'var(--font-mono)' }}>AI-Search intent: highest opportunity for AEO wins</div>
         </div>
-        <div style={{ marginLeft: 'auto', background: color, color: '#fff', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999, flexShrink: 0 }}>NEXT →</div>
+        <div style={{ marginLeft: 'auto', background: color, color: '#0f2244', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999, flexShrink: 0 }}>NEXT →</div>
       </motion.div>
     </div>
   )
@@ -142,25 +142,25 @@ function CreateScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 02</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Answer-First<br />Content</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Answer-First<br />Content</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Before column */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>BEFORE — GENERIC CONTENT</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em' }}>BEFORE — GENERIC CONTENT</div>
           {CONTENT_BLOCKS.map((b, i) => (
             <motion.div key={i}
               initial={{ opacity: 1 }}
               animate={phase >= 1 ? { opacity: 0.3 } : {}}
               transition={{ delay: i * 0.2, duration: 0.4 }}
-              style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 12, border: '1px solid rgba(255,255,255,0.07)', padding: '10px 12px' }}>
+              style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 12, border: '1px solid rgba(15,34,68,0.07)', padding: '10px 12px' }}>
               <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#ef4444', marginBottom: 4 }}>✗ NOT AI-OPTIMISED</div>
-              <div style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.5)', lineHeight: 1.4 }}>{b.before}</div>
+              <div style={{ fontSize: 10.5, color: 'rgba(15,34,68,0.5)', lineHeight: 1.4 }}>{b.before}</div>
               {/* Filler lines */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: 6 }}>
                 {[0.9, 0.75, 0.6].map((w, j) => (
-                  <div key={j} style={{ height: 4, width: `${w * 100}%`, background: 'rgba(255,255,255,0.08)', borderRadius: 2 }} />
+                  <div key={j} style={{ height: 4, width: `${w * 100}%`, background: 'rgba(15,34,68,0.08)', borderRadius: 2 }} />
                 ))}
               </div>
             </motion.div>
@@ -169,13 +169,13 @@ function CreateScene({ active, color }: { active: boolean; color: string }) {
 
         {/* Arrow */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 32 }}>
-          <motion.div animate={phase >= 1 ? { color, opacity: 1 } : { color: 'rgba(255,255,255,0.2)', opacity: 0.5 }}
+          <motion.div animate={phase >= 1 ? { color, opacity: 1 } : { color: 'rgba(15,34,68,0.2)', opacity: 0.5 }}
             style={{ fontSize: 20, fontWeight: 900, transition: 'all 0.4s' }}>→</motion.div>
         </div>
 
         {/* After column */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em' }}>AFTER — ANSWER-FIRST FORMAT</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em' }}>AFTER — ANSWER-FIRST FORMAT</div>
           {CONTENT_BLOCKS.map((b, i) => (
             <motion.div key={i}
               initial={{ opacity: 0, x: 14 }}
@@ -184,7 +184,7 @@ function CreateScene({ active, color }: { active: boolean; color: string }) {
               style={{ background: `${color}10`, borderRadius: 12, border: `1.5px solid ${color}35`, padding: '10px 12px' }}>
               <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: '#1e9e75', marginBottom: 5 }}>✓ AI-OPTIMISED Q&A</div>
               {b.after.split('\n').map((line, j) => (
-                <div key={j} style={{ fontSize: 10, color: j === 0 ? color : 'rgba(255,255,255,0.75)', fontWeight: j === 0 ? 700 : 400, lineHeight: 1.5 }}>{line}</div>
+                <div key={j} style={{ fontSize: 10, color: j === 0 ? color : 'rgba(15,34,68,0.75)', fontWeight: j === 0 ? 700 : 400, lineHeight: 1.5 }}>{line}</div>
               ))}
             </motion.div>
           ))}
@@ -235,15 +235,15 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 03</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Schema &<br />Snippet Targeting</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Schema &<br />Snippet Targeting</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Code editor */}
-        <div style={{ flex: 1, borderRadius: 14, overflow: 'hidden', background: '#0d1117', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', gap: 5, padding: '8px 12px', background: 'rgba(255,255,255,0.03)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+        <div style={{ flex: 1, borderRadius: 14, overflow: 'hidden', background: '#0d1117', border: '1px solid rgba(15,34,68,0.08)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', gap: 5, padding: '8px 12px', background: 'rgba(15,34,68,0.03)', borderBottom: '1px solid rgba(15,34,68,0.07)' }}>
             {['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />)}
-            <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.3)', marginLeft: 4 }}>faq-schema.json</span>
+            <span style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.3)', marginLeft: 4 }}>faq-schema.json</span>
           </div>
           <div style={{ padding: '10px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: 3, overflow: 'hidden' }}>
             {SCHEMA_LINES.map((l, i) => (
@@ -283,7 +283,7 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
 
           <motion.div initial={{ opacity: 0 }} animate={snippetIn ? { opacity: 1 } : {}} transition={{ delay: 0.4 }}
             style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 4 }}>SNIPPETS WON</div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4 }}>SNIPPETS WON</div>
             <div style={{ fontSize: 36, fontWeight: 900, color, lineHeight: 1 }}>31</div>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: `${color}bb`, marginTop: 3 }}>this month</div>
           </motion.div>
@@ -328,21 +328,21 @@ function TrackScene({ active, color }: { active: boolean; color: string }) {
     <div style={{ padding: '28px 26px 24px', height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div>
         <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color, letterSpacing: '0.12em', marginBottom: 6 }}>STEP 04</div>
-        <div style={{ fontSize: 21, fontWeight: 800, color: '#fff', lineHeight: 1.2 }}>Track &<br />Expand</div>
+        <div style={{ fontSize: 21, fontWeight: 800, color: '#0f2244', lineHeight: 1.2 }}>Track &<br />Expand</div>
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
         {/* Cluster coverage */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginBottom: 2 }}>QUESTION CLUSTER COVERAGE</div>
+          <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 2 }}>QUESTION CLUSTER COVERAGE</div>
           {CLUSTERS.map((cl, i) => (
             <div key={cl.name}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
                 <div style={{ width: 8, height: 8, borderRadius: '50%', background: cl.c, flexShrink: 0 }} />
-                <span style={{ fontSize: 10.5, color: '#fff', flex: 1 }}>{cl.name}</span>
+                <span style={{ fontSize: 10.5, color: '#0f2244', flex: 1 }}>{cl.name}</span>
                 <span style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', fontWeight: 700, color: cl.c }}>{cl.wins}/{cl.target}</span>
               </div>
-              <div style={{ height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 999, overflow: 'hidden' }}>
+              <div style={{ height: 5, background: 'rgba(15,34,68,0.06)', borderRadius: 999, overflow: 'hidden' }}>
                 <motion.div
                   initial={{ width: 0 }}
                   animate={phase >= 1 ? { width: `${(cl.wins / cl.target) * 100}%` } : {}}
@@ -357,13 +357,13 @@ function TrackScene({ active, color }: { active: boolean; color: string }) {
         {/* Counter + chart */}
         <div style={{ width: 185, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '14px', textAlign: 'center' }}>
-            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 4 }}>SNIPPET WINS THIS MONTH</div>
+            <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4 }}>SNIPPET WINS THIS MONTH</div>
             <motion.div style={{ fontSize: 44, fontWeight: 900, color, lineHeight: 1 }}>{count}</motion.div>
             <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: `${color}bb`, marginTop: 3 }}>↑ +38% vs last month</div>
           </div>
 
-          <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
-            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>SNIPPET TREND · 12M</div>
+          <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
+            <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>SNIPPET TREND · 12M</div>
             <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 48, overflow: 'visible' }}>
               <defs>
                 <linearGradient id="aeo-track-grad" x1="0" y1="0" x2="0" y2="1">
@@ -391,11 +391,11 @@ function TrackScene({ active, color }: { active: boolean; color: string }) {
         style={{ background: `${color}10`, borderRadius: 12, padding: '10px 14px', border: `1px solid ${color}25`, display: 'flex', gap: 10, alignItems: 'center' }}>
         <span style={{ fontSize: 16 }}>🚀</span>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: '#fff' }}>42 snippets · 4 clusters · Expanding to 6</div>
-          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)', fontFamily: 'var(--font-mono)' }}>New clusters: IP Cameras · Smart Home Security</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: '#0f2244' }}>42 snippets · 4 clusters · Expanding to 6</div>
+          <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.45)', fontFamily: 'var(--font-mono)' }}>New clusters: IP Cameras · Smart Home Security</div>
         </div>
         <motion.div animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 1.5, repeat: Infinity }}
-          style={{ marginLeft: 'auto', background: color, color: '#fff', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999, flexShrink: 0 }}>LIVE</motion.div>
+          style={{ marginLeft: 'auto', background: color, color: '#0f2244', fontSize: 9.5, fontWeight: 700, fontFamily: 'var(--font-mono)', padding: '4px 10px', borderRadius: 999, flexShrink: 0 }}>LIVE</motion.div>
       </motion.div>
     </div>
   )

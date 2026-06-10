@@ -63,9 +63,9 @@ function Scene1({ active, color }: { active: boolean; color: string }) {
             <motion.div
               animate={{ height: active ? [i === 1 ? 36 : 22, i === 1 ? 40 : 22] : 14 }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.07 }}
-              style={{ width: 28, background: i === 1 ? color : 'rgba(255,255,255,0.1)', borderRadius: 3, margin: '0 auto 3px' }}
+              style={{ width: 28, background: i === 1 ? color : 'rgba(15,34,68,0.1)', borderRadius: 3, margin: '0 auto 3px' }}
             />
-            <span style={{ fontSize: 7, color: i === 1 ? color : 'rgba(255,255,255,0.35)' }}>{label}</span>
+            <span style={{ fontSize: 7, color: i === 1 ? color : 'rgba(15,34,68,0.35)' }}>{label}</span>
           </div>
         ))}
       </div>
@@ -81,7 +81,7 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 12, padding: '10px 0' }}>
       {/* Color palette */}
       <div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>COLOUR PALETTE</div>
+        <div style={{ fontSize: 8, color: 'rgba(15,34,68,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>COLOUR PALETTE</div>
         <div style={{ display: 'flex', gap: 5 }}>
           {palette.map((c, i) => (
             <motion.div
@@ -95,23 +95,23 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
       </div>
       {/* Typography */}
       <div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>TYPOGRAPHY</div>
+        <div style={{ fontSize: 8, color: 'rgba(15,34,68,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>TYPOGRAPHY</div>
         <div style={{ display: 'flex', gap: 5, alignItems: 'flex-end' }}>
           {weights.map((w, i) => (
             <motion.span
               key={w}
               animate={{ opacity: active ? 1 : 0.3, y: active ? 0 : 3 }}
               transition={{ duration: 0.3, delay: 0.1 + i * 0.06 }}
-              style={{ fontSize: 8 + i * 2, fontWeight: [100, 400, 700, 900][i], color: '#fff', lineHeight: 1 }}
+              style={{ fontSize: 8 + i * 2, fontWeight: [100, 400, 700, 900][i], color: '#0f2244', lineHeight: 1 }}
             >Aa</motion.span>
           ))}
         </div>
       </div>
       {/* Component library row */}
       <div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>COMPONENTS</div>
+        <div style={{ fontSize: 8, color: 'rgba(15,34,68,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>COMPONENTS</div>
         <div style={{ display: 'flex', gap: 5 }}>
-          <motion.span animate={{ opacity: active ? 1 : 0.4 }} transition={{ duration: 0.3 }} style={{ background: color, color: '#fff', padding: '3px 10px', borderRadius: 5, fontSize: 9, fontWeight: 700 }}>Button</motion.span>
+          <motion.span animate={{ opacity: active ? 1 : 0.4 }} transition={{ duration: 0.3 }} style={{ background: color, color: '#0f2244', padding: '3px 10px', borderRadius: 5, fontSize: 9, fontWeight: 700 }}>Button</motion.span>
           <motion.span animate={{ opacity: active ? 1 : 0.4 }} transition={{ duration: 0.3, delay: 0.05 }} style={{ border: `1px solid ${color}`, color, padding: '3px 10px', borderRadius: 5, fontSize: 9 }}>Outline</motion.span>
           <motion.span animate={{ opacity: active ? 1 : 0.4 }} transition={{ duration: 0.3, delay: 0.1 }} style={{ background: `${color}1a`, color, padding: '3px 10px', borderRadius: 5, fontSize: 9 }}>Ghost</motion.span>
         </div>
@@ -123,8 +123,8 @@ function Scene2({ active, color }: { active: boolean; color: string }) {
         style={{ border: `1px solid ${color}33`, borderRadius: 7, padding: '6px 8px', background: `${color}08` }}
       >
         <div style={{ height: 3, background: color, borderRadius: 2, marginBottom: 4 }} />
-        <div style={{ height: 3, background: 'rgba(255,255,255,0.15)', borderRadius: 2, marginBottom: 3, width: '80%' }} />
-        <div style={{ height: 3, background: 'rgba(255,255,255,0.1)', borderRadius: 2, width: '60%' }} />
+        <div style={{ height: 3, background: 'rgba(15,34,68,0.15)', borderRadius: 2, marginBottom: 3, width: '80%' }} />
+        <div style={{ height: 3, background: 'rgba(15,34,68,0.1)', borderRadius: 2, width: '60%' }} />
       </motion.div>
     </div>
   )
@@ -145,19 +145,19 @@ function Scene3({ active, color }: { active: boolean; color: string }) {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 10, padding: '8px 0' }}>
       {/* Code editor */}
-      <div style={{ background: '#0a0f1e', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 8, padding: '8px 10px', flex: 1 }}>
+      <div style={{ background: '#0a0f1e', border: '1px solid rgba(15,34,68,0.08)', borderRadius: 8, padding: '8px 10px', flex: 1 }}>
         <div style={{ display: 'flex', gap: 4, marginBottom: 6 }}>
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#ff5f57' }} />
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#febc2e' }} />
           <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#28c840' }} />
-          <span style={{ marginLeft: 4, fontSize: 7.5, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>hero-section.tsx</span>
+          <span style={{ marginLeft: 4, fontSize: 7.5, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)' }}>hero-section.tsx</span>
         </div>
         {lines.map((line, i) => (
           <motion.div
             key={i}
             animate={{ opacity: active ? 1 : 0.2, x: active ? 0 : -4 }}
             transition={{ duration: 0.25, delay: 0.05 + i * 0.04 }}
-            style={{ fontSize: 7.5, fontFamily: 'var(--font-mono)', color: i === 0 ? color : i >= 2 && i <= 4 ? '#f59e0b' : 'rgba(255,255,255,0.65)', paddingLeft: line.indent * 6, lineHeight: 1.7 }}
+            style={{ fontSize: 7.5, fontFamily: 'var(--font-mono)', color: i === 0 ? color : i >= 2 && i <= 4 ? '#f59e0b' : 'rgba(15,34,68,0.65)', paddingLeft: line.indent * 6, lineHeight: 1.7 }}
           >{line.text}</motion.div>
         ))}
       </div>
@@ -191,16 +191,16 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
     <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', gap: 12, padding: '8px 0' }}>
       {/* Deployment pipeline */}
       <div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>DEPLOYMENT PIPELINE</div>
+        <div style={{ fontSize: 8, color: 'rgba(15,34,68,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 6, fontFamily: 'var(--font-mono)' }}>DEPLOYMENT PIPELINE</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           {pipeline.map((step, i) => (
             <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 3, flex: 1 }}>
               <motion.div
-                animate={{ background: active ? (i < 3 ? '#10b981' : color) : 'rgba(255,255,255,0.1)', scale: active ? 1 : 0.85 }}
+                animate={{ background: active ? (i < 3 ? '#10b981' : color) : 'rgba(15,34,68,0.1)', scale: active ? 1 : 0.85 }}
                 transition={{ duration: 0.3, delay: 0.05 + i * 0.08 }}
-                style={{ borderRadius: 5, padding: '4px 0', textAlign: 'center', flex: 1, fontSize: 8, fontWeight: 700, color: '#fff' }}
+                style={{ borderRadius: 5, padding: '4px 0', textAlign: 'center', flex: 1, fontSize: 8, fontWeight: 700, color: '#0f2244' }}
               >{step}</motion.div>
-              {i < pipeline.length - 1 && <span style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)' }}>→</span>}
+              {i < pipeline.length - 1 && <span style={{ fontSize: 8, color: 'rgba(15,34,68,0.25)' }}>→</span>}
             </div>
           ))}
         </div>
@@ -214,15 +214,15 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
             transition={{ duration: 0.3, delay: 0.2 + i * 0.08 }}
             style={{ flex: 1, background: `${color}0d`, border: `1px solid ${color}33`, borderRadius: 7, padding: '6px 8px' }}
           >
-            <div style={{ fontSize: 7.5, color: 'rgba(255,255,255,0.4)', marginBottom: 2 }}>{m.label}</div>
-            <div style={{ fontSize: 13, fontWeight: 800, color: '#fff', fontFamily: 'var(--font-mono)' }}>{m.val}</div>
+            <div style={{ fontSize: 7.5, color: 'rgba(15,34,68,0.4)', marginBottom: 2 }}>{m.label}</div>
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#0f2244', fontFamily: 'var(--font-mono)' }}>{m.val}</div>
             <div style={{ fontSize: 8, color: '#10b981', fontWeight: 700 }}>{m.delta} this week</div>
           </motion.div>
         ))}
       </div>
       {/* Rankings */}
       <div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 5, fontFamily: 'var(--font-mono)' }}>GOOGLE RANKINGS</div>
+        <div style={{ fontSize: 8, color: 'rgba(15,34,68,0.35)', fontWeight: 700, letterSpacing: '0.1em', marginBottom: 5, fontFamily: 'var(--font-mono)' }}>GOOGLE RANKINGS</div>
         {rankings.map((r, i) => (
           <motion.div
             key={r.kw}
@@ -230,7 +230,7 @@ function Scene4({ active, color }: { active: boolean; color: string }) {
             transition={{ duration: 0.3, delay: 0.3 + i * 0.07 }}
             style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}
           >
-            <span style={{ fontSize: 8, color: 'rgba(255,255,255,0.6)' }}>{r.kw}</span>
+            <span style={{ fontSize: 8, color: 'rgba(15,34,68,0.6)' }}>{r.kw}</span>
             <span style={{ fontSize: 8, fontWeight: 800, color: color, fontFamily: 'var(--font-mono)', background: `${color}1a`, padding: '1px 6px', borderRadius: 3 }}>#{r.pos}</span>
           </motion.div>
         ))}
