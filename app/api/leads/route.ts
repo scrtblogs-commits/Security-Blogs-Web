@@ -1,99 +1,87 @@
-// ─────────────────────────────────────────────────────────────────────
 // POST /api/leads
 //
-// Single endpoint that every public form on the marketing site posts
-// to. Replaces the Web3Forms integration that lived in
-// lib/submitForm.ts during the static-export era.
+// Receives form submissions from every public form on the site.
+// Delivery pipeline (in priority order):
 //
-// Pipeline per request:
-//   1. Pull form fields from JSON body
-//   2. Honeypot — reject if `company_url` is non-empty
-//   3. Cloudflare Turnstile — verify the token server-side
-//   4. Simple per-IP rate limit (15 submissions / 15 minutes)
-//   5. Shape validation (manual, no zod dep to keep bundle lean)
-//   6. createLead() via the CMS local client
-//   7. Return JSON { ok: true, id } or { ok: false, error }
+//   1. Web3Forms  — if WEB3FORMS_KEY env var is set (recommended for prod)
+//   2. CMS        — if CMS_URL + PAYLOAD_API_KEY are set (Payload backend)
+//   3. Dev-log    — neither configured → logs to console, returns ok:true
+//                   so forms work locally without any setup
 //
-// The marketing site fetches this from the SAME origin — no CORS
-// preflight needed. Phase D's reverse proxy puts the marketing site
-// and CMS behind one hostname so the in-process call is internal.
-// ─────────────────────────────────────────────────────────────────────
+// To go live:
+//   • Register free at https://web3forms.com, copy your Access Key, and
+//     add  WEB3FORMS_KEY=<your-key>  to .env.local / your hosting env.
+//   • The submission will be emailed to info@securityblogs.com.au.
 
 import { NextResponse } from 'next/server'
-import { createLead, type LeadInput } from '@/lib/cms'
 
 export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'    // never cached
+export const dynamic = 'force-dynamic'
 
-const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
-const TURNSTILE_SECRET = process.env.TURNSTILE_SECRET_KEY ?? ''
+const WEB3FORMS_KEY = process.env.WEB3FORMS_KEY ?? ''
+const CMS_URL       = process.env.CMS_URL ?? ''
+const API_KEY       = process.env.PAYLOAD_API_KEY ?? ''
+const CONTACT_EMAIL = 'info@securityblogs.com.au'
 
-// In-memory rate limit. Acceptable for a single-VPS deployment — the
-// VPS process is the only place this endpoint runs, so the Map sees
-// every request. If you ever scale horizontally, swap to Redis / KV.
+// ── In-memory rate limit (15 req / 15 min per IP) ─────────────────────────
 type Bucket = { count: number; resetAt: number }
 const buckets = new Map<string, Bucket>()
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000
-const RATE_LIMIT_MAX = 15
+const WINDOW  = 15 * 60 * 1000
+const MAX     = 15
 
-function getClientIp(req: Request): string {
-  const fwd = req.headers.get('x-forwarded-for')
-  if (fwd) return fwd.split(',')[0].trim()
-  const real = req.headers.get('x-real-ip')
-  if (real) return real.trim()
-  return 'unknown'
+function getIp(req: Request): string {
+  return (req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip') ?? 'unknown').split(',')[0].trim()
 }
-
-function checkRateLimit(ip: string): boolean {
+function rateOk(ip: string): boolean {
   const now = Date.now()
-  const bucket = buckets.get(ip)
-  if (!bucket || bucket.resetAt < now) {
-    buckets.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
-    return true
-  }
-  if (bucket.count >= RATE_LIMIT_MAX) return false
-  bucket.count += 1
-  return true
-}
-
-// Drop stale buckets every 100 requests so the Map can't grow unbounded.
-let cleanupCounter = 0
-function maybeCleanup() {
-  if (++cleanupCounter < 100) return
-  cleanupCounter = 0
-  const now = Date.now()
-  for (const [ip, b] of buckets.entries()) if (b.resetAt < now) buckets.delete(ip)
-}
-
-async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
-  if (!TURNSTILE_SECRET) {
-    // No secret configured = dev mode. Log a warning so it's obvious in
-    // server logs, but allow the submission through so local testing
-    // works without standing up Cloudflare.
-    console.warn('[/api/leads] TURNSTILE_SECRET_KEY not set — skipping verification (dev only)')
-    return true
-  }
-  try {
-    const body = new URLSearchParams()
-    body.set('secret', TURNSTILE_SECRET)
-    body.set('response', token)
-    if (ip !== 'unknown') body.set('remoteip', ip)
-    const res = await fetch(TURNSTILE_VERIFY_URL, { method: 'POST', body })
-    const json = (await res.json()) as { success: boolean }
-    return json.success === true
-  } catch (err) {
-    console.error('[/api/leads] Turnstile verification failed', err)
-    return false
-  }
+  const b = buckets.get(ip)
+  if (!b || b.resetAt < now) { buckets.set(ip, { count: 1, resetAt: now + WINDOW }); return true }
+  if (b.count >= MAX) return false
+  b.count++; return true
 }
 
 function bad(error: string, status = 400) {
   return NextResponse.json({ ok: false, error }, { status })
 }
 
-export async function POST(req: Request) {
-  maybeCleanup()
+// ── Delivery: Web3Forms ────────────────────────────────────────────────────
+async function sendViaWeb3Forms(fields: Record<string, unknown>): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...fields }),
+    })
+    const json = await res.json().catch(() => ({}))
+    if (!res.ok || json.success === false) {
+      return { ok: false, error: json.message || 'Web3Forms rejected submission' }
+    }
+    return { ok: true }
+  } catch (err) {
+    return { ok: false, error: (err as Error).message }
+  }
+}
 
+// ── Delivery: Payload CMS ──────────────────────────────────────────────────
+async function sendViaCms(input: Record<string, unknown>): Promise<{ ok: boolean; id?: string; error?: string }> {
+  try {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+    if (API_KEY) headers['Authorization'] = `users API-Key ${API_KEY}`
+    const res = await fetch(`${CMS_URL}/api/leads`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(input),
+    })
+    const json = await res.json().catch(() => ({}))
+    if (!res.ok) return { ok: false, error: json?.message || `CMS error ${res.status}` }
+    return { ok: true, id: json?.doc?.id }
+  } catch (err) {
+    return { ok: false, error: (err as Error).message }
+  }
+}
+
+// ── Handler ────────────────────────────────────────────────────────────────
+export async function POST(req: Request) {
   let body: Record<string, unknown>
   try {
     body = (await req.json()) as Record<string, unknown>
@@ -101,61 +89,74 @@ export async function POST(req: Request) {
     return bad('Invalid JSON body')
   }
 
-  // 1. Honeypot — bots fill every field; humans never see this one.
+  // Honeypot
   if (typeof body.company_url === 'string' && body.company_url.trim() !== '') {
-    // Pretend it worked so the bot doesn't retry.
     return NextResponse.json({ ok: true })
   }
 
-  // 2. Shape check.
-  const name    = typeof body.name    === 'string' ? body.name.trim()    : ''
-  const email   = typeof body.email   === 'string' ? body.email.trim()   : ''
-  const phone   = typeof body.phone   === 'string' ? body.phone.trim()   : undefined
-  const company = typeof body.company === 'string' ? body.company.trim() : undefined
-  const service = typeof body.service === 'string' ? body.service.trim() : undefined
-  const message = typeof body.message === 'string' ? body.message.trim() : undefined
-  const source  = typeof body.source  === 'string' ? body.source.trim()  : 'unknown'
-  const token   = typeof body['cf-turnstile-response'] === 'string'
-    ? (body['cf-turnstile-response'] as string)
-    : ''
-
+  // Shape validation
+  const name    = typeof body.name  === 'string' ? body.name.trim()  : ''
+  const email   = typeof body.email === 'string' ? body.email.trim() : ''
   if (!name)  return bad('Name is required')
   if (!email) return bad('Email is required')
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad('Email looks invalid')
 
-  // 3. Rate-limit by IP.
-  const ip = getClientIp(req)
-  if (!checkRateLimit(ip)) {
-    return NextResponse.json(
-      { ok: false, error: 'Too many submissions. Please wait 15 minutes and try again.' },
-      { status: 429 },
-    )
+  // Rate limit
+  const ip = getIp(req)
+  if (!rateOk(ip)) return NextResponse.json({ ok: false, error: 'Too many submissions — please wait 15 minutes.' }, { status: 429 })
+
+  // Collect all non-sensitive fields for the submission payload
+  const fields: Record<string, unknown> = {}
+  for (const [k, v] of Object.entries(body)) {
+    if (k === 'company_url' || k === 'cf-turnstile-response') continue
+    fields[k] = v
   }
 
-  // 4. Turnstile.
-  const tokenOk = await verifyTurnstile(token, ip)
-  if (!tokenOk) return bad('Captcha verification failed. Refresh the page and try again.')
-
-  // 5. Create the lead.
-  const meta: Record<string, unknown> = {
-    ip,
-    userAgent: req.headers.get('user-agent') ?? undefined,
-    referer: req.headers.get('referer') ?? undefined,
+  // 1. Try Web3Forms
+  if (WEB3FORMS_KEY) {
+    const result = await sendViaWeb3Forms({
+      subject: `New enquiry from ${name} — SecurityBlogs`,
+      from_name: name,
+      email,
+      to_email: CONTACT_EMAIL,
+      replyto: email,
+      ...fields,
+    })
+    if (result.ok) return NextResponse.json({ ok: true })
+    console.error('[/api/leads] Web3Forms failed:', result.error)
+    // Fall through to CMS attempt
   }
-  // Pass through any extra fields the form sent (e.g. cv_url for careers).
-  for (const k of Object.keys(body)) {
-    if (['name','email','phone','company','service','message','source','cf-turnstile-response','company_url'].includes(k)) continue
-    meta[k] = body[k]
+
+  // 2. Try CMS (Payload)
+  if (CMS_URL && API_KEY) {
+    const result = await sendViaCms({
+      name,
+      email,
+      phone:          typeof body.phone   === 'string' ? body.phone.trim()   : undefined,
+      company:        typeof body.company === 'string' ? body.company.trim() : undefined,
+      serviceInterest:typeof body.service === 'string' ? body.service.trim() : undefined,
+      message:        typeof body.message === 'string' ? body.message.trim() : undefined,
+      source:         typeof body.source  === 'string' ? body.source.trim()  : 'contact',
+      status: 'new',
+      meta: { ip, userAgent: req.headers.get('user-agent') ?? undefined },
+    })
+    if (result.ok) return NextResponse.json({ ok: true, id: result.id })
+    console.error('[/api/leads] CMS failed:', result.error)
   }
 
-  const input: LeadInput = { name, email, phone, company, service, message, source, meta }
-  const result = await createLead(input)
-  if (!result.ok) return bad(result.error ?? 'Could not save your enquiry. Please try again.', 502)
+  // 3. Dev fallback — log to console so local testing works with zero config
+  if (!WEB3FORMS_KEY && !CMS_URL) {
+    console.log('[/api/leads] DEV — no delivery configured. Submission received:', fields)
+    return NextResponse.json({ ok: true })
+  }
 
-  return NextResponse.json({ ok: true, id: result.id })
+  // Both delivery methods failed
+  return NextResponse.json(
+    { ok: false, error: 'Could not send your message. Please email us at ' + CONTACT_EMAIL },
+    { status: 502 },
+  )
 }
 
-// Reject other methods cleanly so Next.js doesn't return its default 405.
 export async function GET()    { return bad('Method not allowed', 405) }
 export async function PUT()    { return bad('Method not allowed', 405) }
 export async function DELETE() { return bad('Method not allowed', 405) }
