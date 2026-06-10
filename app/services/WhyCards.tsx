@@ -83,12 +83,12 @@ function WhyCard({ card, index }: { key?: React.Key; card: typeof WHY_CARDS[0]; 
       <motion.div
         animate={{
           boxShadow: hovered
-            ? `0 20px 50px -12px ${card.color}44, 0 0 0 1px ${card.color}25`
-            : '0 4px 20px -8px rgba(18,42,86,0.15), 0 0 0 1px rgba(255,255,255,0.06)',
+            ? `0 20px 50px -12px ${card.color}33, 0 0 0 1.5px ${card.color}30`
+            : '0 4px 24px -8px rgba(18,42,86,0.10), 0 0 0 1px rgba(18,42,86,0.07)',
         }}
         transition={{ duration: 0.3 }}
         style={{
-          background: 'linear-gradient(145deg, #0e1829 0%, #0a1220 100%)',
+          background: '#ffffff',
           borderRadius: 18,
           overflow: 'hidden',
           position: 'relative',
@@ -136,10 +136,10 @@ function WhyCard({ card, index }: { key?: React.Key; card: typeof WHY_CARDS[0]; 
           </motion.div>
         </div>
 
-        <h4 style={{ fontSize: 17, fontWeight: 700, color: '#fff', marginBottom: 10, letterSpacing: '-0.01em' }}>
+        <h4 style={{ fontSize: 17, fontWeight: 700, color: '#0f2244', marginBottom: 10, letterSpacing: '-0.01em' }}>
           {card.title}
         </h4>
-        <p style={{ fontSize: 13.5, lineHeight: 1.65, color: 'rgba(255,255,255,0.62)', margin: 0 }}>
+        <p style={{ fontSize: 13.5, lineHeight: 1.65, color: '#46546e', margin: 0 }}>
           {card.desc}
         </p>
       </motion.div>
