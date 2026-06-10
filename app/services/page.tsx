@@ -8,8 +8,7 @@ import JsonLd from '@/components/JsonLd'
 import { itemListSchema } from '@/lib/schema'
 import { services } from '@/lib/site'
 import ServicesHeroVisual from './ServicesHeroVisual'
-import ServiceCardsGrid from './ServiceCardsGrid'
-import ServiceBenefitCards from './ServiceBenefitCards'
+import ServiceFlipShowcase from './ServiceFlipShowcase'
 import WhyCards from './WhyCards'
 
 export const metadata = {
@@ -50,20 +49,7 @@ export default function ServicesPage() {
         </div>
       </HeroBg>
 
-      <section className="section">
-        <div className="container">
-          <SectionHead
-            eyebrow="What we do"
-            title="Every channel security buyers use to discover you."
-            sub="Pick a single service or run the full stack. Each one compounds the others into unstoppable AI visibility."
-          />
-          <ServiceCardsGrid />
-
-          <div style={{ marginTop: 36 }}>
-            <ServiceBenefitCards />
-          </div>
-        </div>
-      </section>
+      <ServiceFlipShowcase />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
