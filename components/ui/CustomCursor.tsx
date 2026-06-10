@@ -1,57 +1,62 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
+/*
+  Shield cursor — replaces the default pointer with a tiny SVG shield.
+  · Default : hollow shield outline (brand blue)
+  · Hover   : filled shield + blue glow (over links, buttons, [role="button"])
+  · Click   : shield shrinks 15% on mousedown
+  Only activates on true pointer devices (not touch screens).
+*/
+
 export default function CustomCursor() {
-  const dotRef  = useRef<HTMLDivElement>(null)
-  const ringRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLSpanElement>(null)
+  const shieldRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Only on devices with a real mouse pointer
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
     document.body.classList.add('has-custom-cursor')
 
-    let tx = -100, ty = -100   // target (dot — instant)
-    let rx = -100, ry = -100   // ring position (lagged)
+    let cx = -120, cy = -120
     let raf = 0
     let isHover = false
-    let isClick = false
 
-    const onMove = (e: MouseEvent) => { tx = e.clientX; ty = e.clientY }
+    const onMove = (e: MouseEvent) => {
+      cx = e.clientX
+      cy = e.clientY
+    }
 
     const onOver = (e: MouseEvent) => {
-      const el = (e.target as HTMLElement).closest('a, button, [role="button"], .pill, [data-cursor]') as HTMLElement | null
+      const el = (e.target as HTMLElement).closest(
+        'a, button, [role="button"], label, .pill, input[type="submit"], input[type="button"]'
+      )
       isHover = !!el
-      if (textRef.current) {
-        const label = el?.getAttribute('data-cursor') || (el?.tagName === 'A' ? '' : '')
-        textRef.current.textContent = label
-        textRef.current.style.opacity = label ? '1' : '0'
-      }
-      if (ringRef.current) {
-        ringRef.current.style.width  = isHover ? '52px' : '32px'
-        ringRef.current.style.height = isHover ? '52px' : '32px'
-        ringRef.current.style.borderColor = isHover ? 'var(--blue)' : 'rgba(30,95,224,0.55)'
-        ringRef.current.style.background  = isHover ? 'rgba(30,95,224,0.06)' : 'transparent'
-        ringRef.current.style.boxShadow   = isHover ? '0 0 18px 2px rgba(30,95,224,0.20)' : 'none'
+      const s = shieldRef.current
+      if (!s) return
+      if (isHover) {
+        s.style.filter = 'drop-shadow(0 0 6px rgba(30,95,224,0.65))'
+        // swap to filled shield via opacity on inner rects
+        s.querySelector<SVGPathElement>('.sh-fill')!.style.opacity = '1'
+        s.querySelector<SVGPathElement>('.sh-outline')!.style.opacity = '0'
+      } else {
+        s.style.filter = 'drop-shadow(0 0 3px rgba(30,95,224,0.30))'
+        s.querySelector<SVGPathElement>('.sh-fill')!.style.opacity = '0'
+        s.querySelector<SVGPathElement>('.sh-outline')!.style.opacity = '1'
       }
     }
 
     const onDown = () => {
-      isClick = true
-      if (dotRef.current)  dotRef.current.style.transform  = `translate(${tx - 3}px,${ty - 3}px) scale(0.5)`
-      if (ringRef.current) ringRef.current.style.transform = `translate(${rx - 26}px,${ry - 26}px) scale(0.88)`
+      if (shieldRef.current) shieldRef.current.style.transform =
+        `translate(${cx - 9}px, ${cy - 2}px) scale(0.82)`
     }
-    const onUp = () => { isClick = false }
+    const onUp = () => {
+      if (shieldRef.current) shieldRef.current.style.transform =
+        `translate(${cx - 9}px, ${cy - 2}px) scale(1)`
+    }
 
     const loop = () => {
-      rx += (tx - rx) * 0.14
-      ry += (ty - ry) * 0.14
-
-      if (dotRef.current && !isClick)
-        dotRef.current.style.transform = `translate(${tx - 4}px,${ty - 4}px) scale(1)`
-
-      if (ringRef.current) {
-        const offset = isHover ? 26 : 16
-        ringRef.current.style.transform = `translate(${rx - offset}px,${ry - offset}px)`
+      if (shieldRef.current) {
+        shieldRef.current.style.transform = `translate(${cx - 9}px, ${cy - 2}px) scale(${isHover ? 1.12 : 1})`
       }
       raf = requestAnimationFrame(loop)
     }
@@ -59,7 +64,7 @@ export default function CustomCursor() {
     window.addEventListener('mousemove', onMove)
     window.addEventListener('mouseover', onOver)
     window.addEventListener('mousedown', onDown)
-    window.addEventListener('mouseup',   onUp)
+    window.addEventListener('mouseup', onUp)
     raf = requestAnimationFrame(loop)
 
     return () => {
@@ -67,40 +72,73 @@ export default function CustomCursor() {
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseover', onOver)
       window.removeEventListener('mousedown', onDown)
-      window.removeEventListener('mouseup',   onUp)
+      window.removeEventListener('mouseup', onUp)
       cancelAnimationFrame(raf)
     }
   }, [])
 
   return (
-    <>
-      {/* Solid dot — snaps instantly */}
-      <div ref={dotRef} style={{
-        position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9999,
-        width: 8, height: 8, borderRadius: '50%',
-        background: 'var(--blue)',
-        boxShadow: '0 0 6px 1px rgba(30,95,224,0.55)',
-        transition: 'transform 0.08s ease',
+    <div
+      ref={shieldRef}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        zIndex: 9999,
+        width: 18,
+        height: 22,
         willChange: 'transform',
-      }} />
+        transition: 'filter 0.18s ease',
+        filter: 'drop-shadow(0 0 3px rgba(30,95,224,0.30))',
+      }}
+    >
+      <svg
+        viewBox="0 0 18 22"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ width: '100%', height: '100%' }}
+      >
+        {/* Filled variant — shown on hover */}
+        <path
+          className="sh-fill"
+          d="M9 1L2 4v6c0 4.5 3.1 8.7 7 10 3.9-1.3 7-5.5 7-10V4L9 1z"
+          fill="#1e5fe0"
+          style={{ opacity: 0, transition: 'opacity 0.18s ease' }}
+        />
+        {/* Checkmark on filled */}
+        <path
+          className="sh-fill"
+          d="M6 11l2 2 4-4"
+          stroke="#fff"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ opacity: 0, transition: 'opacity 0.18s ease' }}
+        />
 
-      {/* Lagged ring — transitions size & glow on hover */}
-      <div ref={ringRef} style={{
-        position: 'fixed', top: 0, left: 0, pointerEvents: 'none', zIndex: 9998,
-        width: 32, height: 32, borderRadius: '50%',
-        border: '1.5px solid rgba(30,95,224,0.55)',
-        background: 'transparent',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        transition: 'width 0.22s ease, height 0.22s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease',
-        willChange: 'transform',
-      }}>
-        <span ref={textRef} style={{
-          fontSize: 9, fontFamily: 'var(--font-mono)', fontWeight: 700,
-          color: 'var(--blue)', letterSpacing: '0.05em',
-          opacity: 0, transition: 'opacity 0.2s ease',
-          userSelect: 'none', whiteSpace: 'nowrap',
-        }} />
-      </div>
-    </>
+        {/* Outline variant — shown by default */}
+        <path
+          className="sh-outline"
+          d="M9 1L2 4v6c0 4.5 3.1 8.7 7 10 3.9-1.3 7-5.5 7-10V4L9 1z"
+          stroke="#1e5fe0"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+          fill="rgba(30,95,224,0.08)"
+          style={{ opacity: 1, transition: 'opacity 0.18s ease' }}
+        />
+        {/* Subtle inner line on outline */}
+        <path
+          className="sh-outline"
+          d="M9 4.5L4.5 6.5V10c0 2.8 2 5.4 4.5 6.3C11.5 15.4 13.5 12.8 13.5 10V6.5L9 4.5z"
+          stroke="#1e5fe0"
+          strokeWidth="0.7"
+          strokeLinejoin="round"
+          fill="none"
+          opacity="0.35"
+          style={{ opacity: 0.35, transition: 'opacity 0.18s ease' }}
+        />
+      </svg>
+    </div>
   )
 }
