@@ -4,16 +4,16 @@ import PricingEditor        from './PricingEditor'
 
 export default async function PricingAdminPage() {
   await requireAdminAuth()
-  const pricing = getPricing()
   return (
-    <div style={{ padding: '28px 32px', maxWidth: 1100 }}>
-      <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#111827', margin: 0 }}>Pricing</h1>
-        <p style={{ fontSize: 14, color: '#6b7280', marginTop: 4 }}>
-          Edit all pricing plans, features, badges and CTA buttons across every pricing section.
-        </p>
+    <div style={{ padding: '32px 36px', maxWidth: 1100 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
+        <div style={{ width: 44, height: 44, borderRadius: 12, background: 'linear-gradient(135deg,#dc2626,#ef4444)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, boxShadow: '0 4px 12px rgba(220,38,38,0.3)', flexShrink: 0 }}>💰</div>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#0f172a', margin: 0 }}>Pricing</h1>
+          <p style={{ fontSize: 14, color: '#64748b', margin: '3px 0 0' }}>Edit all pricing plans, features, badges and CTA buttons across every section.</p>
+        </div>
       </div>
-      <PricingEditor initial={pricing} />
+      <PricingEditor initial={getPricing()} />
     </div>
   )
 }

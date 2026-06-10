@@ -26,9 +26,46 @@ const socials = [
 
 const avatars = ['JR', 'SM', 'DK', 'LT', 'MP']
 
+const SUCCESS_MSG = 'Thank you. Your request has been submitted successfully. Our team will contact you within the next 24–48 hours.'
+
+async function submitToLeads(payload: Record<string, string>): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res  = await fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+    const json = await res.json().catch(() => ({}))
+    return res.ok && json.ok !== false ? { ok: true } : { ok: false, error: json.error }
+  } catch {
+    return { ok: false, error: 'Network error. Please try again.' }
+  }
+}
+
+/* ── Get Started form (right column) ───────────────────────────────────── */
 function GetStartedForm() {
-  const [email, setEmail]     = useState('')
-  const [message, setMessage] = useState('')
+  const [email,    setEmail]    = useState('')
+  const [message,  setMessage]  = useState('')
+  const [loading,  setLoading]  = useState(false)
+  const [done,     setDone]     = useState(false)
+  const [error,    setError]    = useState('')
+
+  async function submit() {
+    if (!email.trim()) { setError('Please enter your email address.'); return }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) { setError('Please enter a valid email address.'); return }
+    setLoading(true); setError('')
+    const res = await submitToLeads({
+      name:    'Footer enquiry',
+      email:   email.trim(),
+      message: message.trim() || 'No message provided',
+      service: 'General Enquiry',
+      source:  'footer-get-started',
+    })
+    setLoading(false)
+    if (res.ok) setDone(true)
+    else setError(res.error ?? 'Submission failed. Please try again.')
+  }
+
   return (
     <div style={{
       background: '#fff',
@@ -50,50 +87,127 @@ function GetStartedForm() {
           Get Started
         </h4>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <div>
-          <label className="label">Email</label>
-          <input
-            type="email"
-            className="field"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+
+      {done ? (
+        <div style={{ textAlign: 'center', padding: '12px 0' }}>
+          <div style={{ fontSize: 36, marginBottom: 10 }}>✓</div>
+          <p style={{ fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.6, margin: 0 }}>
+            {SUCCESS_MSG}
+          </p>
         </div>
-        <div>
-          <label className="label">Message</label>
-          <textarea
-            className="field"
-            placeholder="What do you say?"
-            rows={3}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            style={{ resize: 'none' }}
-          />
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div>
+            <label className="label">Email *</label>
+            <input
+              type="email" className="field"
+              placeholder="Enter your email"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setError('') }}
+            />
+          </div>
+          <div>
+            <label className="label">Message</label>
+            <textarea
+              className="field"
+              placeholder="What can we help you with?"
+              rows={3}
+              value={message}
+              onChange={e => setMessage(e.target.value)}
+              style={{ resize: 'none' }}
+            />
+          </div>
+          {error && (
+            <p style={{ fontSize: 12.5, color: 'var(--red)', margin: 0 }}>{error}</p>
+          )}
+          <button
+            onClick={submit}
+            disabled={loading}
+            style={{
+              width: '100%', padding: '13px', borderRadius: 12,
+              background: loading ? 'rgba(30,95,224,0.6)' : 'var(--blue)',
+              color: '#fff', border: 'none',
+              fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: 15,
+              cursor: loading ? 'default' : 'pointer',
+              transition: 'background 0.15s',
+            }}
+          >
+            {loading ? 'Submitting…' : 'Request Demo'}
+          </button>
+          <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-dim)', margin: 0 }}>
+            → Start Free Trial
+          </p>
         </div>
-        <button
-          onClick={() => {}}
-          style={{
-            width: '100%', padding: '13px', borderRadius: 12,
-            background: 'var(--blue)', color: '#fff', border: 'none',
-            fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: 15,
-            cursor: 'pointer',
-          }}
-        >
-          Request Demo
-        </button>
-        <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-dim)', margin: 0 }}>
-          → Start Free Trial
-        </p>
-      </div>
+      )}
     </div>
   )
 }
 
-export default function Footer() {
-  const [email, setEmail] = useState('')
+/* ── Newsletter subscribe row ───────────────────────────────────────────── */
+function SubscribeRow() {
+  const [email,   setEmail]   = useState('')
+  const [loading, setLoading] = useState(false)
+  const [done,    setDone]    = useState(false)
+  const [error,   setError]   = useState('')
 
+  async function submit() {
+    if (!email.trim()) { setError('Enter your email'); return }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) { setError('Invalid email'); return }
+    setLoading(true); setError('')
+    const res = await submitToLeads({
+      name:    'Newsletter subscriber',
+      email:   email.trim(),
+      message: 'Footer newsletter subscribe',
+      service: 'Newsletter',
+      source:  'footer-subscribe',
+    })
+    setLoading(false)
+    if (res.ok) setDone(true)
+    else setError(res.error ?? 'Failed. Please try again.')
+  }
+
+  if (done) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, maxWidth: 360 }}>
+        <span style={{ fontSize: 18 }}>✓</span>
+        <span style={{ fontSize: 13, color: 'var(--text-soft)' }}>Subscribed! Thank you.</span>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ maxWidth: 360 }}>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <input
+          type="email" className="field"
+          placeholder="Enter your email here"
+          value={email}
+          onChange={e => { setEmail(e.target.value); setError('') }}
+          style={{ flex: 1, fontSize: 13, padding: '10px 14px' }}
+          onKeyDown={e => e.key === 'Enter' && submit()}
+        />
+        <button
+          onClick={submit}
+          disabled={loading}
+          style={{
+            width: 38, height: 38, borderRadius: 10,
+            background: 'var(--blue)', border: 'none',
+            color: '#fff', cursor: loading ? 'default' : 'pointer', fontSize: 16,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0, opacity: loading ? 0.6 : 1,
+          }}
+          aria-label="Subscribe"
+        >
+          {loading ? '…' : '→'}
+        </button>
+      </div>
+      {error && <p style={{ fontSize: 12, color: 'var(--red)', marginTop: 4 }}>{error}</p>}
+    </div>
+  )
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+export default function Footer() {
   return (
     <footer style={{ background: 'var(--bg-soft)', borderTop: '1px solid var(--line)', color: 'var(--text)' }}>
 
@@ -102,7 +216,7 @@ export default function Footer() {
         <div className="container" style={{ padding: 'clamp(40px,6vw,72px) 24px' }}>
           <div className="ft-top-grid">
 
-            {/* Left — People are saying */}
+            {/* Left */}
             <div>
               <h2 style={{
                 fontFamily: 'var(--font-display)', fontWeight: 800,
@@ -129,7 +243,7 @@ export default function Footer() {
                 />
               </div>
 
-              {/* Avatar stack + social proof */}
+              {/* Avatar stack */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24 }}>
                 <div style={{ display: 'flex' }}>
                   {avatars.map((a, i) => (
@@ -140,8 +254,7 @@ export default function Footer() {
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       color: '#fff', fontSize: 11, fontWeight: 700,
                       marginLeft: i > 0 ? -10 : 0,
-                      zIndex: avatars.length - i,
-                      position: 'relative',
+                      zIndex: avatars.length - i, position: 'relative',
                     }}>
                       {a}
                     </div>
@@ -167,32 +280,11 @@ export default function Footer() {
                 />
               </Link>
 
-              {/* Subscribe row */}
-              <div style={{ display: 'flex', gap: 8, maxWidth: 360 }}>
-                <input
-                  type="email"
-                  className="field"
-                  placeholder="Enter your email here"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  style={{ flex: 1, fontSize: 13, padding: '10px 14px' }}
-                />
-                <button
-                  onClick={() => {}}
-                  style={{
-                    width: 38, height: 38, borderRadius: 10,
-                    background: 'var(--blue)', border: 'none',
-                    color: '#fff', cursor: 'pointer', fontSize: 16,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
-                  →
-                </button>
-              </div>
+              {/* Subscribe */}
+              <SubscribeRow />
             </div>
 
-            {/* Right — Get Started form */}
+            {/* Right — Get Started */}
             <GetStartedForm />
           </div>
         </div>
@@ -201,39 +293,23 @@ export default function Footer() {
       {/* ── Nav grid ── */}
       <div className="container" style={{ padding: '40px 24px 28px' }}>
         <div className="ft-nav-grid">
-          <FooterCol title="Help centre"          links={[{ title: 'Knowledge Hub', href: '/knowledge-hub/' }, { title: 'Free Tools', href: '/free-tools/' }, { title: 'About Us', href: '/about-us/' }, { title: 'Contact', href: '/contact/' }]} />
-          <FooterCol title="Talk to support"      links={[{ title: 'Book Strategy Call', href: '/book-strategy-call/' }, { title: 'Email Us', href: 'mailto:info@securityblogs.com.au' }, { title: 'Client responds', href: '/contact/' }]} />
-          <FooterCol title="SEO & AI Services"    links={services.slice(0, 4).map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
-          <FooterCol title="Publish With Us"      links={publishWithUs.slice(0, 4)} />
-          <FooterCol title="Pricing"              links={[{ title: 'Pricing Guidelines', href: '/pricing-guidelines/' }, { title: 'Advertise', href: '/publish-with-us/advertise/' }, { title: 'Backlink Packages', href: '/publish-with-us/backlink-packages/' }]} />
+          <FooterCol title="Help centre"       links={[{ title: 'Knowledge Hub', href: '/knowledge-hub/' }, { title: 'Free Tools', href: '/free-tools/' }, { title: 'About Us', href: '/about-us/' }, { title: 'Contact', href: '/contact/' }]} />
+          <FooterCol title="Talk to support"   links={[{ title: 'Book Strategy Call', href: '/book-strategy-call/' }, { title: 'Email Us', href: 'mailto:info@securityblogs.com.au' }, { title: 'Client responds', href: '/contact/' }]} />
+          <FooterCol title="SEO & AI Services" links={services.slice(0, 4).map((s) => ({ title: s.title, href: `/services/${s.slug}/` }))} />
+          <FooterCol title="Publish With Us"   links={publishWithUs.slice(0, 4)} />
+          <FooterCol title="Pricing"           links={[{ title: 'Pricing Guidelines', href: '/pricing-guidelines/' }, { title: 'Advertise', href: '/publish-with-us/advertise/' }, { title: 'Backlink Packages', href: '/publish-with-us/backlink-packages/' }]} />
         </div>
       </div>
 
       {/* ── Social + contact ── */}
       <div style={{ borderTop: '1px solid var(--line)', padding: '16px 24px' }}>
-        <div className="container" style={{
-          display: 'flex', flexWrap: 'wrap', gap: 14,
-          alignItems: 'center',
-        }}>
-          <a href="mailto:info@securityblogs.com.au" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>
-            ✉ info@securityblogs.com.au
-          </a>
-          <a href="tel:+61411212418" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>
-            ✆ +61 411 212 418
-          </a>
+        <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center' }}>
+          <a href="mailto:info@securityblogs.com.au" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>✉ info@securityblogs.com.au</a>
+          <a href="tel:+61411212418" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>✆ +61 411 212 418</a>
           <div style={{ display: 'flex', gap: 6, marginLeft: 'auto' }}>
             {socials.map(({ name, href, Icon }) => (
-              <a
-                key={name} href={href}
-                target="_blank" rel="noreferrer noopener"
-                aria-label={name} title={name}
-                style={{
-                  width: 30, height: 30, borderRadius: 8,
-                  border: '1px solid var(--line)', background: 'var(--bg-card)',
-                  display: 'grid', placeItems: 'center', color: 'var(--text)',
-                  transition: 'border-color 0.15s, color 0.15s',
-                }}
-              >
+              <a key={name} href={href} target="_blank" rel="noreferrer noopener" aria-label={name} title={name}
+                style={{ width: 30, height: 30, borderRadius: 8, border: '1px solid var(--line)', background: 'var(--bg-card)', display: 'grid', placeItems: 'center', color: 'var(--text)', transition: 'border-color 0.15s, color 0.15s' }}>
                 <Icon size={13} />
               </a>
             ))}
@@ -243,16 +319,12 @@ export default function Footer() {
 
       {/* ── Copyright ── */}
       <div style={{ borderTop: '1px solid var(--line)', padding: '14px 24px' }}>
-        <div className="container" style={{
-          display: 'flex', flexWrap: 'wrap', gap: 14,
-          justifyContent: 'space-between', alignItems: 'center',
-          fontSize: 12.5, color: 'var(--text-dim)',
-        }}>
+        <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, justifyContent: 'space-between', alignItems: 'center', fontSize: 12.5, color: 'var(--text-dim)' }}>
           <span>© {new Date().getFullYear()} SecurityBlogs. All rights reserved.</span>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-            <Link href="/terms-of-service/"    style={{ color: 'var(--text-dim)' }}>Terms and Conditions</Link>
-            <Link href="/privacy-policy/"      style={{ color: 'var(--text-dim)' }}>Privacy Policy</Link>
-            <Link href="/content-guidelines/"  style={{ color: 'var(--text-dim)' }}>Content Guidelines</Link>
+            <Link href="/terms-of-service/"   style={{ color: 'var(--text-dim)' }}>Terms and Conditions</Link>
+            <Link href="/privacy-policy/"     style={{ color: 'var(--text-dim)' }}>Privacy Policy</Link>
+            <Link href="/content-guidelines/" style={{ color: 'var(--text-dim)' }}>Content Guidelines</Link>
           </div>
         </div>
       </div>
@@ -285,11 +357,7 @@ export default function Footer() {
 function FooterCol({ title, links }: { title: string; links: { title: string; href: string }[] }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <strong style={{
-        fontSize: 12, fontFamily: 'var(--font-mono)',
-        letterSpacing: '0.08em', textTransform: 'uppercase',
-        color: 'var(--text-dim)', marginBottom: 2,
-      }}>
+      <strong style={{ fontSize: 12, fontFamily: 'var(--font-mono)', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-dim)', marginBottom: 2 }}>
         {title}
       </strong>
       {links.map((l) => (

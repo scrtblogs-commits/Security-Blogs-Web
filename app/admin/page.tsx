@@ -5,54 +5,75 @@ import Link from 'next/link'
 
 export default async function AdminDashboard() {
   await requireAdminAuth()
-  const { stats: leadStats, leads: recent } = queryLeads({ limit: 6 })
-  const blogPosts = getBlogPosts()
-  const publishedPosts = blogPosts.filter(p => p.published).length
+  const { stats: ls, leads: recent } = queryLeads({ limit: 6 })
+  const posts         = getBlogPosts()
+  const publishedPosts = posts.filter(p => p.published).length
 
   const quickLinks = [
-    { icon: '⚙️', label: 'Site Settings',  href: '/admin/site-settings',  desc: 'Name, email, CTAs' },
-    { icon: '🏠', label: 'Homepage',        href: '/admin/homepage',        desc: 'Hero, stats' },
-    { icon: '🛠️', label: 'Services',        href: '/admin/services',        desc: '8 service cards' },
-    { icon: '❓', label: 'FAQs',            href: '/admin/faqs',            desc: 'Q&A section' },
-    { icon: '⭐', label: 'Testimonials',    href: '/admin/testimonials',    desc: 'Client reviews' },
-    { icon: '💰', label: 'Pricing',         href: '/admin/pricing',         desc: 'All price tables' },
-    { icon: '📝', label: 'Blog Posts',      href: '/admin/blog',            desc: `${blogPosts.length} posts` },
-    { icon: '📨', label: 'Submissions',     href: '/admin/leads',           desc: `${leadStats.total} leads` },
+    { icon: '⚙️', label: 'Site Settings',  href: '/admin/site-settings',  desc: 'Name, contact & CTAs',     color: '#6366f1', bg: '#eef2ff' },
+    { icon: '🏠', label: 'Homepage',        href: '/admin/homepage',        desc: 'Hero, stats & content',    color: '#0891b2', bg: '#ecfeff' },
+    { icon: '🛠️', label: 'Services',        href: '/admin/services',        desc: '8 service descriptions',   color: '#059669', bg: '#ecfdf5' },
+    { icon: '❓', label: 'FAQs',            href: '/admin/faqs',            desc: 'Questions & answers',      color: '#d97706', bg: '#fffbeb' },
+    { icon: '⭐', label: 'Testimonials',    href: '/admin/testimonials',    desc: 'Client reviews',           color: '#7c3aed', bg: '#f5f3ff' },
+    { icon: '💰', label: 'Pricing',         href: '/admin/pricing',         desc: 'All pricing tables',       color: '#dc2626', bg: '#fef2f2' },
+    { icon: '📝', label: 'Blog Posts',      href: '/admin/blog',            desc: `${posts.length} articles`, color: '#0369a1', bg: '#f0f9ff' },
+    { icon: '📨', label: 'Submissions',     href: '/admin/leads',           desc: `${ls.new} unread leads`,   color: '#1e5fe0', bg: '#eff4ff' },
   ]
 
   return (
-    <div style={{ padding: '28px 32px', maxWidth: 1100 }}>
-      {/* Header */}
+    <div style={{ padding: '32px 36px', maxWidth: 1060 }}>
+      {/* Welcome header */}
+      <div style={{
+        background: 'linear-gradient(135deg,#1e3a6e 0%,#1e5fe0 60%,#3b82f6 100%)',
+        borderRadius: 18, padding: '26px 30px', marginBottom: 28, position: 'relative', overflow: 'hidden',
+      }}>
+        <div style={{ position: 'absolute', top: -30, right: -30, width: 200, height: 200, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', bottom: -50, right: 80, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
+        <div style={{ position: 'relative' }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 6 }}>
+            SecurityBlogs Admin
+          </div>
+          <h1 style={{ fontSize: 26, fontWeight: 800, color: '#fff', margin: '0 0 6px', lineHeight: 1.2 }}>
+            Good day 👋
+          </h1>
+          <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', margin: 0 }}>
+            You have <strong style={{ color: '#fff' }}>{ls.new} new lead{ls.new !== 1 ? 's' : ''}</strong> waiting for follow-up.
+          </p>
+        </div>
+      </div>
+
+      {/* Stat cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 28 }}>
+        <StatCard label="Total Leads"     value={ls.total}      icon="📨" color="#1e5fe0" bg="linear-gradient(135deg,#eff4ff,#dbeafe)" />
+        <StatCard label="New Leads"       value={ls.new}        icon="🆕" color="#059669" bg="linear-gradient(135deg,#ecfdf5,#d1fae5)" />
+        <StatCard label="In Progress"     value={ls.contacted}  icon="📞" color="#d97706" bg="linear-gradient(135deg,#fffbeb,#fef3c7)" />
+        <StatCard label="Published Posts" value={publishedPosts} icon="📝" color="#7c3aed" bg="linear-gradient(135deg,#f5f3ff,#ede9fe)" />
+      </div>
+
+      {/* Quick access grid */}
       <div style={{ marginBottom: 28 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#111827', margin: 0 }}>Dashboard</h1>
-        <p style={{ fontSize: 14, color: '#6b7280', marginTop: 4 }}>Welcome back. Here&apos;s what&apos;s happening on SecurityBlogs.</p>
-      </div>
-
-      {/* Stats row */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: 14, marginBottom: 32 }}>
-        <StatCard label="Total Leads"     value={leadStats.total}     color="#1e5fe0" bg="#eff4ff" icon="📨" />
-        <StatCard label="New Leads"       value={leadStats.new}       color="#15803d" bg="#f0fdf4" icon="🆕" />
-        <StatCard label="Contacted"       value={leadStats.contacted} color="#b45309" bg="#fffbeb" icon="📞" />
-        <StatCard label="Published Posts" value={publishedPosts}      color="#7c3aed" bg="#f5f3ff" icon="📝" />
-      </div>
-
-      {/* Quick Actions */}
-      <div style={{ marginBottom: 32 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: '#374151', textTransform: 'uppercase', letterSpacing: '0.07em', marginBottom: 14 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 14 }}>
           Quick Access
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
           {quickLinks.map(q => (
             <Link key={q.href} href={q.href} style={{
               display: 'flex', alignItems: 'center', gap: 12,
-              background: '#fff', borderRadius: 12, border: '1px solid #e8ecf2',
+              background: '#fff', borderRadius: 14, border: '1.5px solid #e2e8f0',
               padding: '14px 16px', textDecoration: 'none',
-              transition: 'border-color 0.15s, box-shadow 0.15s',
+              boxShadow: '0 1px 3px rgba(15,23,42,0.04)',
+              transition: 'transform 0.15s, box-shadow 0.15s',
             }}>
-              <span style={{ fontSize: 22, lineHeight: 1 }}>{q.icon}</span>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: '#111827' }}>{q.label}</div>
-                <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 1 }}>{q.desc}</div>
+              <div style={{
+                width: 40, height: 40, borderRadius: 10, background: q.bg,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 18, flexShrink: 0,
+              }}>
+                {q.icon}
+              </div>
+              <div style={{ overflow: 'hidden' }}>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: '#0f172a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.label}</div>
+                <div style={{ fontSize: 11.5, color: '#94a3b8', marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.desc}</div>
               </div>
             </Link>
           ))}
@@ -60,76 +81,90 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Recent submissions */}
-      <div style={{ background: '#fff', borderRadius: 14, border: '1px solid #e8ecf2', overflow: 'hidden' }}>
-        <div style={{ padding: '16px 20px', borderBottom: '1px solid #e8ecf2', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8f9fb' }}>
-          <h2 style={{ fontSize: 14, fontWeight: 700, color: '#111827', margin: 0 }}>Recent Submissions</h2>
-          <Link href="/admin/leads" style={{ fontSize: 13, color: '#1e5fe0', textDecoration: 'none', fontWeight: 600 }}>
-            View all →
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.09em', textTransform: 'uppercase' }}>
+            Recent Submissions
+          </div>
+          <Link href="/admin/leads" style={{ fontSize: 13, color: '#1e5fe0', textDecoration: 'none', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 4 }}>
+            View all <span>→</span>
           </Link>
         </div>
 
-        {recent.length === 0 ? (
-          <div style={{ padding: '40px 20px', textAlign: 'center', color: '#9ca3af', fontSize: 14 }}>
-            No submissions yet.
-          </div>
-        ) : (
-          <div style={{ overflowX: 'auto' }}>
+        <div style={{ background: '#fff', borderRadius: 16, border: '1.5px solid #e2e8f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(15,23,42,0.04)' }}>
+          {recent.length === 0 ? (
+            <div style={{ padding: '48px 20px', textAlign: 'center' }}>
+              <div style={{ fontSize: 36, marginBottom: 10 }}>📭</div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: '#475569', marginBottom: 4 }}>No submissions yet</div>
+              <div style={{ fontSize: 13, color: '#94a3b8' }}>Form submissions will appear here.</div>
+            </div>
+          ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid #e8ecf2' }}>
-                  {['Date', 'Name', 'Email', 'Service', 'Status'].map(h => (
-                    <th key={h} style={{ padding: '10px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
+                <tr style={{ background: '#f8fafc', borderBottom: '1.5px solid #e2e8f0' }}>
+                  {['Name', 'Email', 'Service', 'Date', 'Status', ''].map(h => (
+                    <th key={h} style={{ padding: '11px 18px', textAlign: 'left', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.07em', whiteSpace: 'nowrap' }}>{h}</th>
                   ))}
-                  <th style={{ padding: '10px 16px' }} />
                 </tr>
               </thead>
               <tbody>
-                {recent.map(lead => (
-                  <tr key={lead.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
-                    <td style={{ padding: '11px 16px', color: '#6b7280', whiteSpace: 'nowrap' }}>
-                      {new Date(lead.createdAt).toLocaleDateString('en-AU', { day: '2-digit', month: 'short' })}
+                {recent.map((lead, i) => (
+                  <tr key={lead.id} style={{ borderBottom: i < recent.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
+                    <td style={{ padding: '13px 18px', fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap' }}>{lead.name}</td>
+                    <td style={{ padding: '13px 18px', color: '#475569' }}>{lead.email}</td>
+                    <td style={{ padding: '13px 18px', color: '#64748b' }}>{lead.service ?? '—'}</td>
+                    <td style={{ padding: '13px 18px', color: '#94a3b8', whiteSpace: 'nowrap', fontSize: 12 }}>
+                      {new Date(lead.createdAt).toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: '2-digit' })}
                     </td>
-                    <td style={{ padding: '11px 16px', fontWeight: 600, color: '#111827', whiteSpace: 'nowrap' }}>{lead.name}</td>
-                    <td style={{ padding: '11px 16px', color: '#374151' }}>{lead.email}</td>
-                    <td style={{ padding: '11px 16px', color: '#374151' }}>{lead.service ?? '—'}</td>
-                    <td style={{ padding: '11px 16px' }}><StatusBadge status={lead.status} /></td>
-                    <td style={{ padding: '11px 16px' }}>
-                      <Link href={`/admin/leads/${lead.id}`} style={{ fontSize: 12, color: '#1e5fe0', textDecoration: 'none', fontWeight: 600 }}>View →</Link>
+                    <td style={{ padding: '13px 18px' }}><StatusBadge status={lead.status} /></td>
+                    <td style={{ padding: '13px 18px' }}>
+                      <Link href={`/admin/leads/${lead.id}`} style={{
+                        fontSize: 12, color: '#1e5fe0', textDecoration: 'none', fontWeight: 600,
+                        padding: '5px 10px', background: '#eff4ff', borderRadius: 6,
+                      }}>
+                        View →
+                      </Link>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )
 }
 
-function StatCard({ label, value, color, bg, icon }: { label: string; value: number; color: string; bg: string; icon: string }) {
+function StatCard({ label, value, icon, color, bg }: { label: string; value: number; icon: string; color: string; bg: string }) {
   return (
-    <div style={{ background: bg, borderRadius: 12, padding: '18px 20px', border: `1px solid ${color}22` }}>
-      <div style={{ fontSize: 20, marginBottom: 6 }}>{icon}</div>
-      <div style={{ fontSize: 28, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
-      <div style={{ fontSize: 13, color: '#6b7280', marginTop: 4, fontWeight: 500 }}>{label}</div>
+    <div style={{
+      background: bg, borderRadius: 14, padding: '20px 22px',
+      border: `1.5px solid ${color}20`,
+      boxShadow: '0 1px 4px rgba(15,23,42,0.04)',
+    }}>
+      <div style={{ fontSize: 22, marginBottom: 10 }}>{icon}</div>
+      <div style={{ fontSize: 32, fontWeight: 800, color, lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 13, color: '#64748b', marginTop: 6, fontWeight: 500 }}>{label}</div>
     </div>
   )
 }
 
 export function StatusBadge({ status }: { status: string }) {
-  const MAP: Record<string, { bg: string; color: string; label: string }> = {
-    new:       { bg: '#dcfce7', color: '#15803d', label: 'New' },
-    contacted: { bg: '#fef9c3', color: '#854d0e', label: 'Contacted' },
-    closed:    { bg: '#f1f5f9', color: '#475569', label: 'Closed' },
+  const MAP: Record<string, { bg: string; color: string; dot: string; label: string }> = {
+    new:       { bg: '#dcfce7', color: '#15803d', dot: '#22c55e', label: 'New' },
+    contacted: { bg: '#fef9c3', color: '#854d0e', dot: '#eab308', label: 'Contacted' },
+    closed:    { bg: '#f1f5f9', color: '#475569', dot: '#94a3b8', label: 'Closed' },
   }
   const s = MAP[status] ?? MAP.new
   return (
     <span style={{
-      display: 'inline-block', padding: '3px 9px', borderRadius: 99,
+      display: 'inline-flex', alignItems: 'center', gap: 5,
+      padding: '4px 10px', borderRadius: 99,
       background: s.bg, color: s.color,
-      fontSize: 11, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase',
+      fontSize: 11.5, fontWeight: 700, letterSpacing: '0.03em',
     }}>
+      <span style={{ width: 5, height: 5, borderRadius: '50%', background: s.dot, flexShrink: 0, display: 'inline-block' }} />
       {s.label}
     </span>
   )
