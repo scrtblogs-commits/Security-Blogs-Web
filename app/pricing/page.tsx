@@ -6,6 +6,7 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import MagneticButton from '@/components/ui/MagneticButton'
+import AdPlacementCards from './AdPlacementCards'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -611,23 +612,7 @@ export default function PricingPage() {
           />
 
           {/* Individual placement cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16, marginBottom: 40 }}>
-            {adPlacements.map((p) => (
-              <Reveal key={p.label}>
-                <a href={p.href} style={{ textDecoration: 'none' }}>
-                  <div className="card" style={{ padding: '20px 22px', height: '100%', transition: 'transform 0.2s ease, box-shadow 0.2s ease' }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)'; (e.currentTarget as HTMLDivElement).style.boxShadow = '0 8px 32px -8px rgba(18,42,86,0.14)'; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.transform = ''; (e.currentTarget as HTMLDivElement).style.boxShadow = ''; }}
-                  >
-                    <div style={{ fontSize: 26, marginBottom: 10 }}>{p.icon}</div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: '#0f2244', marginBottom: 4 }}>{p.label}</div>
-                    <div style={{ fontSize: 13, color: '#46546e', marginBottom: 10, lineHeight: 1.55 }}>{p.desc}</div>
-                    <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--blue)', fontFamily: 'var(--font-display)' }}>{p.price}</div>
-                  </div>
-                </a>
-              </Reveal>
-            ))}
-          </div>
+          <AdPlacementCards placements={adPlacements} />
 
           {/* Bundle packages */}
           <SectionHead eyebrow="Bundle packages" title="Save more with a monthly bundle." sub="Combine newsletter, banners and editorial into one recurring campaign." />
