@@ -58,10 +58,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-AU">
       <head>
         <JsonLd data={siteSchema} />
+        {/* Theme init must run before paint to avoid flash — placed in <head> so React 19 doesn't warn */}
+        <Script src="/theme-init.js" strategy="beforeInteractive" />
       </head>
       <body>
-        {/* Theme init — external src avoids React 19 inline-script warning */}
-        <Script src="/theme-init.js" strategy="beforeInteractive" />
         {/* Google Tag Manager */}
         <Script id="gtm-head" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: gtmHead }} />
         <noscript dangerouslySetInnerHTML={{ __html: gtmNoscript }} />
