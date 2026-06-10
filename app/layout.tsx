@@ -40,10 +40,7 @@ export const metadata: Metadata = {
   },
 }
 
-// Google Tag Manager — container ID GTM-KS9SXB2K. The head snippet must
-// be the FIRST script in <head> so any other script can rely on dataLayer
-// being present. The noscript iframe must be the FIRST element in <body>
-// so it fires for users who have JS disabled.
+// Google Tag Manager — container ID GTM-KS9SXB2K.
 const gtmHead = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -52,14 +49,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 const gtmNoscript = `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS9SXB2K" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
 
+// Inline theme-init: reads localStorage/prefers-color-scheme synchronously before
+// first paint. Inlined so no network round-trip is needed and FOUC is impossible.
+const themeInit = `(function(){try{var t=localStorage.getItem('sg-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-AU">
       <head>
         <JsonLd data={siteSchema} />
-        {/* Theme init must run before paint to avoid flash — placed in <head> so React 19 doesn't warn */}
-        <Script src="/theme-init.js" strategy="beforeInteractive" />
+        {/*
+          dangerouslySetInnerHTML on a <script> inside <head> is the only way to get
+          a synchronous theme-init in React 19 App Router without the "Script tag"
+          console warning. React 19 warns about <script> elements rendered by
+          next/script (even with strategy="beforeInteractive") because it sees the
+          component in the reconciler. A raw <script dangerouslySetInnerHTML> placed
+          directly inside <head> JSX is treated as a head resource and does not warn.
+        */}
+        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body>
         {/* Google Tag Manager */}
