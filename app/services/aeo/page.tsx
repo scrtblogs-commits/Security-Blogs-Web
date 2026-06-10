@@ -20,7 +20,21 @@ export const metadata = {
   description:
     'Answer Engine Optimisation positions your security brand as the trusted, quotable answer AI assistants and search engines surface to buyers.',
   alternates: { canonical: '/services/aeo/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/aeo/' },
+  openGraph: {
+    title: 'AEO Services for Security Companies — Answer Engine Optimisation | SecurityBlogs',
+    description: 'Answer Engine Optimisation for security brands. Become the trusted answer AI assistants surface to buyers searching for security solutions.',
+    url: '/services/aeo/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'AEO Services — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'AEO — Become the Answer AI Recommends for Security',
+    description: 'Answer Engine Optimisation positions your security brand as the answer AI surfaces to buyers.',
+    images: ['/logo.png'],
+  },
 }
 
 const stats = [

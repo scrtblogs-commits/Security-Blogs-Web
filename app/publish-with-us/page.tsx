@@ -14,11 +14,25 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Publish With Us',
+  title: 'Publish With Us — Security Guest Posting & Sponsored Content',
   description:
     'Reach security-industry buyers, integrators and decision-makers. Guest posts, sponsored content, product promotion, press releases, backlinks and advertising on SecurityBlogs.',
   alternates: { canonical: '/publish-with-us/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/' },
+  openGraph: {
+    title: 'Publish With SecurityBlogs — Security Guest Posting & Sponsored Content',
+    description: 'Reach security industry buyers and decision-makers with guest posting, sponsored posts, backlinks and product promotion on SecurityBlogs Australia.',
+    url: '/publish-with-us/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Publish With SecurityBlogs Australia' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Publish With SecurityBlogs — Guest Posting & Sponsored Content',
+    description: 'Reach security industry buyers with guest posts, sponsored content and backlinks on SecurityBlogs.',
+    images: ['/logo.png'],
+  },
 }
 
 const icons: Record<string, string> = {

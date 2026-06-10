@@ -21,7 +21,21 @@ export const metadata = {
   description:
     'Full Google Business Profile setup, verification, optimisation and management for security businesses. Rank #1 on Google Maps and dominate every local search in your service area.',
   alternates: { canonical: '/services/gmb-profile/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/gmb-profile/' },
+  openGraph: {
+    title: 'Google Business Profile Setup & Local SEO for Security Companies | SecurityBlogs',
+    description: 'Full GBP setup, verification and management for security businesses. Rank #1 in Google Maps local pack and dominate every local search in your service area.',
+    url: '/services/gmb-profile/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'GMB Profile & Local SEO — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Google Business Profile Setup & Local SEO for Security Companies',
+    description: 'Full GBP setup, verification and management. Rank #1 in Google Maps local pack.',
+    images: ['/logo.png'],
+  },
 }
 
 const capabilities = [

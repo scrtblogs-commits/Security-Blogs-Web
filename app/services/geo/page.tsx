@@ -21,7 +21,21 @@ export const metadata = {
   description:
     'GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.',
   alternates: { canonical: '/services/geo/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/geo/' },
+  openGraph: {
+    title: 'GEO Services for Security Brands — Generative Engine Optimisation | SecurityBlogs',
+    description: 'GEO Services: build entity authority so AI platforms recognise, trust and recommend your security brand across the entire AI ecosystem.',
+    url: '/services/geo/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'GEO Services — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: "GEO — Build Your Security Brand's AI Knowledge Graph",
+    description: 'GEO: build entity authority so AI platforms recognise and recommend your security brand.',
+    images: ['/logo.png'],
+  },
 }
 
 const capabilities = [

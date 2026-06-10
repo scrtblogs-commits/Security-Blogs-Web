@@ -20,7 +20,21 @@ export const metadata = {
   description:
     'AI Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
   alternates: { canonical: '/services/aio/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/aio/' },
+  openGraph: {
+    title: 'AIO Services for Security Brands — AI Optimisation | SecurityBlogs',
+    description: 'Get cited by ChatGPT, Perplexity, Gemini and every AI answer engine with our specialist AIO service for security companies.',
+    url: '/services/aio/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'AIO Services — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'AIO — Get Your Security Brand Cited by Every AI Platform',
+    description: 'AI Optimisation: get cited by ChatGPT, Perplexity, Gemini and every AI answer engine.',
+    images: ['/logo.png'],
+  },
 }
 
 const capabilities = [

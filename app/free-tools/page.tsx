@@ -15,7 +15,21 @@ export const metadata = {
   description:
     'Free AI visibility tools for security brands — check if AI cites you, score your readiness, and follow step-by-step Google & Bing ranking guides. No login required.',
   alternates: { canonical: '/free-tools/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/free-tools/' },
+  openGraph: {
+    title: 'Free AI Visibility & SEO Tools for Security Companies | SecurityBlogs',
+    description: 'Free tools: check if AI cites your security brand, score your AI visibility readiness and get step-by-step Google & Bing ranking guides. No login needed.',
+    url: '/free-tools/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Free AI Visibility Tools — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Free AI Visibility Tools for Security Brands | SecurityBlogs',
+    description: 'Check if AI cites you, score your readiness and get ranking guides — free, no login.',
+    images: ['/logo.png'],
+  },
 }
 
 export default function FreeToolsPage() {

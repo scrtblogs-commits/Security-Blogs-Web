@@ -10,10 +10,24 @@ import JsonLd from '@/components/JsonLd'
 import { aboutPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'About Us',
-  description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the founder behind SecurityBlogs.',
+  title: 'About Us — Security Blogs Australia',
+  description: 'A specialist AI visibility and SEO agency built exclusively for the security industry. Meet the founder behind SecurityBlogs Australia.',
   alternates: { canonical: '/about-us/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/about-us/' },
+  openGraph: {
+    title: 'About SecurityBlogs Australia — Specialist Security Digital Marketing Agency',
+    description: 'SecurityBlogs is a specialist AI visibility and SEO agency built exclusively for the security industry, serving clients across AU, US, UK, UAE and SG.',
+    url: '/about-us/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'About SecurityBlogs Australia' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'About SecurityBlogs Australia — Specialist Security Marketing Agency',
+    description: 'Specialist AI visibility and SEO agency built exclusively for the security industry.',
+    images: ['/logo.png'],
+  },
 }
 
 // Single named founder per Phase B of seo-final-2026-05 (placeholder team

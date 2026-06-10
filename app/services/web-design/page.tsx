@@ -21,7 +21,21 @@ export const metadata = {
   description:
     'We build AI-optimised, schema-rich, conversion-focused security websites that rank on Google and Bing — and get cited by ChatGPT, Perplexity and every AI platform.',
   alternates: { canonical: '/services/web-design/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/web-design/' },
+  openGraph: {
+    title: 'AI-Ready Security Website Design | SecurityBlogs Australia',
+    description: 'Security websites built to rank on Google, get cited by AI, and convert visitors. Schema-rich, fast, conversion-focused web design for security companies.',
+    url: '/services/web-design/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'AI-Ready Security Website Design — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'AI-Ready Security Website Design | SecurityBlogs',
+    description: 'Schema-rich, conversion-focused security websites that rank on Google and get cited by AI.',
+    images: ['/logo.png'],
+  },
 }
 
 const bento = [

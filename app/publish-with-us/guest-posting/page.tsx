@@ -10,11 +10,25 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Guest Posting · Publish With Us',
+  title: 'Security Guest Posting — Publish With SecurityBlogs',
   description:
-    'Submit an original guest article to SecurityBlogs. Minimum 800 words, up to 2 dofollow links, original content. Editors respond within 3 business days.',
+    'Submit an original security guest article to SecurityBlogs. Minimum 800 words, up to 2 dofollow links, original content. Editors respond within 3 business days.',
   alternates: { canonical: '/publish-with-us/guest-posting/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/publish-with-us/guest-posting/' },
+  openGraph: {
+    title: 'Security Guest Posting — Publish on SecurityBlogs Australia',
+    description: 'Guest posting on SecurityBlogs: reach security industry buyers, integrators and decision-makers. Original security articles, up to 2 dofollow links.',
+    url: '/publish-with-us/guest-posting/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Security Guest Posting — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Security Guest Posting | SecurityBlogs Australia',
+    description: 'Publish a security guest article on SecurityBlogs — reach industry buyers with up to 2 dofollow links.',
+    images: ['/logo.png'],
+  },
 }
 
 const chips = ['Min 800 words', 'Max 2 dofollow links', '100% original content', 'Byline credited', 'Editor review in 3 days']

@@ -24,7 +24,21 @@ export const metadata = {
   description:
     'High-converting Google Ads campaigns engineered for security buyers. 3.2× average ROAS, transparent reporting and conversion tracking built in.',
   alternates: { canonical: '/services/google-ads/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/google-ads/' },
+  openGraph: {
+    title: 'Google Ads for Security Companies — 3.2× ROAS | SecurityBlogs',
+    description: 'High-converting Google Ads campaigns built exclusively for security businesses. Specialist keyword targeting, conversion tracking and transparent ROAS reporting.',
+    url: '/services/google-ads/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Google Ads for Security Companies — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Google Ads for Security Companies — 3.2× ROAS',
+    description: 'High-converting Google Ads campaigns built for security businesses with specialist keyword targeting.',
+    images: ['/logo.png'],
+  },
 }
 
 function MetricTile({ label, value, delta, positive = true }: { label: string; value: string; delta: string; positive?: boolean }) {

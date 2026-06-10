@@ -336,6 +336,30 @@ export function jobPostingSchema(opts: {
   return node
 }
 
+// WebPage node — used on key pages to declare the page type, its relationship
+// to the WebSite, and optional description for richer search appearance.
+export function webPageSchema(opts: {
+  path: string
+  name: string
+  description?: string
+  datePublished?: string
+  dateModified?: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${SITE_URL}${opts.path}#webpage`,
+    url: `${SITE_URL}${opts.path}`,
+    name: opts.name,
+    ...(opts.description ? { description: opts.description } : {}),
+    ...(opts.datePublished ? { datePublished: opts.datePublished } : {}),
+    ...(opts.dateModified ? { dateModified: opts.dateModified } : {}),
+    isPartOf: { '@id': `${SITE_URL}/#website` },
+    about: { '@id': `${SITE_URL}/#organization` },
+    inLanguage: 'en-AU',
+  }
+}
+
 // Generic ItemList — used on overview/index pages (services, knowledge hub,
 // publish-with-us, free-tools) to enumerate child items so search engines
 // can model the section structure.

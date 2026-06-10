@@ -11,10 +11,24 @@ import { itemListSchema } from '@/lib/schema'
 import { knowledgeHub } from '@/lib/site'
 
 export const metadata = {
-  title: 'Knowledge Hub',
+  title: 'Knowledge Hub — Security SEO & AI Visibility Guides',
   description: 'Guides, research, news and definitions on AI visibility, SEO and growth for the security industry — all in one place.',
   alternates: { canonical: '/knowledge-hub/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/' },
+  openGraph: {
+    title: 'Security SEO & AI Visibility Knowledge Hub | SecurityBlogs',
+    description: 'Guides, research and definitions on AI visibility, Security SEO, AEO and GEO for security industry brands — all in one place.',
+    url: '/knowledge-hub/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'SecurityBlogs Knowledge Hub' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Security SEO & AI Visibility Knowledge Hub | SecurityBlogs',
+    description: 'Guides on AI visibility, Security SEO, AEO and GEO for security industry brands.',
+    images: ['/logo.png'],
+  },
 }
 
 const hubIcons: Record<string, { icon: string; color: string; desc: string }> = {

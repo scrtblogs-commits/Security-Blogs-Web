@@ -22,7 +22,21 @@ export const metadata = {
   description:
     "From 'CCTV installation Melbourne' to 'enterprise access control systems' — we get your security business to the top of Google and keep it there.",
   alternates: { canonical: '/services/security-seo/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/security-seo/' },
+  openGraph: {
+    title: 'Security SEO Services for Security Companies | SecurityBlogs',
+    description: "SEO built exclusively for security businesses. Rank #1 for high-intent security keywords on Google with our specialist Security SEO service.",
+    url: '/services/security-seo/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Security SEO Services — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Security SEO — Rank #1 for Every Security Keyword',
+    description: "SEO built exclusively for security businesses. Rank #1 for high-intent security keywords on Google.",
+    images: ['/logo.png'],
+  },
 }
 
 const capabilities = [

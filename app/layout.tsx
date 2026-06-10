@@ -12,28 +12,56 @@ import { siteSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   metadataBase: new URL('https://securityblogs.com.au'),
   title: {
-    default: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
-    template: '%s | SecurityBlogs',
+    default: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
+    template: '%s | SecurityBlogs Australia',
   },
   description:
-    'AI visibility, SEO and paid media built exclusively for the security industry. Rank #1 on Google and get cited by ChatGPT, Perplexity, Gemini and every AI answer engine.',
+    'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
   keywords: [
+    'Security Blogs',
+    'Security Blogs Australia',
     'security SEO',
+    'SEO for security companies',
     'AI visibility',
     'AIO',
-    'AEO',
-    'GEO',
-    'security marketing',
+    'AEO services',
+    'GEO services',
+    'security guest posting',
+    'security digital marketing',
     'Google Ads security',
+    'AI visibility for security brands',
   ],
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
+    title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
     description:
-      'Be the answer AI gives. AI visibility, SEO and paid media for security brands.',
+      'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
     url: '/',
-    siteName: 'SecurityBlogs',
+    siteName: 'SecurityBlogs Australia',
     type: 'website',
+    locale: 'en_AU',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'SecurityBlogs Australia — AI Visibility & SEO for Security Companies',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@securityblogs',
+    creator: '@securityblogs',
+    title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
+    description:
+      'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
+    images: ['/logo.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
   verification: {
     google: 'Raa890785NPKf-PneFnw5fMfDYIQWur4CLNb0q-wyvE',

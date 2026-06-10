@@ -10,10 +10,24 @@ import JsonLd from '@/components/JsonLd'
 import { contactPageSchema } from '@/lib/schema'
 
 export const metadata = {
-  title: 'Contact',
-  description: 'Get in touch with the AI visibility and SEO team built for the security industry. Response within 24 hours, 100% confidential.',
+  title: 'Contact SecurityBlogs — Get Your Free SEO & AI Visibility Audit',
+  description: 'Get in touch with the AI visibility and SEO team built for the security industry. Free audit, response within 24 hours, 100% confidential.',
   alternates: { canonical: '/contact/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/contact/' },
+  openGraph: {
+    title: 'Contact SecurityBlogs Australia — Free SEO & AI Visibility Audit',
+    description: 'Get your free AI visibility and SEO audit from the team built exclusively for security companies. Response within 24 hours.',
+    url: '/contact/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Contact SecurityBlogs Australia' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Contact SecurityBlogs — Free SEO & AI Visibility Audit',
+    description: 'Get your free audit from the AI visibility and SEO team built for security companies.',
+    images: ['/logo.png'],
+  },
 }
 
 const details = [

@@ -15,7 +15,21 @@ export const metadata = {
   description:
     'Complete pricing for every SecurityBlogs service: SEO, Google Ads, GMB Profile, sponsored posts, guest posting, backlink placements, product promotion, advertising and directory listings.',
   alternates: { canonical: '/pricing/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/pricing/' },
+  openGraph: {
+    title: 'SecurityBlogs Pricing — SEO, AI Visibility & Digital Marketing Packages',
+    description: 'Transparent pricing for every SecurityBlogs service: Security SEO, Google Ads, GMB Profile, guest posting, backlinks, sponsored posts and more.',
+    url: '/pricing/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'SecurityBlogs Pricing' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'SecurityBlogs Pricing — SEO & AI Visibility Packages',
+    description: 'Transparent pricing for Security SEO, Google Ads, GMB Profile, guest posting and more.',
+    images: ['/logo.png'],
+  },
 }
 
 /* ─── Marketing Services ───────────────────────────────────────────────── */

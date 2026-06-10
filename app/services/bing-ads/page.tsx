@@ -23,7 +23,21 @@ export const metadata = {
   description:
     'Microsoft Advertising campaigns that capture the B2B security buyers Google misses — lower CPCs, LinkedIn profile targeting and 41% of business decision-makers.',
   alternates: { canonical: '/services/bing-ads/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/bing-ads/' },
+  openGraph: {
+    title: 'Bing Ads for Security Companies — Lower CPC, Higher Intent | SecurityBlogs',
+    description: 'Microsoft Advertising campaigns for security businesses — reach B2B buyers Google misses with lower CPCs and LinkedIn profile targeting.',
+    url: '/services/bing-ads/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Bing Ads for Security Companies — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Bing Ads for Security Companies — 41% Lower CPC',
+    description: 'Microsoft Advertising campaigns for security businesses — reach B2B buyers Google misses.',
+    images: ['/logo.png'],
+  },
 }
 
 function MetricTile({ label, value, delta, positive = true }: { label: string; value: string; delta: string; positive?: boolean }) {

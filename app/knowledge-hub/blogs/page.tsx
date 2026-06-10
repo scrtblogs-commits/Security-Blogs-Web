@@ -6,10 +6,24 @@ import Reveal from '@/components/ui/Reveal'
 import BlogGrid from './BlogGrid'
 
 export const metadata = {
-  title: 'Blog · Knowledge Hub',
-  description: 'The SecurityBlogs blog — tactical reads on SEO, AIO, AEO, GEO and paid advertising for security industry brands.',
+  title: 'Security Marketing & AI Visibility Blog | SecurityBlogs',
+  description: 'Tactical guides on Security SEO, AIO, AEO, GEO, AI Visibility and paid advertising for security industry brands.',
   alternates: { canonical: '/knowledge-hub/blogs/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/blogs/' },
+  openGraph: {
+    title: 'Security Marketing & AI Visibility Blog | SecurityBlogs Australia',
+    description: 'Tactical guides on Security SEO, AIO, AEO, GEO, AI Visibility and paid advertising — written for security industry brands.',
+    url: '/knowledge-hub/blogs/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'SecurityBlogs Blog' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Security Marketing & AI Visibility Blog | SecurityBlogs',
+    description: 'Tactical guides on Security SEO, AI Visibility, AEO and GEO for security brands.',
+    images: ['/logo.png'],
+  },
 }
 
 export default function BlogsPage() {

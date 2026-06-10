@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import MarqueeStrip from '@/components/ui/MarqueeStrip'
@@ -7,17 +9,78 @@ import CTABand from '@/components/ui/CTABand'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import Reveal from '@/components/ui/Reveal'
 import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
-import AIVisibilityScore from '@/components/ui/AIVisibilityScore'
-import { stats } from '@/lib/site'
+import JsonLd from '@/components/JsonLd'
+import { stats, services } from '@/lib/site'
 import { siteConfig } from '@/lib/siteConfig'
+import { faqSchema, webPageSchema, itemListSchema } from '@/lib/schema'
 import HeroAIIcons from './HeroAIIcons'
 import ScrollStackSection from './ScrollStackSection'
 import TestimonialsSection from './TestimonialsSection'
 import AIScoreWithVideo from './AIScoreWithVideo'
 
+export const metadata: Metadata = {
+  title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
+  description:
+    'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
+    description:
+      'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
+    url: '/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'SecurityBlogs Australia — AI Visibility & SEO for Security Companies',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
+    description:
+      'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
+    images: ['/logo.png'],
+  },
+  keywords: [
+    'Security Blogs',
+    'Security Blogs Australia',
+    'Security SEO',
+    'SEO for security companies',
+    'AEO services',
+    'GEO services',
+    'AI Visibility',
+    'security guest posting',
+    'security digital marketing',
+    'AI visibility for security brands',
+  ],
+}
+
 export default function HomePage() {
   return (
     <>
+      {/* Structured data */}
+      <JsonLd data={webPageSchema({
+        path: '/',
+        name: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
+        description: 'Security Blogs Australia helps security companies grow with SEO, AEO, GEO, AI Visibility, Guest Posting and Digital Marketing services.',
+      })} />
+      <JsonLd data={faqSchema(siteConfig.faqs)} />
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs Services',
+        path: '/',
+        items: services.map((s) => ({
+          name: s.title,
+          url: `/services/${s.slug}/`,
+          description: s.desc,
+        })),
+      })} />
+
       {/* ─────────────────────────────────────────
           1. HERO
           Left  → headline + buttons
@@ -117,7 +180,55 @@ export default function HomePage() {
       <LocalVisibilityCheck service="security companies" />
 
       {/* ─────────────────────────────────────────
-          9. FAQ
+          9. SERVICES HUB — keyword-rich internal links
+             to all major service pages (SEO)
+      ───────────────────────────────────────── */}
+      <section className="section" id="all-services" style={{ background: '#f8f9fb', paddingTop: 56, paddingBottom: 56 }}>
+        <div className="container">
+          <SectionHead
+            eyebrow="All Services"
+            title="Security Digital Marketing Services"
+            sub="Every service built exclusively for security companies — from Security SEO and AI Visibility to Google Ads and Guest Posting."
+          />
+          <nav aria-label="Service pages" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, marginTop: 32 }}>
+            {services.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/services/${s.slug}/`}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '13px 16px', borderRadius: 10,
+                  background: '#fff', border: '1px solid var(--line)',
+                  textDecoration: 'none', color: 'var(--text)',
+                  fontWeight: 600, fontSize: 14,
+                  transition: 'border-color 0.15s, box-shadow 0.15s',
+                }}
+              >
+                <span style={{ fontSize: 18 }}>{s.icon}</span>
+                <span style={{ flex: 1 }}>{s.title}</span>
+                <span style={{ fontSize: 12, color: 'var(--blue)' }}>→</span>
+              </Link>
+            ))}
+            <Link
+              href="/publish-with-us/guest-posting/"
+              style={{
+                display: 'flex', alignItems: 'center', gap: 10,
+                padding: '13px 16px', borderRadius: 10,
+                background: '#fff', border: '1px solid var(--line)',
+                textDecoration: 'none', color: 'var(--text)',
+                fontWeight: 600, fontSize: 14,
+              }}
+            >
+              <span style={{ fontSize: 18 }}>✍️</span>
+              <span style={{ flex: 1 }}>Security Guest Posting</span>
+              <span style={{ fontSize: 12, color: 'var(--blue)' }}>→</span>
+            </Link>
+          </nav>
+        </div>
+      </section>
+
+      {/* ─────────────────────────────────────────
+          10. FAQ
       ───────────────────────────────────────── */}
       <section className="section" id="faq">
         <div className="container">

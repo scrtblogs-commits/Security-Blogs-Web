@@ -16,7 +16,21 @@ export const metadata = {
   description:
     'From SEO to AI citations, Google Ads to web design — every SecurityBlogs service is engineered exclusively for the security industry.',
   alternates: { canonical: '/services/' },
-  openGraph: { siteName: 'SecurityBlogs', url: '/services/' },
+  openGraph: {
+    title: 'Security Digital Marketing Services — SEO, AEO, GEO, Google Ads | SecurityBlogs',
+    description: 'Security SEO, AIO, AEO, GEO, Google Ads, Bing Ads, Web Design and GMB Profile — every service engineered exclusively for security companies.',
+    url: '/services/',
+    siteName: 'SecurityBlogs Australia',
+    type: 'website',
+    locale: 'en_AU',
+    images: [{ url: '/logo.png', width: 1200, height: 630, alt: 'Security Digital Marketing Services — SecurityBlogs' }],
+  },
+  twitter: {
+    card: 'summary_large_image' as const,
+    title: 'Security Digital Marketing Services | SecurityBlogs Australia',
+    description: 'Security SEO, AIO, AEO, GEO, Google Ads, Bing Ads and Web Design — built for security companies.',
+    images: ['/logo.png'],
+  },
 }
 
 
