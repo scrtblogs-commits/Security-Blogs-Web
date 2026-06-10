@@ -33,14 +33,14 @@ export default function BlogsPage() {
               <div className="eyebrow" style={{ marginBottom: 14 }}>Trending now</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {[
-                  { tag: 'AIO/AEO', title: 'How ChatGPT decides which security vendor to name' },
-                  { tag: 'SEO', title: 'Local SEO for alarm installers: the 2026 checklist' },
-                  { tag: 'GEO', title: 'Building entity authority so AI trusts your brand' },
+                  { tag: 'AIO/AEO', title: 'How ChatGPT decides which security vendor to name', slug: 'how-chatgpt-decides-which-security-vendor-to-name' },
+                  { tag: 'SEO', title: 'Local SEO for alarm installers: the 2026 checklist', slug: 'local-seo-for-alarm-installers-the-2026-checklist' },
+                  { tag: 'GEO', title: 'Building entity authority so AI trusts your brand', slug: 'building-entity-authority-so-ai-trusts-your-brand' },
                 ].map((p, i) => (
-                  <div key={i} className="card" style={{ padding: 16 }}>
+                  <a key={i} href={`/knowledge-hub/blog/${p.slug}/`} className="card" style={{ padding: 16, textDecoration: 'none' }}>
                     <span className="chip" style={{ marginBottom: 8 }}>{p.tag}</span>
                     <div style={{ fontWeight: 600, fontFamily: 'var(--font-display)', fontSize: 15 }}>{p.title}</div>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>
