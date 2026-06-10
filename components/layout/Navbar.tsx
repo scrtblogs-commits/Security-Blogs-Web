@@ -35,7 +35,7 @@ const dropdowns: Drop[] = [
 ]
 
 const flatLinks = [
-  { label: 'Pricing', href: '/publish-with-us/product-promotion/' },
+  { label: 'Pricing', href: '/pricing/' },
   { label: 'About',   href: '/about-us/' },
 ]
 
