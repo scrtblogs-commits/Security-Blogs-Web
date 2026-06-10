@@ -264,7 +264,7 @@ export default function ServiceFlipShowcase() {
             flexDirection: 'column',
             justifyContent: 'center',
             padding: '32px 0 40px',
-            background: '#f7f7f5',
+            background: 'transparent',
           }}
         >
 
