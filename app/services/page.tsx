@@ -49,7 +49,16 @@ export default function ServicesPage() {
         </div>
       </HeroBg>
 
-      <ServiceFlipShowcase />
+      <section className="section">
+        <div className="container">
+          <SectionHead
+            eyebrow="What we do"
+            title="Every channel security buyers use to discover you."
+            sub="Scroll through the cards to explore each service in depth."
+          />
+          <ServiceFlipShowcase />
+        </div>
+      </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
