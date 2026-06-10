@@ -1,42 +1,35 @@
 // POST /api/leads
 //
-// Receives form submissions from every public form on the site.
-// Delivery pipeline (in priority order):
+// Receives all public form submissions.
+// Pipeline:
+//   1. Honeypot check
+//   2. Validation
+//   3. Rate limit
+//   4. Save to /data/leads.json
+//   5. Email notification (Web3Forms if WEB3FORMS_KEY is set)
 //
-//   1. Web3Forms  — if WEB3FORMS_KEY env var is set (recommended for prod)
-//   2. CMS        — if CMS_URL + PAYLOAD_API_KEY are set (Payload backend)
-//   3. Dev-log    — neither configured → logs to console, returns ok:true
-//                   so forms work locally without any setup
-//
-// To go live:
-//   • Register free at https://web3forms.com, copy your Access Key, and
-//     add  WEB3FORMS_KEY=<your-key>  to .env.local / your hosting env.
-//   • The submission will be emailed to info@securityblogs.com.au.
+// Forms work in dev with zero configuration — data is always saved locally.
+// To receive email notifications, set WEB3FORMS_KEY in .env.local.
 
 import { NextResponse } from 'next/server'
+import { createLead } from '@/lib/leads-store'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const WEB3FORMS_KEY = process.env.WEB3FORMS_KEY ?? ''
-const CMS_URL       = process.env.CMS_URL ?? ''
-const API_KEY       = process.env.PAYLOAD_API_KEY ?? ''
-const CONTACT_EMAIL = 'info@securityblogs.com.au'
+const WEB3FORMS_KEY  = process.env.WEB3FORMS_KEY ?? ''
+const CONTACT_EMAIL  = 'info@securityblogs.com.au'
 
-// ── In-memory rate limit (15 req / 15 min per IP) ─────────────────────────
+// ── Rate limit ─────────────────────────────────────────────────────────────
 type Bucket = { count: number; resetAt: number }
 const buckets = new Map<string, Bucket>()
-const WINDOW  = 15 * 60 * 1000
-const MAX     = 15
-
-function getIp(req: Request): string {
+function getIp(req: Request) {
   return (req.headers.get('x-forwarded-for') ?? req.headers.get('x-real-ip') ?? 'unknown').split(',')[0].trim()
 }
 function rateOk(ip: string): boolean {
-  const now = Date.now()
-  const b = buckets.get(ip)
-  if (!b || b.resetAt < now) { buckets.set(ip, { count: 1, resetAt: now + WINDOW }); return true }
-  if (b.count >= MAX) return false
+  const now = Date.now(); const b = buckets.get(ip)
+  if (!b || b.resetAt < now) { buckets.set(ip, { count: 1, resetAt: now + 15 * 60_000 }); return true }
+  if (b.count >= 15) return false
   b.count++; return true
 }
 
@@ -44,117 +37,71 @@ function bad(error: string, status = 400) {
   return NextResponse.json({ ok: false, error }, { status })
 }
 
-// ── Delivery: Web3Forms ────────────────────────────────────────────────────
-async function sendViaWeb3Forms(fields: Record<string, unknown>): Promise<{ ok: boolean; error?: string }> {
+// ── Email notification via Web3Forms ──────────────────────────────────────
+async function notifyEmail(fields: Record<string, unknown>) {
+  if (!WEB3FORMS_KEY) return
+  const rows = Object.entries(fields)
+    .filter(([k]) => !['source', 'company_url'].includes(k))
+    .map(([k, v]) => `<tr><td style="padding:6px 12px;font-weight:600;color:#374151;white-space:nowrap">${k}</td><td style="padding:6px 12px;color:#111827">${v ?? '—'}</td></tr>`)
+    .join('')
   try {
-    const res = await fetch('https://api.web3forms.com/submit', {
+    await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ access_key: WEB3FORMS_KEY, ...fields }),
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `New enquiry from ${fields.name} — SecurityBlogs`,
+        from_name: 'SecurityBlogs Forms',
+        to_email: CONTACT_EMAIL,
+        replyto: fields.email,
+        html: `<h2 style="color:#1e5fe0;margin-bottom:16px">New form submission</h2><table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">${rows}</table>`,
+      }),
     })
-    const json = await res.json().catch(() => ({}))
-    if (!res.ok || json.success === false) {
-      return { ok: false, error: json.message || 'Web3Forms rejected submission' }
-    }
-    return { ok: true }
   } catch (err) {
-    return { ok: false, error: (err as Error).message }
-  }
-}
-
-// ── Delivery: Payload CMS ──────────────────────────────────────────────────
-async function sendViaCms(input: Record<string, unknown>): Promise<{ ok: boolean; id?: string; error?: string }> {
-  try {
-    const headers: Record<string, string> = { 'Content-Type': 'application/json' }
-    if (API_KEY) headers['Authorization'] = `users API-Key ${API_KEY}`
-    const res = await fetch(`${CMS_URL}/api/leads`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(input),
-    })
-    const json = await res.json().catch(() => ({}))
-    if (!res.ok) return { ok: false, error: json?.message || `CMS error ${res.status}` }
-    return { ok: true, id: json?.doc?.id }
-  } catch (err) {
-    return { ok: false, error: (err as Error).message }
+    console.error('[/api/leads] email notification failed:', err)
   }
 }
 
 // ── Handler ────────────────────────────────────────────────────────────────
 export async function POST(req: Request) {
   let body: Record<string, unknown>
-  try {
-    body = (await req.json()) as Record<string, unknown>
-  } catch {
-    return bad('Invalid JSON body')
-  }
+  try { body = await req.json() } catch { return bad('Invalid JSON') }
 
   // Honeypot
-  if (typeof body.company_url === 'string' && body.company_url.trim() !== '') {
+  if (typeof body.company_url === 'string' && body.company_url.trim()) {
     return NextResponse.json({ ok: true })
   }
 
-  // Shape validation
-  const name    = typeof body.name  === 'string' ? body.name.trim()  : ''
-  const email   = typeof body.email === 'string' ? body.email.trim() : ''
+  const name    = typeof body.name    === 'string' ? body.name.trim()    : ''
+  const email   = typeof body.email   === 'string' ? body.email.trim()   : ''
+  const phone   = typeof body.phone   === 'string' ? body.phone.trim()   : undefined
+  const company = typeof body.company === 'string' ? body.company.trim() : undefined
+  const service = typeof body.service === 'string' ? body.service.trim() : undefined
+  const message = typeof body.message === 'string' ? body.message.trim() : undefined
+  const source  = typeof body.source  === 'string' ? body.source.trim()  : 'contact'
+
   if (!name)  return bad('Name is required')
   if (!email) return bad('Email is required')
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return bad('Email looks invalid')
 
-  // Rate limit
   const ip = getIp(req)
-  if (!rateOk(ip)) return NextResponse.json({ ok: false, error: 'Too many submissions — please wait 15 minutes.' }, { status: 429 })
-
-  // Collect all non-sensitive fields for the submission payload
-  const fields: Record<string, unknown> = {}
-  for (const [k, v] of Object.entries(body)) {
-    if (k === 'company_url' || k === 'cf-turnstile-response') continue
-    fields[k] = v
-  }
-
-  // 1. Try Web3Forms
-  if (WEB3FORMS_KEY) {
-    const result = await sendViaWeb3Forms({
-      subject: `New enquiry from ${name} — SecurityBlogs`,
-      from_name: name,
-      email,
-      to_email: CONTACT_EMAIL,
-      replyto: email,
-      ...fields,
-    })
-    if (result.ok) return NextResponse.json({ ok: true })
-    console.error('[/api/leads] Web3Forms failed:', result.error)
-    // Fall through to CMS attempt
-  }
-
-  // 2. Try CMS (Payload)
-  if (CMS_URL && API_KEY) {
-    const result = await sendViaCms({
-      name,
-      email,
-      phone:          typeof body.phone   === 'string' ? body.phone.trim()   : undefined,
-      company:        typeof body.company === 'string' ? body.company.trim() : undefined,
-      serviceInterest:typeof body.service === 'string' ? body.service.trim() : undefined,
-      message:        typeof body.message === 'string' ? body.message.trim() : undefined,
-      source:         typeof body.source  === 'string' ? body.source.trim()  : 'contact',
-      status: 'new',
-      meta: { ip, userAgent: req.headers.get('user-agent') ?? undefined },
-    })
-    if (result.ok) return NextResponse.json({ ok: true, id: result.id })
-    console.error('[/api/leads] CMS failed:', result.error)
-  }
-
-  // 3. Dev fallback — log to console so local testing works with zero config
-  if (!WEB3FORMS_KEY && !CMS_URL) {
-    console.log('[/api/leads] DEV — no delivery configured. Submission received:', fields)
-    return NextResponse.json({ ok: true })
-  }
-
-  // Both delivery methods failed
-  return NextResponse.json(
-    { ok: false, error: 'Could not send your message. Please email us at ' + CONTACT_EMAIL },
-    { status: 502 },
+  if (!rateOk(ip)) return NextResponse.json(
+    { ok: false, error: 'Too many submissions — please wait 15 minutes.' }, { status: 429 }
   )
+
+  // Save to file store
+  const lead = await createLead({
+    name, email, phone, company, service, message, source,
+    ip,
+    userAgent: req.headers.get('user-agent') ?? undefined,
+  })
+
+  // Send email notification (non-blocking)
+  notifyEmail({ name, email, phone, company, service, message, source,
+    submitted: new Date(lead.createdAt).toLocaleString('en-AU', { timeZone: 'Australia/Sydney' }),
+  })
+
+  return NextResponse.json({ ok: true, id: lead.id })
 }
 
 export async function GET()    { return bad('Method not allowed', 405) }

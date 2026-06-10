@@ -39,3 +39,6 @@ next-env.d.ts
 
 # docker dev volumes
 /pgdata
+
+# form submission data — contains PII, never commit
+/data
