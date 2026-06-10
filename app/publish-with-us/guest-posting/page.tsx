@@ -5,6 +5,7 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import GuestPostForm from './GuestPostForm'
+import GuestPostHeroVisual from './GuestPostHeroVisual'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -35,26 +36,34 @@ export default function GuestPostingPage() {
         serviceType: 'Content Publishing',
       })} />
       <HeroBg grid>
-        <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Guest Posting' }]} />
-          <span className="badge badge-blue" style={{ marginBottom: 20 }}>
-            <span className="dot dot-pulse" /> NOW ACCEPTING GUEST POSTS
-          </span>
-          <h1 className="h1" style={{ maxWidth: 820, marginBottom: 18 }}>
-            Guest Posting on{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityBlogs</span>.
-          </h1>
-          <p className="lead" style={{ maxWidth: 640, marginBottom: 24 }}>
-            Share your expertise with thousands of security buyers, integrators and decision-makers.
-            Submit a byline-credited article below — our editors review every piece within 3 business days.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {chips.map((c) => <span key={c} className="chip">{c}</span>)}
-          </div>
-        </Reveal>
+        <div className="grid-2" style={{ alignItems: 'center', gap: 52 }}>
+          <Reveal>
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Guest Posting' }]} />
+            <span className="badge badge-blue" style={{ marginBottom: 20 }}>
+              <span className="dot dot-pulse" /> NOW ACCEPTING GUEST POSTS
+            </span>
+            <h1 className="h1" style={{ maxWidth: 600, marginBottom: 18 }}>
+              Get Your Expertise in Front of{' '}
+              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>38,000 Security Professionals</span>.
+            </h1>
+            <p className="lead" style={{ maxWidth: 520, marginBottom: 24 }}>
+              Guest post on SecurityBlogs and earn two dofollow backlinks, a byline, and direct exposure to the buyers, integrators and decision-makers shaping the security industry.
+            </p>
+            <div className="flex flex-wrap gap-2" style={{ marginBottom: 20 }}>
+              {chips.map((c) => <span key={c} className="chip">{c}</span>)}
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <a href="#submit" className="btn btn-primary" style={{ padding: '11px 22px' }}>Submit your article →</a>
+              <a href="#guidelines" className="btn btn-outline" style={{ padding: '11px 22px' }}>See guidelines</a>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <GuestPostHeroVisual />
+          </Reveal>
+        </div>
       </HeroBg>
 
-      <section className="section">
+      <section id="submit" className="section">
         <div className="container" style={{ maxWidth: 860 }}>
           <SectionHead eyebrow="Submission form" title="Submit your guest article." sub="Fill in the details below. Live counters help you meet our editorial guidelines before you submit." />
           <Reveal>
