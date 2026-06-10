@@ -9,7 +9,10 @@ const dropdowns: Drop[] = [
   {
     label: 'Services',
     href: '/services/',
-    items: services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
+    items: [
+      ...services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
+      { title: 'Security Guides', href: '/knowledge-hub/security-guides/' },
+    ],
   },
   {
     label: 'Knowledge Hub',

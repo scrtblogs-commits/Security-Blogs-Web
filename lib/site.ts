@@ -6,6 +6,7 @@ export const services = [
   { title: 'Google Ads', slug: 'google-ads', icon: '📢', color: '#f6c715', desc: 'High-converting PPC campaigns built for security buyers.' },
   { title: 'Bing Ads', slug: 'bing-ads', icon: '🔷', color: '#0078d4', desc: 'Capture 41% of B2B buyers searching on Microsoft Bing.' },
   { title: 'Web Design', slug: 'web-design', icon: '', color: '#1e5fe0', desc: 'AI-ready websites that rank, convert and get cited.' },
+  { title: 'GMB Profile', slug: 'gmb-profile', icon: '📍', color: '#34a853', desc: 'Full Google Business Profile setup, verification and local SEO management.' },
 ]
 
 export const aiPlatforms = [
@@ -16,8 +17,6 @@ export const aiPlatforms = [
 export const knowledgeHub = [
   { title: 'Blog', href: '/knowledge-hub/blogs/' },
   { title: 'Security Industry SEO', href: '/knowledge-hub/security-industry-seo/' },
-  { title: 'Security Guides', href: '/knowledge-hub/security-guides/' },
-  { title: 'Security Trends 2026', href: '/knowledge-hub/security-trends-2026/' },
 ]
 
 export const publishWithUs = [

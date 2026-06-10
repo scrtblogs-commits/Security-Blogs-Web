@@ -11,6 +11,7 @@ import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 import SeoHeroVisual from './SeoHeroVisual'
 import SeoGlobeNetwork from './SeoGlobeNetwork'
+import SeoTrackingDashboard from './SeoTrackingDashboard'
 import SeoHowItWorks from './SeoHowItWorks'
 import PromoVideoSection from '@/components/ui/PromoVideoSection'
 
@@ -101,6 +102,8 @@ export default function SecuritySeoPage() {
           <SeoGlobeNetwork />
         </div>
       </section>
+
+      <SeoTrackingDashboard />
 
       <SeoHowItWorks />
 

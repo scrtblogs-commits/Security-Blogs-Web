@@ -220,7 +220,7 @@ const [sigProgress, setSigProgress] = useState(0)
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
-        background: '#ffffff',
+        background: 'transparent',
       }}>
 
         {/* Subtle dot texture */}
