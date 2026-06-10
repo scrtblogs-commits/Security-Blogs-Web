@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { submitForm } from '../../lib/submitForm'
 
 type FieldDef = { name: string; label: string; type?: string; required?: boolean; options?: string[]; full?: boolean; placeholder?: string }
@@ -10,22 +9,18 @@ const defaultFields: FieldDef[] = [
   { name: 'email', label: 'Email', type: 'email', required: true },
   { name: 'phone', label: 'Phone' },
   { name: 'company', label: 'Company' },
-  { name: 'service', label: 'Service needed', type: 'select', options: ['Security SEO', 'AIO', 'AEO', 'GEO', 'Google Ads', 'Bing Ads', 'Web Design', 'Full Service Package'], full: true },
+  { name: 'service', label: 'Service needed', type: 'select', options: ['Security SEO', 'AIO', 'AEO', 'GEO', 'Google Ads', 'Bing Ads', 'Web Design', 'GMB Profile', 'Full Service Package'], full: true },
   { name: 'message', label: 'Message', type: 'textarea', required: true, full: true },
 ]
 
-// successMsg prop retained for backwards compatibility (some pages still
-// pass it) but no longer rendered — on success the form router.push()s to
-// /thank-you/ per Phase F of seo-final-2026-05.
 export default function ContactForm({
   fields = defaultFields,
   submitLabel = 'Send Message →',
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  successMsg,
+  successMsg = 'Thanks! We\'ll be in touch within one business day.',
   subject = 'New contact form submission',
 }: { fields?: FieldDef[]; submitLabel?: string; successMsg?: string; subject?: string }) {
-  const router = useRouter()
   const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,8 +32,18 @@ export default function ContactForm({
     setError(null)
     const result = await submitForm({ formData: fd, subject })
     setSubmitting(false)
-    if (result.ok) router.push('/thank-you/')
+    if (result.ok) setSubmitted(true)
     else setError(result.error || 'Submission failed.')
+  }
+
+  if (submitted) {
+    return (
+      <div className="card" style={{ padding: '36px 28px', textAlign: 'center' }}>
+        <div style={{ fontSize: 44, marginBottom: 16 }}>✅</div>
+        <h3 style={{ fontSize: 20, fontWeight: 700, color: 'var(--heading)', marginBottom: 10 }}>Message Sent!</h3>
+        <p style={{ fontSize: 15, color: 'var(--text-soft)', lineHeight: 1.6, maxWidth: 360, margin: '0 auto' }}>{successMsg}</p>
+      </div>
+    )
   }
 
   return (
@@ -71,7 +76,7 @@ export default function ContactForm({
         <div style={{ gridColumn: '1 / -1', color: 'var(--red)', fontSize: 13 }}>{error}</div>
       )}
       <button type="submit" className="btn btn-primary" style={{ gridColumn: '1 / -1' }} disabled={submitting}>
-        {submitting ? 'Sending…' : submitLabel}
+        {submitting ? 'Sending…' : submitted ? 'Submitted ✓' : submitLabel}
       </button>
     </form>
   )

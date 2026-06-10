@@ -384,6 +384,65 @@ export function WebDesignFace(p: CardProps) {
 }
 
 // =============================================================
+// GMB Profile — Google Maps local pack with 3 listings
+// =============================================================
+export function GmbProfileFace(p: CardProps) {
+  return (
+    <div style={{ ...SHELL, background: 'linear-gradient(180deg, #e8f5e9 0%, #c8e6c9 100%)' }}>
+      <span style={{ ...SERVICE_TAG, color: '#1a3d2b' }}>Service</span>
+
+      {/* Google Maps chrome */}
+      <div style={{ position: 'absolute', top: 14, left: 16, right: 100, padding: '7px 12px', background: '#fff', border: '1px solid #dadce0', borderRadius: 22, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#202124', boxShadow: '0 2px 6px rgba(0,0,0,0.08)' }}>
+        <span style={{ fontSize: 13 }}>📍</span>
+        <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>security company near me</span>
+      </div>
+
+      {/* Map background */}
+      <div style={{ position: 'absolute', top: 52, left: 0, right: 0, height: 70, background: 'linear-gradient(180deg, #d4ecd4 0%, #b8ddb8 100%)', overflow: 'hidden' }}>
+        {/* Street grid */}
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+        {/* Map pins */}
+        {[{ l: '30%', t: '35%' }, { l: '52%', t: '22%' }, { l: '70%', t: '45%' }].map((pos, i) => (
+          <div key={i} style={{ position: 'absolute', left: pos.l, top: pos.t, transform: 'translate(-50%,-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ width: 18, height: 18, borderRadius: '50% 50% 50% 0', transform: 'rotate(-45deg)', background: i === 0 ? '#34a853' : '#ea4335', border: '2px solid #fff', boxShadow: '0 2px 6px rgba(0,0,0,0.18)' }} />
+          </div>
+        ))}
+      </div>
+
+      {/* Local pack listings */}
+      <div style={{ position: 'absolute', top: 128, left: 16, right: 16, display: 'flex', flexDirection: 'column', gap: 5 }}>
+        <LocalListing rank={1} name="SecureGuard Pro" rating="4.9" reviews="142" verified />
+        <LocalListing rank={2} name="SafeShield Security" rating="4.6" reviews="89" />
+        <LocalListing rank={3} name="TrustWatch Alarms" rating="4.3" reviews="54" />
+      </div>
+
+      <CardCTA {...p} />
+    </div>
+  )
+}
+
+function LocalListing({ rank, name, rating, reviews, verified }: { rank: number; name: string; rating: string; reviews: string; verified?: boolean }) {
+  return (
+    <div
+      className={rank === 1 ? 'sb-card-rank' : undefined}
+      style={{
+        background: rank === 1 ? 'rgba(52,168,83,0.12)' : '#fff',
+        border: rank === 1 ? '1.5px solid rgba(52,168,83,0.55)' : '1px solid #e0e0e0',
+        borderRadius: 7, padding: '5px 9px',
+        display: 'flex', alignItems: 'center', gap: 7,
+        boxShadow: rank === 1 ? '0 3px 10px rgba(52,168,83,0.15)' : '0 1px 3px rgba(0,0,0,0.05)',
+      }}
+    >
+      <span style={{ fontSize: 10, fontWeight: 700, color: rank === 1 ? '#34a853' : '#9e9e9e', minWidth: 14 }}>{rank}</span>
+      <span style={{ flex: 1, fontSize: 11.5, fontWeight: rank === 1 ? 700 : 500, color: rank === 1 ? '#1b5e20' : '#424242', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
+      {verified && <span style={{ fontSize: 9, background: '#34a853', color: '#fff', borderRadius: 3, padding: '1px 4px', fontWeight: 600 }}>✓</span>}
+      <span style={{ fontSize: 10, color: '#f9ab00', fontWeight: 700 }}>★ {rating}</span>
+      <span style={{ fontSize: 9.5, color: '#757575' }}>({reviews})</span>
+    </div>
+  )
+}
+
+// =============================================================
 // ServiceFace — picks the right face by slug. Used by both the
 // homepage card stack AND the /services/ index grid so each card
 // renders the same live "what this service does" visual everywhere.
@@ -410,6 +469,7 @@ export function ServiceFace({
     case 'google-ads':   return <GoogleAdsFace {...common} />
     case 'bing-ads':     return <BingAdsFace {...common} />
     case 'web-design':   return <WebDesignFace {...common} />
+    case 'gmb-profile':  return <GmbProfileFace {...common} />
     default:             return null
   }
 }

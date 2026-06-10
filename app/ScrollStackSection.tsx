@@ -30,7 +30,7 @@ export default function ScrollStackSection() {
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         overflow: 'hidden',
-        background: '#f0f5ff',
+        background: '#f8f9fb',
         gap: 0,
       }}>
 

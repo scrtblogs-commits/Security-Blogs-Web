@@ -13,6 +13,7 @@ const ACCENT: Record<string, string> = {
   'google-ads': '#f6c715',
   'bing-ads': '#0078d4',
   'web-design': '#1e5fe0',
+  'gmb-profile': '#34a853',
 }
 
 const ICONS: Record<string, string> = {
@@ -23,6 +24,7 @@ const ICONS: Record<string, string> = {
   'google-ads': '📢',
   'bing-ads': '🔷',
   'web-design': '🎨',
+  'gmb-profile': '📍',
 }
 
 const benefits: Record<string, string[]> = {
@@ -61,6 +63,11 @@ const benefits: Record<string, string[]> = {
     'Fast, Core Web Vitals optimised',
     'Conversion-focused UX',
   ],
+  'gmb-profile': [
+    'Rank #1 in Google Maps local pack',
+    'Full GBP setup & verification',
+    'Review strategy & monthly management',
+  ],
 }
 
 const statChip: Record<string, string> = {
@@ -71,6 +78,7 @@ const statChip: Record<string, string> = {
   'google-ads': '3.2× average ROAS',
   'bing-ads': '41% lower CPC',
   'web-design': '2.1× conversion lift',
+  'gmb-profile': '#1 Map Pack in 90 days',
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
