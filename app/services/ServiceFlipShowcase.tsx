@@ -264,15 +264,9 @@ export default function ServiceFlipShowcase() {
             flexDirection: 'column',
             justifyContent: 'center',
             padding: '32px 0 40px',
-            background: 'linear-gradient(160deg, #f8faff 0%, #eef3ff 55%, #f4f8fc 100%)',
+            background: '#f7f7f5',
           }}
         >
-          {/* Subtle grid overlay */}
-          <div aria-hidden style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none',
-            backgroundImage: 'linear-gradient(rgba(30,95,224,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(30,95,224,0.035) 1px,transparent 1px)',
-            backgroundSize: '56px 56px',
-          }} />
 
           {/* Scroll hint — fades out as user starts rotating */}
           <motion.div
