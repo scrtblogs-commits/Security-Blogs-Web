@@ -135,6 +135,8 @@ export default function GeoPage() {
         </div>
       </section>
 
+      <GeoHowItWorks />
+
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
           <SectionHead eyebrow="FAQ" title="GEO questions, answered." />
@@ -148,8 +150,6 @@ export default function GeoPage() {
         subtitle="GEO builds your security brand as a recognised entity across every AI platform — so ChatGPT, Gemini and Perplexity consistently recommend you by name."
         accent={ACCENT}
       />
-
-      <GeoHowItWorks />
     </>
   )
 }
