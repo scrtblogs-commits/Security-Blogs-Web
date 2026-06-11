@@ -124,147 +124,179 @@ export function SEOFace(p: CardProps) {
 }
 
 /* ─────────────────────────────────────────────
-   AIO — 4 AI robots walking + speech bubble citations
+   AIO — Realistic AI mention monitor dashboard
 ───────────────────────────────────────────── */
-const AIO_BOTS = [
-  { name:'ChatGPT',    color:'#10a37f', bg:'#d1fae5', label:'GPT-4o' },
-  { name:'Gemini',     color:'#4285F4', bg:'#dbeafe', label:'Gemini' },
-  { name:'Perplexity', color:'#7c3aed', bg:'#ede9fe', label:'Pplx'   },
-  { name:'Copilot',    color:'#0078d4', bg:'#e0f2fe', label:'Copilot' },
+const AIO_PLATFORMS = [
+  {
+    name: 'ChatGPT',    short: 'GPT-4o',  color: '#10a37f', bg: '#0d0d0d',
+    // OpenAI logo: stylised hexagonal asterisk
+    logo: (c: string) => (
+      <g>
+        <circle cx="10" cy="10" r="9" fill="#0d0d0d" />
+        <path d="M10 3.5 L12.6 8.5 L18 8.5 L13.7 11.8 L15.5 17 L10 13.8 L4.5 17 L6.3 11.8 L2 8.5 L7.4 8.5 Z" fill="none" stroke="#10a37f" strokeWidth="0.9" strokeLinejoin="round" />
+        <circle cx="10" cy="10" r="2.2" fill="#10a37f" />
+      </g>
+    ),
+  },
+  {
+    name: 'Claude',     short: 'Claude 3', color: '#d4782c', bg: '#191818',
+    // Anthropic/Claude logo: concentric arcs forming a bloom
+    logo: (c: string) => (
+      <g>
+        <circle cx="10" cy="10" r="9" fill="#191818" />
+        <path d="M10 3 Q14 6 14 10 Q14 14 10 17 Q6 14 6 10 Q6 6 10 3 Z" fill="none" stroke="#d4782c" strokeWidth="1.1" />
+        <path d="M3 10 Q6 6 10 6 Q14 6 17 10 Q14 14 10 14 Q6 14 3 10 Z" fill="none" stroke="#d4782c" strokeWidth="0.9" opacity="0.6" />
+        <circle cx="10" cy="10" r="2" fill="#d4782c" />
+      </g>
+    ),
+  },
+  {
+    name: 'Gemini',     short: 'Gemini',   color: '#4285F4', bg: '#1a1a2e',
+    // Gemini logo: four-pointed star
+    logo: (c: string) => (
+      <g>
+        <circle cx="10" cy="10" r="9" fill="#1a1a2e" />
+        <path d="M10 2 C10 2 11.5 7.5 16 10 C11.5 12.5 10 18 10 18 C10 18 8.5 12.5 4 10 C8.5 7.5 10 2 10 2 Z" fill="url(#gem-grad)" />
+        <defs>
+          <linearGradient id="gem-grad" x1="4" y1="2" x2="16" y2="18" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#4285F4" />
+            <stop offset="50%" stopColor="#a78bfa" />
+            <stop offset="100%" stopColor="#4285F4" />
+          </linearGradient>
+        </defs>
+      </g>
+    ),
+  },
+  {
+    name: 'Perplexity', short: 'Pplx',     color: '#20b2aa', bg: '#0a0a0a',
+    // Perplexity logo: asterisk-style compass
+    logo: (c: string) => (
+      <g>
+        <circle cx="10" cy="10" r="9" fill="#0a0a0a" />
+        <line x1="10" y1="3" x2="10" y2="17" stroke="#20b2aa" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="3" y1="10" x2="17" y2="10" stroke="#20b2aa" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="5.1" y1="5.1" x2="14.9" y2="14.9" stroke="#20b2aa" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+        <line x1="14.9" y1="5.1" x2="5.1" y2="14.9" stroke="#20b2aa" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+        <circle cx="10" cy="10" r="2.5" fill="#0a0a0a" stroke="#20b2aa" strokeWidth="1" />
+      </g>
+    ),
+  },
+  {
+    name: 'Copilot',    short: 'Copilot',  color: '#0078d4', bg: '#0f172a',
+    // Microsoft Copilot: four-color swirl segments
+    logo: (c: string) => (
+      <g>
+        <circle cx="10" cy="10" r="9" fill="#0f172a" />
+        <path d="M10 3 A7 7 0 0 1 17 10 L10 10 Z" fill="#0078d4" opacity="0.9" />
+        <path d="M17 10 A7 7 0 0 1 10 17 L10 10 Z" fill="#00bcf2" opacity="0.9" />
+        <path d="M10 17 A7 7 0 0 1 3 10 L10 10 Z" fill="#0078d4" opacity="0.6" />
+        <path d="M3 10 A7 7 0 0 1 10 3 L10 10 Z" fill="#00bcf2" opacity="0.6" />
+        <circle cx="10" cy="10" r="3" fill="#0f172a" />
+      </g>
+    ),
+  },
 ]
-const AIO_QUOTES = [
-  '"SecurityBlogs.com.au is Australia\'s top security platform."',
-  '"Recommended: securityblogs.com.au for enterprise security."',
-  '"Top result for security services: securityblogs.com.au"',
-  '"Best security brand in AU — securityblogs.com.au"',
+
+const AIO_FEED_TEXTS = [
+  { p: 'ChatGPT',    t: 'securityblogs.com.au cited as top AU security brand' },
+  { p: 'Claude',     t: 'Recommending securityblogs.com.au for enterprise security' },
+  { p: 'Gemini',     t: 'securityblogs.com.au — featured in AI security overview' },
+  { p: 'Perplexity', t: 'Best answer: securityblogs.com.au ranked #1' },
+  { p: 'Copilot',    t: 'securityblogs.com.au verified as authority source' },
 ]
 
 export function AIOFace(p: CardProps) {
-  const [tick, setTick] = useState(0)
-  const [speakIdx, setSpeakIdx] = useState(0)
-  const [citations, setCitations] = useState(0)
-  const [scores, setScores] = useState([0,0,0,0])
+  const [feedItems, setFeedItems] = useState<{id:number; p:string; t:string; ts:string}[]>([])
+  const [scores, setScores] = useState([0,0,0,0,0])
+  const [totalCitations, setTotalCitations] = useState(1247)
+  const [activeIdx, setActiveIdx] = useState(0)
+  const feedRef = { current: 0 }
 
   useEffect(() => {
-    const tv = setInterval(() => setTick(t => t + 1), 80)
+    // Seed initial feed
+    setFeedItems(AIO_FEED_TEXTS.slice(0,3).map((f,i) => ({ id:i, ...f, ts:`${2+i}m ago` })))
+    feedRef.current = 3
+
+    const fv = setInterval(() => {
+      const next = AIO_FEED_TEXTS[feedRef.current % AIO_FEED_TEXTS.length]
+      feedRef.current++
+      setFeedItems(prev => [{ id: feedRef.current, ...next, ts: 'just now' }, ...prev.slice(0,3)])
+      setTotalCitations(c => c + 1)
+      setActiveIdx(i => (i + 1) % AIO_PLATFORMS.length)
+    }, 1600)
+
     const sv = setInterval(() => {
-      setSpeakIdx(i => (i + 1) % 4)
-      setCitations(c => c + 1)
-    }, 1400)
-    const pv = setInterval(() => {
       setScores(prev => prev.map((v, i) => {
-        const targets = [94, 88, 97, 82]
-        if (v < targets[i]) return Math.min(v + 1, targets[i])
-        return 0
+        const targets = [94, 91, 88, 96, 82]
+        if (v >= targets[i]) return 0
+        return Math.min(v + 1, targets[i])
       }))
-    }, 30)
-    return () => { clearInterval(tv); clearInterval(sv); clearInterval(pv) }
+    }, 28)
+    return () => { clearInterval(fv); clearInterval(sv) }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // Robot bounce: each bot has a staggered vertical oscillation
-  function botY(i: number) {
-    return Math.sin((tick / 10) + i * (Math.PI / 2)) * 4
-  }
-  // Arm swing angle
-  function armAngle(i: number) {
-    return Math.sin((tick / 8) + i * (Math.PI / 2)) * 20
-  }
-
   return (
-    <div style={{ ...SHELL, background: 'linear-gradient(145deg, #faf5ff 0%, #f0f9ff 100%)' }}>
-      {/* Header */}
-      <div style={{ position:'absolute', top:8, left:12, right:12, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontSize:9, fontWeight:800, letterSpacing:'0.1em', color:'#6d28d9' }}>AI ROBOTS CITING YOUR BRAND</div>
-        <div style={{ background:'#ede9fe', border:'1px solid #c4b5fd', borderRadius:20, padding:'3px 9px', fontSize:9, fontWeight:700, color:'#6d28d9' }}>
-          {citations} citations
+    <div style={{ ...SHELL, background: '#0f0f13' }}>
+      {/* Header bar */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, background:'#18181f', borderBottom:'1px solid rgba(255,255,255,0.06)', padding:'7px 12px', display:'flex', alignItems:'center', justifyContent:'space-between', zIndex:5 }}>
+        <div style={{ display:'flex', alignItems:'center', gap:7 }}>
+          <div style={{ width:6,height:6,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 8px #22c55e' }} />
+          <span style={{ fontSize:10,fontWeight:700,color:'rgba(255,255,255,0.9)',letterSpacing:'0.02em' }}>AI Mention Monitor</span>
+        </div>
+        <div style={{ display:'flex', alignItems:'center', gap:5 }}>
+          <span style={{ fontSize:9,color:'rgba(255,255,255,0.4)' }}>total citations</span>
+          <span style={{ fontSize:11,fontWeight:800,color:'#22c55e',fontFamily:'var(--font-mono)' }}>{totalCitations.toLocaleString()}</span>
         </div>
       </div>
 
-      {/* 4 robots on a ground strip */}
-      <div style={{ position:'absolute', top:30, left:0, right:0, height:160 }}>
-        <svg viewBox="0 0 320 160" width="100%" height="100%" style={{ overflow:'visible' }}>
-          <defs>
-            <filter id="aio-shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.12)" /></filter>
-          </defs>
-
-          {/* Ground */}
-          <rect x="0" y="132" width="320" height="2" rx="1" fill="#e2e8f0" />
-          {/* Ground dots */}
-          {[40,80,120,160,200,240,280].map(x => <circle key={x} cx={x} cy="138" r="1.5" fill="#cbd5e1" />)}
-
-          {AIO_BOTS.map((bot, i) => {
-            const bx = 40 + i * 72
-            const by = 100 + botY(i)
-            const arm = armAngle(i)
-            const isSpeaking = speakIdx === i
-
-            return (
-              <g key={bot.name} transform={`translate(${bx}, ${by})`} filter="url(#aio-shadow)">
-                {/* Speech bubble */}
-                {isSpeaking && (
-                  <g transform="translate(-26, -74)">
-                    <rect x="0" y="0" width="72" height="26" rx="6" fill={bot.bg} stroke={bot.color} strokeWidth="1.2" />
-                    <polygon points="28,26 35,34 42,26" fill={bot.bg} stroke={bot.color} strokeWidth="1.2" />
-                    <polygon points="29,26 36,32 41,26" fill={bot.bg} />
-                    <text x="36" y="11" textAnchor="middle" fontSize="6.5" fill={bot.color} fontWeight="700">"{bot.label} says:"</text>
-                    <text x="36" y="21" textAnchor="middle" fontSize="6" fill="#334155">You're #1 ✓</text>
-                  </g>
-                )}
-
-                {/* Antenna */}
-                <line x1="0" y1="-36" x2="0" y2="-28" stroke={bot.color} strokeWidth="1.5" />
-                <circle cx="0" cy="-38" r="3" fill={isSpeaking ? bot.color : '#e2e8f0'} style={{ transition:'fill 0.3s' }} />
-
-                {/* Head */}
-                <rect x="-14" y="-28" width="28" height="22" rx="5" fill="white" stroke={bot.color} strokeWidth="1.5" />
-                {/* Eyes */}
-                <rect x="-9" y="-22" width="7" height="6" rx="2" fill={isSpeaking ? bot.color : '#cbd5e1'} style={{ transition:'fill 0.3s' }} />
-                <rect x="2" y="-22" width="7" height="6" rx="2" fill={isSpeaking ? bot.color : '#cbd5e1'} style={{ transition:'fill 0.3s' }} />
-                {/* Mouth — smile when speaking */}
-                {isSpeaking
-                  ? <path d="M-5,-9 Q0,-5 5,-9" fill="none" stroke={bot.color} strokeWidth="1.5" strokeLinecap="round" />
-                  : <line x1="-4" y1="-9" x2="4" y2="-9" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
-                }
-
-                {/* Body */}
-                <rect x="-12" y="-5" width="24" height="22" rx="4" fill={bot.bg} stroke={bot.color} strokeWidth="1.2" />
-                {/* Chest panel */}
-                <rect x="-7" y="-1" width="14" height="8" rx="2" fill="white" />
-                <circle cx="-3" cy="3" r="2" fill={bot.color} opacity="0.6" />
-                <circle cx="3" cy="3" r="2" fill={bot.color} opacity="0.9" />
-
-                {/* Left arm */}
-                <g transform={`rotate(${arm}, -12, 2)`}>
-                  <rect x="-18" y="-1" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1" />
-                </g>
-                {/* Right arm */}
-                <g transform={`rotate(${-arm}, 12, 2)`}>
-                  <rect x="11" y="-1" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1" />
-                </g>
-
-                {/* Legs */}
-                <rect x="-9" y="17" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1"
-                  transform={`rotate(${Math.sin((tick/8)+i*Math.PI)*12}, -5, 17)`} />
-                <rect x="2" y="17" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1"
-                  transform={`rotate(${-Math.sin((tick/8)+i*Math.PI)*12}, 5, 17)`} />
-
-                {/* Platform label */}
-                <text x="0" y="38" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={bot.color}>{bot.name}</text>
-              </g>
-            )
-          })}
-        </svg>
+      {/* Platform logos strip */}
+      <div style={{ position:'absolute', top:32, left:0, right:0, background:'#13131a', borderBottom:'1px solid rgba(255,255,255,0.05)', padding:'8px 12px', display:'flex', alignItems:'center', gap:6 }}>
+        {AIO_PLATFORMS.map((pl, i) => (
+          <div key={pl.name} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:3, opacity: activeIdx===i?1:0.45, transition:'opacity 0.4s', flex:1 }}>
+            <div style={{ width:26,height:26,borderRadius:8,overflow:'hidden',border:`1.5px solid ${activeIdx===i?pl.color:'rgba(255,255,255,0.08)'}`,boxShadow:activeIdx===i?`0 0 10px ${pl.color}50`:'none',transition:'all 0.4s',flexShrink:0 }}>
+              <svg viewBox="0 0 20 20" width="26" height="26">{pl.logo(pl.color)}</svg>
+            </div>
+            <span style={{ fontSize:7,fontWeight:600,color:activeIdx===i?pl.color:'rgba(255,255,255,0.3)',transition:'color 0.4s',whiteSpace:'nowrap' }}>{pl.short}</span>
+          </div>
+        ))}
       </div>
 
-      {/* Citation score bars */}
-      <div style={{ position:'absolute', top:196, left:12, right:12, display:'flex', flexDirection:'column', gap:5 }}>
-        {AIO_BOTS.map((bot, i) => (
-          <div key={bot.name} style={{ display:'flex', alignItems:'center', gap:7 }}>
-            <span style={{ fontSize:8.5, fontWeight:600, color:'#64748b', width:52, flexShrink:0 }}>{bot.name}</span>
-            <div style={{ flex:1, height:6, background:'#f1f5f9', borderRadius:3, overflow:'hidden' }}>
-              <div style={{ height:'100%', width:`${scores[i]}%`, background:`linear-gradient(90deg, ${bot.color}, ${bot.color}bb)`, borderRadius:3, transition:'width 0.03s linear', boxShadow:`0 0 6px ${bot.color}50` }} />
+      {/* Live mention feed */}
+      <div style={{ position:'absolute', top:104, left:0, right:0, bottom:112, overflow:'hidden', padding:'4px 0' }}>
+        {feedItems.map((item, i) => {
+          const pl = AIO_PLATFORMS.find(x => x.name === item.p) ?? AIO_PLATFORMS[0]
+          return (
+            <div key={item.id} style={{
+              display:'flex', alignItems:'flex-start', gap:8, padding:'6px 12px',
+              background: i===0 ? `${pl.color}12` : 'transparent',
+              borderLeft: i===0 ? `2px solid ${pl.color}` : '2px solid transparent',
+              marginBottom:2, transition:'all 0.4s',
+            }}>
+              <div style={{ width:20,height:20,borderRadius:6,overflow:'hidden',flexShrink:0,marginTop:1 }}>
+                <svg viewBox="0 0 20 20" width="20" height="20">{pl.logo(pl.color)}</svg>
+              </div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:2 }}>
+                  <span style={{ fontSize:9.5,fontWeight:700,color:pl.color }}>{item.p}</span>
+                  <span style={{ fontSize:8,color:'rgba(255,255,255,0.2)',flexShrink:0,marginLeft:4 }}>{item.ts}</span>
+                </div>
+                <div style={{ fontSize:9.5,color:'rgba(255,255,255,0.65)',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap' }}>{item.t}</div>
+              </div>
             </div>
-            <span style={{ fontSize:8.5, fontWeight:700, color:bot.color, width:24, textAlign:'right' }}>{scores[i]}%</span>
+          )
+        })}
+      </div>
+
+      {/* Score bars strip */}
+      <div style={{ position:'absolute', bottom:92, left:0, right:0, background:'#18181f', borderTop:'1px solid rgba(255,255,255,0.06)', padding:'7px 12px', display:'flex', gap:6, alignItems:'flex-end' }}>
+        {AIO_PLATFORMS.map((pl, i) => (
+          <div key={pl.name} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:3 }}>
+            <span style={{ fontSize:8,fontWeight:700,color:pl.color,fontFamily:'var(--font-mono)' }}>{scores[i]}%</span>
+            <div style={{ width:'100%',height:28,background:'rgba(255,255,255,0.04)',borderRadius:3,overflow:'hidden',display:'flex',alignItems:'flex-end' }}>
+              <div style={{ width:'100%',height:`${scores[i]}%`,background:pl.color,opacity:0.85,transition:'height 0.03s linear',borderRadius:'2px 2px 0 0' }} />
+            </div>
+            <span style={{ fontSize:7,color:'rgba(255,255,255,0.3)',textAlign:'center' }}>{pl.short}</span>
           </div>
         ))}
       </div>
@@ -365,186 +397,181 @@ export function AEOFace(p: CardProps) {
 /* ─────────────────────────────────────────────
    GEO — Australia map with live city pings + signals
 ───────────────────────────────────────────── */
-// Real Australia SVG path (simplified but geographically accurate)
-const AU_PATH = `M 148,4 L 160,2 L 178,3 L 198,8 L 214,6 L 230,4 L 248,4 L 264,6 L 278,4
-  L 294,10 L 306,18 L 314,28 L 318,40 L 318,58 L 316,74 L 314,88 L 316,102
-  L 318,118 L 318,132 L 316,146 L 312,158 L 304,168 L 292,174 L 276,174
-  L 260,172 L 246,176 L 232,182 L 218,188 L 204,194 L 190,196 L 176,196
-  L 162,192 L 150,188 L 138,190 L 124,194 L 110,196 L 96,194 L 82,190
-  L 68,186 L 54,180 L 42,172 L 32,162 L 24,150 L 18,136 L 14,122 L 12,108
-  L 12,94 L 14,80 L 18,66 L 24,54 L 32,44 L 42,36 L 54,28 L 66,20
-  L 82,12 L 98,7 L 116,4 L 132,3 Z`
+/* ─────────────────────────────────────────────
+   GEO — Realistic Google Maps city view + live pins
+───────────────────────────────────────────── */
+// Google Maps pin path: teardrop shape centred at 0,0, pointing down
+function GMapPin({ x, y, color, scale = 1 }: { x:number; y:number; color:string; scale?:number }) {
+  return (
+    <g transform={`translate(${x},${y}) scale(${scale})`}>
+      <path d="M0-14 C-6-14 -10-9 -10-4 C-10 3 0 14 0 14 C0 14 10 3 10-4 C10-9 6-14 0-14 Z"
+        fill={color} stroke="white" strokeWidth="1.2" />
+      <circle cx="0" cy="-4" r="4" fill="white" opacity="0.9" />
+    </g>
+  )
+}
 
-// Tasmania
-const TAS_PATH = `M 192,206 L 200,202 L 210,204 L 216,212 L 214,222 L 206,228 L 196,226 L 188,218 L 188,210 Z`
-
-const AU_CITIES = [
-  { name:'Sydney',    x:294, y:148, color:'#1d4ed8', pop:'5.3M' },
-  { name:'Melbourne', x:266, y:170, color:'#dc2626', pop:'5.1M' },
-  { name:'Brisbane',  x:300, y:104, color:'#d97706', pop:'2.6M' },
-  { name:'Perth',     x:66,  y:130, color:'#7c3aed', pop:'2.1M' },
-  { name:'Adelaide',  x:220, y:156, color:'#0891b2', pop:'1.4M' },
-  { name:'Darwin',    x:174, y:22,  color:'#15803d', pop:'147K' },
+const GEO_PINS = [
+  { x:172, y:126, color:'#EA4335', name:'SecureGuard Pro',     rating:4.9, reviews:142, isClient:true },
+  { x:210, y:104, color:'#1a73e8', name:'SafeShield Security', rating:4.6, reviews:89  },
+  { x:138, y:114, color:'#1a73e8', name:'TrustWatch Alarms',   rating:4.3, reviews:54  },
 ]
 
 export function GEOFace(p: CardProps) {
-  const [activeCity, setActiveCity] = useState(0)
   const [pingR, setPingR] = useState(0)
-  const [scanAngle, setScanAngle] = useState(0)
-  const [reach, setReach] = useState(0)
-  const [connectedCities, setConnectedCities] = useState<number[]>([0])
+  const [activePin, setActivePin] = useState(0)
+  const [showCard, setShowCard] = useState(true)
+  const [views, setViews] = useState(2841)
 
   useEffect(() => {
-    // Radar scan rotation
-    const sv = setInterval(() => setScanAngle(a => (a + 2) % 360), 25)
-    // Ping ring expand
-    const pv = setInterval(() => setPingR(r => r > 36 ? 0 : r + 0.7), 30)
-    // Cycle active city
-    const cv = setInterval(() => {
-      setActiveCity(i => {
-        const next = (i + 1) % AU_CITIES.length
-        setConnectedCities(prev => prev.includes(next) ? prev : [...prev, next])
-        return next
-      })
-    }, 800)
-    // Reach counter
-    const rv = setInterval(() => setReach(v => v < 26 ? v + 1 : 0), 60)
-    return () => { clearInterval(sv); clearInterval(pv); clearInterval(cv); clearInterval(rv) }
+    // Pulse ring from main pin
+    const pr = setInterval(() => setPingR(r => r > 44 ? 0 : r + 0.65), 28)
+    // Cycle active pin
+    const ac = setInterval(() => {
+      setActivePin(i => (i + 1) % GEO_PINS.length)
+    }, 2200)
+    // Live view counter
+    const vv = setInterval(() => setViews(v => v + 1), 700)
+    return () => { clearInterval(pr); clearInterval(ac); clearInterval(vv) }
   }, [])
 
-  const cx = 180, cy = 110 // map center approx
+  const act = GEO_PINS[activePin]
 
   return (
-    <div style={{ ...SHELL, background: '#f0f9ff' }}>
-      {/* Header strip */}
-      <div style={{ position:'absolute', top:0, left:0, right:0, background:'linear-gradient(90deg,#0369a1,#0891b2)', padding:'6px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', zIndex:5 }}>
-        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
-          <div style={{ width:6,height:6,borderRadius:'50%',background:'#7dd3fc',boxShadow:'0 0 6px #7dd3fc',animation:'geo-blink 1s infinite' }} />
-          <span style={{ fontSize:9.5,fontWeight:800,color:'white',letterSpacing:'0.06em' }}>GEO COVERAGE · LIVE</span>
-        </div>
-        <div style={{ fontSize:9,fontWeight:700,color:'#bae6fd' }}>
-          {AU_CITIES.length} cities tracked
+    <div style={{ ...SHELL, background: '#f2efe9' }}>
+
+      {/* Google Maps search bar */}
+      <div style={{ position:'absolute', top:8, left:8, right:8, zIndex:10, background:'white', borderRadius:26, padding:'7px 13px', display:'flex', alignItems:'center', gap:8, boxShadow:'0 2px 10px rgba(0,0,0,0.18)' }}>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#9aa0a6" strokeWidth="2.5"/><path d="m21 21-4.35-4.35" stroke="#9aa0a6" strokeWidth="2.5" strokeLinecap="round"/></svg>
+        <span style={{ fontSize:11, color:'#202124', flex:1 }}>Security companies near me</span>
+        <div style={{ display:'flex', gap:1.5 }}>
+          {['#4285F4','#EA4335','#FBBC05','#34A853'].map(c => <div key={c} style={{ width:5,height:5,borderRadius:'50%',background:c }} />)}
         </div>
       </div>
 
-      {/* Australia map SVG */}
-      <div style={{ position:'absolute', top:28, left:0, right:0, bottom:92 }}>
-        <svg viewBox="0 0 336 235" width="100%" height="100%" style={{ display:'block' }}>
+      {/* Map tile — Google Maps accurate color scheme */}
+      <div style={{ position:'absolute', top:42, left:0, right:0, bottom:90 }}>
+        <svg viewBox="0 0 320 210" width="100%" height="100%" style={{ display:'block' }}>
           <defs>
-            <radialGradient id="au-ocean" cx="50%" cy="50%" r="70%">
-              <stop offset="0%" stopColor="#e0f2fe" />
-              <stop offset="100%" stopColor="#bae6fd" />
-            </radialGradient>
-            <radialGradient id="au-land" cx="50%" cy="50%" r="70%">
-              <stop offset="0%" stopColor="#fef3c7" />
-              <stop offset="100%" stopColor="#fde68a" />
-            </radialGradient>
-            <filter id="geo-drop"><feDropShadow dx="0" dy="3" stdDeviation="6" floodColor="rgba(0,0,0,0.12)" /></filter>
-            <filter id="pin-glow"><feGaussianBlur stdDeviation="2" result="blur" /><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            {/* Radar scan gradient */}
-            <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="rgba(3,105,161,0)" />
-              <stop offset="100%" stopColor="rgba(3,105,161,0.3)" />
-            </linearGradient>
+            <filter id="gmap-shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.3)" /></filter>
+            <filter id="pin-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.35)" /></filter>
           </defs>
 
-          {/* Ocean background */}
-          <rect width="336" height="235" fill="url(#au-ocean)" />
+          {/* Land base — Google Maps beige */}
+          <rect width="320" height="210" fill="#f2efe9" />
 
-          {/* Lat/lon grid lines */}
-          {[60,120,180].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="235" stroke="rgba(3,105,161,0.08)" strokeWidth="1" />)}
-          {[60,120,180].map(y => <line key={`h${y}`} x1="0" y1={y} x2="336" y2={y} stroke="rgba(3,105,161,0.08)" strokeWidth="1" />)}
+          {/* Water body (harbour/river) at top */}
+          <path d="M0 0 L320 0 L320 32 Q280 28 240 30 Q200 32 160 30 Q120 28 80 31 Q40 34 0 30 Z" fill="#a8d4f5" />
+          {/* Water label */}
+          <text x="160" y="20" textAnchor="middle" fontSize="7.5" fill="#5c8a9f" fontStyle="italic" letterSpacing="2">Sydney Harbour</text>
 
-          {/* Australia land */}
-          <path d={AU_PATH} fill="url(#au-land)" stroke="#d97706" strokeWidth="1.2" strokeLinejoin="round" filter="url(#geo-drop)" />
+          {/* Waterfront road */}
+          <rect x="0" y="30" width="320" height="6" fill="#ffffff" />
+          <rect x="0" y="30" width="320" height="6" fill="none" stroke="#e8e0d8" strokeWidth="0.5" />
 
-          {/* Tasmania */}
-          <path d={TAS_PATH} fill="url(#au-land)" stroke="#d97706" strokeWidth="1" strokeLinejoin="round" />
+          {/* Park / Hyde Park */}
+          <rect x="198" y="82" width="52" height="64" rx="3" fill="#c8e8b0" />
+          <rect x="200" y="84" width="48" height="60" rx="2" fill="none" stroke="#9ec87a" strokeWidth="0.8" strokeDasharray="3 2" />
+          <text x="224" y="116" textAnchor="middle" fontSize="7" fill="#4a7c2f" fontWeight="600">Hyde Park</text>
 
-          {/* Radar sweep from Sydney */}
-          {(() => {
-            const sc = AU_CITIES[0]
-            const rad = (scanAngle * Math.PI) / 180
-            const ex = sc.x + Math.cos(rad) * 90
-            const ey = sc.y + Math.sin(rad) * 90
+          {/* Second park */}
+          <rect x="48" y="136" width="36" height="30" rx="2" fill="#c8e8b0" />
+
+          {/* Major roads — Google Maps yellow/orange arterials */}
+          {/* Horizontal major: y=60 (Bridge St), y=100 (Market St), y=140 (Park St), y=175 (Ultimo) */}
+          <rect x="0" y="58" width="320" height="5" fill="#fdd663" />
+          <rect x="0" y="100" width="320" height="5" fill="#fdd663" />
+          <rect x="0" y="140" width="320" height="5" fill="#fdd663" />
+
+          {/* Vertical major: x=80 (George St), x=155 (Pitt St), x=260 (Elizabeth St) */}
+          <rect x="78" y="36" width="5" height="174" fill="#fdd663" />
+          <rect x="153" y="36" width="5" height="174" fill="#fdd663" />
+          <rect x="258" y="36" width="5" height="174" fill="#fdd663" />
+
+          {/* Minor roads — white */}
+          {[46,120,160].map(x => <rect key={`mv${x}`} x={x} y="36" width="3" height="174" fill="#ffffff" opacity="0.8" />)}
+          {[76,122,158,180].map(y => <rect key={`mh${y}`} x="0" y={y} width="320" height="3" fill="#ffffff" opacity="0.8" />)}
+
+          {/* Building footprints — slightly darker than land */}
+          {[
+            [8,40,32,16],[44,40,28,16],[10,62,28,14],[44,62,28,14],[76,62,12,14],
+            [8,80,32,18],[44,80,26,18],[8,104,32,15],[44,104,26,15],[8,128,32,10],
+            [44,128,26,10],[8,148,26,18],[38,148,36,18],[8,168,32,12],[44,168,26,12],
+            [92,40,55,16],[162,40,85,16],[92,64,28,16],[124,64,25,16],[162,64,26,16],[192,64,28,16],[222,64,30,16],
+            [92,84,28,14],[124,84,25,14],[162,84,26,14],[92,108,28,16],[124,108,25,16],[162,108,26,14],
+            [92,128,28,10],[124,128,25,10],[92,148,28,16],[124,148,55,16],[92,168,28,12],[124,168,55,12],
+            [264,40,48,16],[264,64,48,16],[264,84,48,14],[264,108,48,16],[264,128,48,10],[264,148,48,16],[264,168,48,12],
+          ].map(([bx,by,bw,bh],i) => (
+            <rect key={i} x={bx} y={by} width={bw} height={bh} rx="1" fill="#e9e1da" stroke="#ddd5ca" strokeWidth="0.3" />
+          ))}
+
+          {/* Road name labels */}
+          <text x="82" y="57" fontSize="6" fill="#635d52" transform="rotate(-90,82,57)" textAnchor="end">George St</text>
+          <text x="157" y="57" fontSize="6" fill="#635d52" transform="rotate(-90,157,57)" textAnchor="end">Pitt St</text>
+          <text x="260" y="95" fontSize="6" fill="#635d52" transform="rotate(-90,260,95)" textAnchor="end">Elizabeth St</text>
+          <text x="40" y="97" fontSize="6" fill="#635d52" textAnchor="middle">Market St</text>
+          <text x="40" y="137" fontSize="6" fill="#635d52" textAnchor="middle">Park St</text>
+
+          {/* Pulse rings on active pin */}
+          {pingR > 0 && (
+            <>
+              <circle cx={act.x} cy={act.y} r={pingR} fill="none" stroke={act.color} strokeWidth="1.5" opacity={Math.max(0, 0.9 - pingR/44)} />
+              {pingR > 14 && <circle cx={act.x} cy={act.y} r={pingR * 0.55} fill="none" stroke={act.color} strokeWidth="1" opacity={Math.max(0, 0.5 - pingR/60)} />}
+            </>
+          )}
+
+          {/* All pins */}
+          {GEO_PINS.map((pin, i) => {
+            const isAct = activePin === i
             return (
-              <g>
-                {/* Sweep sector */}
-                <path
-                  d={`M${sc.x},${sc.y} L${sc.x + Math.cos((rad-0.4)*1)*90},${sc.y + Math.sin((rad-0.4)*1)*90} A90,90 0 0,1 ${ex},${ey} Z`}
-                  fill="rgba(3,105,161,0.08)"
-                />
-                {/* Sweep line */}
-                <line x1={sc.x} y1={sc.y} x2={ex} y2={ey} stroke="rgba(3,105,161,0.25)" strokeWidth="1" />
-              </g>
-            )
-          })()}
-
-          {/* Connection arcs between cities */}
-          {connectedCities.slice(1).map((ci, idx) => {
-            const from = AU_CITIES[0]
-            const to = AU_CITIES[ci]
-            const mx = (from.x + to.x) / 2
-            const my = (from.y + to.y) / 2 - 30
-            return (
-              <path
-                key={ci}
-                d={`M${from.x},${from.y} Q${mx},${my} ${to.x},${to.y}`}
-                fill="none"
-                stroke={to.color}
-                strokeWidth="1.2"
-                strokeDasharray="4 3"
-                opacity="0.5"
-              />
-            )
-          })}
-
-          {/* City pings */}
-          {AU_CITIES.map((city, i) => {
-            const isActive = activeCity === i
-            return (
-              <g key={city.name}>
-                {/* Expanding ping ring on active city */}
-                {isActive && pingR > 0 && (
-                  <circle cx={city.x} cy={city.y} r={pingR} fill="none" stroke={city.color} strokeWidth="1.5" opacity={Math.max(0, 1 - pingR/36)} />
-                )}
-                {isActive && pingR > 12 && (
-                  <circle cx={city.x} cy={city.y} r={pingR * 0.6} fill="none" stroke={city.color} strokeWidth="1" opacity={Math.max(0, 0.6 - pingR/50)} />
-                )}
-
-                {/* Pin marker */}
-                <circle cx={city.x} cy={city.y} r={isActive ? 7 : 5} fill={isActive ? city.color : `${city.color}99`} stroke="white" strokeWidth={isActive ? 2 : 1.5} style={{ transition:'all 0.3s', filter: isActive ? `drop-shadow(0 0 4px ${city.color})` : 'none' }} />
-
-                {/* City label */}
-                <text x={city.x} y={city.y - 11} textAnchor="middle" fontSize="7.5" fontWeight={isActive?'800':'600'} fill={isActive ? city.color : '#374151'} style={{ transition:'all 0.3s' }}>
-                  {city.name}
-                </text>
-
-                {/* Pop badge on active */}
-                {isActive && (
-                  <g>
-                    <rect x={city.x + 8} y={city.y - 8} width={city.pop.length * 4.8 + 4} height="12" rx="4" fill={city.color} />
-                    <text x={city.x + 10 + (city.pop.length * 4.8)/2} y={city.y} textAnchor="middle" fontSize="6.5" fill="white" fontWeight="700">{city.pop}</text>
-                  </g>
-                )}
+              <g key={pin.name} filter="url(#pin-shadow)" style={{ transition:'all 0.3s' }}>
+                <GMapPin x={pin.x} y={pin.y} color={pin.color} scale={isAct ? 1.25 : 1} />
               </g>
             )
           })}
         </svg>
+
+        {/* Google Maps info card (floating, positioned over map) */}
+        <div style={{
+          position:'absolute', bottom:8, left:8, right:8,
+          background:'white', borderRadius:10, padding:'9px 12px',
+          boxShadow:'0 4px 16px rgba(0,0,0,0.22)',
+          display:'flex', alignItems:'center', gap:10,
+        }}>
+          <div style={{ flex:1, minWidth:0 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:5, marginBottom:2 }}>
+              <span style={{ fontSize:11.5, fontWeight:700, color:'#202124', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{act.name}</span>
+              {act.isClient && <span style={{ background:'#e8f5e9', color:'#2e7d32', fontSize:8, fontWeight:700, padding:'1px 5px', borderRadius:3, flexShrink:0 }}>Your Listing</span>}
+            </div>
+            <div style={{ display:'flex', alignItems:'center', gap:4 }}>
+              <span style={{ fontSize:10.5, fontWeight:700, color:'#e37400' }}>{act.rating}</span>
+              <div style={{ display:'flex', gap:1 }}>
+                {Array.from({length:5}).map((_,si) => (
+                  <span key={si} style={{ fontSize:9, color: si < Math.round(act.rating) ? '#fbbc04' : '#e0e0e0' }}>★</span>
+                ))}
+              </div>
+              <span style={{ fontSize:9.5, color:'#70757a' }}>({act.reviews})</span>
+              <span style={{ fontSize:9, color:'#70757a', marginLeft:2 }}>· Security company</span>
+            </div>
+          </div>
+          <div style={{ display:'flex', gap:4, flexShrink:0 }}>
+            <div style={{ background:'#e8f0fe', borderRadius:6, padding:'4px 8px', fontSize:8.5, fontWeight:600, color:'#1a73e8' }}>Directions</div>
+            <div style={{ background:'#e8f0fe', borderRadius:6, padding:'4px 8px', fontSize:8.5, fontWeight:600, color:'#1a73e8' }}>Save</div>
+          </div>
+        </div>
       </div>
 
-      {/* Bottom stats bar */}
-      <div style={{ position:'absolute', bottom:92, left:0, right:0, background:'linear-gradient(90deg,#0c4a6e,#075985)', padding:'6px 14px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        {[
-          { label:'Coverage', value:`${reach}M+`, unit:'reach' },
-          { label:'Cities',   value:'6',           unit:'capitals' },
-          { label:'Visibility',value:'94%',        unit:'national' },
-        ].map(s => (
-          <div key={s.label} style={{ textAlign:'center' }}>
-            <div style={{ fontSize:14,fontWeight:900,color:'#7dd3fc',lineHeight:1,fontFamily:'var(--font-mono)' }}>{s.value}</div>
-            <div style={{ fontSize:7.5,color:'rgba(255,255,255,0.6)',fontWeight:600,marginTop:1 }}>{s.unit}</div>
-          </div>
+      {/* Map controls — Google Maps style */}
+      <div style={{ position:'absolute', top:50, right:8, display:'flex', flexDirection:'column', gap:1, zIndex:5 }}>
+        {['+','−'].map(s => (
+          <div key={s} style={{ width:22,height:22,background:'white',borderRadius:3,display:'grid',placeItems:'center',fontSize:13,fontWeight:400,color:'#666',boxShadow:'0 1px 4px rgba(0,0,0,0.2)',cursor:'default',lineHeight:1 }}>{s}</div>
         ))}
+      </div>
+
+      {/* Live views badge */}
+      <div style={{ position:'absolute', top:50, left:8, background:'white', borderRadius:5, padding:'3px 8px', boxShadow:'0 1px 4px rgba(0,0,0,0.18)', display:'flex', alignItems:'center', gap:4, zIndex:5 }}>
+        <div style={{ width:5,height:5,borderRadius:'50%',background:'#34a853',boxShadow:'0 0 5px #34a853' }} />
+        <span style={{ fontSize:8.5,fontWeight:600,color:'#202124',fontFamily:'var(--font-mono)' }}>{views.toLocaleString()} views today</span>
       </div>
 
       <CardCTA {...p} />
