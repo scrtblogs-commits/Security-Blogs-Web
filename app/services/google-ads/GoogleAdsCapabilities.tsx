@@ -37,7 +37,7 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true) }, { threshold: 0.15 })
+    const obs = new IntersectionObserver(([e]) => { setInView(!!e.isIntersecting) }, { threshold: 0.15 })
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
@@ -77,19 +77,16 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Top glow line */}
         <div style={{
           height: 2,
           background: `linear-gradient(90deg, transparent 5%, ${ACCENT} 50%, transparent 95%)`,
           opacity: hovered ? 1 : 0.3, transition: 'opacity 0.4s',
         }} />
 
-        {/* Preview area */}
-        <div style={{ position: 'relative', height: 160, overflow: 'hidden', background: '#f4f8fc' }}>
-          <card.Preview hovered={hovered} accent={ACCENT} />
+        <div style={{ position: 'relative', height: 170, overflow: 'hidden' }}>
+          <card.Preview hovered={hovered} inView={inView} accent={ACCENT} />
         </div>
 
-        {/* Content */}
         <div style={{ padding: '18px 20px 22px' }}>
           <motion.div
             animate={hovered ? { scale: 1.12, rotate: -6 } : { scale: 1, rotate: 0 }}
@@ -106,185 +103,410 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
   )
 }
 
-/* ── Preview 1 — Search Intent: keyword list with match badges ── */
-function SearchIntentPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
-  const kws = [
-    { kw: 'commercial cctv installer', vol: '4.4K', match: 'EXACT' },
-    { kw: 'access control quote',      vol: '2.1K', match: 'PHRASE' },
-    { kw: '24/7 monitored alarm',      vol: '1.8K', match: 'EXACT' },
-  ]
+/* ── Preview 1 — Search Intent: live keyword bid auction ── */
+function SearchIntentPreview({ hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const targets = [1260, 980, 740]
+  const starts = [1840, 1420, 1160]
+  const [vals, setVals] = useState(starts)
+  const [barWidths, setBarWidths] = useState([0, 0, 0])
+  const targetBars = [92, 71, 54]
+
+  useEffect(() => {
+    if (!inView) {
+      setVals(starts)
+      setBarWidths([0, 0, 0])
+      return
+    }
+    const steps = 40
+    let step = 0
+    const id = setInterval(() => {
+      step++
+      const p = Math.min(step / steps, 1)
+      setVals(starts.map((s, i) => Math.round(s - (s - targets[i]) * p)))
+      setBarWidths(targetBars.map(t => Math.round(t * p)))
+      if (step >= steps) clearInterval(id)
+    }, 40)
+    return () => clearInterval(id)
+  }, [inView])
+
+  const kws = ['commercial cctv installer', 'access control quote', '24/7 monitored alarm']
+  const colors = [accent, '#60a5fa', '#a78bfa']
+
   return (
-    <div style={{ position: 'absolute', inset: 12, display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1, marginBottom: 4, fontFamily: 'var(--font-mono)' }}>KEYWORDS · BUYER INTENT</div>
-      {kws.map((k, i) => (
-        <motion.div
-          key={k.kw}
-          initial={{ opacity: 0, x: -10 }}
-          animate={hovered ? { opacity: 1, x: 0 } : { opacity: 0.7, x: 0 }}
-          transition={{ delay: i * 0.08, duration: 0.3 }}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 6,
-            padding: '5px 8px', borderRadius: 8,
-            background: 'rgba(255,255,255,0.04)',
-            border: `1px solid ${i === 0 ? accent + '44' : 'rgba(255,255,255,0.06)'}`,
-          }}
-        >
-          <span style={{ flex: 1, fontSize: 10.5, color: i === 0 ? accent : 'rgba(255,255,255,0.75)' }}>{k.kw}</span>
-          <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-mono)' }}>{k.vol}/mo</span>
-          <span style={{ fontSize: 8.5, color: '#060d1c', background: accent, padding: '1px 5px', borderRadius: 3, fontWeight: 700 }}>{k.match}</span>
-        </motion.div>
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #0a1628, #071020)',
+      display: 'flex', flexDirection: 'column', padding: '14px 16px', gap: 8,
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 2 }}>
+        KEYWORD AUCTIONS · LIVE
+      </div>
+      {kws.map((kw, i) => (
+        <div key={kw} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 10, color: i === 0 ? accent : 'rgba(255,255,255,0.65)' }}>{kw}</span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: colors[i], fontFamily: 'var(--font-mono)' }}>
+              ${(vals[i] / 100).toFixed(2)}
+            </span>
+          </div>
+          <div style={{ height: 5, background: 'rgba(255,255,255,0.07)', borderRadius: 3, overflow: 'hidden' }}>
+            <div style={{
+              height: '100%',
+              width: `${barWidths[i]}%`,
+              background: `linear-gradient(90deg, ${colors[i]}, ${colors[i]}88)`,
+              borderRadius: 3,
+              transition: 'width 0.04s linear',
+            }} />
+          </div>
+        </div>
       ))}
+      <div style={{
+        marginTop: 4,
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)',
+        borderRadius: 6, padding: '3px 9px', fontSize: 9.5, color: '#22c55e', fontWeight: 700,
+        alignSelf: 'flex-start',
+        opacity: inView ? 1 : 0, transition: 'opacity 0.5s 1.6s',
+      }}>
+        Savings vs competitors: −31%
+      </div>
     </div>
   )
 }
 
-/* ── Preview 2 — Geo Target: dark map with pulsing pins ── */
-function GeoTargetPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
-  const pins = [{ top: 32, left: 38 }, { top: 52, left: 62 }, { top: 67, left: 47 }, { top: 38, left: 74 }]
+/* ── Preview 2 — Geo Target: animated suburb map ── */
+function GeoTargetPreview({ hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const pins = [
+    { top: 28, left: 35 },
+    { top: 48, left: 60 },
+    { top: 65, left: 44 },
+    { top: 35, left: 72 },
+    { top: 58, left: 25 },
+  ]
   return (
-    <div style={{ position: 'absolute', inset: 0 }}>
-      {/* Grid map bg */}
+    <div style={{ position: 'absolute', inset: 0, background: '#060e1f', overflow: 'hidden' }}>
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: `linear-gradient(${accent}08 1px, transparent 1px), linear-gradient(90deg, ${accent}08 1px, transparent 1px)`,
-        backgroundSize: '28px 28px',
+        backgroundImage: `linear-gradient(${accent}10 1px, transparent 1px), linear-gradient(90deg, ${accent}10 1px, transparent 1px)`,
+        backgroundSize: '32px 32px',
       }} />
-      <div style={{ position: 'absolute', top: 8, left: 12, fontSize: 9, color: accent, fontWeight: 700, letterSpacing: 1, fontFamily: 'var(--font-mono)', zIndex: 2 }}>SYDNEY · 25KM RADIUS</div>
-      {/* Radius circle */}
-      <div style={{
-        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-        width: 90, height: 90, borderRadius: '50%',
-        border: `1px solid ${accent}30`,
-        background: `radial-gradient(circle, ${accent}08 0%, transparent 70%)`,
-        zIndex: 1,
-      }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, #060e1f 90%)' }} />
+      <motion.div
+        animate={{ scale: [1, 1.08, 1] }}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+          width: 110, height: 110, borderRadius: '50%',
+          border: `1px solid ${accent}40`,
+          background: `radial-gradient(circle, ${accent}10 0%, transparent 70%)`,
+        }}
+      />
+      <div style={{ position: 'absolute', top: 10, left: 14, fontSize: 9, color: accent, fontWeight: 700, letterSpacing: 1.5, fontFamily: 'var(--font-mono)', zIndex: 2 }}>
+        SYDNEY · 25KM RADIUS
+      </div>
       {pins.map((p, i) => (
         <div key={i} style={{ position: 'absolute', top: `${p.top}%`, left: `${p.left}%`, zIndex: 3, transform: 'translate(-50%,-50%)' }}>
           <motion.div
-            animate={hovered ? { scale: [1, 1.8, 1], opacity: [0.8, 0, 0.8] } : {}}
-            transition={{ duration: 1.6, repeat: Infinity, delay: i * 0.3 }}
-            style={{ position: 'absolute', inset: -6, borderRadius: '50%', background: accent, opacity: 0.2 }}
+            animate={{ scale: [1, 2.4, 1], opacity: [0.6, 0, 0.6] }}
+            transition={{ duration: 2, repeat: Infinity, delay: i * 0.4, ease: 'easeOut' }}
+            style={{ position: 'absolute', inset: -5, borderRadius: '50%', background: accent }}
           />
-          <div style={{ width: 10, height: 10, borderRadius: '50%', background: accent, boxShadow: `0 0 6px ${accent}` }} />
+          <motion.div
+            animate={{ scale: [1, 1.6, 1], opacity: [0.3, 0, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, delay: i * 0.4 + 0.3, ease: 'easeOut' }}
+            style={{ position: 'absolute', inset: -9, borderRadius: '50%', border: `1px solid ${accent}` }}
+          />
+          <div style={{ width: 10, height: 10, borderRadius: '50%', background: accent, boxShadow: `0 0 8px ${accent}` }} />
         </div>
       ))}
-      <div style={{ position: 'absolute', bottom: 8, right: 10, background: 'rgba(6,13,28,0.9)', border: `1px solid ${accent}44`, borderRadius: 6, padding: '3px 8px', fontSize: 9.5, color: accent, fontWeight: 700, zIndex: 2, fontFamily: 'var(--font-mono)' }}>4 active suburbs</div>
+      <div style={{
+        position: 'absolute', bottom: 10, left: '50%', transform: 'translateX(-50%)',
+        background: 'rgba(6,14,31,0.92)', border: `1px solid ${accent}44`,
+        borderRadius: 6, padding: '3px 10px', fontSize: 9.5, color: accent,
+        fontWeight: 700, zIndex: 4, fontFamily: 'var(--font-mono)', whiteSpace: 'nowrap',
+      }}>
+        5 suburbs · 847 impressions today
+      </div>
     </div>
   )
 }
 
-/* ── Preview 3 — Budget & Bid: dark bar allocation ── */
-function BudgetPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
-  return (
-    <div style={{ position: 'absolute', inset: 12, display: 'flex', flexDirection: 'column', gap: 7 }}>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1, fontFamily: 'var(--font-mono)' }}>BUDGET ALLOCATION · TODAY</div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11 }}>
-        <span style={{ color: 'rgba(255,255,255,0.7)' }}>Daily spend</span>
-        <span style={{ color: accent, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>$184 / $250</span>
-      </div>
-      <div style={{ height: 10, background: 'rgba(255,255,255,0.07)', borderRadius: 5, overflow: 'hidden', display: 'flex' }}>
-        <motion.div animate={{ width: hovered ? '52%' : '40%' }} transition={{ duration: 0.5 }} style={{ background: accent, borderRadius: '5px 0 0 5px' }} />
-        <motion.div animate={{ width: hovered ? '20%' : '15%' }} transition={{ duration: 0.5, delay: 0.1 }} style={{ background: '#22c55e' }} />
-        <motion.div animate={{ width: hovered ? '12%' : '8%' }} transition={{ duration: 0.5, delay: 0.2 }} style={{ background: '#0ea5e9' }} />
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, fontFamily: 'var(--font-mono)' }}>
-        <span style={{ color: accent }}>Search 52%</span>
-        <span style={{ color: '#22c55e' }}>Display 20%</span>
-        <span style={{ color: '#0ea5e9' }}>YouTube 12%</span>
-      </div>
-      <div style={{ fontSize: 9.5, color: '#22c55e', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>● Bid pacing healthy</div>
-    </div>
-  )
-}
+/* ── Preview 3 — Budget: live spend counter + bars ── */
+function BudgetPreview({ hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [spend, setSpend] = useState(0)
+  const [barW, setBarW] = useState(0)
+  const [channelW, setChannelW] = useState([0, 0, 0])
+  const targetSpend = 184
+  const targetBar = 73
+  const targetChannels = [52, 20, 12]
 
-/* ── Preview 4 — Conversion Funnel: dark funnel bars ── */
-function FunnelPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
-  const steps = [
-    { k: 'Impressions', v: '18,420', w: 100 },
-    { k: 'Clicks',      v: '947',    w: 70  },
-    { k: 'Form views',  v: '312',    w: 42  },
-    { k: 'Leads',       v: '84',     w: 22  },
+  useEffect(() => {
+    if (!inView) {
+      setSpend(0); setBarW(0); setChannelW([0, 0, 0]); return
+    }
+    const steps = 60
+    let step = 0
+    const id = setInterval(() => {
+      step++
+      const p = Math.min(step / steps, 1)
+      const ease = 1 - Math.pow(1 - p, 3)
+      setSpend(Math.round(targetSpend * ease))
+      setBarW(Math.round(targetBar * ease))
+      setChannelW(targetChannels.map(t => Math.round(t * ease)))
+      if (step >= steps) clearInterval(id)
+    }, 30)
+    return () => clearInterval(id)
+  }, [inView])
+
+  const channels = [
+    { label: 'Search', color: accent },
+    { label: 'Display', color: '#22c55e' },
+    { label: 'YouTube', color: '#0ea5e9' },
   ]
+
   return (
-    <div style={{ position: 'absolute', inset: 12, display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1, fontFamily: 'var(--font-mono)' }}>CONVERSION FUNNEL</div>
-      {steps.map((s, i) => (
-        <div key={s.k} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ width: 60, fontSize: 9.5, color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-mono)' }}>{s.k}</span>
-          <div style={{ flex: 1, height: 14, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
-            <motion.div
-              animate={{ width: hovered ? `${s.w}%` : `${s.w * 0.6}%` }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              style={{ height: '100%', background: `linear-gradient(90deg, ${accent}, ${accent}88)`, borderRadius: 3 }}
-            />
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #08111f, #0d1a2e)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10,
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: 1.5, fontFamily: 'var(--font-mono)' }}>
+        BUDGET ALLOCATION · TODAY
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginBottom: 2 }}>Daily spend</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: accent, fontFamily: 'var(--font-mono)', lineHeight: 1 }}>
+            ${spend}
           </div>
-          <span style={{ width: 42, fontSize: 9.5, fontWeight: 700, color: accent, fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{s.v}</span>
+        </div>
+        <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)' }}>/ $250 budget</div>
+      </div>
+      <div style={{ height: 8, background: 'rgba(255,255,255,0.07)', borderRadius: 4, overflow: 'hidden' }}>
+        <div style={{
+          width: `${barW}%`, height: '100%',
+          background: `linear-gradient(90deg, ${accent}, ${accent}bb)`,
+          borderRadius: 4, transition: 'width 0.03s linear',
+        }} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {channels.map((ch, i) => (
+          <div key={ch.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ width: 46, fontSize: 9.5, color: ch.color, fontFamily: 'var(--font-mono)' }}>{ch.label}</span>
+            <div style={{ flex: 1, height: 5, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
+              <div style={{
+                width: `${channelW[i]}%`, height: '100%',
+                background: ch.color, borderRadius: 3, transition: 'width 0.03s linear',
+              }} />
+            </div>
+            <span style={{ width: 28, fontSize: 9, color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-mono)', textAlign: 'right' }}>{channelW[i]}%</span>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: 9.5, color: '#22c55e', fontWeight: 700, fontFamily: 'var(--font-mono)', marginTop: -2 }}>
+        ✓ Bid pacing: healthy
+      </div>
+    </div>
+  )
+}
+
+/* ── Preview 4 — Funnel: animated conversion funnel ── */
+function FunnelPreview({ hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const targets = [18420, 947, 312, 84]
+  const widths = [100, 70, 42, 22]
+  const [vals, setVals] = useState([0, 0, 0, 0])
+  const [barW, setBarW] = useState([0, 0, 0, 0])
+  const labels = ['Impressions', 'Clicks', 'Form views', 'Leads']
+  const rates = ['', 'CTR 5.1%', 'Conv 32.9%', 'Conv 8.9%']
+
+  useEffect(() => {
+    if (!inView) { setVals([0, 0, 0, 0]); setBarW([0, 0, 0, 0]); return }
+    const steps = 60
+    let step = 0
+    const id = setInterval(() => {
+      step++
+      const p = Math.min(step / steps, 1)
+      const ease = 1 - Math.pow(1 - p, 2)
+      setVals(targets.map(t => Math.round(t * ease)))
+      setBarW(widths.map(w => Math.round(w * ease)))
+      if (step >= steps) clearInterval(id)
+    }, 30)
+    return () => clearInterval(id)
+  }, [inView])
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #080f1c, #0c1627)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 3,
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 6 }}>
+        CONVERSION FUNNEL
+      </div>
+      {labels.map((lbl, i) => (
+        <div key={lbl} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ width: 58, fontSize: 9.5, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-mono)', flexShrink: 0 }}>{lbl}</span>
+          <div style={{ flex: 1, height: 16, background: 'rgba(255,255,255,0.05)', borderRadius: 3, overflow: 'hidden', position: 'relative' }}>
+            <div style={{
+              width: `${barW[i]}%`, height: '100%',
+              background: i === 3
+                ? `linear-gradient(90deg, ${accent}, ${accent}cc)`
+                : `linear-gradient(90deg, ${accent}88, ${accent}44)`,
+              borderRadius: 3, transition: 'width 0.03s linear',
+            }} />
+            {rates[i] && (
+              <span style={{ position: 'absolute', right: 4, top: '50%', transform: 'translateY(-50%)', fontSize: 8.5, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-mono)' }}>
+                {rates[i]}
+              </span>
+            )}
+          </div>
+          <div style={{ width: 44, textAlign: 'right', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 3 }}>
+            <span style={{ fontSize: 9.5, fontWeight: 700, color: i === 3 ? accent : 'rgba(255,255,255,0.6)', fontFamily: 'var(--font-mono)' }}>
+              {vals[i].toLocaleString()}
+            </span>
+            {i === 3 && (
+              <motion.div
+                animate={{ opacity: [1, 0.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity }}
+                style={{ width: 5, height: 5, borderRadius: '50%', background: accent, flexShrink: 0 }}
+              />
+            )}
+          </div>
         </div>
       ))}
     </div>
   )
 }
 
-/* ── Preview 5 — Remarketing: dark audience segments ── */
-function RemarketingPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
-  const aud = [
-    { n: 'Quote page · 7d',      s: 1240 },
-    { n: 'Pricing · 14d',        s: 820  },
-    { n: 'Service page · 30d',   s: 3460 },
-  ]
+/* ── Preview 5 — Remarketing: audience growth animation ── */
+function RemarketingPreview({ hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const targets = [1240, 820, 3460]
+  const [vals, setVals] = useState([0, 0, 0])
+  const [barW, setBarW] = useState([0, 0, 0])
+  const maxVal = 3460
+  const segs = ['Quote page · 7d', 'Pricing · 14d', 'Service page · 30d']
+
+  useEffect(() => {
+    if (!inView) { setVals([0, 0, 0]); setBarW([0, 0, 0]); return }
+    const steps = 70
+    let step = 0
+    const id = setInterval(() => {
+      step++
+      const p = Math.min(step / steps, 1)
+      const ease = 1 - Math.pow(1 - p, 2)
+      setVals(targets.map(t => Math.round(t * ease)))
+      setBarW(targets.map(t => Math.round((t / maxVal) * 100 * ease)))
+      if (step >= steps) clearInterval(id)
+    }, 30)
+    return () => clearInterval(id)
+  }, [inView])
+
+  const total = vals.reduce((a, b) => a + b, 0)
+
   return (
-    <div style={{ position: 'absolute', inset: 12, display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1, marginBottom: 4, fontFamily: 'var(--font-mono)' }}>AUDIENCES · LIVE</div>
-      {aud.map((a, i) => (
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #09101e, #0b1825)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: 1.5, fontFamily: 'var(--font-mono)' }}>
+          AUDIENCES · BUILDING
+        </div>
         <motion.div
-          key={a.n}
-          animate={hovered ? { x: 4 } : { x: 0 }}
-          transition={{ delay: i * 0.06, duration: 0.25 }}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 8,
-            padding: '6px 8px', borderRadius: 8,
-            background: 'rgba(255,255,255,0.04)',
-            border: `1px solid rgba(255,255,255,0.07)`,
-          }}
-        >
-          <span style={{
-            width: 18, height: 18, borderRadius: '50%',
-            background: accent, color: '#000',
-            fontSize: 9, display: 'grid', placeItems: 'center', fontWeight: 700, flexShrink: 0,
-          }}>{i + 1}</span>
-          <span style={{ flex: 1, fontSize: 10, color: 'rgba(255,255,255,0.7)' }}>{a.n}</span>
-          <span style={{ fontSize: 9.5, color: accent, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{a.s.toLocaleString()}</span>
-        </motion.div>
+          animate={{ opacity: [1, 0.2, 1] }}
+          transition={{ duration: 1.2, repeat: Infinity }}
+          style={{ width: 6, height: 6, borderRadius: '50%', background: accent, flexShrink: 0 }}
+        />
+      </div>
+      {segs.map((seg, i) => (
+        <div key={seg} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.65)' }}>{seg}</span>
+            <span style={{ fontSize: 10, fontWeight: 700, color: accent, fontFamily: 'var(--font-mono)' }}>
+              {vals[i].toLocaleString()}
+            </span>
+          </div>
+          <div style={{ height: 5, background: 'rgba(255,255,255,0.07)', borderRadius: 3, overflow: 'hidden' }}>
+            <div style={{
+              width: `${barW[i]}%`, height: '100%',
+              background: `linear-gradient(90deg, ${accent}, ${accent}88)`,
+              borderRadius: 3, transition: 'width 0.03s linear',
+            }} />
+          </div>
+        </div>
       ))}
+      <div style={{
+        marginTop: 4, fontSize: 9.5, color: '#22c55e', fontWeight: 700, fontFamily: 'var(--font-mono)',
+        background: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.25)',
+        borderRadius: 6, padding: '3px 9px', alignSelf: 'flex-start',
+      }}>
+        Total reach: {total.toLocaleString()} buyers
+      </div>
     </div>
   )
 }
 
-/* ── Preview 6 — Competitor: dark auction insights table ── */
-function CompetitorPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+/* ── Preview 6 — Competitor: rising position chart ── */
+function CompetitorPreview({ hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [yourIS, setYourIS] = useState(0)
+  const [position, setPosition] = useState(4)
+
+  useEffect(() => {
+    if (!inView) { setYourIS(0); setPosition(4); return }
+    const steps = 60
+    let step = 0
+    const id = setInterval(() => {
+      step++
+      const p = Math.min(step / steps, 1)
+      setYourIS(Math.round(92 * p))
+      setPosition(Math.max(1, Math.round(4 - 3 * p)))
+      if (step >= steps) clearInterval(id)
+    }, 35)
+    return () => clearInterval(id)
+  }, [inView])
+
+  const competitors = [
+    { n: 'rival-cctv.au', is: 64 },
+    { n: 'security-co.au', is: 51 },
+    { n: 'alarm-firm.au', is: 38 },
+  ]
+
   return (
-    <div style={{ position: 'absolute', inset: 12, display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1, marginBottom: 4, fontFamily: 'var(--font-mono)' }}>AUCTION INSIGHTS</div>
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #090e1a, #0c1420)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 6,
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', fontWeight: 700, letterSpacing: 1.5, fontFamily: 'var(--font-mono)', marginBottom: 2 }}>
+        AUCTION INSIGHTS
+      </div>
       <motion.div
-        animate={hovered ? { scale: 1.02 } : { scale: 1 }}
-        transition={{ duration: 0.25 }}
+        animate={{ boxShadow: [`0 0 0px ${accent}00`, `0 0 16px ${accent}44`, `0 0 0px ${accent}00`] }}
+        transition={{ duration: 2, repeat: Infinity }}
         style={{
-          display: 'flex', justifyContent: 'space-between', padding: '6px 8px',
-          background: `${accent}18`, borderRadius: 8,
-          border: `1px solid ${accent}55`,
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '7px 10px', background: `${accent}18`,
+          borderRadius: 8, border: `1px solid ${accent}55`,
         }}
       >
-        <span style={{ fontSize: 10, color: accent, fontWeight: 700 }}>★ securityblogs.com.au</span>
-        <span style={{ fontSize: 10, color: accent, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>92% IS</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span style={{ fontSize: 9, background: accent, color: '#000', borderRadius: 3, padding: '1px 5px', fontWeight: 800, fontFamily: 'var(--font-mono)' }}>
+            #{position}
+          </span>
+          <span style={{ fontSize: 10, color: accent, fontWeight: 700 }}>securityblogs.com.au</span>
+        </div>
+        <span style={{ fontSize: 11, color: accent, fontWeight: 800, fontFamily: 'var(--font-mono)' }}>
+          {yourIS}% IS
+        </span>
       </motion.div>
-      {[
-        { n: 'rival-cctv.au',    is: '64%' },
-        { n: 'security-co.au',   is: '51%' },
-        { n: 'alarm-firm.au',    is: '38%' },
-      ].map((c, i) => (
-        <div key={c.n} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 8px', fontSize: 10, color: 'rgba(255,255,255,0.4)', borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-          <span>{c.n}</span>
-          <span style={{ fontFamily: 'var(--font-mono)' }}>{c.is} IS</span>
+      {competitors.map((c, i) => (
+        <div key={c.n} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-mono)' }}>#{i + 2}</span>
+            <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)' }}>{c.n}</span>
+          </div>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-mono)' }}>{c.is}% IS</span>
         </div>
       ))}
     </div>
