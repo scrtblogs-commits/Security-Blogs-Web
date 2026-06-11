@@ -23,7 +23,8 @@ function SearchConsoleWidget() {
           <div style={{ fontSize: 11, fontWeight: 700, color: '#0f2244' }}>Search Console</div>
           <div style={{ fontSize: 10, color: '#8896af', fontFamily: 'var(--font-mono)' }}>securityblogs.com.au</div>
         </div>
-        <div style={{ marginLeft: 'auto', fontSize: 10, color: '#34a853', fontWeight: 700, background: '#34a85314', border: '1px solid #34a85330', padding: '2px 8px', borderRadius: 999 }}>
+        <div style={{ marginLeft: 'auto', fontSize: 10, color: '#34a853', fontWeight: 700, background: '#34a85314', border: '1px solid #34a85330', padding: '2px 8px', borderRadius: 999, display: 'flex', alignItems: 'center', gap: 5 }}>
+          <span className="tracking-dot-live" style={{ width: 6, height: 6, borderRadius: '50%', background: '#34a853', display: 'inline-block' }} />
           LIVE
         </div>
       </div>
@@ -35,30 +36,36 @@ function SearchConsoleWidget() {
           { label: 'Impressions', val: '42.1K', delta: '+61%', color: '#34a853' },
           { label: 'Avg. CTR', val: '8.4%', delta: '+2.1pp', color: ACCENT },
           { label: 'Avg. position', val: '3.2', delta: '↑ 4.8', color: '#fa7b17' },
-        ].map((m) => (
+        ].map((m, mi) => (
           <div key={m.label} style={{ background: '#f8faff', borderRadius: 9, padding: '8px 10px' }}>
             <div style={{ fontSize: 9.5, color: '#8896af', marginBottom: 3 }}>{m.label}</div>
-            <div style={{ fontSize: 15, fontWeight: 800, color: '#0f2244', fontFamily: 'var(--font-mono)' }}>{m.val}</div>
-            <div style={{ fontSize: 9.5, color: '#34a853', fontWeight: 700 }}>{m.delta}</div>
+            <motion.div
+              animate={{ color: ['#0f2244', m.color, '#0f2244'] }}
+              transition={{ duration: 3, repeat: Infinity, delay: mi * 0.8 }}
+              style={{ fontSize: 15, fontWeight: 800, fontFamily: 'var(--font-mono)' }}
+            >{m.val}</motion.div>
+            <motion.div
+              animate={{ opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: mi * 0.5 }}
+              style={{ fontSize: 9.5, color: '#34a853', fontWeight: 700 }}
+            >{m.delta}</motion.div>
           </div>
         ))}
       </div>
 
-      {/* Chart */}
+      {/* Chart — bars loop up/down continuously */}
       <div style={{ fontSize: 9.5, color: '#8896af', fontFamily: 'var(--font-mono)', marginBottom: 6 }}>CLICKS vs IMPRESSIONS · 12 weeks</div>
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: 3, height: 52 }}>
         {bars.map((imp, i) => (
           <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, height: '100%', justifyContent: 'flex-end' }}>
             <motion.div
-              initial={{ height: 0 }}
-              animate={{ height: `${imp}%` }}
-              transition={{ duration: 0.6, delay: i * 0.04, ease: 'easeOut' }}
+              animate={{ height: [`${imp * 0.4}%`, `${imp}%`, `${imp * 0.6}%`, `${imp}%`, `${imp * 0.4}%`] }}
+              transition={{ duration: 4 + i * 0.3, repeat: Infinity, ease: 'easeInOut', delay: i * 0.15 }}
               style={{ width: '100%', background: '#4285f420', borderRadius: '3px 3px 0 0' }}
             />
             <motion.div
-              initial={{ height: 0 }}
-              animate={{ height: `${clicks[i]}%` }}
-              transition={{ duration: 0.6, delay: 0.2 + i * 0.04, ease: 'easeOut' }}
+              animate={{ height: [`${clicks[i] * 0.4}%`, `${clicks[i]}%`, `${clicks[i] * 0.55}%`, `${clicks[i]}%`, `${clicks[i] * 0.4}%`] }}
+              transition={{ duration: 3.5 + i * 0.25, repeat: Infinity, ease: 'easeInOut', delay: 0.2 + i * 0.15 }}
               style={{ width: '100%', background: ACCENT, borderRadius: '3px 3px 0 0', marginTop: -4, position: 'relative' }}
             />
           </div>
@@ -112,9 +119,17 @@ function TagManagerWidget() {
               border: '1px solid #edf0f7',
             }}
           >
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: t.color, flexShrink: 0 }} />
+            <motion.span
+              animate={t.status === 'firing' ? { scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] } : {}}
+              transition={{ duration: 1.6 + i * 0.4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
+              style={{ width: 7, height: 7, borderRadius: '50%', background: t.color, flexShrink: 0, display: 'inline-block' }}
+            />
             <span style={{ fontSize: 11.5, color: '#2d3a52', flex: 1 }}>{t.name}</span>
-            <span style={{ fontSize: 9.5, color: t.color, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>{t.status.toUpperCase()}</span>
+            <motion.span
+              animate={t.status === 'firing' ? { opacity: [0.6, 1, 0.6] } : {}}
+              transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+              style={{ fontSize: 9.5, color: t.color, fontWeight: 700, fontFamily: 'var(--font-mono)' }}
+            >{t.status.toUpperCase()}</motion.span>
           </motion.div>
         ))}
       </div>
@@ -150,20 +165,23 @@ function AnalyticsWidget() {
           <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#46546e', flex: 1 }}>{e.name}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${(e.count / 541) * 80}px` }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
-              style={{ height: 6, background: ACCENT, borderRadius: 3, opacity: 0.7 }}
+              animate={{ width: [`${(e.count / 541) * 30}px`, `${(e.count / 541) * 80}px`, `${(e.count / 541) * 50}px`, `${(e.count / 541) * 80}px`, `${(e.count / 541) * 30}px`] }}
+              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
+              style={{ height: 6, background: ACCENT, borderRadius: 3, opacity: 0.8 }}
             />
             <span style={{ fontSize: 11, fontWeight: 700, color: '#0f2244', fontFamily: 'var(--font-mono)', minWidth: 28 }}>{e.count}</span>
-            <span style={{ fontSize: 10, color: '#34a853', fontWeight: 700 }}>+{e.change}</span>
+            <motion.span
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.3 }}
+              style={{ fontSize: 10, color: '#34a853', fontWeight: 700 }}
+            >+{e.change}</motion.span>
           </div>
         </div>
       ))}
-      {/* Funnel mini-chart */}
+      {/* Funnel mini-chart — bars pulse continuously */}
       <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid #e8edf7' }}>
         <div style={{ fontSize: 9.5, color: '#8896af', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>CONVERSION FUNNEL</div>
-        {[{ s: 'Organic visit', n: '4,280', w: 100 }, { s: 'Page engaged', n: '2,610', w: 61 }, { s: 'CTA clicked', n: '541', w: 26 }, { s: 'Lead converted', n: '184', w: 14 }].map((f) => (
+        {[{ s: 'Organic visit', n: '4,280', w: 100 }, { s: 'Page engaged', n: '2,610', w: 61 }, { s: 'CTA clicked', n: '541', w: 26 }, { s: 'Lead converted', n: '184', w: 14 }].map((f, fi) => (
           <div key={f.s} style={{ marginBottom: 6 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
               <span style={{ fontSize: 10, color: '#46546e' }}>{f.s}</span>
@@ -171,9 +189,8 @@ function AnalyticsWidget() {
             </div>
             <div style={{ height: 5, background: '#f0f4ff', borderRadius: 3, overflow: 'hidden' }}>
               <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${f.w}%` }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                animate={{ width: [`${f.w * 0.5}%`, `${f.w}%`, `${f.w * 0.7}%`, `${f.w}%`, `${f.w * 0.5}%`] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: fi * 0.4 }}
                 style={{ height: '100%', background: ACCENT, borderRadius: 3 }}
               />
             </div>

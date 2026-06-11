@@ -10,19 +10,26 @@ export type Capability = {
 
 export default function CapabilityGrid({ items }: { items: Capability[] }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 28 }}>
       {items.map((c) => (
         <div
           key={c.title}
-          className="card"
-          style={{ padding: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}
+          className="capability-card"
+          style={{
+            padding: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden',
+            borderRadius: 18,
+            border: '2px solid rgba(30,95,224,0.18)',
+            background: '#fff',
+            boxShadow: '0 4px 24px -6px rgba(30,95,224,0.10)',
+            transition: 'border-color 0.2s, box-shadow 0.2s, transform 0.2s',
+          }}
         >
-          <div style={{ position: 'relative', minHeight: 150, background: '#f4f8fc', borderBottom: '1px solid var(--line)' }}>
+          <div style={{ position: 'relative', minHeight: 180, background: 'linear-gradient(135deg, #f0f6ff 0%, #f8faff 100%)', borderBottom: '2px solid rgba(30,95,224,0.10)' }}>
             {c.preview}
           </div>
-          <div style={{ padding: 22, position: 'relative', zIndex: 1 }}>
-            <h3 style={{ fontSize: 18, marginBottom: 8, color: 'var(--text)' }}>{c.title}</h3>
-            <p className="text-soft" style={{ fontSize: 14, lineHeight: 1.55 }}>{c.desc}</p>
+          <div style={{ padding: 26, position: 'relative', zIndex: 1 }}>
+            <h3 style={{ fontSize: 19, marginBottom: 10, color: 'var(--text)', fontWeight: 700 }}>{c.title}</h3>
+            <p className="text-soft" style={{ fontSize: 14.5, lineHeight: 1.6 }}>{c.desc}</p>
           </div>
         </div>
       ))}

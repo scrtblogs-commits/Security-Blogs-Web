@@ -642,3 +642,40 @@ body::before {
   50%  { transform: translate(5vw,8vh) scale(1.08) }
   100% { transform: translate(0,  0)   scale(1)    }
 }
+
+/* ── Capability card hover lift ── */
+.capability-card:hover {
+  border-color: rgba(30,95,224,0.55) !important;
+  box-shadow: 0 8px 36px -8px rgba(30,95,224,0.22) !important;
+  transform: translateY(-3px) !important;
+}
+
+/* ── SeoTracking live bar animation ── */
+@keyframes tracking-bar-grow {
+  0%   { transform: scaleX(0.3); opacity: 0.6; }
+  50%  { transform: scaleX(1);   opacity: 1;   }
+  100% { transform: scaleX(0.3); opacity: 0.6; }
+}
+.tracking-bar-loop {
+  transform-origin: left;
+  animation: tracking-bar-grow 3s ease-in-out infinite;
+}
+
+/* ── Pulsing live dot on tracking widgets ── */
+@keyframes tracking-dot-pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52,168,83,0.5); }
+  50%     { opacity: 0.7; box-shadow: 0 0 0 5px rgba(52,168,83,0); }
+}
+.tracking-dot-live {
+  animation: tracking-dot-pulse 1.8s ease-in-out infinite;
+}
+
+/* ── Ticker number scroll ── */
+@keyframes ticker-scroll {
+  0%   { transform: translateY(0); }
+  20%  { transform: translateY(-100%); }
+  40%  { transform: translateY(-200%); }
+  60%  { transform: translateY(-300%); }
+  80%  { transform: translateY(-400%); }
+  100% { transform: translateY(0); }
+}
