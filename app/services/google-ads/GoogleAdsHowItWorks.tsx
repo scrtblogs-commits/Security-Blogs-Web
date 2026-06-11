@@ -3,258 +3,303 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
-/* ── Scene 1 — Audit & Keyword Research ── */
-function Scene1({ active, color }: { active: boolean; color: string }) {
+const G = { blue:'#4285f4', red:'#ea4335', yellow:'#fbbc04', green:'#34a853' }
+
+/* ── Scene 1: Audit & Keyword Research ── */
+function Scene1({ active }: { active: boolean; color: string }) {
   const kws = [
-    { kw: 'commercial cctv installer sydney', vol: '4.4K', cmp: 'HIGH' },
-    { kw: 'access control quote nsw',         vol: '2.1K', cmp: 'MED'  },
-    { kw: '24/7 monitored alarm business',    vol: '1.8K', cmp: 'HIGH' },
-    { kw: 'security camera installation cost',vol: '3.2K', cmp: 'MED'  },
-    { kw: 'intercom system office',           vol: '1.1K', cmp: 'LOW'  },
+    { kw:'commercial cctv installer sydney', vol:'4.4K', cmp:'HIGH', c:G.red   },
+    { kw:'access control quote nsw',         vol:'2.1K', cmp:'MED',  c:G.yellow },
+    { kw:'24/7 monitored alarm business',    vol:'1.8K', cmp:'HIGH', c:G.red   },
+    { kw:'security camera installation',     vol:'3.2K', cmp:'MED',  c:G.blue  },
+    { kw:'intercom system office',           vol:'1.1K', cmp:'LOW',  c:G.green },
   ]
+  const stats = [{ l:'Keywords', v:'2,840', c:G.blue }, { l:'Buyer intent', v:'347', c:G.green }, { l:'Negative', v:'92', c:G.red }]
+
   return (
-    <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
-        KEYWORD RESEARCH · BUYER INTENT AUDIT
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:8, padding:'10px 4px' }}>
+      <div style={{ display:'flex', gap:2, marginBottom:2 }}>
+        {[G.blue,G.red,G.yellow,G.green].map(c => <div key={c} style={{ flex:1, height:3, borderRadius:2, background:c }} />)}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 7, flex: 1 }}>
-        {kws.map((k, i) => (
-          <div key={k.kw} style={{
-            display: 'flex', alignItems: 'center', gap: 10,
-            padding: '9px 12px', borderRadius: 10,
-            background: i === 0 ? `${color}14` : 'rgba(15,34,68,0.04)',
-            border: `1px solid ${i === 0 ? color + '44' : 'rgba(15,34,68,0.07)'}`,
-            opacity: active ? 1 : 0.5,
-            transition: `opacity 0.4s ${i * 0.06}s`,
-          }}>
-            <span style={{ flex: 1, fontSize: 12.5, color: i === 0 ? color : 'rgba(15,34,68,0.7)', fontFamily: 'var(--font-mono)' }}>{k.kw}</span>
-            <span style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>{k.vol}/mo</span>
-            <span style={{
-              fontSize: 9.5, fontWeight: 700, padding: '2px 7px', borderRadius: 4,
-              background: k.cmp === 'HIGH' ? color : k.cmp === 'MED' ? '#f97316' : '#22c55e',
-              color: '#000',
-            }}>{k.cmp}</span>
-          </div>
+      <div style={{ fontSize:8, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)', color:G.blue }}>KEYWORD RESEARCH · BUYER INTENT</div>
+      <div style={{ display:'flex', flexDirection:'column', gap:5, flex:1 }}>
+        {kws.map((k,i) => (
+          <motion.div key={k.kw}
+            animate={{ opacity: active ? 1 : 0.3, x: active ? 0 : -10 }}
+            transition={{ duration:0.32, delay:i*0.06 }}
+            style={{ display:'flex', alignItems:'center', gap:8, padding:'6px 10px', borderRadius:9, background: i===0 ? `${k.c}15` : `${k.c}08`, border:`1.5px solid ${i===0 ? k.c+'50' : k.c+'25'}`, boxShadow: active && i===0 ? `0 3px 12px ${k.c}25` : 'none' }}>
+            <span style={{ flex:1, fontSize:11, color: i===0 ? k.c : 'rgba(15,34,68,0.7)', fontFamily:'var(--font-mono)', fontWeight: i===0 ? 700 : 400 }}>{k.kw}</span>
+            <span style={{ fontSize:10, color:'rgba(15,34,68,0.4)', fontFamily:'var(--font-mono)' }}>{k.vol}/mo</span>
+            <span style={{ fontSize:9, fontWeight:800, padding:'2px 6px', borderRadius:4, background:k.c, color:'#fff' }}>{k.cmp}</span>
+          </motion.div>
         ))}
       </div>
-      <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>
-        {[{ l: 'Keywords found', v: '2,840' }, { l: 'Buyer intent', v: '347' }, { l: 'Negative list', v: '92' }].map(m => (
-          <div key={m.l} style={{ flex: 1, padding: '10px 12px', borderRadius: 10, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.07)', textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 800, color, fontFamily: 'var(--font-mono)' }}>{m.v}</div>
-            <div style={{ fontSize: 10, color: 'rgba(15,34,68,0.4)', marginTop: 2 }}>{m.l}</div>
-          </div>
+      <div style={{ display:'flex', gap:6 }}>
+        {stats.map((m,i) => (
+          <motion.div key={m.l}
+            animate={{ opacity: active ? 1 : 0.3, scale: active ? 1 : 0.9 }}
+            transition={{ duration:0.35, delay:0.3+i*0.07 }}
+            style={{ flex:1, padding:'7px 6px', borderRadius:9, background:`${m.c}15`, border:`1.5px solid ${m.c}40`, textAlign:'center', boxShadow: active ? `0 3px 10px ${m.c}20` : 'none' }}>
+            <div style={{ fontSize:15, fontWeight:900, color:m.c, fontFamily:'var(--font-mono)' }}>{m.v}</div>
+            <div style={{ fontSize:8.5, color:'rgba(15,34,68,0.5)', marginTop:1 }}>{m.l}</div>
+          </motion.div>
         ))}
       </div>
     </div>
   )
 }
 
-/* ── Scene 2 — Build & Launch ── */
-function Scene2({ active, color }: { active: boolean; color: string }) {
+/* ── Scene 2: Build & Launch ── */
+function Scene2({ active }: { active: boolean; color: string }) {
   const adGroups = [
-    { name: 'CCTV Install', ads: 3, kws: 18 },
-    { name: 'Access Control', ads: 3, kws: 14 },
-    { name: 'Monitoring', ads: 2, kws: 11 },
+    { name:'CCTV Install',    ads:3, kws:18, c:G.blue  },
+    { name:'Access Control',  ads:3, kws:14, c:G.red   },
+    { name:'Monitoring',      ads:2, kws:11, c:G.green },
   ]
   return (
-    <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
-        CAMPAIGN STRUCTURE · LIVE
-      </div>
-      {/* Campaign box */}
-      <div style={{ borderRadius: 12, border: `1px solid ${color}44`, background: `${color}08`, padding: '12px 14px' }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color, marginBottom: 10, fontFamily: 'var(--font-mono)' }}>📢 Security Installers — Sydney</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 7, paddingLeft: 12 }}>
-          {adGroups.map((ag, i) => (
-            <div key={ag.name} style={{
-              display: 'flex', alignItems: 'center', gap: 10,
-              padding: '7px 10px', borderRadius: 8,
-              background: 'rgba(15,34,68,0.05)',
-              border: '1px solid rgba(15,34,68,0.08)',
-              opacity: active ? 1 : 0.5,
-              transition: `opacity 0.4s ${i * 0.1}s`,
-            }}>
-              <span style={{ flex: 1, fontSize: 12.5, color: 'rgba(15,34,68,0.8)' }}>{ag.name}</span>
-              <span style={{ fontSize: 10, color: color, fontFamily: 'var(--font-mono)' }}>{ag.ads} ads</span>
-              <span style={{ fontSize: 10, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>{ag.kws} kws</span>
-            </div>
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:10, padding:'10px 4px' }}>
+      <div style={{ fontSize:8, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)', color:G.red }}>CAMPAIGN STRUCTURE</div>
+      <div style={{ borderRadius:12, border:`2px solid ${G.blue}35`, background:`${G.blue}08`, padding:'10px 12px' }}>
+        <div style={{ fontSize:11.5, fontWeight:800, color:G.blue, marginBottom:8, fontFamily:'var(--font-mono)' }}>📢 Security Installers — Sydney</div>
+        <div style={{ display:'flex', flexDirection:'column', gap:6, paddingLeft:10 }}>
+          {adGroups.map((ag,i) => (
+            <motion.div key={ag.name}
+              animate={{ opacity: active ? 1 : 0.3, x: active ? 0 : -8 }}
+              transition={{ duration:0.3, delay:i*0.09 }}
+              style={{ display:'flex', alignItems:'center', gap:9, padding:'6px 10px', borderRadius:8, background:`${ag.c}12`, border:`1.5px solid ${ag.c}35`, boxShadow: active ? `0 2px 8px ${ag.c}20` : 'none' }}>
+              <span style={{ flex:1, fontSize:11.5, color:'rgba(15,34,68,0.8)', fontWeight:600 }}>{ag.name}</span>
+              <span style={{ fontSize:10, color:ag.c, fontFamily:'var(--font-mono)', fontWeight:700 }}>{ag.ads} ads</span>
+              <span style={{ fontSize:10, color:'rgba(15,34,68,0.45)', fontFamily:'var(--font-mono)' }}>{ag.kws} kws</span>
+            </motion.div>
           ))}
         </div>
       </div>
-      {/* Headline preview */}
-      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.08)' }}>
-        <div style={{ fontSize: 10, color: 'rgba(15,34,68,0.35)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>AD PREVIEW</div>
-        <div style={{ fontSize: 13, color: '#4ade80', fontWeight: 700 }}>securityblogs.com.au</div>
-        <div style={{ fontSize: 14, color, fontWeight: 700, margin: '4px 0' }}>Commercial CCTV Install Sydney | Free Site Survey</div>
-        <div style={{ fontSize: 12, color: 'rgba(15,34,68,0.55)' }}>AS2201 Certified · 500+ Installs · 24/7 Monitoring Available</div>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-        <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
-        <span style={{ fontSize: 11, color: '#22c55e', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Campaign live · conversion tracking active</span>
-      </div>
+      {/* Ad preview */}
+      <motion.div animate={{ opacity: active ? 1 : 0.35 }} transition={{ duration:0.4, delay:0.25 }}
+        style={{ padding:'10px 12px', borderRadius:12, background:'#fff', border:`1.5px solid ${G.blue}20`, boxShadow: active ? `0 4px 18px ${G.blue}14` : 'none' }}>
+        <div style={{ fontSize:9, color:'rgba(15,34,68,0.35)', fontFamily:'var(--font-mono)', marginBottom:6 }}>AD PREVIEW</div>
+        <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:4 }}>
+          <span style={{ fontSize:10.5, background:G.blue, color:'#fff', padding:'1px 6px', borderRadius:4, fontWeight:700 }}>Ad</span>
+          <span style={{ fontSize:11, color:G.green, fontFamily:'var(--font-mono)' }}>securityblogs.com.au</span>
+        </div>
+        <div style={{ fontSize:13.5, color:'#1a0dab', fontWeight:700, marginBottom:4 }}>Commercial CCTV Sydney | Free Site Survey</div>
+        <div style={{ fontSize:11.5, color:'rgba(15,34,68,0.55)', lineHeight:1.4 }}>AS2201 certified · 500+ businesses · 24/7 monitoring</div>
+      </motion.div>
+      <motion.div animate={{ opacity: active ? 1 : 0.3 }} transition={{ duration:0.3, delay:0.45 }}
+        style={{ display:'flex', alignItems:'center', gap:6 }}>
+        <motion.span animate={{ scale: active ? [1,1.4,1] : 1 }} transition={{ duration:1, repeat:Infinity }} style={{ width:7, height:7, borderRadius:'50%', background:G.green, display:'inline-block' }} />
+        <span style={{ fontSize:10, color:G.green, fontFamily:'var(--font-mono)', fontWeight:700 }}>Campaign live · conversion tracking active</span>
+      </motion.div>
     </div>
   )
 }
 
-/* ── Scene 3 — Optimise & Scale ── */
-function Scene3({ active, color }: { active: boolean; color: string }) {
-  const weeks = [38, 44, 51, 47, 58, 63, 71, 68, 82, 79, 91, 96]
-  const cpcs   = [18, 17, 16, 17, 15, 14, 13, 14, 12, 12, 11, 10]
-  const maxCpc = 18
-  return (
-    <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 4 }}>
-        OPTIMISATION · 12 WEEKS
-      </div>
-      {/* ROAS chart */}
-      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.08)', flex: 1 }}>
-        <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 10 }}>ROAS — rising week on week</div>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 90 }}>
-          {weeks.map((w, i) => (
-            <div key={i} style={{
-              flex: 1, height: active ? `${w}%` : '20%', borderRadius: '4px 4px 2px 2px',
-              background: `linear-gradient(180deg, ${color}, ${color}55)`,
-              transition: `height 0.5s ${i * 0.04}s ease-out`,
-            }} />
-          ))}
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)', marginTop: 6 }}>
-          <span>W1 · 1.8×</span><span>W6 · 2.4×</span><span>W12 · 3.2×</span>
-        </div>
-      </div>
-      {/* CPC chart */}
-      <div style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.08)' }}>
-        <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>CPC — falling as quality improves</div>
-        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 52 }}>
-          {cpcs.map((c, i) => (
-            <div key={i} style={{
-              flex: 1, height: active ? `${(c / maxCpc) * 100}%` : '80%', borderRadius: '4px 4px 2px 2px',
-              background: '#22c55e55',
-              transition: `height 0.5s ${i * 0.04}s ease-out`,
-            }} />
-          ))}
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)', marginTop: 5 }}>
-          <span>$18</span><span>$14</span><span>$10 ↓</span>
-        </div>
-      </div>
-    </div>
-  )
-}
+/* ── Scene 3: Optimise & Scale ── */
+function Scene3({ active }: { active: boolean; color: string }) {
+  const [roas, setRoas] = useState(1.8)
+  const [cpc, setCpc] = useState(18)
+  useEffect(() => {
+    if (!active) { setRoas(1.8); setCpc(18); return }
+    const ir = setInterval(() => setRoas(v => v < 3.2 ? +(v + 0.05).toFixed(2) : v), 60)
+    const ic = setInterval(() => setCpc(v => v > 10 ? v - 1 : v), 120)
+    return () => { clearInterval(ir); clearInterval(ic) }
+  }, [active])
 
-/* ── Scene 4 — Report & Refine ── */
-function Scene4({ active, color }: { active: boolean; color: string }) {
-  const metrics = [
-    { l: 'Conversions', v: '184', d: '+46 vs last month', pos: true },
-    { l: 'Cost per lead', v: '$28', d: '−$9 vs last month', pos: true },
-    { l: 'ROAS', v: '3.2×', d: '+0.8× vs last month', pos: true },
-    { l: 'Impression share', v: '92%', d: '+14pp vs last month', pos: true },
-  ]
+  const weeks = [38,44,51,47,58,63,71,68,82,79,91,96]
+
   return (
-    <div style={{ position: 'absolute', inset: 0, padding: '52px 36px 28px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em' }}>
-          MONTHLY REPORT · MAY 2026
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:8, padding:'10px 4px' }}>
+      <div style={{ fontSize:8, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)', color:G.green }}>12-WEEK OPTIMISATION</div>
+      {/* ROAS meter */}
+      <div style={{ display:'flex', gap:10, alignItems:'center', padding:'8px 12px', background:`${G.green}12`, border:`1.5px solid ${G.green}40`, borderRadius:10, boxShadow: active ? `0 3px 14px ${G.green}22` : 'none' }}>
+        <div>
+          <div style={{ fontSize:9, color:'rgba(15,34,68,0.45)' }}>ROAS</div>
+          <motion.div animate={{ color: roas >= 3 ? G.green : roas >= 2.5 ? G.yellow : G.red }}
+            style={{ fontSize:28, fontWeight:900, fontFamily:'var(--font-mono)', lineHeight:1 }}>
+            {roas.toFixed(1)}×
+          </motion.div>
+          <div style={{ fontSize:9, color:G.green, fontWeight:700 }}>↑ rising</div>
         </div>
-        <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', padding: '3px 8px', borderRadius: 5, background: `${color}18`, border: `1px solid ${color}44`, color }}>PDF READY</span>
-      </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-        {metrics.map((m, i) => (
-          <div key={m.l} style={{
-            padding: '12px 14px', borderRadius: 12,
-            background: 'rgba(15,34,68,0.04)',
-            border: '1px solid rgba(15,34,68,0.07)',
-            opacity: active ? 1 : 0.4,
-            transition: `opacity 0.4s ${i * 0.1}s`,
-          }}>
-            <div style={{ fontSize: 10, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)', marginBottom: 5 }}>{m.l}</div>
-            <div style={{ fontSize: 24, fontWeight: 800, color, fontFamily: 'var(--font-mono)', lineHeight: 1 }}>{m.v}</div>
-            <div style={{ fontSize: 10.5, color: '#22c55e', fontWeight: 600, marginTop: 4 }}>▲ {m.d}</div>
+        <div style={{ flex:1 }}>
+          <div style={{ display:'flex', alignItems:'flex-end', gap:3, height:50 }}>
+            {weeks.map((w,i) => (
+              <motion.div key={i}
+                animate={{ height: active ? `${w}%` : '15%' }}
+                transition={{ duration:0.55, delay:i*0.04 }}
+                style={{ flex:1, borderRadius:'3px 3px 0 0', background:`linear-gradient(180deg, ${G.green}, ${G.green}66)`, boxShadow: active ? `0 0 5px ${G.green}35` : 'none' }} />
+            ))}
           </div>
+          <div style={{ display:'flex', justifyContent:'space-between', fontSize:8, color:'rgba(15,34,68,0.3)', fontFamily:'var(--font-mono)', marginTop:3 }}>
+            <span>W1 1.8×</span><span>W6 2.4×</span><span>W12 3.2×</span>
+          </div>
+        </div>
+      </div>
+      {/* CPC + Quality Score */}
+      <div style={{ display:'flex', gap:7 }}>
+        {[
+          { l:'Avg CPC', v:`$${cpc}`, d:'↓ falling', c:G.blue },
+          { l:'Quality Score', v:'9/10', d:'↑ excellent', c:G.yellow },
+          { l:'Conv Rate', v:'6.8%', d:'↑ optimised', c:G.red },
+        ].map((m,i) => (
+          <motion.div key={m.l}
+            animate={{ opacity: active ? 1 : 0.3, y: active ? 0 : 6 }}
+            transition={{ duration:0.35, delay:0.2+i*0.08 }}
+            style={{ flex:1, padding:'7px 6px', background:`${m.c}12`, border:`1.5px solid ${m.c}40`, borderRadius:9, textAlign:'center', boxShadow: active ? `0 3px 10px ${m.c}20` : 'none' }}>
+            <div style={{ fontSize:9, color:'rgba(15,34,68,0.45)', marginBottom:2 }}>{m.l}</div>
+            <div style={{ fontSize:14, fontWeight:900, color:m.c, fontFamily:'var(--font-mono)' }}>{m.v}</div>
+            <div style={{ fontSize:8.5, color:m.c, fontWeight:700 }}>{m.d}</div>
+          </motion.div>
         ))}
       </div>
-      {/* Insight strip */}
-      <div style={{ marginTop: 4, padding: '12px 14px', borderRadius: 12, background: `${color}0a`, border: `1px solid ${color}30` }}>
-        <div style={{ fontSize: 11, color, fontWeight: 700, fontFamily: 'var(--font-mono)', marginBottom: 5 }}>💡 INSIGHT THIS MONTH</div>
-        <p style={{ fontSize: 12, color: 'rgba(15,34,68,0.65)', lineHeight: 1.5, margin: 0 }}>
-          "Intruder alarm" +broad drove 23 irrelevant clicks. Moved to EXACT and reallocated $180 to CCTV campaigns. Expect CPL to drop further next month.
-        </p>
+    </div>
+  )
+}
+
+/* ── Scene 4: Report & Refine ── */
+function Scene4({ active }: { active: boolean; color: string }) {
+  const [conversions, setConversions] = useState(0)
+  useEffect(() => {
+    if (!active) { setConversions(0); return }
+    const iv = setInterval(() => setConversions(v => v < 184 ? v + 3 : v), 30)
+    return () => clearInterval(iv)
+  }, [active])
+
+  const metrics = [
+    { l:'Conversions', v:conversions, suffix:'',    d:'+46 vs last', c:G.blue  },
+    { l:'Cost/lead',   v:'$28',  suffix:'', d:'−$9 vs last',  c:G.green, s:true },
+    { l:'ROAS',        v:'3.2×', suffix:'', d:'+0.8× vs last',c:G.yellow, s:true },
+    { l:'Impr. share', v:'92%',  suffix:'', d:'+14pp vs last',c:G.red, s:true  },
+  ]
+
+  return (
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:8, padding:'10px 4px' }}>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontSize:8, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)', color:G.red }}>MONTHLY REPORT</div>
+        <motion.div animate={{ background: active ? `${G.blue}18` : 'rgba(15,34,68,0.05)', color: active ? G.blue : 'rgba(15,34,68,0.35)' }} transition={{ duration:0.4 }}
+          style={{ padding:'3px 8px', borderRadius:5, border:`1px solid ${G.blue}35`, fontSize:9, fontFamily:'var(--font-mono)', fontWeight:700 }}>PDF READY</motion.div>
       </div>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:7 }}>
+        {metrics.map((m,i) => (
+          <motion.div key={m.l}
+            animate={{ opacity: active ? 1 : 0.3, scale: active ? 1 : 0.9 }}
+            transition={{ duration:0.35, delay:i*0.08 }}
+            style={{ padding:'10px 12px', borderRadius:12, background:`${m.c}12`, border:`1.5px solid ${m.c}40`, boxShadow: active ? `0 4px 14px ${m.c}20` : 'none' }}>
+            <div style={{ fontSize:9, color:'rgba(15,34,68,0.45)', fontFamily:'var(--font-mono)', marginBottom:4 }}>{m.l}</div>
+            <div style={{ fontSize:22, fontWeight:900, color:m.c, fontFamily:'var(--font-mono)', lineHeight:1 }}>{m.s ? m.v : m.v}</div>
+            <div style={{ fontSize:9.5, color:G.green, fontWeight:700, marginTop:3 }}>▲ {m.d}</div>
+          </motion.div>
+        ))}
+      </div>
+      <motion.div animate={{ opacity: active ? 1 : 0.35 }} transition={{ duration:0.4, delay:0.35 }}
+        style={{ padding:'10px 12px', borderRadius:11, background:`${G.yellow}12`, border:`1.5px solid ${G.yellow}45` }}>
+        <div style={{ fontSize:10, color:G.yellow, fontWeight:800, fontFamily:'var(--font-mono)', marginBottom:4 }}>💡 INSIGHT THIS MONTH</div>
+        <p style={{ fontSize:11, color:'rgba(15,34,68,0.65)', lineHeight:1.5, margin:0 }}>
+          "Intruder alarm" +broad drove irrelevant clicks. Shifted to EXACT, reallocated $180 to CCTV. CPL expected ↓ further.
+        </p>
+      </motion.div>
     </div>
   )
 }
 
 const STEPS: WorkflowStep[] = [
-  { step: '01', tag: 'RESEARCH', title: 'Audit & Keyword Research', color: '#4285f4', glow: 'rgba(66,133,244,0.45)', Scene: Scene1 },
-  { step: '02', tag: 'LAUNCH',   title: 'Build & Launch',           color: '#fa7b17', glow: 'rgba(250,123,23,0.45)', Scene: Scene2 },
-  { step: '03', tag: 'OPTIMISE', title: 'Optimise & Scale',         color: '#34a853', glow: 'rgba(52,168,83,0.45)',  Scene: Scene3 },
-  { step: '04', tag: 'REPORT',   title: 'Report & Refine',          color: '#fbbc04', glow: 'rgba(251,188,4,0.45)', Scene: Scene4 },
+  { step:'01', tag:'RESEARCH', title:'Audit & Keyword Research', color:'#4285f4', glow:'rgba(66,133,244,0.5)',  Scene: Scene1 },
+  { step:'02', tag:'LAUNCH',   title:'Build & Launch',          color:'#ea4335', glow:'rgba(234,67,53,0.5)',   Scene: Scene2 },
+  { step:'03', tag:'OPTIMISE', title:'Optimise & Scale',        color:'#34a853', glow:'rgba(52,168,83,0.5)',   Scene: Scene3 },
+  { step:'04', tag:'REPORT',   title:'Report & Refine',         color:'#fbbc04', glow:'rgba(251,188,4,0.5)',   Scene: Scene4 },
 ]
 
-// ─── Google Ads animated intro: PPC ad with live click counter ───────────────
+/* ── Intro Scene ── */
 function GoogleAdsIntroScene() {
   const [clicks, setClicks] = useState(0)
-  const [roas, setRoas] = useState(0)
-  const [cursorPos, setCursorPos] = useState({ x: 50, y: 80 })
+  const [roas, setRoas] = useState(1.0)
+  const [funnel, setFunnel] = useState(0)
+
   useEffect(() => {
-    const iv = setInterval(() => {
-      setClicks(v => v + 1)
-      setRoas(v => Math.min(320, v + 4))
-      setCursorPos({ x: 45 + Math.random() * 10, y: 55 + Math.random() * 10 })
-    }, 800)
-    return () => clearInterval(iv)
+    const ic = setInterval(() => setClicks(v => v + 1), 900)
+    const ir = setInterval(() => setRoas(v => v < 3.2 ? +(v + 0.08).toFixed(1) : v), 150)
+    const iff = setInterval(() => setFunnel(v => Math.min(v + 1, 3)), 600)
+    return () => { clearInterval(ic); clearInterval(ir); clearInterval(iff) }
   }, [])
 
-  return (
-    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f8f9ff 0%, #fafbff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 500, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(26,115,232,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+  const funnelSteps = [
+    { l:'Impressions', v:'18,400', c:G.blue  },
+    { l:'Clicks',      v:'842',   c:G.yellow },
+    { l:'Leads',       v:'57',    c:G.green  },
+  ]
 
-      {/* Google Ads search ad mockup */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}
-        style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: 500, background: '#fff', borderRadius: 16, padding: '18px 20px', boxShadow: '0 4px 24px rgba(26,115,232,0.1)', border: '1.5px solid rgba(26,115,232,0.12)' }}>
-        {/* Ad badge */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <span style={{ fontSize: 10.5, background: '#1a73e8', color: '#fff', padding: '1px 6px', borderRadius: 4, fontWeight: 700 }}>Ad</span>
-          <span style={{ fontSize: 11, color: '#188038', fontFamily: 'var(--font-mono)' }}>securityblogs.com.au</span>
-          <motion.span animate={{ scale: [1,1.2,1] }} transition={{ duration: 0.8, repeat: Infinity, delay: clicks * 0.8 }} style={{ marginLeft: 'auto', fontSize: 13 }}>👆</motion.span>
+  return (
+    <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, #f8f9ff 0%, #fafbff 100%)', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center' }}>
+      <div style={{ position:'absolute', top:'35%', left:'40%', width:600, height:500, borderRadius:'50%', background:`radial-gradient(ellipse, ${G.blue}10 0%, transparent 65%)`, pointerEvents:'none' }} />
+
+      {/* Google Ads search ad */}
+      <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.3, duration:0.5 }}
+        style={{ position:'absolute', top:'8%', left:'50%', transform:'translateX(-50%)', width:520, background:'#fff', borderRadius:18, padding:'18px 22px', boxShadow:`0 8px 40px ${G.blue}14`, border:`2px solid ${G.blue}14` }}>
+        {/* Color bar */}
+        <div style={{ display:'flex', gap:2, marginBottom:10 }}>
+          {[G.blue,G.red,G.yellow,G.green].map(c => <div key={c} style={{ flex:1, height:3, borderRadius:2, background:c }} />)}
         </div>
-        <div style={{ fontSize: 17, fontWeight: 700, color: '#1a0dab', marginBottom: 6, lineHeight: 1.3 }}>
-          Commercial CCTV Sydney | 24/7 Security From $49/mo
+        <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:8 }}>
+          <span style={{ fontSize:11, background:G.blue, color:'#fff', padding:'2px 7px', borderRadius:4, fontWeight:700 }}>Ad</span>
+          <span style={{ fontSize:11.5, color:G.green, fontFamily:'var(--font-mono)' }}>securityblogs.com.au</span>
+          <motion.span animate={{ x: clicks % 2 === 0 ? 0 : 2, y: clicks % 2 === 0 ? 0 : -1 }} style={{ marginLeft:'auto', fontSize:16 }}>👆</motion.span>
         </div>
-        <div style={{ fontSize: 12.5, color: '#46546e', lineHeight: 1.5 }}>
+        <div style={{ fontSize:17, fontWeight:700, color:'#1a0dab', marginBottom:6, lineHeight:1.3 }}>
+          Commercial CCTV Sydney · 24/7 Security From $49/mo
+        </div>
+        <div style={{ fontSize:12.5, color:'rgba(15,34,68,0.6)', lineHeight:1.5 }}>
           AS2201 certified · 500+ businesses protected · Free site survey for NSW businesses
         </div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
-          {['Get Free Quote', 'CCTV Systems', 'Access Control', 'Contact'].map(sl => (
-            <span key={sl} style={{ fontSize: 11, color: '#1a73e8', textDecoration: 'underline', cursor: 'default' }}>{sl}</span>
+        <div style={{ display:'flex', gap:8, marginTop:10, flexWrap:'wrap' }}>
+          {['Get Free Quote','CCTV Systems','Access Control','Contact'].map((sl,i) => (
+            <span key={sl} style={{ fontSize:11.5, color:G.blue, textDecoration:'underline', cursor:'default' }}>{sl}</span>
           ))}
         </div>
       </motion.div>
 
-      {/* Live stats */}
-      <div style={{ position: 'absolute', top: '52%', left: '50%', transform: 'translateX(-50%)', width: 500, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-        {[
-          { label: 'Clicks Today', value: clicks, suffix: '', color: '#1a73e8' },
-          { label: 'ROAS', value: roas, suffix: '%', color: '#0f9d58' },
-          { label: 'Avg CPC', value: '$4.20', suffix: '', color: '#f29900', static: true },
-        ].map((m, i) => (
-          <motion.div key={m.label} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 + i * 0.15 }}
-            style={{ background: '#fff', borderRadius: 14, padding: '14px', textAlign: 'center', border: `1.5px solid ${m.color}20`, boxShadow: `0 3px 12px ${m.color}10` }}>
-            <div style={{ fontSize: 10.5, color: '#46546e', marginBottom: 4 }}>{m.label}</div>
-            <div style={{ fontSize: 20, fontWeight: 900, color: m.color, fontFamily: 'var(--font-mono)' }}>{m.static ? m.value : m.value}{m.suffix}</div>
+      {/* Funnel */}
+      <div style={{ position:'absolute', top:'54%', left:'50%', transform:'translateX(-50%)', width:520, display:'flex', gap:10, alignItems:'stretch' }}>
+        {funnelSteps.map((s,i) => (
+          <motion.div key={s.l}
+            initial={{ opacity:0, scale:0.8 }}
+            animate={funnel > i ? { opacity:1, scale:1 } : {}}
+            transition={{ duration:0.4, type:'spring', stiffness:180 }}
+            style={{ flex:1, background:'#fff', border:`2px solid ${s.c}30`, borderRadius:14, padding:'12px 10px', textAlign:'center', boxShadow:`0 4px 18px ${s.c}14` }}>
+            <div style={{ fontSize:10, color:'rgba(15,34,68,0.45)', marginBottom:4 }}>{s.l}</div>
+            <div style={{ fontSize:20, fontWeight:900, color:s.c, fontFamily:'var(--font-mono)' }}>{s.v}</div>
+            {i < 2 && <motion.div animate={{ x:[0,3,0] }} transition={{ duration:0.8, repeat:Infinity }} style={{ fontSize:14, color:s.c, marginTop:3 }}>→</motion.div>}
           </motion.div>
         ))}
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 320 }}>
-        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#1a73e8', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
-        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', lineHeight: 1.2, marginBottom: 12 }}>Turn Clicks into<br /><span style={{ color: '#1a73e8' }}>Security Contracts</span></h2>
-        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
-          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(26,115,232,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#1a73e8' }} />
+      {/* Live ROAS badge */}
+      <motion.div initial={{ opacity:0, x:40 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.6 }}
+        style={{ position:'absolute', top:'18%', right:'4%', background:`linear-gradient(135deg, ${G.green}, #1e7e34)`, borderRadius:16, padding:'12px 18px', textAlign:'center', boxShadow:`0 8px 30px ${G.green}40` }}>
+        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.8)', letterSpacing:'0.1em', marginBottom:3 }}>LIVE ROAS</div>
+        <div style={{ fontSize:32, fontWeight:900, color:'#fff', fontFamily:'var(--font-mono)', lineHeight:1 }}>{roas}×</div>
+        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.75)', marginTop:3 }}>return on ad spend</div>
+      </motion.div>
+
+      {/* Click counter */}
+      <motion.div initial={{ opacity:0, x:-40 }} animate={{ opacity:1, x:0 }} transition={{ delay:0.5 }}
+        style={{ position:'absolute', top:'30%', left:'4%', background:`linear-gradient(135deg, ${G.blue}, #1557b0)`, borderRadius:16, padding:'12px 18px', textAlign:'center', boxShadow:`0 8px 30px ${G.blue}40` }}>
+        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.8)', letterSpacing:'0.1em', marginBottom:3 }}>CLICKS TODAY</div>
+        <div style={{ fontSize:32, fontWeight:900, color:'#fff', fontFamily:'var(--font-mono)', lineHeight:1 }}>{clicks}</div>
+        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.75)', marginTop:3 }}>live counter</div>
+      </motion.div>
+
+      <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.8, delay:0.2 }}
+        style={{ textAlign:'center', zIndex:10, position:'relative', marginTop:340 }}>
+        <div style={{ display:'flex', gap:3, justifyContent:'center', marginBottom:10 }}>
+          {'Google'.split('').map((l,i) => <span key={i} style={{ fontSize:13, fontWeight:900, color:[G.blue,G.red,G.yellow,G.blue,G.green,G.red][i] }}>{l}</span>)}
+          <span style={{ fontSize:13, fontWeight:900, color:'rgba(15,34,68,0.6)' }}>&nbsp;Ads</span>
+        </div>
+        <h2 style={{ fontSize:'clamp(24px,3.5vw,40px)', fontWeight:800, color:'#0f2244', lineHeight:1.2, marginBottom:12 }}>Turn Clicks into<br /><span style={{ color:G.blue }}>Security Contracts</span></h2>
+        <motion.div animate={{ y:[0,7,0] }} transition={{ duration:1.8, repeat:Infinity }}
+          style={{ marginTop:18, display:'flex', flexDirection:'column', alignItems:'center', gap:6, opacity:0.7 }}>
+          <div style={{ width:24, height:38, borderRadius:12, border:`2px solid ${G.blue}55`, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingTop:5 }}>
+            <motion.div animate={{ y:[0,10,0] }} transition={{ duration:1.8, repeat:Infinity }} style={{ width:4, height:8, borderRadius:2, background:G.blue }} />
           </div>
-          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#1a73e8', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+          <span style={{ fontSize:10, fontFamily:'var(--font-mono)', color:G.blue, letterSpacing:'0.14em' }}>SCROLL TO BEGIN</span>
         </motion.div>
       </motion.div>
     </div>

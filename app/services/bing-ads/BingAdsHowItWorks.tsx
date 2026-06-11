@@ -3,316 +3,279 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
-/* ── Scene 1 — Import & Audit ── */
-function Scene1({ active, color }: { active: boolean; color: string }) {
+const B = { blue:'#0078d4', li:'#0a66c2', green:'#107c10', purple:'#5c2d91', sky:'#00b4d8' }
+
+/* ── Scene 1: Import & Audit ── */
+function Scene1({ active }: { active: boolean; color: string }) {
+  const checks = ['Keyword gaps', 'Bid strategy', 'Quality Scores', 'Audience gaps']
   return (
-    <div style={{ position: 'absolute', inset: 0, padding: 36, display: 'flex', flexDirection: 'column', gap: 20 }}>
-      <div style={{ fontSize: 11, color: 'rgba(120,160,255,0.5)', fontFamily: 'var(--font-mono)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-        Campaign Migration
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        {/* Google box */}
-        <div style={{
-          flex: 1, background: 'rgba(15,34,68,0.04)', border: '1px solid rgba(15,34,68,0.1)',
-          borderRadius: 16, padding: 18, textAlign: 'center',
-        }}>
-          <div style={{ fontSize: 28, marginBottom: 8 }}>🔴</div>
-          <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(15,34,68,0.7)' }}>Google Ads</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(15,34,68,0.35)', marginTop: 4 }}>existing structure</div>
-          <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {['12 campaigns', '84 ad groups', '340 keywords'].map(t => (
-              <div key={t} style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.4)', background: 'rgba(15,34,68,0.04)', borderRadius: 6, padding: '3px 8px' }}>{t}</div>
-            ))}
-          </div>
-        </div>
-
-        {/* Arrow */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 48, height: 2, background: `linear-gradient(90deg, rgba(15,34,68,0.1), ${color})` }} />
-          <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: active ? color : 'rgba(15,34,68,0.3)', transition: 'color 0.4s', textAlign: 'center' }}>IMPORT→<br />RE-TUNE</div>
-          <div style={{ width: 48, height: 2, background: `linear-gradient(90deg, ${color}, rgba(15,34,68,0.1))` }} />
-        </div>
-
-        {/* Microsoft box */}
-        <div style={{
-          flex: 1, background: active ? `${color}12` : 'rgba(15,34,68,0.04)',
-          border: `1px solid ${active ? color + '44' : 'rgba(15,34,68,0.1)'}`,
-          borderRadius: 16, padding: 18, textAlign: 'center',
-          transition: 'all 0.4s ease', boxShadow: active ? `0 0 30px -8px ${color}55` : 'none',
-        }}>
-          <div style={{ fontSize: 28, marginBottom: 8 }}>🔷</div>
-          <div style={{ fontSize: 12, fontWeight: 700, color: active ? color : 'rgba(15,34,68,0.7)', transition: 'color 0.4s' }}>Microsoft Ads</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'rgba(15,34,68,0.35)', marginTop: 4 }}>B2B optimised</div>
-          <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {['12 campaigns ✓', '84 ad groups ✓', '+ LinkedIn layer'].map(t => (
-              <div key={t} style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: active ? color : 'rgba(15,34,68,0.4)', background: active ? `${color}12` : 'rgba(15,34,68,0.04)', borderRadius: 6, padding: '3px 8px', transition: 'all 0.4s' }}>{t}</div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Audit checklist */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
-        {['Keyword gaps', 'Bid strategy', 'QS scores', 'Audience gaps'].map(item => (
-          <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 11, color: 'rgba(15,34,68,0.55)' }}>
-            <span style={{ width: 16, height: 16, borderRadius: '50%', background: active ? color : 'rgba(15,34,68,0.1)', color: '#0f2244', fontSize: 9, display: 'grid', placeItems: 'center', transition: 'background 0.4s', flexShrink: 0 }}>✓</span>
-            {item}
-          </div>
-        ))}
-      </div>
-
-      <div style={{ padding: '10px 16px', background: active ? `${color}14` : 'rgba(15,34,68,0.03)', border: `1px solid ${active ? color + '30' : 'rgba(15,34,68,0.07)'}`, borderRadius: 12, fontSize: 12, color: active ? 'rgba(15,34,68,0.7)' : 'rgba(15,34,68,0.35)', transition: 'all 0.4s' }}>
-        Running start — no rebuilding from zero.
-      </div>
-    </div>
-  )
-}
-
-/* ── Scene 2 — Layer LinkedIn Targeting ── */
-function Scene2({ active, color }: { active: boolean; color: string }) {
-  const rows = [
-    { label: 'Job title', value: 'Security Manager, Facilities Dir' },
-    { label: 'Industry', value: 'Physical Security · Logistics' },
-    { label: 'Company size', value: '50–500 employees' },
-    { label: 'Seniority', value: 'Manager, Director, VP' },
-  ]
-  return (
-    <div style={{ position: 'absolute', inset: 0, padding: 36, display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <span style={{ width: 30, height: 30, borderRadius: 8, background: '#0a66c2', color: '#0f2244', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: 14, flexShrink: 0 }}>in</span>
-        <div>
-          <div style={{ fontSize: 14, fontWeight: 700, color: '#0f2244' }}>LinkedIn Profile Targeting</div>
-          <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>Microsoft × LinkedIn data</div>
-        </div>
-        <div style={{ marginLeft: 'auto', padding: '4px 12px', borderRadius: 999, background: active ? `${color}20` : 'rgba(15,34,68,0.05)', border: `1px solid ${active ? color + '44' : 'rgba(15,34,68,0.1)'}`, fontSize: 10, fontFamily: 'var(--font-mono)', color: active ? color : 'rgba(15,34,68,0.35)', transition: 'all 0.4s' }}>
-          LIVE
-        </div>
-      </div>
-
-      {/* Targeting rows */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {rows.map((r, i) => (
-          <div key={r.label} style={{
-            padding: '10px 14px', background: active ? `${color}0d` : 'rgba(15,34,68,0.03)',
-            border: `1px solid ${active ? color + '25' : 'rgba(15,34,68,0.07)'}`,
-            borderRadius: 12, display: 'flex', alignItems: 'center', gap: 12,
-            transition: `all 0.4s ease ${i * 0.06}s`,
-          }}>
-            <span style={{ width: 72, fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', textTransform: 'uppercase', letterSpacing: 0.5, flexShrink: 0 }}>{r.label}</span>
-            <span style={{ flex: 1, fontSize: 12, color: active ? 'rgba(15,34,68,0.85)' : 'rgba(15,34,68,0.4)', transition: 'color 0.4s' }}>{r.value}</span>
-            <span style={{ width: 18, height: 18, borderRadius: '50%', background: active ? color : 'rgba(15,34,68,0.08)', color: '#0f2244', fontSize: 9, display: 'grid', placeItems: 'center', transition: 'background 0.4s', flexShrink: 0 }}>✓</span>
-          </div>
-        ))}
-      </div>
-
-      <div style={{
-        marginTop: 4, padding: '12px 16px', borderRadius: 14,
-        background: active ? `${color}14` : 'rgba(15,34,68,0.04)',
-        border: `1px solid ${active ? color + '30' : 'rgba(15,34,68,0.07)'}`,
-        transition: 'all 0.4s',
-      }}>
-        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700, color: active ? color : 'rgba(15,34,68,0.4)', transition: 'color 0.4s' }}>~ 28,400 matched buyers</span>
-        <span style={{ fontSize: 11, color: 'rgba(15,34,68,0.35)', marginLeft: 10 }}>within your campaign targeting</span>
-      </div>
-
-      <div style={{ fontSize: 12, color: 'rgba(15,34,68,0.4)', lineHeight: 1.5 }}>
-        Only available on Microsoft Advertising — the unfair advantage Google cannot replicate.
-      </div>
-    </div>
-  )
-}
-
-/* ── Scene 3 — Launch & Track ── */
-function Scene3({ active, color }: { active: boolean; color: string }) {
-  const conversions = [
-    { label: 'Form submitted', time: '2m ago', value: '$480 LTV' },
-    { label: 'Quote requested', time: '11m ago', value: '$1,200 LTV' },
-    { label: 'Phone call (3:42)', time: '28m ago', value: '$860 LTV' },
-    { label: 'Demo booked', time: '1h ago', value: '$2,400 LTV' },
-  ]
-  return (
-    <div style={{ position: 'absolute', inset: 0, padding: 36, display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <div style={{ fontSize: 11, color: 'rgba(120,160,255,0.5)', fontFamily: 'var(--font-mono)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-        Live Conversion Feed
-      </div>
-
-      {/* Status bar */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-        {[
-          { label: 'Microsoft UET', status: 'ACTIVE' },
-          { label: 'MS Clarity', status: 'RECORDING' },
-          { label: 'Call Tracking', status: 'LIVE' },
-        ].map(s => (
-          <div key={s.label} style={{
-            padding: '8px 10px', background: active ? `${color}10` : 'rgba(15,34,68,0.03)',
-            border: `1px solid ${active ? color + '25' : 'rgba(15,34,68,0.07)'}`,
-            borderRadius: 10, textAlign: 'center', transition: 'all 0.4s',
-          }}>
-            <div style={{ fontSize: 8, fontFamily: 'var(--font-mono)', color: active ? color : 'rgba(15,34,68,0.3)', letterSpacing: '0.08em', marginBottom: 3, transition: 'color 0.4s' }}>
-              {active ? '● ' : '○ '}{s.status}
-            </div>
-            <div style={{ fontSize: 9.5, color: 'rgba(15,34,68,0.55)' }}>{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Conversion feed */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {conversions.map((c, i) => (
-          <div key={c.label} style={{
-            display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px',
-            background: i === 0 && active ? `${color}14` : 'rgba(15,34,68,0.03)',
-            border: `1px solid ${i === 0 && active ? color + '35' : 'rgba(15,34,68,0.06)'}`,
-            borderRadius: 12, transition: `all 0.4s ease ${i * 0.05}s`,
-          }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: i === 0 && active ? color : 'rgba(15,34,68,0.15)', flexShrink: 0, transition: 'background 0.4s' }} />
-            <span style={{ flex: 1, fontSize: 12, color: 'rgba(15,34,68,0.7)' }}>{c.label}</span>
-            <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.3)' }}>{c.time}</span>
-            <span style={{ fontSize: 11, fontFamily: 'var(--font-mono)', fontWeight: 700, color: active ? '#22c55e' : 'rgba(15,34,68,0.3)', transition: 'color 0.4s' }}>{c.value}</span>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ padding: '10px 16px', background: active ? 'rgba(34,197,94,0.1)' : 'rgba(15,34,68,0.03)', border: `1px solid ${active ? 'rgba(34,197,94,0.25)' : 'rgba(15,34,68,0.07)'}`, borderRadius: 12, fontSize: 12, color: active ? '#22c55e' : 'rgba(15,34,68,0.35)', fontWeight: 600, transition: 'all 0.4s' }}>
-        Every B2B lead measured and attributed to the right keyword.
-      </div>
-    </div>
-  )
-}
-
-/* ── Scene 4 — Optimise & Expand ── */
-function Scene4({ active, color }: { active: boolean; color: string }) {
-  const placements = [
-    { label: 'Bing Search', scale: 100, icon: '🔍' },
-    { label: 'MSN News Feed', scale: 72, icon: '📰' },
-    { label: 'Outlook Sidebar', scale: 60, icon: '📧' },
-    { label: 'Edge New Tab', scale: 54, icon: '🌐' },
-    { label: 'Partner Sites', scale: 42, icon: '🌐' },
-  ]
-  return (
-    <div style={{ position: 'absolute', inset: 0, padding: 36, display: 'flex', flexDirection: 'column', gap: 18 }}>
-      <div style={{ fontSize: 11, color: 'rgba(120,160,255,0.5)', fontFamily: 'var(--font-mono)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-        Audience Network Expansion
-      </div>
-
-      {/* Placement bars */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {placements.map((p, i) => (
-          <div key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: 14, flexShrink: 0 }}>{p.icon}</span>
-            <span style={{ width: 110, fontSize: 11, color: 'rgba(15,34,68,0.6)', flexShrink: 0 }}>{p.label}</span>
-            <div style={{ flex: 1, height: 7, background: 'rgba(15,34,68,0.06)', borderRadius: 4, overflow: 'hidden' }}>
-              <div style={{
-                height: '100%', borderRadius: 4,
-                background: i === 0 ? color : `${color}${Math.round(90 - i * 14).toString(16).padStart(2, '0')}`,
-                width: active ? `${p.scale}%` : '0%',
-                transition: `width 0.6s ease ${i * 0.08}s`,
-              }} />
-            </div>
-            <span style={{ width: 36, textAlign: 'right', fontSize: 10, fontFamily: 'var(--font-mono)', color: active ? color : 'rgba(15,34,68,0.3)', transition: 'color 0.5s', flexShrink: 0 }}>{p.scale}%</span>
-          </div>
-        ))}
-      </div>
-
-      {/* CPL trend */}
-      <div style={{ padding: '14px 16px', background: active ? `${color}10` : 'rgba(15,34,68,0.03)', border: `1px solid ${active ? color + '25' : 'rgba(15,34,68,0.07)'}`, borderRadius: 14, transition: 'all 0.4s' }}>
-        <div style={{ fontSize: 11, color: 'rgba(15,34,68,0.35)', fontFamily: 'var(--font-mono)', marginBottom: 8 }}>COST PER B2B LEAD · TREND</div>
-        <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end', height: 44 }}>
-          {[80, 68, 62, 55, 48, 44, 40, 36].map((h, i) => (
-            <div key={i} style={{
-              flex: 1, borderRadius: '4px 4px 2px 2px',
-              background: i === 7 ? color : `${color}${(30 + i * 8).toString(16).padStart(2, '0')}`,
-              height: active ? `${h}%` : '0%',
-              transition: `height 0.5s ease ${i * 0.05}s`,
-            }} />
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:10, padding:'10px 4px' }}>
+      <div style={{ fontSize:8, color:B.blue, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)' }}>CAMPAIGN MIGRATION</div>
+      <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+        {/* Google side */}
+        <motion.div animate={{ opacity: active ? 0.65 : 0.3, scale: active ? 1 : 0.92 }} transition={{ duration:0.4 }}
+          style={{ flex:1, background:'rgba(234,67,53,0.08)', border:'1.5px solid rgba(234,67,53,0.25)', borderRadius:12, padding:'10px', textAlign:'center' }}>
+          <div style={{ fontSize:20, marginBottom:4 }}>🔴</div>
+          <div style={{ fontSize:10.5, fontWeight:700, color:'rgba(15,34,68,0.7)' }}>Google Ads</div>
+          {['12 campaigns','84 ad groups','340 keywords'].map(t => (
+            <div key={t} style={{ fontSize:9, color:'rgba(15,34,68,0.45)', background:'rgba(15,34,68,0.05)', borderRadius:5, padding:'2px 6px', marginTop:4 }}>{t}</div>
           ))}
+        </motion.div>
+        {/* Arrow */}
+        <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:3 }}>
+          <motion.div animate={{ x: active ? [0,4,0] : 0 }} transition={{ duration:0.8, repeat:Infinity }} style={{ fontSize:18, color:B.blue }}>→</motion.div>
+          <div style={{ fontSize:8, fontFamily:'var(--font-mono)', color: active ? B.blue : 'rgba(15,34,68,0.3)', fontWeight:700, transition:'color 0.4s', textAlign:'center' }}>IMPORT<br/>+ TUNE</div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-          <span style={{ fontSize: 10, color: 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)' }}>Month 1</span>
-          <span style={{ fontSize: 11, fontWeight: 700, color: active ? '#22c55e' : 'rgba(15,34,68,0.3)', fontFamily: 'var(--font-mono)', transition: 'color 0.4s' }}>↓ 55% CPL · Month 8</span>
-        </div>
+        {/* Microsoft side */}
+        <motion.div animate={{ opacity: active ? 1 : 0.4, scale: active ? 1 : 0.92, boxShadow: active ? `0 6px 24px ${B.blue}35` : 'none' }} transition={{ duration:0.4 }}
+          style={{ flex:1, background:`${B.blue}12`, border:`1.5px solid ${B.blue}40`, borderRadius:12, padding:'10px', textAlign:'center', transition:'all 0.4s' }}>
+          <div style={{ fontSize:20, marginBottom:4 }}>🔷</div>
+          <div style={{ fontSize:10.5, fontWeight:700, color:B.blue }}>Microsoft Ads</div>
+          {['12 campaigns ✓','84 ad groups ✓','+ LinkedIn layer'].map((t,i) => (
+            <div key={t} style={{ fontSize:9, color: active ? B.blue : 'rgba(15,34,68,0.4)', background: active ? `${B.blue}15` : 'rgba(15,34,68,0.04)', borderRadius:5, padding:'2px 6px', marginTop:4, transition:'all 0.4s' }}>{t}</div>
+          ))}
+        </motion.div>
       </div>
+      <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6 }}>
+        {checks.map((item,i) => (
+          <motion.div key={item}
+            animate={{ opacity: active ? 1 : 0.35, x: active ? 0 : -6 }}
+            transition={{ duration:0.3, delay:0.15+i*0.07 }}
+            style={{ display:'flex', alignItems:'center', gap:6, padding:'5px 8px', background:`${B.blue}10`, border:`1px solid ${B.blue}30`, borderRadius:8, fontSize:10, color:'rgba(15,34,68,0.7)' }}>
+            <span style={{ width:15, height:15, borderRadius:'50%', background: active ? B.blue : 'rgba(15,34,68,0.12)', color:'#fff', fontSize:8, display:'grid', placeItems:'center', transition:'background 0.4s', flexShrink:0 }}>✓</span>
+            {item}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
-      <div style={{ fontSize: 12, color: 'rgba(15,34,68,0.4)', lineHeight: 1.5 }}>
-        Scale into Edge, MSN and Outlook as cost-per-lead falls and quality compounds.
+/* ── Scene 2: LinkedIn Targeting ── */
+function Scene2({ active }: { active: boolean; color: string }) {
+  const rows = [
+    { label:'Job title', value:'Security Manager, Facilities Dir', icon:'👔' },
+    { label:'Industry',  value:'Physical Security · Logistics',   icon:'🏢' },
+    { label:'Org size',  value:'50–500 employees',                icon:'📊' },
+    { label:'Seniority', value:'Manager, Director, VP',           icon:'⭐' },
+  ]
+  return (
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:9, padding:'10px 4px' }}>
+      <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+        <div style={{ width:30, height:30, borderRadius:7, background:B.li, display:'grid', placeItems:'center', fontWeight:900, fontSize:13, color:'#fff', flexShrink:0 }}>in</div>
+        <div>
+          <div style={{ fontSize:12, fontWeight:800, color:'#0f2244' }}>LinkedIn Profile Targeting</div>
+          <div style={{ fontSize:9.5, color:'rgba(15,34,68,0.45)', fontFamily:'var(--font-mono)' }}>Microsoft × LinkedIn data</div>
+        </div>
+        <motion.div animate={{ background: active ? `${B.li}22` : 'rgba(15,34,68,0.05)', color: active ? B.li : 'rgba(15,34,68,0.3)' }}
+          transition={{ duration:0.4 }}
+          style={{ marginLeft:'auto', padding:'3px 10px', borderRadius:999, border:`1px solid ${B.li}44`, fontSize:9.5, fontFamily:'var(--font-mono)', fontWeight:700 }}>LIVE</motion.div>
       </div>
+      {rows.map((r,i) => (
+        <motion.div key={r.label}
+          animate={{ opacity: active ? 1 : 0.35, x: active ? 0 : -8, background: active ? `${B.li}10` : 'rgba(15,34,68,0.03)' }}
+          transition={{ duration:0.35, delay:i*0.07 }}
+          style={{ padding:'8px 12px', border:`1.5px solid ${active ? B.li+'30' : 'rgba(15,34,68,0.07)'}`, borderRadius:10, display:'flex', alignItems:'center', gap:10, transition:'border-color 0.35s' }}>
+          <span style={{ fontSize:14 }}>{r.icon}</span>
+          <span style={{ width:64, fontSize:9, fontFamily:'var(--font-mono)', color:'rgba(15,34,68,0.4)', textTransform:'uppercase', letterSpacing:0.5, flexShrink:0 }}>{r.label}</span>
+          <span style={{ flex:1, fontSize:11, color: active ? 'rgba(15,34,68,0.85)' : 'rgba(15,34,68,0.4)', transition:'color 0.35s' }}>{r.value}</span>
+        </motion.div>
+      ))}
+      <motion.div animate={{ opacity: active ? 1 : 0.35 }} transition={{ duration:0.4, delay:0.35 }}
+        style={{ padding:'8px 12px', borderRadius:10, background:`${B.li}15`, border:`1.5px solid ${B.li}40`, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <span style={{ fontFamily:'var(--font-mono)', fontSize:12.5, fontWeight:800, color:B.li }}>28,400</span>
+        <span style={{ fontSize:10.5, color:'rgba(15,34,68,0.5)' }}>matched B2B buyers</span>
+      </motion.div>
+    </div>
+  )
+}
+
+/* ── Scene 3: Launch & Track ── */
+function Scene3({ active }: { active: boolean; color: string }) {
+  const [convCount, setConvCount] = useState(0)
+  useEffect(() => {
+    if (!active) { setConvCount(0); return }
+    const iv = setInterval(() => setConvCount(v => v < 184 ? v + 3 : v), 30)
+    return () => clearInterval(iv)
+  }, [active])
+
+  const feed = [
+    { label:'Form submitted', time:'2m ago', ltv:'$480 LTV',   c:B.green },
+    { label:'Quote requested', time:'11m ago', ltv:'$1,200 LTV', c:B.blue  },
+    { label:'Phone call 3:42', time:'28m ago', ltv:'$860 LTV',  c:B.purple },
+    { label:'Demo booked',     time:'1h ago',  ltv:'$2,400 LTV', c:B.green },
+  ]
+
+  return (
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:8, padding:'10px 4px' }}>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontSize:8, color:B.green, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)' }}>LIVE CONVERSIONS</div>
+        <motion.div animate={{ scale: active ? [1,1.2,1] : 1 }} transition={{ duration:1, repeat:Infinity }}
+          style={{ display:'flex', gap:4, alignItems:'center' }}>
+          <div style={{ width:6, height:6, borderRadius:'50%', background:B.green }} />
+          <span style={{ fontSize:9, color:B.green, fontWeight:700, fontFamily:'var(--font-mono)' }}>LIVE</span>
+        </motion.div>
+      </div>
+      {/* Total counter */}
+      <motion.div animate={{ opacity: active ? 1 : 0.3, scale: active ? 1 : 0.9 }} transition={{ duration:0.4 }}
+        style={{ padding:'8px 12px', background:`${B.green}15`, border:`1.5px solid ${B.green}45`, borderRadius:10, display:'flex', gap:12, alignItems:'center', boxShadow: active ? `0 3px 12px ${B.green}25` : 'none' }}>
+        <span style={{ fontSize:26, fontWeight:900, color:B.green, fontFamily:'var(--font-mono)', lineHeight:1 }}>{convCount}</span>
+        <div>
+          <div style={{ fontSize:10, fontWeight:700, color:B.green }}>Conversions this month</div>
+          <div style={{ fontSize:9, color:'rgba(15,34,68,0.45)' }}>+46 vs last month ↑</div>
+        </div>
+      </motion.div>
+      {feed.map((c,i) => (
+        <motion.div key={c.label}
+          animate={{ opacity: active ? 1 : 0.3, x: active ? 0 : 10 }}
+          transition={{ duration:0.3, delay:0.1+i*0.06 }}
+          style={{ display:'flex', alignItems:'center', gap:10, padding:'6px 10px', background: i===0 && active ? `${c.c}14` : 'rgba(15,34,68,0.04)', border:`1px solid ${i===0 && active ? c.c+'35' : 'rgba(15,34,68,0.07)'}`, borderRadius:9, transition:'all 0.35s' }}>
+          <motion.span animate={{ scale: i===0 && active ? [1,1.5,1] : 1 }} transition={{ duration:1.2, repeat:Infinity }}
+            style={{ width:8, height:8, borderRadius:'50%', background: active ? c.c : 'rgba(15,34,68,0.15)', flexShrink:0 }} />
+          <span style={{ flex:1, fontSize:11, color:'rgba(15,34,68,0.75)' }}>{c.label}</span>
+          <span style={{ fontSize:9.5, color:'rgba(15,34,68,0.35)', fontFamily:'var(--font-mono)' }}>{c.time}</span>
+          <span style={{ fontSize:10.5, fontWeight:800, color: active ? c.c : 'rgba(15,34,68,0.3)', fontFamily:'var(--font-mono)', transition:'color 0.4s' }}>{c.ltv}</span>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
+/* ── Scene 4: Optimise & Expand ── */
+function Scene4({ active }: { active: boolean; color: string }) {
+  const [cpl, setCpl] = useState(80)
+  useEffect(() => {
+    if (!active) { setCpl(80); return }
+    const iv = setInterval(() => setCpl(v => v > 36 ? v - 1 : v), 50)
+    return () => clearInterval(iv)
+  }, [active])
+
+  const placements = [
+    { label:'Bing Search',     scale:100, icon:'🔍', c:B.blue   },
+    { label:'MSN News Feed',   scale:72,  icon:'📰', c:B.purple },
+    { label:'Outlook Sidebar', scale:60,  icon:'📧', c:B.blue   },
+    { label:'Edge New Tab',    scale:54,  icon:'🌐', c:B.sky    },
+    { label:'Partner Sites',   scale:42,  icon:'🤝', c:B.li     },
+  ]
+
+  return (
+    <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', gap:9, padding:'10px 4px' }}>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <div style={{ fontSize:8, color:B.purple, fontWeight:800, letterSpacing:'0.12em', fontFamily:'var(--font-mono)' }}>AUDIENCE NETWORK</div>
+        <motion.div animate={{ opacity: active ? 1 : 0.35, background: active ? `${B.green}20` : 'rgba(15,34,68,0.05)', color: active ? B.green : 'rgba(15,34,68,0.3)' }} transition={{ duration:0.4 }}
+          style={{ padding:'3px 10px', borderRadius:999, border:`1px solid ${B.green}35`, fontSize:9, fontFamily:'var(--font-mono)', fontWeight:700 }}>EXPANDING</motion.div>
+      </div>
+      {placements.map((p,i) => (
+        <div key={p.label} style={{ display:'flex', alignItems:'center', gap:9 }}>
+          <span style={{ fontSize:13, flexShrink:0 }}>{p.icon}</span>
+          <span style={{ width:108, fontSize:10.5, color:'rgba(15,34,68,0.65)', flexShrink:0 }}>{p.label}</span>
+          <div style={{ flex:1, height:8, background:'rgba(15,34,68,0.07)', borderRadius:4, overflow:'hidden' }}>
+            <motion.div animate={{ width: active ? `${p.scale}%` : '0%' }} transition={{ duration:0.65, delay:i*0.08 }}
+              style={{ height:'100%', borderRadius:4, background:`linear-gradient(90deg, ${p.c}, ${p.c}99)`, boxShadow: active ? `0 0 8px ${p.c}50` : 'none' }} />
+          </div>
+          <span style={{ width:30, textAlign:'right', fontSize:10, fontFamily:'var(--font-mono)', color: active ? p.c : 'rgba(15,34,68,0.3)', transition:'color 0.5s', flexShrink:0 }}>{p.scale}%</span>
+        </div>
+      ))}
+      <motion.div animate={{ opacity: active ? 1 : 0.35 }} transition={{ duration:0.4, delay:0.3 }}
+        style={{ padding:'8px 12px', background:`${B.green}12`, border:`1.5px solid ${B.green}40`, borderRadius:10, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        <span style={{ fontSize:10, color:'rgba(15,34,68,0.55)' }}>Cost Per B2B Lead</span>
+        <div style={{ display:'flex', alignItems:'baseline', gap:4 }}>
+          <span style={{ fontSize:22, fontWeight:900, color:B.green, fontFamily:'var(--font-mono)' }}>${cpl}</span>
+          <span style={{ fontSize:10, color:B.green, fontWeight:700 }}>↓ falling</span>
+        </div>
+      </motion.div>
     </div>
   )
 }
 
 const STEPS = [
-  { step: '01', tag: 'IMPORT', title: 'Import & Audit', color: '#0078d4', glow: 'rgba(0,120,212,0.45)', Scene: Scene1 },
-  { step: '02', tag: 'LAYER', title: 'Layer LinkedIn Targeting', color: '#0a66c2', glow: 'rgba(10,102,194,0.45)', Scene: Scene2 },
-  { step: '03', tag: 'LAUNCH', title: 'Launch & Track', color: '#107c10', glow: 'rgba(16,124,16,0.45)', Scene: Scene3 },
-  { step: '04', tag: 'SCALE', title: 'Optimise & Expand', color: '#5c2d91', glow: 'rgba(92,45,145,0.45)', Scene: Scene4 },
+  { step:'01', tag:'IMPORT', title:'Import & Audit',           color:'#0078d4', glow:'rgba(0,120,212,0.5)',  Scene: Scene1 },
+  { step:'02', tag:'LAYER',  title:'Layer LinkedIn Targeting', color:'#0a66c2', glow:'rgba(10,102,194,0.5)', Scene: Scene2 },
+  { step:'03', tag:'LAUNCH', title:'Launch & Track',           color:'#107c10', glow:'rgba(16,124,16,0.5)',  Scene: Scene3 },
+  { step:'04', tag:'SCALE',  title:'Optimise & Expand',        color:'#5c2d91', glow:'rgba(92,45,145,0.5)',  Scene: Scene4 },
 ] satisfies WorkflowStep[]
 
-// ─── Bing Ads animated intro: Microsoft dashboard + LinkedIn targeting ──────────
+/* ── Intro Scene ── */
+const LI_TAGS = ['Security Manager','Facilities Director','Head of Operations','Commercial RE','50–500 employees']
 const BING_METRICS = [
-  { label: 'CPC vs Google', value: '−52%', color: '#0078d4', icon: '💲' },
-  { label: 'B2B Reach',     value: '41%',  color: '#0f9d58', icon: '🎯' },
-  { label: 'Conv. Rate',    value: '6.4%', color: '#f29900', icon: '📈' },
-  { label: 'Monthly Leads', value: '142',  color: '#e91e63', icon: '🤝' },
+  { label:'CPC vs Google', value:'−52%', c:B.blue,   icon:'💲' },
+  { label:'B2B Reach',     value:'+41%', c:B.green,  icon:'🎯' },
+  { label:'Conv. Rate',    value:'6.4%', c:'#f29900', icon:'📈' },
+  { label:'Monthly Leads', value:'142',  c:B.purple, icon:'🤝' },
 ]
-const LI_TAGS = ['Security Manager', 'Facilities Director', 'Head of Operations', 'Commercial Real Estate', '50–500 employees']
 
 function BingIntroScene() {
   const [shown, setShown] = useState(0)
+  const [cpc, setCpc] = useState(100)
+
   useEffect(() => {
-    const iv = setInterval(() => setShown(v => Math.min(v + 1, BING_METRICS.length)), 300)
-    return () => clearInterval(iv)
+    const iv = setInterval(() => setShown(v => Math.min(v+1, BING_METRICS.length)), 320)
+    const sv = setInterval(() => setCpc(v => v > 48 ? v - 1 : v), 30)
+    return () => { clearInterval(iv); clearInterval(sv) }
   }, [])
 
   return (
-    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f0f6ff 0%, #f8fbff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: 700, height: 500, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(0,120,212,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+    <div style={{ position:'absolute', inset:0, background:'linear-gradient(160deg, #f0f6ff 0%, #f8fbff 100%)', overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center' }}>
+      <div style={{ position:'absolute', top:'35%', left:'40%', width:600, height:500, borderRadius:'50%', background:`radial-gradient(ellipse, ${B.blue}12 0%, transparent 65%)`, pointerEvents:'none' }} />
+      <div style={{ position:'absolute', top:'60%', left:'60%', width:300, height:300, borderRadius:'50%', background:`radial-gradient(ellipse, ${B.purple}10 0%, transparent 65%)`, pointerEvents:'none' }} />
 
-      {/* Dashboard header */}
-      <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: 480, background: '#fff', borderRadius: 16, border: '1.5px solid rgba(0,120,212,0.15)', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: '0 4px 20px rgba(0,120,212,0.08)' }}>
-        <div style={{ width: 32, height: 32, background: '#0078d4', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>Ⓜ️</div>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#0f2244' }}>Microsoft Advertising · Security B2B</div>
-          <div style={{ fontSize: 11, color: '#46546e', fontFamily: 'var(--font-mono)' }}>Live Campaign · Sydney Metro</div>
+      {/* Header bar */}
+      <div style={{ position:'absolute', top:'8%', left:'50%', transform:'translateX(-50%)', width:500, background:'#fff', borderRadius:16, border:`2px solid ${B.blue}20`, padding:'12px 18px', display:'flex', alignItems:'center', gap:12, boxShadow:`0 6px 30px ${B.blue}12` }}>
+        <div style={{ width:36, height:36, background:`linear-gradient(135deg, ${B.blue}, #00bcf2)`, borderRadius:10, display:'grid', placeItems:'center', flexShrink:0 }}>
+          <span style={{ fontSize:18 }}>Ⓜ</span>
         </div>
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 5 }}>
-          <motion.div animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 1.2, repeat: Infinity }} style={{ width: 7, height: 7, borderRadius: '50%', background: '#0f9d58' }} />
-          <span style={{ fontSize: 11, color: '#0f9d58', fontWeight: 700 }}>LIVE</span>
+        <div>
+          <div style={{ fontSize:13, fontWeight:800, color:'#0f2244' }}>Microsoft Advertising</div>
+          <div style={{ fontSize:10.5, color:'#46546e', fontFamily:'var(--font-mono)' }}>Security B2B · Sydney Metro</div>
+        </div>
+        <div style={{ marginLeft:'auto', display:'flex', alignItems:'center', gap:6 }}>
+          <motion.div animate={{ scale:[1,1.5,1] }} transition={{ duration:1.2, repeat:Infinity }} style={{ width:7, height:7, borderRadius:'50%', background:B.green }} />
+          <span style={{ fontSize:11, color:B.green, fontWeight:800 }}>LIVE</span>
         </div>
       </div>
 
+      {/* Big CPC saver */}
+      <motion.div initial={{ opacity:0, scale:0.8 }} animate={{ opacity:1, scale:1 }} transition={{ delay:0.3, type:'spring', stiffness:180 }}
+        style={{ position:'absolute', top:'23%', left:'8%', background:`linear-gradient(135deg, ${B.blue}, #005ba1)`, borderRadius:18, padding:'14px 20px', boxShadow:`0 10px 40px ${B.blue}45`, textAlign:'center' }}>
+        <div style={{ fontSize:9, color:'rgba(255,255,255,0.7)', letterSpacing:'0.1em', marginBottom:4 }}>CPC vs Google</div>
+        <div style={{ fontSize:36, fontWeight:900, color:'#fff', fontFamily:'var(--font-mono)', lineHeight:1 }}>−{100 - cpc}%</div>
+        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.8)', marginTop:4 }}>lower cost per click</div>
+      </motion.div>
+
       {/* Metric tiles */}
-      <div style={{ position: 'absolute', top: '26%', left: '50%', transform: 'translateX(-50%)', width: 480, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-        {BING_METRICS.map((m, i) => (
-          <motion.div key={m.label} initial={{ opacity: 0, y: 14 }} animate={i < shown ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.3 }}
-            style={{ background: '#fff', borderRadius: 14, padding: '14px 16px', border: `1.5px solid ${m.color}20`, boxShadow: `0 4px 16px ${m.color}10` }}>
-            <div style={{ fontSize: 11, color: '#46546e', marginBottom: 4 }}>{m.icon} {m.label}</div>
-            <div style={{ fontSize: 22, fontWeight: 900, color: m.color, fontFamily: 'var(--font-mono)' }}>{m.value}</div>
+      <div style={{ position:'absolute', top:'24%', left:'50%', transform:'translateX(-50%)', width:380, display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+        {BING_METRICS.map((m,i) => (
+          <motion.div key={m.label} initial={{ opacity:0, y:16 }} animate={i < shown ? { opacity:1, y:0 } : {}} transition={{ duration:0.35, type:'spring' }}
+            style={{ background:'#fff', borderRadius:14, padding:'14px', border:`2px solid ${m.c}22`, boxShadow:`0 4px 18px ${m.c}12` }}>
+            <div style={{ fontSize:11, color:'#46546e', marginBottom:4 }}>{m.icon} {m.label}</div>
+            <div style={{ fontSize:24, fontWeight:900, color:m.c, fontFamily:'var(--font-mono)' }}>{m.value}</div>
           </motion.div>
         ))}
       </div>
 
-      {/* LinkedIn targeting badges */}
-      <div style={{ position: 'absolute', top: '60%', left: '50%', transform: 'translateX(-50%)', width: 500 }}>
-        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#0078d4', marginBottom: 8, textAlign: 'center', letterSpacing: '0.1em' }}>LINKEDIN PROFILE TARGETING</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, justifyContent: 'center' }}>
-          {LI_TAGS.map((tag, i) => (
-            <motion.div key={tag} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.8 + i * 0.12, type: 'spring', stiffness: 200 }}
-              style={{ background: '#0a66c2', color: '#fff', borderRadius: 999, padding: '5px 12px', fontSize: 11, fontWeight: 600 }}>
-              in {tag}
+      {/* LinkedIn targeting */}
+      <div style={{ position:'absolute', top:'63%', left:'50%', transform:'translateX(-50%)', width:510 }}>
+        <div style={{ fontSize:10, fontFamily:'var(--font-mono)', color:B.li, marginBottom:8, textAlign:'center', letterSpacing:'0.1em', fontWeight:700 }}>in LINKEDIN PROFILE TARGETING · EXCLUSIVE</div>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:7, justifyContent:'center' }}>
+          {LI_TAGS.map((tag,i) => (
+            <motion.div key={tag} initial={{ opacity:0, scale:0.75 }} animate={{ opacity:1, scale:1 }} transition={{ delay:0.9+i*0.12, type:'spring', stiffness:220 }}
+              style={{ background:`linear-gradient(135deg, ${B.li}, #084c9e)`, color:'#fff', borderRadius:999, padding:'5px 14px', fontSize:11, fontWeight:700, boxShadow:`0 3px 10px ${B.li}40` }}>
+              {tag}
             </motion.div>
           ))}
         </div>
       </div>
 
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 340 }}>
-        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#0078d4', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
-        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', lineHeight: 1.2, marginBottom: 12 }}>Capture B2B Buyers<br /><span style={{ color: '#0078d4' }}>Google Misses</span></h2>
-        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
-          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(0,120,212,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#0078d4' }} />
+      <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.8, delay:0.2 }}
+        style={{ textAlign:'center', zIndex:10, position:'relative', marginTop:340 }}>
+        <div style={{ fontSize:11, fontFamily:'var(--font-mono)', color:B.blue, letterSpacing:'0.18em', marginBottom:10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize:'clamp(24px,3.5vw,40px)', fontWeight:800, color:'#0f2244', lineHeight:1.2, marginBottom:12 }}>Capture B2B Buyers<br /><span style={{ color:B.blue }}>Google Can't Reach</span></h2>
+        <motion.div animate={{ y:[0,7,0] }} transition={{ duration:1.8, repeat:Infinity }}
+          style={{ marginTop:18, display:'flex', flexDirection:'column', alignItems:'center', gap:6, opacity:0.7 }}>
+          <div style={{ width:24, height:38, borderRadius:12, border:`2px solid ${B.blue}55`, display:'flex', alignItems:'flex-start', justifyContent:'center', paddingTop:5 }}>
+            <motion.div animate={{ y:[0,10,0] }} transition={{ duration:1.8, repeat:Infinity }} style={{ width:4, height:8, borderRadius:2, background:B.blue }} />
           </div>
-          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#0078d4', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+          <span style={{ fontSize:10, fontFamily:'var(--font-mono)', color:B.blue, letterSpacing:'0.14em' }}>SCROLL TO BEGIN</span>
         </motion.div>
       </motion.div>
     </div>
