@@ -29,9 +29,8 @@ export default function ServiceWorkflowCards({
   sectionBg?: string
   footerSlot?: React.ReactNode
 }) {
-  const outerRef  = useRef<HTMLDivElement>(null)
+  const outerRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(1200)
-  // "entered" = user has clicked the first card; unlocks full scroll experience
   const [entered, setEntered] = useState(false)
 
   useEffect(() => {
@@ -41,42 +40,44 @@ export default function ServiceWorkflowCards({
     return () => window.removeEventListener('resize', up)
   }, [])
 
-  // Footer counts as one extra slide when provided
-  const hasFooter  = Boolean(footerSlot)
-  const total      = steps.length
-  // scrollable phases: one per card + one for footer
+  const hasFooter   = Boolean(footerSlot)
+  const total       = steps.length
   const totalPhases = total + (hasFooter ? 1 : 0)
 
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start start', 'end end'] })
 
-  // Map scroll to card index (0 … total-1)
-  const cardProgress = useTransform(scrollYProgress, [0, hasFooter ? total / totalPhases : 1], [0, total - 1])
-  const floatIdx     = cardProgress
+  // Card progress: 0 → total-1 over the card phases only
+  const cardEnd    = hasFooter ? total / totalPhases : 1
+  const cardProgress = useTransform(scrollYProgress, [0, cardEnd], [0, total - 1])
+  const floatIdx   = cardProgress
 
   const startX = vw / 2 - cardW / 2
   const endX   = startX - (total - 1) * (cardW + GAP)
   const rawX   = useTransform(cardProgress, [0, total - 1], [startX, endX])
   const x      = useSpring(rawX, { stiffness: 70, damping: 22, mass: 0.6 })
 
-  // Footer slide-up: last phase (footerProgress 0→1)
-  const footerProgress = hasFooter
-    ? useTransform(scrollYProgress, [total / totalPhases, 1], [0, 1])
-    : null
-  const footerY = footerProgress
-    ? useSpring(useTransform(footerProgress, [0, 1], ['100%', '0%']), { stiffness: 80, damping: 24 })
-    : null
+  // Footer: always call hooks — only used when hasFooter=true
+  // Use numbers (0–100) then convert to % string so useSpring works correctly
+  const footerProgress = useTransform(
+    scrollYProgress,
+    hasFooter ? [cardEnd, 1] : [0.9, 1],
+    [0, 1]
+  )
+  const rawFooterYNum = useTransform(footerProgress, [0, 1], [100, 0])
+  const footerYNum    = useSpring(rawFooterYNum, { stiffness: 90, damping: 26 })
+  const footerY       = useTransform(footerYNum, (v: number) => `${v}%`)
 
-  // Header fades out as footer comes in
-  const headerOp = footerProgress
-    ? useTransform(footerProgress, [0, 0.3], [1, 0])
-    : undefined
-  const navOp = headerOp
+  // Header/nav fades out as footer slides in (only when hasFooter)
+  const headerOp = useTransform(
+    footerProgress,
+    hasFooter ? [0, 0.25] : [0, 0],
+    hasFooter ? [1, 0]    : [1, 1]
+  )
 
-  // Click the first card: scroll outerRef to top of viewport to "enter"
   function handleEnter() {
     if (!outerRef.current) return
     const rect = outerRef.current.getBoundingClientRect()
-    if (rect.top !== 0) {
+    if (rect.top > 1) {
       outerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
     setEntered(true)
@@ -89,7 +90,6 @@ export default function ServiceWorkflowCards({
         background: sectionBg,
         display: 'flex', flexDirection: 'column',
       }}>
-
         {/* Dot grid texture */}
         <div aria-hidden style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
@@ -101,7 +101,7 @@ export default function ServiceWorkflowCards({
 
         <GlowOrb floatIdx={floatIdx} steps={steps} />
 
-        {/* Header — fades out when footer arrives */}
+        {/* Header */}
         <motion.div style={{ opacity: headerOp, textAlign: 'center', paddingTop: 42, flexShrink: 0, position: 'relative', zIndex: 2 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: '0.14em', color: '#8896af', textTransform: 'uppercase' }}>
             How It Works
@@ -135,8 +135,8 @@ export default function ServiceWorkflowCards({
           ))}
         </motion.div>
 
-        {/* Bottom nav — fades out with header */}
-        <motion.div style={{ opacity: navOp, position: 'absolute', bottom: 26, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, zIndex: 2 }}>
+        {/* Bottom nav */}
+        <motion.div style={{ opacity: headerOp, position: 'absolute', bottom: 26, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, zIndex: 2 }}>
           <div style={{ display: 'flex', gap: 10 }}>
             {steps.map((s, i) => <StepPill key={i} index={i} floatIdx={floatIdx as MotionValue<number>} step={s} />)}
           </div>
@@ -152,11 +152,13 @@ export default function ServiceWorkflowCards({
           </motion.div>
         </motion.div>
 
-        {/* Footer slide — slides up from below after all cards are done */}
-        {hasFooter && footerY && (
+        {/* Footer slide — only rendered when footerSlot provided */}
+        {hasFooter && (
           <motion.div
             style={{
-              position: 'absolute', inset: 0,
+              position: 'absolute',
+              top: 0, left: 0, right: 0,
+              height: '100%',
               y: footerY,
               zIndex: 20,
               overflowY: 'auto',
@@ -254,7 +256,6 @@ function SceneCard({ index, floatIdx, data, cardH, cardW, sideXOffset, onEnterCl
   return (
     <motion.div
       style={{ scale, opacity, flexShrink: 0, position: 'relative' }}
-      // Click-to-enter: zoom punch on click
       whileTap={onEnterClick ? { scale: 1.03 } : undefined}
       onClick={onEnterClick}
     >
@@ -266,19 +267,16 @@ function SceneCard({ index, floatIdx, data, cardH, cardW, sideXOffset, onEnterCl
         position: 'relative',
         cursor: onEnterClick ? 'pointer' : 'default',
       }}>
-        {/* Accent top bar */}
         <div style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 3,
           background: `linear-gradient(90deg, transparent 5%, ${data.color} 50%, transparent 95%)`,
           opacity: active ? 1 : 0.25, transition: 'opacity 0.5s',
         }} />
-        {/* Subtle colour wash */}
         <div style={{
           position: 'absolute', inset: 0,
           background: `linear-gradient(160deg, ${data.color}06 0%, transparent 55%)`,
           pointerEvents: 'none',
         }} />
-        {/* Tag badge */}
         <div style={{
           position: 'absolute', top: 18, right: 18, zIndex: 10,
           fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700,
@@ -290,25 +288,24 @@ function SceneCard({ index, floatIdx, data, cardH, cardW, sideXOffset, onEnterCl
         </div>
         <Scene active={active} color={data.color} />
 
-        {/* "Enter" overlay on card 0 before user has scrolled in */}
+        {/* Click-to-enter overlay on card 0 */}
         <AnimatePresence>
           {isFirst && !entered && (
             <motion.div
               key="enter-overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.3 }}
               style={{
                 position: 'absolute', inset: 0, zIndex: 20,
                 background: `linear-gradient(160deg, ${data.color}cc 0%, ${data.color}99 100%)`,
                 display: 'flex', flexDirection: 'column',
                 alignItems: 'center', justifyContent: 'center', gap: 16,
-                backdropFilter: 'blur(2px)',
               }}
             >
               <motion.div
-                animate={{ scale: [1, 1.06, 1] }}
+                animate={{ scale: [1, 1.07, 1] }}
                 transition={{ duration: 2.2, repeat: Infinity }}
                 style={{
                   width: 72, height: 72, borderRadius: '50%',
