@@ -254,14 +254,13 @@ export default function AioHowItWorks() {
               />
             </div>
 
-            {/* Lines from portal to outer nodes */}
-            <svg style={{ position: 'absolute', width: '100vw', height: '100vh', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', pointerEvents: 'none', overflow: 'visible' }}>
+            {/* Lines from portal to outer nodes — use % coords to avoid hydration mismatch */}
+            <svg viewBox="0 0 200 200" style={{ position: 'absolute', width: '100vw', height: '100vh', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', pointerEvents: 'none', overflow: 'visible' }} preserveAspectRatio="xMidYMid slice">
               {NODES.map((n, i) => (
                 <line key={i}
-                  x1="0" y1="0"
-                  x2={`${(n.x - 50) / 100 * (typeof window !== 'undefined' ? window.innerWidth : 1280)}px`}
-                  y2={`${(n.y - 50) / 100 * (typeof window !== 'undefined' ? window.innerHeight : 720)}px`}
-                  stroke="rgba(0,200,255,0.07)" strokeWidth="1"
+                  x1="100" y1="100"
+                  x2={n.x * 2} y2={n.y * 2}
+                  stroke="rgba(0,200,255,0.07)" strokeWidth="0.5"
                 >
                   <animate attributeName="opacity" values="0.07;0.22;0.07" dur={`${3 + (i % 4)}s`} begin={`${i * 0.4}s`} repeatCount="indefinite" />
                 </line>
