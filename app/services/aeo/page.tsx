@@ -104,6 +104,8 @@ export default function AeoPage() {
         </div>
       </section>
 
+      <AeoHowItWorks />
+
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
           <SectionHead eyebrow="FAQ" title="AEO questions, answered." />
@@ -117,8 +119,6 @@ export default function AeoPage() {
         subtitle="Our AEO framework structures your security brand's content so AI assistants and Google feature it as the definitive answer — in snippets, voice results and AI-generated responses."
         accent={ACCENT}
       />
-
-      <AeoHowItWorks />
     </>
   )
 }

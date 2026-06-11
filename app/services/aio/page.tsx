@@ -130,14 +130,14 @@ export default function AioPage() {
         </div>
       </section>
 
+      <AioHowItWorks />
+
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
           <SectionHead eyebrow="FAQ" title="AIO questions, answered." />
           <FAQAccordion items={faqs} />
         </div>
       </section>
-
-      <AioHowItWorks />
     </>
   )
 }

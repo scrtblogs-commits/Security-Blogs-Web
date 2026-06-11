@@ -126,6 +126,8 @@ export default function SecuritySeoPage() {
         </div>
       </section>
 
+      <SeoHowItWorks />
+
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
           <SectionHead eyebrow="FAQ" title="Security SEO questions, answered." />
@@ -163,8 +165,6 @@ export default function SecuritySeoPage() {
         subtitle="Our SEO framework is built exclusively for security brands — from CCTV installers to monitoring firms — engineering the content and authority signals that dominate Google and AI search."
         accent={ACCENT}
       />
-
-      <SeoHowItWorks />
     </>
   )
 }
