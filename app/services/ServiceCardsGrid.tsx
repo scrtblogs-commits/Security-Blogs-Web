@@ -16,7 +16,7 @@ export default function ServiceCardsGrid() {
         @keyframes cardFloat5 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
         @keyframes cardFloat6 { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
       `}</style>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 22 }}>
+      <div className="service-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 22 }}>
         {services.map((s, i) => (
           <ServiceCard key={s.slug} s={s} index={i} />
         ))}

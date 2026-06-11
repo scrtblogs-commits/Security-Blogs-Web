@@ -310,7 +310,7 @@ export default function PromoVideoSection({
   return (
     <section style={{ padding: '72px 0' }}>
       <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 48, alignItems: 'center' }}>
+        <div className="promo-video-inner" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 48, alignItems: 'center' }}>
           {/* Left — text */}
           <div>
             {eyebrow && (

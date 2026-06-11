@@ -47,7 +47,7 @@ export default function ContactForm({
   }
 
   return (
-    <form onSubmit={onSubmit} className="card" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+    <form onSubmit={onSubmit} className="card contact-form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
       {fields.map((f) => (
         <div key={f.name} style={{ gridColumn: f.full || f.type === 'textarea' ? '1 / -1' : 'auto' }}>
           <label className="label" htmlFor={f.name}>{f.label}{f.required && ' *'}</label>

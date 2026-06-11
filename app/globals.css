@@ -679,3 +679,101 @@ body::before {
   80%  { transform: translateY(-400%); }
   100% { transform: translateY(0); }
 }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — comprehensive mobile/tablet fixes
+══════════════════════════════════════════════ */
+
+/* Navigation */
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+  .section { padding: 56px 0; }
+  .hero { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 56px; }
+  .h1 { font-size: clamp(30px, 8vw, 52px); }
+  .h2 { font-size: clamp(24px, 6vw, 38px); }
+  .lead { font-size: clamp(15px, 4vw, 18px); }
+  .btn-lg { padding: 14px 22px; font-size: 15px; }
+  .card { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 14px; }
+  .section { padding: 44px 0; }
+  .hero { padding-top: calc(var(--nav-h) + 28px); padding-bottom: 40px; }
+  .btn { padding: 12px 18px; font-size: 14px; }
+  .btn-lg { padding: 13px 20px; font-size: 14px; }
+  .card { padding: 16px; }
+  .chip { font-size: 11px; padding: 4px 10px; }
+  .badge { font-size: 11px; padding: 5px 12px; }
+}
+
+/* Flex wrapping helpers */
+@media (max-width: 768px) {
+  .flex-wrap-mobile { flex-wrap: wrap !important; }
+  .gap-mobile-2 { gap: 8px !important; }
+}
+
+/* Stats strip */
+@media (max-width: 600px) {
+  .stats-strip-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+}
+
+/* Hero two-col split — collapse to single on tablet */
+@media (max-width: 860px) {
+  .hero-split { flex-direction: column !important; }
+  .hero-split > * { flex: unset !important; width: 100% !important; min-width: 0 !important; }
+}
+
+/* ServiceCardsGrid — single col on mobile */
+@media (max-width: 560px) {
+  .service-cards-grid { grid-template-columns: 1fr !important; }
+}
+
+/* HowItWorks section intro */
+@media (max-width: 768px) {
+  .how-it-works-intro h2 { font-size: clamp(22px, 5vw, 34px) !important; }
+}
+
+/* FAQ accordion */
+@media (max-width: 480px) {
+  .acc-q { font-size: 14px; padding: 16px 0; }
+}
+
+/* Contact form full-width on mobile */
+@media (max-width: 600px) {
+  .contact-form-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Platform tabs — scroll on mobile */
+@media (max-width: 640px) {
+  .platform-tabs-list { overflow-x: auto; flex-wrap: nowrap !important; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 4px; }
+  .platform-tabs-list::-webkit-scrollbar { display: none; }
+}
+
+/* PromoVideoSection */
+@media (max-width: 768px) {
+  .promo-video-inner { padding: 32px 20px !important; }
+  .promo-video-inner h2 { font-size: clamp(22px, 5vw, 34px) !important; }
+}
+
+/* Overflow prevention */
+@media (max-width: 768px) {
+  img, svg, video, iframe { max-width: 100%; height: auto; }
+  pre, code { overflow-x: auto; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ServiceWorkflowCards — hide on very small screens to avoid breakage */
+@media (max-width: 480px) {
+  .swc-outer { overflow-x: hidden; }
+}
+
+/* Pricing / comparison tables */
+@media (max-width: 700px) {
+  .pricing-grid { grid-template-columns: 1fr !important; }
+}
+
+/* Blog / article grid */
+@media (max-width: 640px) {
+  .blog-grid { grid-template-columns: 1fr !important; }
+}

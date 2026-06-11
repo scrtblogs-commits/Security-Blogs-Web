@@ -5,7 +5,7 @@ type Stat = { value?: number; prefix?: string; suffix?: string; decimals?: numbe
 
 export default function StatsStrip({ items, dark = false }: { items: Stat[]; dark?: boolean }) {
   return (
-    <div className="grid-4" style={{ gap: 18 }}>
+    <div className="grid-4 stats-strip-grid" style={{ gap: 18 }}>
       {items.map((s, i) => (
         <div
           key={i}

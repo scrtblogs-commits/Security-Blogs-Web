@@ -16,7 +16,7 @@ export default function PlatformTabs({ tabs }: { tabs: { label: string; content:
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2" style={{ marginBottom: 22, justifyContent: 'center' }}>
+      <div className="flex flex-wrap gap-2 platform-tabs-list" style={{ marginBottom: 22, justifyContent: 'center' }}>
         {tabs.map((t, i) => (
           <button key={t.label} className={`pill ${active === i ? 'active' : ''}`} onClick={() => switchTo(i)}>{t.label}</button>
         ))}
