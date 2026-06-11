@@ -1,7 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
+
+const Footer = dynamic(() => import('@/components/layout/Footer'), { ssr: false })
 
 // ─── AIO Workflow: 4 scroll-driven scenes ───────────────────────────────────
 const STEPS: WorkflowStep[] = [
@@ -18,6 +21,7 @@ export default function AioHowItWorks() {
     cardH={560}
     sideXOffset={9999}
     sectionBg="linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%)"
+    footerSlot={<Footer />}
   />
 }
 
