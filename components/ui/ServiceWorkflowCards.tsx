@@ -186,13 +186,13 @@ export default function ServiceWorkflowCards({
         <motion.div style={{ opacity: stripOp }}>
           {/* Step label above cards */}
           <motion.div style={{
-            position: 'absolute', top: 36, left: 0, right: 0,
+            position: 'absolute', top: 24, left: 0, right: 0,
             textAlign: 'center', zIndex: 6, opacity: navOp,
           }}>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.14em', color: 'rgba(111,77,255,0.55)', textTransform: 'uppercase' }}>
+            <div style={{ fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 800, color: 'var(--text, #0f2244)', letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: 6 }}>
               How It Works
-            </span>
-            <div style={{ position: 'relative', height: 32, marginTop: 5 }}>
+            </div>
+            <div style={{ position: 'relative', height: 28, marginTop: 2 }}>
               {steps.map((s, i) => (
                 <ActiveTitle key={i} index={i} floatIdx={floatIdx as MotionValue<number>} step={s} />
               ))}
@@ -203,7 +203,7 @@ export default function ServiceWorkflowCards({
           <motion.div style={{
             x,
             position: 'absolute',
-            top: `calc(50vh - ${cardH / 2}px + 12px)`,
+            top: `calc(50vh - ${cardH / 2}px + 24px)`,
             left: 0,
             display: 'flex',
             gap: GAP,

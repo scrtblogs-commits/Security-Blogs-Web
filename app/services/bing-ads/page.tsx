@@ -317,6 +317,8 @@ export default function BingAdsPage() {
       </section>
 
 
+      <BingAdsHowItWorks />
+
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
           <SectionHead eyebrow="FAQ" title="Bing Ads questions, answered honestly." />
@@ -341,8 +343,6 @@ export default function BingAdsPage() {
         subtitle="Microsoft Advertising reaches 41% of business decision-makers your competitors ignore on Google — with lower CPCs, LinkedIn profile targeting, and campaigns built for security brands."
         accent={ACCENT}
       />
-
-      <BingAdsHowItWorks />
     </>
   )
 }

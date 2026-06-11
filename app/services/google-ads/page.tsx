@@ -320,6 +320,7 @@ export default function GoogleAdsPage() {
         </div>
       </section>
 
+      <GoogleAdsHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
@@ -345,8 +346,6 @@ export default function GoogleAdsPage() {
         subtitle="We engineer Google Ads campaigns specifically for security buyers — from CCTV installers to monitoring firms — with conversion tracking, transparent reporting and 3.2× average ROAS."
         accent={ACCENT}
       />
-
-      <GoogleAdsHowItWorks />
     </>
   )
 }

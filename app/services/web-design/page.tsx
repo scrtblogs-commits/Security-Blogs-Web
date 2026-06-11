@@ -154,6 +154,8 @@ export default function WebDesignPage() {
         </div>
       </section>
 
+      <WebDesignHowItWorks />
+
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
           <SectionHead eyebrow="FAQ" title="Web design questions, answered honestly." />
@@ -178,8 +180,6 @@ export default function WebDesignPage() {
         subtitle="Every security website we build is engineered for green Core Web Vitals, schema markup, and AI-citation readiness — turning visitors into qualified leads from day one."
         accent={ACCENT}
       />
-
-      <WebDesignHowItWorks />
     </>
   )
 }
