@@ -37,7 +37,7 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true) }, { threshold: 0.15 })
+    const obs = new IntersectionObserver(([e]) => { setInView(!!e.isIntersecting) }, { threshold: 0.15 })
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
@@ -77,19 +77,16 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Top glow line */}
         <div style={{
           height: 2,
           background: `linear-gradient(90deg, transparent 5%, ${ACCENT} 50%, transparent 95%)`,
           opacity: hovered ? 1 : 0.3, transition: 'opacity 0.4s',
         }} />
 
-        {/* Preview area */}
-        <div style={{ position: 'relative', height: 160, overflow: 'hidden', background: '#f4f8fc' }}>
-          <card.Preview hovered={hovered} accent={ACCENT} />
+        <div style={{ position: 'relative', height: 170, overflow: 'hidden' }}>
+          <card.Preview hovered={hovered} inView={inView} accent={ACCENT} />
         </div>
 
-        {/* Content */}
         <div style={{ padding: '18px 20px 22px' }}>
           <motion.div
             animate={hovered ? { scale: 1.12, rotate: -6 } : { scale: 1, rotate: 0 }}
@@ -106,129 +103,361 @@ function PremiumCard({ card, index }: { key?: React.Key; card: typeof CARDS[0]; 
   )
 }
 
-// ─────────────────────────────────────────────────────────────
-// Per-capability dark-themed animated previews
-// ─────────────────────────────────────────────────────────────
+const JSON_LINES = [
+  { key: '@context', val: '"https://schema.org"', keyColor: '#d2a8ff', valColor: '#9ecbff' },
+  { key: '@type', val: '"Organization"', keyColor: '#d2a8ff', valColor: '#f97583' },
+  { key: 'name', val: '"SecurityBlogs"', keyColor: '#d2a8ff', valColor: '#9ecbff' },
+  { key: 'url', val: '"securityblogs.com.au"', keyColor: '#d2a8ff', valColor: '#9ecbff' },
+  { key: 'areaServed', val: '["AU","US","UK","UAE"]', keyColor: '#d2a8ff', valColor: '#9ecbff' },
+  { key: 'sameAs', val: '[wikidata, crunchbase]', keyColor: '#d2a8ff', valColor: '#79c0ff' },
+]
 
-function EntityPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+function EntityPreview({ hovered: _hovered, inView, accent: _accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [lineIdx, setLineIdx] = useState(0)
+  const [showBadge, setShowBadge] = useState(false)
+
+  useEffect(() => {
+    if (!inView) { setLineIdx(0); setShowBadge(false); return }
+    setLineIdx(0)
+    setShowBadge(false)
+    let idx = 0
+    const id = setInterval(() => {
+      idx++
+      setLineIdx(idx)
+      if (idx >= JSON_LINES.length) {
+        clearInterval(id)
+        setTimeout(() => setShowBadge(true), 300)
+      }
+    }, 260)
+    return () => clearInterval(id)
+  }, [inView])
+
   return (
-    <div style={{ position: 'absolute', inset: 10, fontFamily: 'var(--font-mono, monospace)', fontSize: 10.5, color: '#c9d1d9', background: '#0d1117', borderRadius: 10, padding: '10px 12px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: 4 }}>
-      <DarkRow k="@type" v="Organization" valueColor="#f97583" />
-      <DarkRow k="name" v={'"SecurityBlogs"'} valueColor="#9ecbff" />
-      <DarkRow k="url" v={'"securityblogs.com.au"'} valueColor="#9ecbff" />
-      <DarkRow k="areaServed" v={'["AU","US","UK","UAE","SG"]'} valueColor="#9ecbff" />
-      <motion.div
-        animate={hovered ? { opacity: 1, scale: 1 } : { opacity: 0.5, scale: 0.95 }}
-        transition={{ duration: 0.3 }}
-        style={{ marginTop: 6, fontFamily: 'system-ui, sans-serif', fontSize: 10, color: '#3fb950', display: 'flex', alignItems: 'center', gap: 5, background: 'rgba(63,185,80,0.12)', borderRadius: 6, padding: '4px 8px', border: '1px solid rgba(63,185,80,0.25)', width: 'fit-content' }}
-      >
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: '#0d1117',
+      fontFamily: 'var(--font-mono, monospace)',
+      padding: '14px 16px',
+      display: 'flex', flexDirection: 'column', gap: 5,
+      overflow: 'hidden',
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.25)', fontWeight: 700, letterSpacing: 1.5, marginBottom: 2 }}>
+        SCHEMA.ORG · ENTITY DEFINITION
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        {JSON_LINES.map((line, i) => (
+          <div
+            key={line.key}
+            style={{
+              display: 'flex', gap: 6, fontSize: 10.5,
+              opacity: i < lineIdx ? 1 : 0,
+              transition: 'opacity 0.2s',
+              position: 'relative',
+            }}
+          >
+            <span style={{ color: line.keyColor }}>{line.key}</span>
+            <span style={{ color: 'rgba(255,255,255,0.3)' }}>:</span>
+            <span style={{ color: line.valColor }}>{line.val}</span>
+            {i === lineIdx - 1 && (
+              <motion.span
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.7, repeat: Infinity }}
+                style={{ display: 'inline-block', width: 7, height: 12, background: '#e23744', marginLeft: 2, verticalAlign: 'middle' }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div style={{
+        marginTop: 6,
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        background: 'rgba(63,185,80,0.15)', border: '1px solid rgba(63,185,80,0.3)',
+        borderRadius: 6, padding: '3px 9px', fontSize: 9.5, color: '#3fb950', fontWeight: 700,
+        alignSelf: 'flex-start',
+        opacity: showBadge ? 1 : 0, transition: 'opacity 0.4s',
+      }}>
         <motion.span
           animate={{ opacity: [1, 0.2, 1] }}
           transition={{ duration: 1.4, repeat: Infinity }}
           style={{ display: 'inline-block', width: 7, height: 7, borderRadius: '50%', background: '#3fb950' }}
         />
         Entity verified
-      </motion.div>
+      </div>
     </div>
   )
 }
 
-function DarkRow({ k, v, valueColor }: { k: string; v: string; valueColor: string }) {
-  return (
-    <div style={{ display: 'flex', gap: 6 }}>
-      <span style={{ color: '#d2a8ff' }}>{k}</span>
-      <span style={{ color: 'rgba(255,255,255,0.3)' }}>:</span>
-      <span style={{ color: valueColor, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v}</span>
-    </div>
-  )
-}
+function KnowledgePanelPreview({ hovered: _hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [stars, setStars] = useState(0)
+  const [reviews, setReviews] = useState(0)
+  const [chipIdx, setChipIdx] = useState(0)
 
-function KnowledgePanelPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+  useEffect(() => {
+    if (!inView) { setStars(0); setReviews(0); setChipIdx(0); return }
+    const steps = 50
+    let step = 0
+    const id = setInterval(() => {
+      step++
+      const p = Math.min(step / steps, 1)
+      setStars(Math.min(5, Math.ceil(5 * p)))
+      setReviews(Math.round(142 * p))
+      if (step >= steps) clearInterval(id)
+    }, 28)
+
+    const chipTimer1 = setTimeout(() => setChipIdx(1), 600)
+    const chipTimer2 = setTimeout(() => setChipIdx(2), 900)
+    const chipTimer3 = setTimeout(() => setChipIdx(3), 1200)
+
+    return () => {
+      clearInterval(id)
+      clearTimeout(chipTimer1)
+      clearTimeout(chipTimer2)
+      clearTimeout(chipTimer3)
+    }
+  }, [inView])
+
+  const chips = [
+    { label: 'Website', bg: 'rgba(96,165,250,0.15)', color: '#60a5fa' },
+    { label: 'Contact', bg: 'rgba(52,211,153,0.15)', color: '#34d399' },
+    { label: 'Services', bg: `${accent}20`, color: accent },
+  ]
+
   return (
-    <div style={{ position: 'absolute', inset: 10, background: '#111827', borderRadius: 10, padding: 12, border: '1px solid rgba(255,255,255,0.08)', fontFamily: 'system-ui, sans-serif', display: 'flex', flexDirection: 'column', gap: 5 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 8, background: `linear-gradient(135deg, ${accent}, #ff6b7a)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 900, color: '#fff', flexShrink: 0 }}>S</div>
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #0d111e, #111827)',
+      padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 7,
+      fontFamily: 'system-ui, sans-serif',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ width: 36, height: 36, borderRadius: 10, background: `linear-gradient(135deg, ${accent}, #ff6b7a)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, fontWeight: 900, color: '#fff', flexShrink: 0 }}>S</div>
         <div>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>SecurityBlogs</div>
-          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.45)' }}>AI Visibility Platform · Security</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: '#fff' }}>SecurityBlogs</div>
+          <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.4)' }}>AI Visibility Platform · Security</div>
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 10.5 }}>
-        <motion.span
-          animate={hovered ? { color: '#fbbf24' } : { color: '#f59e0b' }}
-          style={{ color: '#f59e0b' }}
-        >★★★★★</motion.span>
-        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 10 }}>5.0 · 142 reviews</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 15 }}>
+        {[1, 2, 3, 4, 5].map(n => (
+          <span key={n} style={{ color: n <= stars ? '#fbbf24' : 'rgba(255,255,255,0.12)', transition: 'color 0.15s' }}>★</span>
+        ))}
+        <span style={{ color: 'rgba(255,255,255,0.45)', fontSize: 10, marginLeft: 4 }}>
+          5.0 · {reviews} reviews
+        </span>
       </div>
-      <div style={{ fontSize: 10, color: '#60a5fa' }}>securityblogs.com.au</div>
-      <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-        <span style={{ background: 'rgba(96,165,250,0.15)', color: '#60a5fa', padding: '2px 6px', borderRadius: 4, fontSize: 9 }}>Website</span>
-        <span style={{ background: 'rgba(52,211,153,0.15)', color: '#34d399', padding: '2px 6px', borderRadius: 4, fontSize: 9 }}>Contact</span>
-        <span style={{ background: `${accent}20`, color: accent, padding: '2px 6px', borderRadius: 4, fontSize: 9 }}>Services</span>
+      <div style={{ fontSize: 10.5, color: '#60a5fa' }}>securityblogs.com.au</div>
+      <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+        {chips.map((ch, i) => (
+          <span
+            key={ch.label}
+            style={{
+              background: ch.bg, color: ch.color,
+              padding: '3px 8px', borderRadius: 5, fontSize: 9.5, fontWeight: 600,
+              opacity: i < chipIdx ? 1 : 0, transition: `opacity 0.3s ${i * 0.12}s`,
+            }}
+          >
+            {ch.label}
+          </span>
+        ))}
       </div>
     </div>
   )
 }
 
-const SIGNAL_ITEMS = [
-  { name: 'Wikidata', status: 'synced' as const },
-  { name: 'Crunchbase', status: 'synced' as const },
-  { name: 'LinkedIn', status: 'syncing' as const },
-  { name: 'Industry dirs', status: 'syncing' as const },
+const SIGNAL_NODES = [
+  { name: 'Wikidata', angle: -60, dist: 80, status: 'synced' },
+  { name: 'Crunchbase', angle: 30, dist: 80, status: 'synced' },
+  { name: 'LinkedIn', angle: 150, dist: 80, status: 'syncing' },
+  { name: 'Industry dirs', angle: 240, dist: 75, status: 'syncing' },
 ]
 
-function SignalDistributionPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+function SignalDistributionPreview({ hovered: _hovered, inView, accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [pathProgress, setPathProgress] = useState([0, 0, 0, 0])
+
+  useEffect(() => {
+    if (!inView) { setPathProgress([0, 0, 0, 0]); return }
+    SIGNAL_NODES.forEach((_, i) => {
+      setTimeout(() => {
+        setPathProgress(prev => {
+          const next = [...prev]
+          next[i] = 1
+          return next
+        })
+      }, i * 350)
+    })
+  }, [inView])
+
+  const cx = 50
+  const cy = 52
+
   return (
-    <div style={{ position: 'absolute', inset: 10, fontFamily: 'system-ui, sans-serif', fontSize: 11, background: '#111827', borderRadius: 10, padding: '10px 12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-      {SIGNAL_ITEMS.map((it, i) => (
-        <div key={it.name} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5.5px 0', borderBottom: i < SIGNAL_ITEMS.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-          <span style={{ flex: 1, color: 'rgba(255,255,255,0.75)', fontSize: 11 }}>{it.name}</span>
-          {it.status === 'synced' ? (
-            <span style={{ fontSize: 9.5, color: '#34d399', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'rgba(52,211,153,0.12)', borderRadius: 5, padding: '2px 7px', border: '1px solid rgba(52,211,153,0.2)' }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
-              SYNCED
-            </span>
-          ) : (
-            <span style={{ fontSize: 9.5, color: '#60a5fa', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'rgba(96,165,250,0.12)', borderRadius: 5, padding: '2px 7px', border: '1px solid rgba(96,165,250,0.2)' }}>
-              <motion.span
-                animate={{ opacity: [1, 0.2, 1] }}
-                transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.3 }}
-                style={{ width: 6, height: 6, borderRadius: '50%', background: '#60a5fa', display: 'inline-block' }}
-              />
-              SYNCING
-            </span>
-          )}
-        </div>
-      ))}
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #080d1a, #0f1726)', overflow: 'hidden' }}>
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `radial-gradient(circle, ${accent}08 1px, transparent 1px)`,
+        backgroundSize: '24px 24px',
+      }} />
+      <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+        {SIGNAL_NODES.map((node, i) => {
+          const rad = (node.angle * Math.PI) / 180
+          const nx = cx + Math.cos(rad) * (node.dist * 0.38)
+          const ny = cy + Math.sin(rad) * (node.dist * 0.32)
+          const color = node.status === 'synced' ? '#34d399' : '#60a5fa'
+          return (
+            <motion.line
+              key={node.name}
+              x1={`${cx}%`} y1={`${cy}%`}
+              x2={`${nx}%`} y2={`${ny}%`}
+              stroke={color}
+              strokeWidth={1}
+              strokeDasharray="4 3"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: pathProgress[i], opacity: pathProgress[i] > 0 ? 0.6 : 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+            />
+          )
+        })}
+      </svg>
+      <motion.div
+        animate={{ boxShadow: [`0 0 0px ${accent}00`, `0 0 20px ${accent}55`, `0 0 0px ${accent}00`] }}
+        transition={{ duration: 2.5, repeat: Infinity }}
+        style={{
+          position: 'absolute',
+          left: `${cx}%`, top: `${cy}%`,
+          transform: 'translate(-50%, -50%)',
+          width: 36, height: 36, borderRadius: '50%',
+          background: `linear-gradient(135deg, ${accent}, #ff6b7a)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 14, fontWeight: 900, color: '#fff',
+          zIndex: 2,
+        }}
+      >
+        S
+      </motion.div>
+      {SIGNAL_NODES.map((node, i) => {
+        const rad = (node.angle * Math.PI) / 180
+        const nx = cx + Math.cos(rad) * (node.dist * 0.38)
+        const ny = cy + Math.sin(rad) * (node.dist * 0.32)
+        const color = node.status === 'synced' ? '#34d399' : '#60a5fa'
+        return (
+          <div
+            key={node.name}
+            style={{
+              position: 'absolute',
+              left: `${nx}%`, top: `${ny}%`,
+              transform: 'translate(-50%, -50%)',
+              opacity: pathProgress[i] > 0 ? 1 : 0,
+              transition: 'opacity 0.3s',
+              zIndex: 2,
+            }}
+          >
+            <div style={{
+              background: 'rgba(13,17,23,0.9)', border: `1px solid ${color}44`,
+              borderRadius: 6, padding: '3px 6px',
+              display: 'flex', alignItems: 'center', gap: 4,
+              whiteSpace: 'nowrap',
+            }}>
+              <span style={{ fontSize: 8.5, color: 'rgba(255,255,255,0.7)', fontFamily: 'system-ui' }}>{node.name}</span>
+              {node.status === 'synced' ? (
+                <span style={{ fontSize: 8, color, fontWeight: 700, fontFamily: 'var(--font-mono)' }}>SYNCED</span>
+              ) : (
+                <motion.span
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.25 }}
+                  style={{ fontSize: 8, color, fontWeight: 700, fontFamily: 'var(--font-mono)' }}
+                >
+                  SYNCING
+                </motion.span>
+              )}
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
 
 const PLATFORMS_CROSS = [
-  { name: 'ChatGPT', bg: '#10a37f', mono: 'AI' },
-  { name: 'Gemini', bg: '#4285f4', mono: 'G' },
-  { name: 'Claude', bg: '#cc785c', mono: 'C' },
-  { name: 'Perplexity', bg: '#1FB8CD', mono: 'P' },
+  { name: 'ChatGPT', bg: '#10a37f', mono: 'AI', snippet: 'SecurityBlogs provides AI-driven…' },
+  { name: 'Gemini', bg: '#4285f4', mono: 'G', snippet: 'SecurityBlogs.com.au is a leading…' },
+  { name: 'Claude', bg: '#cc785c', mono: 'C', snippet: 'SecurityBlogs offers visibility…' },
+  { name: 'Perplexity', bg: '#1FB8CD', mono: 'P', snippet: 'Founded in Australia, SecurityBlogs…' },
 ]
 
-function CrossPlatformPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+function CrossPlatformPreview({ hovered: _hovered, inView, accent: _accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [typeIdx, setTypeIdx] = useState(-1)
+  const [doneIdx, setDoneIdx] = useState(-1)
+
+  useEffect(() => {
+    if (!inView) { setTypeIdx(-1); setDoneIdx(-1); return }
+    let current = 0
+    const advance = () => {
+      if (current >= PLATFORMS_CROSS.length) return
+      setTypeIdx(current)
+      setTimeout(() => {
+        setDoneIdx(current)
+        current++
+        setTimeout(advance, 300)
+      }, 600)
+    }
+    const t = setTimeout(advance, 200)
+    return () => clearTimeout(t)
+  }, [inView])
+
   return (
-    <div style={{ position: 'absolute', inset: 10, fontFamily: 'system-ui, sans-serif', background: '#111827', borderRadius: 10, padding: '10px 12px', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', flexDirection: 'column', gap: 6 }}>
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #090e1c, #0d1525)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 6,
+      fontFamily: 'system-ui, sans-serif',
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1.5, marginBottom: 2 }}>
+        AI PLATFORMS · BRAND RECOGNITION
+      </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
-        {PLATFORMS_CROSS.map((p) => (
-          <motion.div
+        {PLATFORMS_CROSS.map((p, i) => (
+          <div
             key={p.name}
-            animate={hovered ? { borderColor: `${p.bg}44` } : { borderColor: 'rgba(255,255,255,0.06)' }}
-            style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 7px', background: 'rgba(255,255,255,0.03)', borderRadius: 7, border: '1px solid rgba(255,255,255,0.06)' }}
+            style={{
+              display: 'flex', flexDirection: 'column', gap: 4,
+              padding: '7px 8px', background: 'rgba(255,255,255,0.04)',
+              borderRadius: 8, border: `1px solid rgba(255,255,255,0.07)`,
+              position: 'relative', overflow: 'hidden',
+            }}
           >
-            <span style={{ width: 18, height: 18, borderRadius: 5, background: p.bg, color: '#fff', fontSize: 9, fontWeight: 700, display: 'grid', placeItems: 'center', flexShrink: 0 }}>{p.mono}</span>
-            <span style={{ flex: 1, fontSize: 10, color: 'rgba(255,255,255,0.75)' }}>{p.name}</span>
-            <span style={{ color: '#34d399', fontSize: 11, fontWeight: 700 }}>✓</span>
-          </motion.div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+              <span style={{ width: 18, height: 18, borderRadius: 5, background: p.bg, color: '#fff', fontSize: 9, fontWeight: 700, display: 'grid', placeItems: 'center', flexShrink: 0 }}>{p.mono}</span>
+              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>{p.name}</span>
+              <span style={{
+                marginLeft: 'auto', color: '#34d399', fontSize: 12, fontWeight: 700,
+                opacity: doneIdx >= i ? 1 : 0, transition: 'opacity 0.3s',
+              }}>✓</span>
+            </div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.35)', lineHeight: 1.4, minHeight: 24, overflow: 'hidden' }}>
+              {typeIdx >= i ? (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  {p.snippet}
+                  {typeIdx === i && doneIdx < i && (
+                    <motion.span
+                      animate={{ opacity: [1, 0, 1] }}
+                      transition={{ duration: 0.5, repeat: Infinity }}
+                      style={{ display: 'inline-block', width: 5, height: 9, background: 'rgba(255,255,255,0.4)', marginLeft: 1, verticalAlign: 'middle' }}
+                    />
+                  )}
+                </motion.span>
+              ) : null}
+            </div>
+          </div>
         ))}
       </div>
-      <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.3)', textAlign: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 5 }}>
-        All cite <strong style={{ color: '#60a5fa' }}>securityblogs.com.au</strong>
+      <div style={{
+        fontSize: 9.5, color: 'rgba(255,255,255,0.3)', textAlign: 'center',
+        borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 5, marginTop: 2,
+      }}>
+        All 4 platforms cite <strong style={{ color: '#60a5fa' }}>securityblogs.com.au</strong>
       </div>
     </div>
   )
@@ -241,53 +470,174 @@ const NAP_FIELDS = [
   { k: 'Email', v: 'info@securityblogs.com.au' },
 ]
 
-function NAPPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+function NAPPreview({ hovered: _hovered, inView, accent: _accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [syncProgress, setSyncProgress] = useState([0, 0, 0, 0])
+  const [syncDone, setSyncDone] = useState([false, false, false, false])
+  const [dirCount, setDirCount] = useState(0)
+
+  useEffect(() => {
+    if (!inView) {
+      setSyncProgress([0, 0, 0, 0])
+      setSyncDone([false, false, false, false])
+      setDirCount(0)
+      return
+    }
+    NAP_FIELDS.forEach((_, i) => {
+      const delay = i * 400
+      const startAt = Date.now() + delay
+      const duration = 800
+      const interval = setInterval(() => {
+        const elapsed = Date.now() - startAt
+        if (elapsed < 0) return
+        const p = Math.min(elapsed / duration, 1)
+        setSyncProgress(prev => { const n = [...prev]; n[i] = p; return n })
+        if (p >= 1) {
+          clearInterval(interval)
+          setSyncDone(prev => { const n = [...prev]; n[i] = true; return n })
+        }
+      }, 30)
+    })
+    const totalDuration = NAP_FIELDS.length * 400 + 800
+    const countSteps = 40
+    let step = 0
+    const countId = setInterval(() => {
+      step++
+      setDirCount(Math.round(48 * Math.min(step / countSteps, 1)))
+      if (step >= countSteps) clearInterval(countId)
+    }, totalDuration / countSteps)
+    return () => clearInterval(countId)
+  }, [inView])
+
   return (
-    <div style={{ position: 'absolute', inset: 10, fontFamily: 'system-ui, sans-serif', fontSize: 10.5, background: '#111827', borderRadius: 10, padding: '10px 12px', border: '1px solid rgba(255,255,255,0.08)' }}>
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #08111f, #0d1828)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 7,
+      fontFamily: 'system-ui, sans-serif',
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1.5, marginBottom: 2 }}>
+        NAP SYNC · DIRECTORIES
+      </div>
       {NAP_FIELDS.map((f, i) => (
-        <div key={f.k} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 0', borderBottom: i < NAP_FIELDS.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-          <span style={{ width: 52, fontSize: 9, color: 'rgba(255,255,255,0.35)', fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: 0.5, flexShrink: 0 }}>{f.k}</span>
-          <span style={{ flex: 1, fontSize: 10, color: 'rgba(255,255,255,0.7)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' as const }}>{f.v}</span>
-          <motion.span
-            animate={hovered ? { scale: 1.15 } : { scale: 1 }}
-            style={{ width: 16, height: 16, borderRadius: '50%', background: '#34d399', color: '#fff', fontSize: 9.5, fontWeight: 700, display: 'grid', placeItems: 'center', flexShrink: 0 }}
-          >✓</motion.span>
+        <div key={f.k} style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ width: 44, fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5, fontFamily: 'var(--font-mono)' }}>{f.k}</span>
+              <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.65)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 140 }}>{f.v}</span>
+            </div>
+            <span style={{
+              width: 18, height: 18, borderRadius: '50%',
+              background: syncDone[i] ? '#34d399' : 'rgba(255,255,255,0.07)',
+              color: '#fff', fontSize: 9.5, fontWeight: 700,
+              display: 'grid', placeItems: 'center', flexShrink: 0,
+              transition: 'background 0.3s',
+            }}>✓</span>
+          </div>
+          <div style={{ height: 4, background: 'rgba(255,255,255,0.06)', borderRadius: 2, overflow: 'hidden', position: 'relative' }}>
+            <motion.div
+              style={{ height: '100%', background: '#34d399', borderRadius: 2 }}
+              animate={{ width: `${syncProgress[i] * 100}%` }}
+              transition={{ duration: 0.03, ease: 'linear' }}
+            />
+            {syncProgress[i] > 0 && syncProgress[i] < 1 && (
+              <motion.div
+                animate={{ left: [`${Math.max(0, syncProgress[i] * 100 - 20)}%`, `${syncProgress[i] * 100}%`] }}
+                transition={{ duration: 0.4, repeat: Infinity, repeatType: 'reverse' }}
+                style={{ position: 'absolute', top: 0, height: '100%', width: 20, background: 'rgba(255,255,255,0.3)', filter: 'blur(2px)' }}
+              />
+            )}
+          </div>
         </div>
       ))}
+      <div style={{
+        marginTop: 2, fontSize: 9.5, color: '#34d399', fontWeight: 700,
+        fontFamily: 'var(--font-mono)',
+        opacity: dirCount > 0 ? 1 : 0, transition: 'opacity 0.3s',
+      }}>
+        100% consistent across {dirCount} directories
+      </div>
     </div>
   )
 }
 
-const CONFIRM_ITEMS = [
-  { name: 'ChatGPT', status: 'verified' as const },
-  { name: 'Gemini', status: 'verified' as const },
-  { name: 'Perplexity', status: 'verified' as const },
-  { name: 'Claude', status: 'pending' as const },
+const CONFIRM_PLATFORMS = [
+  { name: 'ChatGPT', bg: '#10a37f', mono: 'AI' },
+  { name: 'Gemini', bg: '#4285f4', mono: 'G' },
+  { name: 'Perplexity', bg: '#1FB8CD', mono: 'P' },
+  { name: 'Claude', bg: '#cc785c', mono: 'C' },
 ]
 
-function ConfirmationPreview({ hovered, accent }: { hovered: boolean; accent: string }) {
+function ConfirmationPreview({ hovered: _hovered, inView, accent: _accent }: { hovered: boolean; inView: boolean; accent: string }) {
+  const [verifiedCount, setVerifiedCount] = useState(0)
+  const [flashing, setFlashing] = useState(-1)
+
+  useEffect(() => {
+    if (!inView) { setVerifiedCount(0); setFlashing(-1); return }
+    let count = 0
+    const flip = () => {
+      if (count >= CONFIRM_PLATFORMS.length) return
+      setFlashing(count)
+      setTimeout(() => {
+        setFlashing(-1)
+        count++
+        setVerifiedCount(count)
+        setTimeout(flip, 400)
+      }, 350)
+    }
+    const t = setTimeout(flip, 300)
+    return () => clearTimeout(t)
+  }, [inView])
+
   return (
-    <div style={{ position: 'absolute', inset: 10, fontFamily: 'system-ui, sans-serif', fontSize: 11, background: '#111827', borderRadius: 10, padding: '10px 12px', border: '1px solid rgba(255,255,255,0.08)' }}>
-      {CONFIRM_ITEMS.map((it, i) => (
-        <div key={it.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5.5px 0', borderBottom: i < CONFIRM_ITEMS.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
-          <span style={{ color: 'rgba(255,255,255,0.75)' }}>{it.name}</span>
-          {it.status === 'verified' ? (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9.5, color: '#34d399', fontWeight: 700, background: 'rgba(52,211,153,0.12)', borderRadius: 5, padding: '2px 7px', border: '1px solid rgba(52,211,153,0.2)' }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34d399' }} />
-              VERIFIED
-            </span>
-          ) : (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9.5, color: '#fbbf24', fontWeight: 700, background: 'rgba(251,191,36,0.12)', borderRadius: 5, padding: '2px 7px', border: '1px solid rgba(251,191,36,0.2)' }}>
-              <motion.span
-                animate={{ opacity: [1, 0.2, 1] }}
-                transition={{ duration: 1.1, repeat: Infinity }}
-                style={{ width: 6, height: 6, borderRadius: '50%', background: '#fbbf24', display: 'inline-block' }}
-              />
-              PENDING
-            </span>
-          )}
-        </div>
-      ))}
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(135deg, #080d1c, #0b1220)',
+      padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 6,
+      fontFamily: 'system-ui, sans-serif',
+    }}>
+      <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.3)', fontWeight: 700, letterSpacing: 1.5, marginBottom: 2 }}>
+        PLATFORM VERIFICATION
+      </div>
+      {CONFIRM_PLATFORMS.map((p, i) => {
+        const verified = i < verifiedCount
+        const isFlashing = flashing === i
+        return (
+          <div
+            key={p.name}
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '6px 10px',
+              background: isFlashing ? 'rgba(52,211,153,0.15)' : verified ? 'rgba(52,211,153,0.07)' : 'rgba(255,255,255,0.03)',
+              borderRadius: 8,
+              border: `1px solid ${isFlashing ? 'rgba(52,211,153,0.5)' : verified ? 'rgba(52,211,153,0.2)' : 'rgba(255,255,255,0.06)'}`,
+              transition: 'background 0.2s, border-color 0.2s',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span style={{ width: 22, height: 22, borderRadius: 6, background: p.bg, color: '#fff', fontSize: 10, fontWeight: 700, display: 'grid', placeItems: 'center', flexShrink: 0 }}>{p.mono}</span>
+              <span style={{ fontSize: 11, color: verified ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.45)', transition: 'color 0.3s' }}>{p.name}</span>
+            </div>
+            {verified ? (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9.5, color: '#34d399', fontWeight: 700, background: 'rgba(52,211,153,0.12)', borderRadius: 5, padding: '2px 7px', border: '1px solid rgba(52,211,153,0.25)' }}>
+                <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#34d399', display: 'inline-block' }} />
+                VERIFIED
+              </span>
+            ) : (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 9.5, color: 'rgba(255,255,255,0.25)', fontWeight: 700, background: 'rgba(255,255,255,0.04)', borderRadius: 5, padding: '2px 7px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                PENDING
+              </span>
+            )}
+          </div>
+        )
+      })}
+      <div style={{
+        marginTop: 2, fontSize: 9.5, color: '#34d399', fontWeight: 700,
+        fontFamily: 'var(--font-mono)', textAlign: 'center',
+        opacity: verifiedCount === CONFIRM_PLATFORMS.length ? 1 : 0,
+        transition: 'opacity 0.4s',
+      }}>
+        {verifiedCount}/{CONFIRM_PLATFORMS.length} platforms confirmed
+      </div>
     </div>
   )
 }
