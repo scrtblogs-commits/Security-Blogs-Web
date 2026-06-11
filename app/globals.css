@@ -552,3 +552,93 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ── Service card face — live looping animations ──────────────── */
+@keyframes sb-bar-grow-loop {
+  0%,8%   { transform: scaleY(0.05); opacity: 0.5 }
+  55%,78% { transform: scaleY(1);    opacity: 1   }
+  95%,100%{ transform: scaleY(0.05); opacity: 0.5 }
+}
+.sb-bar-loop {
+  transform-origin: bottom;
+  animation: sb-bar-grow-loop 3.2s ease-in-out infinite;
+}
+
+@keyframes sb-sparkline-draw {
+  0%   { stroke-dashoffset: 320; opacity: 0.4 }
+  60%  { stroke-dashoffset: 0;   opacity: 1   }
+  88%  { stroke-dashoffset: 0;   opacity: 1   }
+  100% { stroke-dashoffset: 320; opacity: 0.4 }
+}
+.sb-sparkline { stroke-dasharray: 320; stroke-dashoffset: 320; animation: sb-sparkline-draw 3s ease-in-out infinite; }
+
+@keyframes sb-traffic-draw {
+  0%   { stroke-dashoffset: 230; opacity: 0.35 }
+  65%  { stroke-dashoffset: 0;   opacity: 1    }
+  88%  { stroke-dashoffset: 0;   opacity: 1    }
+  100% { stroke-dashoffset: 230; opacity: 0.35 }
+}
+.sb-traffic { stroke-dasharray: 230; stroke-dashoffset: 230; animation: sb-traffic-draw 2.8s ease-in-out infinite; }
+
+@keyframes sb-ping {
+  0%   { transform: translate(-50%,-50%) scale(1);   opacity: 0.65 }
+  100% { transform: translate(-50%,-50%) scale(2.8); opacity: 0    }
+}
+.sb-ping { animation: sb-ping 2.2s ease-out infinite; }
+
+@keyframes sb-fill-grow {
+  0%,8%   { width: 3%  }
+  62%,80% { width: 100% }
+  95%,100%{ width: 3%  }
+}
+.sb-fill { animation: sb-fill-grow 3s ease-in-out infinite; }
+
+@keyframes sb-row-sweep {
+  0%,10%  { background: transparent }
+  18%,42% { background: rgba(30,95,224,0.07) }
+  55%,100%{ background: transparent }
+}
+.sb-row-active { animation: sb-row-sweep 3.6s ease-in-out infinite; }
+
+@keyframes sb-live-blink {
+  0%,48%  { opacity: 1 }
+  50%,98% { opacity: 0.3 }
+  100%    { opacity: 1 }
+}
+.sb-live-dot { animation: sb-live-blink 1.4s ease-in-out infinite; }
+
+@keyframes sb-score-glow {
+  0%,100% { text-shadow: none; opacity: 1 }
+  50%     { text-shadow: 0 0 16px rgba(126,182,255,0.6); opacity: 0.85 }
+}
+.sb-score-pulse { animation: sb-score-glow 2.6s ease-in-out infinite; }
+
+@keyframes sb-badge-pop {
+  0%,8%   { opacity: 0; transform: scale(0.88) }
+  20%,78% { opacity: 1; transform: scale(1)    }
+  90%,100%{ opacity: 0; transform: scale(0.94) }
+}
+
+/* ── Page background — enhanced ambient flow ───────────────────── */
+@keyframes amb-drift-a2 {
+  0%   { transform: translate(0,    0)    }
+  33%  { transform: translate(8vw,  10vh) }
+  66%  { transform: translate(-4vw, 5vh)  }
+  100% { transform: translate(0,    0)    }
+}
+@keyframes amb-drift-b2 {
+  0%   { transform: translate(0,     0)     }
+  40%  { transform: translate(-10vw, -8vh)  }
+  70%  { transform: translate(3vw,   -12vh) }
+  100% { transform: translate(0,     0)     }
+}
+@keyframes amb-drift-c2 {
+  0%   { transform: translate(0,    0)    }
+  50%  { transform: translate(-6vw, 9vh)  }
+  100% { transform: translate(0,    0)    }
+}
+@keyframes amb-drift-d {
+  0%   { transform: translate(0,  0)   scale(1)    }
+  50%  { transform: translate(5vw,8vh) scale(1.08) }
+  100% { transform: translate(0,  0)   scale(1)    }
+}
