@@ -12,8 +12,69 @@ const STEPS: WorkflowStep[] = [
   { step: '04', tag: 'TRACK',     title: 'Track & Expand',                color: '#e91e63', glow: 'rgba(233,30,99,0.45)', Scene: TrackScene     },
 ]
 
+// ─── Animated intro: floating Q&A bubbles + voice waveform ───────────────────
+const QA_PAIRS = [
+  { q: 'Best security company near me?',           a: 'SecurityBlogs is highly rated...' },
+  { q: 'Who installs CCTV in Sydney?',             a: 'SecurityBlogs.com.au offers...'   },
+  { q: 'Trusted alarm monitoring Australia?',      a: 'SecurityBlogs is trusted by...'   },
+  { q: 'Commercial access control installers?',   a: 'SecurityBlogs specialises in...'   },
+]
+
+function AeoIntroScene() {
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f5f3ff 0%, #faf9ff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Soft radial glow */}
+      <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 400, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(127,119,221,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+      {/* Floating Q&A bubbles */}
+      {QA_PAIRS.map((pair, i) => (
+        <motion.div key={i}
+          style={{ position: 'absolute', left: `${10 + (i % 2) * 52}%`, top: `${12 + i * 18}%` }}
+          animate={{ y: [0, -10, 0], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.6 }}
+        >
+          {/* Question */}
+          <div style={{ background: '#fff', border: '1.5px solid rgba(127,119,221,0.25)', borderRadius: '18px 18px 18px 4px', padding: '8px 14px', fontSize: 11.5, color: '#3c3270', fontWeight: 600, boxShadow: '0 4px 16px rgba(127,119,221,0.12)', maxWidth: 220, marginBottom: 6 }}>
+            🎤 {pair.q}
+          </div>
+          {/* Answer */}
+          <motion.div animate={{ scaleX: [0, 1] }} transition={{ duration: 0.5, delay: i * 0.6 + 0.3 }} style={{ transformOrigin: 'left' }}>
+            <div style={{ background: `${COLOR}18`, border: `1.5px solid ${COLOR}35`, borderRadius: '4px 18px 18px 18px', padding: '7px 12px', fontSize: 11, color: '#46546e', maxWidth: 220 }}>
+              🤖 {pair.a}
+            </div>
+          </motion.div>
+        </motion.div>
+      ))}
+
+      {/* Center: voice waveform */}
+      <div style={{ position: 'absolute', bottom: '18%', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: 3 }}>
+        {Array.from({ length: 16 }).map((_, i) => (
+          <motion.div key={i}
+            animate={{ scaleY: [0.3, 1 + Math.sin(i * 0.8) * 0.6, 0.3] }}
+            transition={{ duration: 0.9 + i * 0.05, repeat: Infinity, ease: 'easeInOut', delay: i * 0.06 }}
+            style={{ width: 4, height: 32, borderRadius: 2, background: `${COLOR}`, transformOrigin: 'center', opacity: 0.7 + (i % 3) * 0.1 }}
+          />
+        ))}
+      </div>
+
+      {/* Text */}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 60 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: COLOR, letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', marginBottom: 12, lineHeight: 1.2 }}>Become the Answer<br /><span style={{ color: COLOR }}>AI Recommends</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }} style={{ marginTop: 20, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: `2px solid ${COLOR}55`, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: COLOR }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: COLOR, letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function AeoHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<AeoIntroScene />} sectionBg="#f9f8ff" />
 }
 
 /* ══════════════════════════════════════════════

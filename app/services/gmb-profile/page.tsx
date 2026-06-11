@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
@@ -185,7 +184,6 @@ export default function GmbProfilePage() {
       </section>
 
       {/* ── How it works ─────────────────────────────────────────────── */}
-      <GmbHowItWorks />
 
       {/* ── Everything included list ─────────────────────────────────── */}
       <section className="section" style={{ paddingTop: 0 }}>
@@ -286,12 +284,7 @@ export default function GmbProfilePage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Ready to rank #1 on Google Maps?"
-        subtitle="Book a free strategy call and we'll audit your Google Business Profile — showing you exactly what it takes to reach position one in your local area."
-        ctaLabel="Book my free strategy call →"
-        ctaHref="/book-strategy-call/"
-      />
+      <GmbHowItWorks />
     </>
   )
 }

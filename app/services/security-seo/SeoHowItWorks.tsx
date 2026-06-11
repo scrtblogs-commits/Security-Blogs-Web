@@ -10,8 +10,73 @@ const STEPS: WorkflowStep[] = [
   { step: '04', tag: 'RESULTS',    title: 'Monitor & Scale',             color: '#d93025', glow: 'rgba(217,48,37,0.45)', Scene: Scene4 },
 ]
 
+// ─── Security SEO animated intro: SERP rankings climbing ────────────────────
+const SERP_RESULTS = [
+  { pos: 1, domain: 'securityblogs.com.au', title: 'CCTV Installation Sydney — SecurityBlogs', badge: '★ Featured' },
+  { pos: 2, domain: 'securityblogs.com.au', title: 'Best Security Cameras 2025 | Expert Reviews' },
+  { pos: 3, domain: 'securityblogs.com.au', title: 'Commercial Access Control Installers NSW' },
+]
+const KEYWORDS = ['cctv installer sydney', 'security monitoring', 'access control nsw', 'alarm systems commercial']
+
+function SeoIntroScene() {
+  const [typed, setTyped] = useState('')
+  const query = 'best security company Sydney'
+  useEffect(() => {
+    let i = 0
+    const iv = setInterval(() => { i++; setTyped(query.slice(0, i)); if (i >= query.length) clearInterval(iv) }, 60)
+    return () => clearInterval(iv)
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f0f7ff 0%, #f8fcff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'absolute', top: '35%', left: '50%', transform: 'translate(-50%,-50%)', width: 700, height: 500, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(26,115,232,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+      {/* Search bar */}
+      <div style={{ position: 'absolute', top: '12%', left: '50%', transform: 'translateX(-50%)', width: 480, background: '#fff', borderRadius: 28, border: '2px solid rgba(26,115,232,0.2)', padding: '12px 20px', display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 4px 24px rgba(26,115,232,0.10)' }}>
+        <span style={{ fontSize: 18 }}>🔍</span>
+        <span style={{ fontSize: 14, color: '#0f2244', fontFamily: 'var(--font-mono)' }}>{typed}<motion.span animate={{ opacity: [1,0,1] }} transition={{ duration: 0.7, repeat: Infinity }} style={{ display: 'inline-block', width: 2, height: 16, background: '#1a73e8', verticalAlign: 'middle', marginLeft: 2 }} /></span>
+      </div>
+
+      {/* SERP results */}
+      <div style={{ position: 'absolute', top: '26%', left: '50%', transform: 'translateX(-50%)', width: 480, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {SERP_RESULTS.map((r, i) => (
+          <motion.div key={i} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.2, duration: 0.4 }}
+            style={{ background: '#fff', borderRadius: 14, padding: '12px 16px', border: '1.5px solid rgba(26,115,232,0.12)', boxShadow: '0 2px 12px rgba(26,115,232,0.06)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
+              <div style={{ width: 22, height: 22, borderRadius: 6, background: 'linear-gradient(135deg,#1a73e8,#0f9d58)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#fff', fontWeight: 800 }}>{r.pos}</div>
+              <span style={{ fontSize: 10.5, color: '#188038', fontFamily: 'var(--font-mono)' }}>{r.domain}</span>
+              {r.badge && <span style={{ fontSize: 9.5, background: '#fef3c7', color: '#d97706', padding: '1px 7px', borderRadius: 999, border: '1px solid #fde68a', fontWeight: 700 }}>{r.badge}</span>}
+            </div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: '#1a0dab' }}>{r.title}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Floating keyword tags */}
+      {KEYWORDS.map((kw, i) => (
+        <motion.div key={kw} style={{ position: 'absolute', left: `${8 + (i % 2) * 60}%`, top: `${62 + Math.floor(i/2) * 12}%` }}
+          animate={{ y: [0, -6, 0], opacity: [0.6, 1, 0.6] }} transition={{ duration: 2.5 + i * 0.4, repeat: Infinity, delay: i * 0.3 }}>
+          <div style={{ background: 'rgba(26,115,232,0.08)', border: '1px solid rgba(26,115,232,0.2)', borderRadius: 999, padding: '4px 12px', fontSize: 11, color: '#1a73e8', fontWeight: 600 }}>{kw}</div>
+        </motion.div>
+      ))}
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 260 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#1a73e8', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', marginBottom: 12, lineHeight: 1.2 }}>Rank #1 for Every<br /><span style={{ color: '#1a73e8' }}>Security Search</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(26,115,232,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#1a73e8' }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#1a73e8', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function SeoHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<SeoIntroScene />} sectionBg="#f0f7ff" />
 }
 
 /* ══════════════════════════════════════════════

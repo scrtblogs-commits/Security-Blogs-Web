@@ -28,6 +28,7 @@ export default function ServiceWorkflowCards({
   sideXOffset = 700,
   sectionBg = '#f8f9fb',
   footerSlot,
+  introNode,
 }: {
   steps: WorkflowStep[]
   cardW?: number
@@ -35,6 +36,7 @@ export default function ServiceWorkflowCards({
   sideXOffset?: number
   sectionBg?: string
   footerSlot?: React.ReactNode
+  introNode?: React.ReactNode
 }) {
   const outerRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(1200)
@@ -132,86 +134,51 @@ export default function ServiceWorkflowCards({
         <GlowOrb floatIdx={floatIdx} steps={steps} />
 
         {/* ══════════════════════════════════════════════════
-            ENTRY OVERLAY — visible only during intro phase
+            INTRO — custom scene OR default orb+text
         ══════════════════════════════════════════════════ */}
-        <motion.div
-          style={{
-            position: 'absolute', inset: 0, zIndex: 10,
-            opacity: entryOp,
-            pointerEvents: 'none', // so it doesn't block scroll
-            display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'center', gap: 0,
-          }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            style={{ textAlign: 'center', maxWidth: 560, padding: '0 24px', zIndex: 2, position: 'relative' }}
-          >
-            <span style={{
-              fontFamily: 'var(--font-mono)', fontSize: 10.5,
-              letterSpacing: '0.18em', color: 'rgba(111,77,255,0.7)',
-              textTransform: 'uppercase', display: 'block', marginBottom: 14,
-            }}>
-              How It Works
-            </span>
-            <h2 style={{
-              fontSize: 'clamp(28px, 4vw, 46px)', fontWeight: 800,
-              color: 'var(--text, #0f2244)', lineHeight: 1.18,
-              letterSpacing: '-0.025em', marginBottom: 16,
-            }}>
-              Your AI Visibility<br />
-              <span style={{ color: '#6f4dff' }}>Journey Starts Here</span>
-            </h2>
-            <p style={{
-              fontSize: 16, color: 'var(--text-soft, #46546e)',
-              lineHeight: 1.65, marginBottom: 32, maxWidth: 440, marginInline: 'auto',
-            }}>
-              Scroll to step through each phase of our proven AIO process — from audit to citation growth.
-            </p>
-            {/* Scroll indicator */}
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.55 }}
-            >
-              <div style={{
-                width: 26, height: 42, borderRadius: 999,
-                border: '2px solid rgba(111,77,255,0.4)',
-                display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: 5,
-              }}>
-                <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-                  style={{ width: 5, height: 5, borderRadius: '50%', background: '#6f4dff' }}
-                />
-              </div>
-              <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#6f4dff', letterSpacing: '0.12em' }}>
-                SCROLL TO BEGIN
-              </span>
-            </motion.div>
+        {introNode ? (
+          <motion.div style={{ position: 'absolute', inset: 0, zIndex: 10, opacity: entryOp, pointerEvents: 'none' }}>
+            {introNode}
           </motion.div>
-        </motion.div>
-
-        {/* ══════════════════════════════════════════════════
-            3D ROBOT ORB — centered on entry, drifts left
-        ══════════════════════════════════════════════════ */}
-        <motion.div
-          style={{
-            position: 'absolute',
-            top: '50%', left: '50%',
-            translateX: '-50%',
-            translateY: '-50%',
-            x: orbX,
-            scale: orbScale,
-            opacity: orbOp,
-            zIndex: 5,
-            pointerEvents: 'none',
-          }}
-        >
-          <RobotOrb />
-        </motion.div>
+        ) : (
+          <>
+            <motion.div
+              style={{
+                position: 'absolute', inset: 0, zIndex: 10,
+                opacity: entryOp,
+                pointerEvents: 'none',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center', gap: 0,
+              }}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ textAlign: 'center', maxWidth: 560, padding: '0 24px', zIndex: 2, position: 'relative' }}
+              >
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.18em', color: 'rgba(111,77,255,0.7)', textTransform: 'uppercase', display: 'block', marginBottom: 14 }}>How It Works</span>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 46px)', fontWeight: 800, color: 'var(--text, #0f2244)', lineHeight: 1.18, letterSpacing: '-0.025em', marginBottom: 16 }}>
+                  Your AI Visibility<br /><span style={{ color: '#6f4dff' }}>Journey Starts Here</span>
+                </h2>
+                <p style={{ fontSize: 16, color: 'var(--text-soft, #46546e)', lineHeight: 1.65, marginBottom: 32, maxWidth: 440, marginInline: 'auto' }}>
+                  Scroll to step through each phase of our proven process.
+                </p>
+                <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.55 }}>
+                  <div style={{ width: 26, height: 42, borderRadius: 999, border: '2px solid rgba(111,77,255,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: 5 }}>
+                    <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+                      style={{ width: 5, height: 5, borderRadius: '50%', background: '#6f4dff' }} />
+                  </div>
+                  <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#6f4dff', letterSpacing: '0.12em' }}>SCROLL TO BEGIN</span>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+            <motion.div style={{ position: 'absolute', top: '50%', left: '50%', translateX: '-50%', translateY: '-50%', x: orbX, scale: orbScale, opacity: orbOp, zIndex: 5, pointerEvents: 'none' }}>
+              <RobotOrb />
+            </motion.div>
+          </>
+        )}
 
         {/* ══════════════════════════════════════════════════
             CARD STRIP — fades in as intro exits

@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
@@ -158,6 +159,76 @@ const STEPS: WorkflowStep[] = [
   { step: '04', tag: 'RANK', title: 'Ranking & Monthly Management', color: '#ea4335', glow: 'rgba(234,67,53,0.45)', Scene: Scene4 },
 ]
 
+// ─── GMB animated intro: Google Maps pin + star rating ───────────────────────
+function GmbIntroScene() {
+  const [stars, setStars] = useState(0)
+  const [reviews, setReviews] = useState(0)
+  useEffect(() => {
+    const t1 = setTimeout(() => setStars(5), 600)
+    const iv = setInterval(() => setReviews(v => { if (v >= 218) { clearInterval(iv); return v } return v + 3 }), 20)
+    return () => { clearTimeout(t1); clearInterval(iv) }
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #fff8f6 0%, #fffaf9 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Map grid */}
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(219,68,55,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(219,68,55,0.05) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+      {/* Road lines */}
+      <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+        <line x1="0" y1="55%" x2="100%" y2="55%" stroke="rgba(219,68,55,0.08)" strokeWidth="8" />
+        <line x1="38%" y1="0" x2="38%" y2="100%" stroke="rgba(219,68,55,0.06)" strokeWidth="12" />
+        <line x1="68%" y1="0" x2="68%" y2="100%" stroke="rgba(219,68,55,0.06)" strokeWidth="6" />
+      </svg>
+
+      {/* Map pin */}
+      <div style={{ position: 'absolute', top: '25%', left: '50%', transform: 'translateX(-50%)' }}>
+        <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ width: 48, height: 48, borderRadius: '50% 50% 50% 0', transform: 'rotate(-45deg)', background: 'linear-gradient(135deg,#db4437,#ea4335)', boxShadow: '0 8px 24px rgba(219,68,55,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ transform: 'rotate(45deg)', fontSize: 20 }}>📍</span>
+          </div>
+          {/* Ripple rings */}
+          {[1,2,3].map(n => (
+            <motion.div key={n} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', borderRadius: '50%', border: '2px solid rgba(219,68,55,0.3)', width: n*32, height: n*32 }}
+              animate={{ scale: [1, 1.6, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2, repeat: Infinity, delay: n * 0.4 }} />
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Business card popup */}
+      <motion.div initial={{ opacity: 0, y: 20, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 0.4, duration: 0.5 }}
+        style={{ position: 'absolute', top: '48%', left: '50%', transform: 'translateX(-50%)', background: '#fff', borderRadius: 16, padding: '16px 20px', boxShadow: '0 8px 40px rgba(219,68,55,0.15)', border: '1.5px solid rgba(219,68,55,0.12)', width: 260 }}>
+        <div style={{ fontSize: 13, fontWeight: 800, color: '#0f2244', marginBottom: 4 }}>SecureMax CCTV Sydney</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+          <div style={{ display: 'flex', gap: 1 }}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <motion.span key={i} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: i < stars ? 1 : 0.3, scale: 1 }} transition={{ delay: 0.6 + i * 0.1, type: 'spring' }} style={{ fontSize: 14, color: '#f59e0b' }}>★</motion.span>
+            ))}
+          </div>
+          <span style={{ fontSize: 12, color: '#46546e' }}>{reviews} reviews</span>
+        </div>
+        <div style={{ fontSize: 11.5, color: '#46546e' }}>📍 Sydney CBD · Open 24/7 · AS2201 Certified</div>
+        <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+          {['Directions','Website','Call'].map(btn => (
+            <div key={btn} style={{ flex: 1, background: 'rgba(219,68,55,0.08)', border: '1px solid rgba(219,68,55,0.2)', borderRadius: 8, padding: '5px', textAlign: 'center', fontSize: 10.5, color: '#db4437', fontWeight: 600, cursor: 'default' }}>{btn}</div>
+          ))}
+        </div>
+      </motion.div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 320 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#db4437', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', lineHeight: 1.2, marginBottom: 12 }}>Rank #1 on<br /><span style={{ color: '#db4437' }}>Google Maps</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(219,68,55,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#db4437' }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#db4437', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function GmbHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<GmbIntroScene />} sectionBg="#fff8f6" />
 }

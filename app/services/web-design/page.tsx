@@ -1,6 +1,5 @@
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import WebDesignCapabilities from './WebDesignCapabilities'
@@ -133,7 +132,6 @@ export default function WebDesignPage() {
         </div>
       </section>
 
-      <WebDesignHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -173,12 +171,7 @@ export default function WebDesignPage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Ready for a security website that works as hard as you do?"
-        subtitle="Get a free website + AI-visibility review and a clear plan to rank, convert and get cited."
-        ctaLabel="Start your project →"
-        ctaHref="/contact/"
-      />
+      <WebDesignHowItWorks />
     </>
   )
 }

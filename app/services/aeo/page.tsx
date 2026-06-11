@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import AeoCapabilities from './AeoCapabilities'
@@ -97,7 +96,6 @@ export default function AeoPage() {
         </div>
       </section>
 
-      <AeoHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -120,12 +118,7 @@ export default function AeoPage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Get quoted by AI →"
-        subtitle="See which buyer questions your security brand could be answering — and how to become the response AI assistants recommend."
-        ctaLabel="Get my free AEO audit →"
-        ctaHref="/contact/"
-      />
+      <AeoHowItWorks />
     </>
   )
 }

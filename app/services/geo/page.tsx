@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import GeoCapabilities from './GeoCapabilities'
@@ -116,7 +115,6 @@ export default function GeoPage() {
         </div>
       </section>
 
-      <GeoHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -151,12 +149,7 @@ export default function GeoPage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Get my GEO audit →"
-        subtitle="See how AI platforms recognise your security brand today — and the entity signals it takes to be recommended by name."
-        ctaLabel="Get my GEO audit →"
-        ctaHref="/contact/"
-      />
+      <GeoHowItWorks />
     </>
   )
 }

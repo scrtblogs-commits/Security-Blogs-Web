@@ -405,6 +405,80 @@ const STEPS: WorkflowStep[] = [
   },
 ]
 
+// ─── GEO animated intro: globe with AI signal pulses ─────────────────────────
+const GEO_CITIES = [
+  { cx: 50, cy: 42, label: 'Sydney', delay: 0 },
+  { cx: 28, cy: 38, label: 'London', delay: 0.4 },
+  { cx: 74, cy: 35, label: 'Dubai',  delay: 0.8 },
+  { cx: 16, cy: 45, label: 'New York', delay: 1.2 },
+  { cx: 62, cy: 55, label: 'Singapore', delay: 0.6 },
+]
+
+function GeoIntroScene() {
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f0fffe 0%, #f6fffe 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      {/* Globe SVG */}
+      <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -52%)', width: 340, height: 340 }}>
+        <svg viewBox="0 0 200 200" style={{ width: '100%', height: '100%' }}>
+          {/* Outer circle */}
+          <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(0,170,160,0.18)" strokeWidth="1.5" />
+          {/* Latitude lines */}
+          {[20,40,60,80].map(r => <ellipse key={r} cx="100" cy="100" rx={r} ry={r*0.35} fill="none" stroke="rgba(0,170,160,0.12)" strokeWidth="1" />)}
+          {/* Longitude arcs */}
+          {[0,40,80,120,160].map((a,i) => (
+            <ellipse key={a} cx="100" cy="100" rx="45" ry="90" fill="none" stroke="rgba(0,170,160,0.10)" strokeWidth="1"
+              transform={`rotate(${a} 100 100)`} />
+          ))}
+          {/* City dots */}
+          {GEO_CITIES.map((c, i) => (
+            <g key={c.label}>
+              <circle cx={c.cx * 2} cy={c.cy * 2} r="4" fill="#00aaa0" opacity="0.9">
+                <animate attributeName="r" values="4;7;4" dur={`${2+i*0.3}s`} begin={`${c.delay}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.9;0.4;0.9" dur={`${2+i*0.3}s`} begin={`${c.delay}s`} repeatCount="indefinite" />
+              </circle>
+              <circle cx={c.cx * 2} cy={c.cy * 2} r="12" fill="none" stroke="#00aaa0" strokeWidth="1" opacity="0.3">
+                <animate attributeName="r" values="6;18;6" dur={`${2+i*0.3}s`} begin={`${c.delay}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.5;0;0.5" dur={`${2+i*0.3}s`} begin={`${c.delay}s`} repeatCount="indefinite" />
+              </circle>
+            </g>
+          ))}
+          {/* Connecting lines to center */}
+          {GEO_CITIES.map((c, i) => (
+            <line key={c.label} x1={c.cx * 2} y1={c.cy * 2} x2="100" y2="100" stroke="rgba(0,170,160,0.2)" strokeWidth="1" strokeDasharray="3 3">
+              <animate attributeName="opacity" values="0.2;0.6;0.2" dur={`${3+i*0.4}s`} begin={`${i*0.3}s`} repeatCount="indefinite" />
+            </line>
+          ))}
+          {/* AI core */}
+          <circle cx="100" cy="100" r="8" fill="#00aaa0" opacity="0.9">
+            <animate attributeName="r" values="8;11;8" dur="2.4s" repeatCount="indefinite" />
+          </circle>
+          <text x="100" y="104" textAnchor="middle" fontSize="7" fill="#fff" fontWeight="bold">AI</text>
+        </svg>
+      </div>
+
+      {/* City labels floating */}
+      {GEO_CITIES.map((c, i) => (
+        <motion.div key={c.label} style={{ position: 'absolute', left: `${c.cx - 4}%`, top: `${c.cy - 22}%` }}
+          animate={{ y: [0, -5, 0] }} transition={{ duration: 2.5 + i * 0.3, repeat: Infinity, delay: c.delay }}>
+          <div style={{ background: '#fff', border: '1px solid rgba(0,170,160,0.3)', borderRadius: 8, padding: '3px 8px', fontSize: 10, color: '#0f7a74', fontWeight: 700, whiteSpace: 'nowrap', boxShadow: '0 2px 8px rgba(0,170,160,0.12)' }}>{c.label}</div>
+        </motion.div>
+      ))}
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 200 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#00aaa0', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', marginBottom: 12, lineHeight: 1.2 }}>Get Recommended<br /><span style={{ color: '#00aaa0' }}>Everywhere AI Looks</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(0,170,160,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#00aaa0' }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#00aaa0', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function GeoHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<GeoIntroScene />} sectionBg="#f0fffe" />
 }

@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
@@ -309,7 +308,6 @@ export default function BingAdsPage() {
         </div>
       </section>
 
-      <BingAdsHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
@@ -336,12 +334,7 @@ export default function BingAdsPage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Capture the buyers your competitors ignore →"
-        subtitle="Get a free Microsoft Advertising audit and see how much cheaper your B2B security leads could be."
-        ctaLabel="Get your free audit →"
-        ctaHref="/contact/"
-      />
+      <BingAdsHowItWorks />
     </>
   )
 }

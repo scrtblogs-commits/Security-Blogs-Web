@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
@@ -246,6 +247,93 @@ const STEPS: WorkflowStep[] = [
   { step: '04', tag: 'LAUNCH', title: 'Launch & Optimisation', color: '#0acf83', glow: 'rgba(10,207,131,0.45)', Scene: Scene4 },
 ]
 
+// ─── Web Design animated intro: browser being built ──────────────────────────
+const DESIGN_STEPS_ANIM = [
+  { label: 'UX Wireframe', icon: '📐', delay: 0 },
+  { label: 'Brand System', icon: '🎨', delay: 0.4 },
+  { label: 'Components',   icon: '🧩', delay: 0.8 },
+  { label: 'AI-Ready',     icon: '🤖', delay: 1.2 },
+]
+const CODE_LINES = [
+  { t: '<SecurityPage />', c: '#a5b4fc' },
+  { t: '  <Hero cta="Get Quote" />', c: '#6ee7b7' },
+  { t: '  <Services schema={true} />', c: '#fde68a' },
+  { t: '  <ContactForm ai-ready />', c: '#6ee7b7' },
+  { t: '</SecurityPage>', c: '#a5b4fc' },
+]
+
+function WebDesignIntroScene() {
+  const [lineIdx, setLineIdx] = useState(-1)
+  useEffect(() => {
+    let i = -1
+    const iv = setInterval(() => { i++; setLineIdx(i); if (i >= CODE_LINES.length) clearInterval(iv) }, 220)
+    return () => clearInterval(iv)
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f5f0ff 0%, #faf8ff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 500, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(99,102,241,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+      {/* Browser frame */}
+      <div style={{ position: 'absolute', top: '8%', left: '50%', transform: 'translateX(-50%)', width: 500, background: '#fff', borderRadius: 16, overflow: 'hidden', boxShadow: '0 8px 40px rgba(99,102,241,0.12)', border: '1.5px solid rgba(99,102,241,0.15)' }}>
+        {/* Browser chrome */}
+        <div style={{ background: '#f1f3f9', padding: '9px 14px', borderBottom: '1px solid rgba(99,102,241,0.1)', display: 'flex', alignItems: 'center', gap: 8 }}>
+          {['#ff5f57','#febc2e','#28c840'].map(c => <div key={c} style={{ width: 9, height: 9, borderRadius: '50%', background: c }} />)}
+          <div style={{ flex: 1, background: '#fff', borderRadius: 20, padding: '4px 12px', fontSize: 11, color: '#46546e', fontFamily: 'var(--font-mono)', border: '1px solid rgba(99,102,241,0.1)' }}>
+            securityblogs.com.au
+          </div>
+        </div>
+        {/* Page preview */}
+        <div style={{ padding: '14px', background: '#0f2244', minHeight: 120 }}>
+          <motion.div initial={{ width: 0 }} animate={{ width: '70%' }} transition={{ duration: 0.6, delay: 0.3 }} style={{ height: 10, background: 'rgba(255,255,255,0.9)', borderRadius: 5, marginBottom: 8 }} />
+          <motion.div initial={{ width: 0 }} animate={{ width: '45%' }} transition={{ duration: 0.5, delay: 0.5 }} style={{ height: 7, background: 'rgba(99,102,241,0.8)', borderRadius: 4, marginBottom: 12 }} />
+          <div style={{ display: 'flex', gap: 8 }}>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }} style={{ background: '#6366f1', borderRadius: 8, padding: '6px 14px', fontSize: 11, color: '#fff', fontWeight: 700 }}>Get Quote</motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }} style={{ background: 'rgba(255,255,255,0.1)', borderRadius: 8, padding: '6px 14px', fontSize: 11, color: '#fff', fontWeight: 700, border: '1px solid rgba(255,255,255,0.2)' }}>Learn More</motion.div>
+          </div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} style={{ marginTop: 10, display: 'flex', gap: 6 }}>
+            {['CCTV','Access','Alarms','Monitoring'].map(t => (
+              <div key={t} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: 999, padding: '3px 10px', fontSize: 10, color: 'rgba(255,255,255,0.7)' }}>{t}</div>
+            ))}
+          </motion.div>
+        </div>
+        {/* Code editor */}
+        <div style={{ background: '#1e1e2e', padding: '10px 14px' }}>
+          {CODE_LINES.map((l, i) => (
+            <motion.div key={i} initial={{ opacity: 0, x: -8 }} animate={lineIdx >= i ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.2 }}
+              style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: l.c, lineHeight: 1.7 }}>
+              {l.t}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Design step badges */}
+      <div style={{ position: 'absolute', top: '70%', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 10 }}>
+        {DESIGN_STEPS_ANIM.map((s, i) => (
+          <motion.div key={s.label} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: s.delay, type: 'spring', stiffness: 200 }}
+            style={{ background: '#fff', border: '1.5px solid rgba(99,102,241,0.2)', borderRadius: 12, padding: '8px 12px', textAlign: 'center', boxShadow: '0 2px 12px rgba(99,102,241,0.08)' }}>
+            <div style={{ fontSize: 18, marginBottom: 3 }}>{s.icon}</div>
+            <div style={{ fontSize: 10, fontWeight: 700, color: '#6366f1', whiteSpace: 'nowrap' }}>{s.label}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 350 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#6366f1', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', lineHeight: 1.2, marginBottom: 12 }}>Websites That Rank,<br /><span style={{ color: '#6366f1' }}>Convert & Get Cited</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(99,102,241,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#6366f1' }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#6366f1', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function WebDesignHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<WebDesignIntroScene />} sectionBg="#f5f0ff" />
 }

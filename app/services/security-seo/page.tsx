@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
@@ -119,7 +118,6 @@ export default function SecuritySeoPage() {
 
       <SeoTrackingDashboard />
 
-      <SeoHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
@@ -166,12 +164,7 @@ export default function SecuritySeoPage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Ready to dominate security search?"
-        subtitle="Book a free strategy call and we'll map the exact keywords that will drive qualified leads to your security business."
-        ctaLabel="Book my free strategy call →"
-        ctaHref="/book-strategy-call/"
-      />
+      <SeoHowItWorks />
     </>
   )
 }

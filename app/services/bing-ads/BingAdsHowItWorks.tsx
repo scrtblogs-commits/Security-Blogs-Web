@@ -1,4 +1,6 @@
 'use client'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
 /* ── Scene 1 — Import & Audit ── */
@@ -245,6 +247,78 @@ const STEPS = [
   { step: '04', tag: 'SCALE', title: 'Optimise & Expand', color: '#5c2d91', glow: 'rgba(92,45,145,0.45)', Scene: Scene4 },
 ] satisfies WorkflowStep[]
 
+// ─── Bing Ads animated intro: Microsoft dashboard + LinkedIn targeting ──────────
+const BING_METRICS = [
+  { label: 'CPC vs Google', value: '−52%', color: '#0078d4', icon: '💲' },
+  { label: 'B2B Reach',     value: '41%',  color: '#0f9d58', icon: '🎯' },
+  { label: 'Conv. Rate',    value: '6.4%', color: '#f29900', icon: '📈' },
+  { label: 'Monthly Leads', value: '142',  color: '#e91e63', icon: '🤝' },
+]
+const LI_TAGS = ['Security Manager', 'Facilities Director', 'Head of Operations', 'Commercial Real Estate', '50–500 employees']
+
+function BingIntroScene() {
+  const [shown, setShown] = useState(0)
+  useEffect(() => {
+    const iv = setInterval(() => setShown(v => Math.min(v + 1, BING_METRICS.length)), 300)
+    return () => clearInterval(iv)
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f0f6ff 0%, #f8fbff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: 700, height: 500, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(0,120,212,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+      {/* Dashboard header */}
+      <div style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: 480, background: '#fff', borderRadius: 16, border: '1.5px solid rgba(0,120,212,0.15)', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: 10, boxShadow: '0 4px 20px rgba(0,120,212,0.08)' }}>
+        <div style={{ width: 32, height: 32, background: '#0078d4', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>Ⓜ️</div>
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#0f2244' }}>Microsoft Advertising · Security B2B</div>
+          <div style={{ fontSize: 11, color: '#46546e', fontFamily: 'var(--font-mono)' }}>Live Campaign · Sydney Metro</div>
+        </div>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 5 }}>
+          <motion.div animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 1.2, repeat: Infinity }} style={{ width: 7, height: 7, borderRadius: '50%', background: '#0f9d58' }} />
+          <span style={{ fontSize: 11, color: '#0f9d58', fontWeight: 700 }}>LIVE</span>
+        </div>
+      </div>
+
+      {/* Metric tiles */}
+      <div style={{ position: 'absolute', top: '26%', left: '50%', transform: 'translateX(-50%)', width: 480, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        {BING_METRICS.map((m, i) => (
+          <motion.div key={m.label} initial={{ opacity: 0, y: 14 }} animate={i < shown ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.3 }}
+            style={{ background: '#fff', borderRadius: 14, padding: '14px 16px', border: `1.5px solid ${m.color}20`, boxShadow: `0 4px 16px ${m.color}10` }}>
+            <div style={{ fontSize: 11, color: '#46546e', marginBottom: 4 }}>{m.icon} {m.label}</div>
+            <div style={{ fontSize: 22, fontWeight: 900, color: m.color, fontFamily: 'var(--font-mono)' }}>{m.value}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* LinkedIn targeting badges */}
+      <div style={{ position: 'absolute', top: '60%', left: '50%', transform: 'translateX(-50%)', width: 500 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#0078d4', marginBottom: 8, textAlign: 'center', letterSpacing: '0.1em' }}>LINKEDIN PROFILE TARGETING</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, justifyContent: 'center' }}>
+          {LI_TAGS.map((tag, i) => (
+            <motion.div key={tag} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.8 + i * 0.12, type: 'spring', stiffness: 200 }}
+              style={{ background: '#0a66c2', color: '#fff', borderRadius: 999, padding: '5px 12px', fontSize: 11, fontWeight: 600 }}>
+              in {tag}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 340 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#0078d4', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', lineHeight: 1.2, marginBottom: 12 }}>Capture B2B Buyers<br /><span style={{ color: '#0078d4' }}>Google Misses</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(0,120,212,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#0078d4' }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#0078d4', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function BingAdsHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<BingIntroScene />} sectionBg="#f0f6ff" />
 }

@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import StatsStrip from '@/components/ui/StatsStrip'
@@ -321,7 +320,6 @@ export default function GoogleAdsPage() {
         </div>
       </section>
 
-      <GoogleAdsHowItWorks />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 820 }}>
@@ -348,12 +346,7 @@ export default function GoogleAdsPage() {
         accent={ACCENT}
       />
 
-      <CTABand
-        title="Ready to turn search clicks into security contracts?"
-        subtitle="Get a free Google Ads audit and a forecast of the leads your budget should be generating."
-        ctaLabel="Get your free audit →"
-        ctaHref="/contact/"
-      />
+      <GoogleAdsHowItWorks />
     </>
   )
 }

@@ -1,4 +1,6 @@
 'use client'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
 /* ── Scene 1 — Audit & Keyword Research ── */
@@ -189,6 +191,76 @@ const STEPS: WorkflowStep[] = [
   { step: '04', tag: 'REPORT',   title: 'Report & Refine',          color: '#fbbc04', glow: 'rgba(251,188,4,0.45)', Scene: Scene4 },
 ]
 
+// ─── Google Ads animated intro: PPC ad with live click counter ───────────────
+function GoogleAdsIntroScene() {
+  const [clicks, setClicks] = useState(0)
+  const [roas, setRoas] = useState(0)
+  const [cursorPos, setCursorPos] = useState({ x: 50, y: 80 })
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setClicks(v => v + 1)
+      setRoas(v => Math.min(320, v + 4))
+      setCursorPos({ x: 45 + Math.random() * 10, y: 55 + Math.random() * 10 })
+    }, 800)
+    return () => clearInterval(iv)
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, #f8f9ff 0%, #fafbff 100%)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'absolute', top: '40%', left: '50%', transform: 'translate(-50%,-50%)', width: 600, height: 500, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(26,115,232,0.07) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
+      {/* Google Ads search ad mockup */}
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}
+        style={{ position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)', width: 500, background: '#fff', borderRadius: 16, padding: '18px 20px', boxShadow: '0 4px 24px rgba(26,115,232,0.1)', border: '1.5px solid rgba(26,115,232,0.12)' }}>
+        {/* Ad badge */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <span style={{ fontSize: 10.5, background: '#1a73e8', color: '#fff', padding: '1px 6px', borderRadius: 4, fontWeight: 700 }}>Ad</span>
+          <span style={{ fontSize: 11, color: '#188038', fontFamily: 'var(--font-mono)' }}>securityblogs.com.au</span>
+          <motion.span animate={{ scale: [1,1.2,1] }} transition={{ duration: 0.8, repeat: Infinity, delay: clicks * 0.8 }} style={{ marginLeft: 'auto', fontSize: 13 }}>👆</motion.span>
+        </div>
+        <div style={{ fontSize: 17, fontWeight: 700, color: '#1a0dab', marginBottom: 6, lineHeight: 1.3 }}>
+          Commercial CCTV Sydney | 24/7 Security From $49/mo
+        </div>
+        <div style={{ fontSize: 12.5, color: '#46546e', lineHeight: 1.5 }}>
+          AS2201 certified · 500+ businesses protected · Free site survey for NSW businesses
+        </div>
+        <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
+          {['Get Free Quote', 'CCTV Systems', 'Access Control', 'Contact'].map(sl => (
+            <span key={sl} style={{ fontSize: 11, color: '#1a73e8', textDecoration: 'underline', cursor: 'default' }}>{sl}</span>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Live stats */}
+      <div style={{ position: 'absolute', top: '52%', left: '50%', transform: 'translateX(-50%)', width: 500, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
+        {[
+          { label: 'Clicks Today', value: clicks, suffix: '', color: '#1a73e8' },
+          { label: 'ROAS', value: roas, suffix: '%', color: '#0f9d58' },
+          { label: 'Avg CPC', value: '$4.20', suffix: '', color: '#f29900', static: true },
+        ].map((m, i) => (
+          <motion.div key={m.label} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 + i * 0.15 }}
+            style={{ background: '#fff', borderRadius: 14, padding: '14px', textAlign: 'center', border: `1.5px solid ${m.color}20`, boxShadow: `0 3px 12px ${m.color}10` }}>
+            <div style={{ fontSize: 10.5, color: '#46546e', marginBottom: 4 }}>{m.label}</div>
+            <div style={{ fontSize: 20, fontWeight: 900, color: m.color, fontFamily: 'var(--font-mono)' }}>{m.static ? m.value : m.value}{m.suffix}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+        style={{ textAlign: 'center', zIndex: 10, position: 'relative', marginTop: 320 }}>
+        <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: '#1a73e8', letterSpacing: '0.18em', marginBottom: 10 }}>HOW IT WORKS</div>
+        <h2 style={{ fontSize: 'clamp(24px, 3.5vw, 40px)', fontWeight: 800, color: '#0f2244', lineHeight: 1.2, marginBottom: 12 }}>Turn Clicks into<br /><span style={{ color: '#1a73e8' }}>Security Contracts</span></h2>
+        <motion.div animate={{ y: [0, 7, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ marginTop: 18, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, opacity: 0.6 }}>
+          <div style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(26,115,232,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 5 }}>
+            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.8, repeat: Infinity }} style={{ width: 4, height: 8, borderRadius: 2, background: '#1a73e8' }} />
+          </div>
+          <span style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: '#1a73e8', letterSpacing: '0.14em' }}>SCROLL TO BEGIN</span>
+        </motion.div>
+      </motion.div>
+    </div>
+  )
+}
+
 export default function GoogleAdsHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<GoogleAdsIntroScene />} sectionBg="#f8f9ff" />
 }
