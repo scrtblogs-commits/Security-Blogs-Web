@@ -12,7 +12,13 @@ const STEPS: WorkflowStep[] = [
 ]
 
 export default function AioHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} />
+  return <ServiceWorkflowCards
+    steps={STEPS}
+    cardW={1080}
+    cardH={560}
+    sideXOffset={9999}
+    sectionBg="linear-gradient(135deg, #dbeafe 0%, #ede9fe 100%)"
+  />
 }
 
 /* ══════════════════════════════════════════════

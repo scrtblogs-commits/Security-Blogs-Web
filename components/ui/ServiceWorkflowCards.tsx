@@ -12,11 +12,9 @@ export type WorkflowStep = {
   Scene: (props: { active: boolean; color: string }) => React.ReactElement | null
 }
 
-const CARD_W = 660
-const CARD_H = 490
-const GAP    = 40
+const GAP = 40
 
-export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] }) {
+export default function ServiceWorkflowCards({ steps, cardW = 660, cardH = 490, sideXOffset = 700, sectionBg = '#ffffff' }: { steps: WorkflowStep[]; cardW?: number; cardH?: number; sideXOffset?: number; sectionBg?: string }) {
   const outerRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(1200)
 
@@ -30,8 +28,8 @@ export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] 
   const total = steps.length
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start start', 'end end'] })
 
-  const startX = vw / 2 - CARD_W / 2
-  const endX   = startX - (total - 1) * (CARD_W + GAP)
+  const startX = vw / 2 - cardW / 2
+  const endX   = startX - (total - 1) * (cardW + GAP)
   const rawX = useTransform(scrollYProgress, [0, 1], [startX, endX])
   const x    = useSpring(rawX, { stiffness: 70, damping: 22, mass: 0.6 })
   const floatIdx = useTransform(scrollYProgress, [0, 1], [0, total - 1])
@@ -40,7 +38,7 @@ export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] 
     <div ref={outerRef} style={{ height: `${total * 100}vh`, position: 'relative' }}>
       <div style={{
         position: 'sticky', top: 0, height: '100vh', overflow: 'hidden',
-        background: '#ffffff',
+        background: sectionBg,
         display: 'flex', flexDirection: 'column',
       }}>
         {/* Subtle dot grid */}
@@ -70,11 +68,11 @@ export default function ServiceWorkflowCards({ steps }: { steps: WorkflowStep[] 
         <motion.div style={{
           x,
           position: 'absolute',
-          top: `calc(50vh - ${CARD_H / 2}px + 14px)`,
+          top: `calc(50vh - ${cardH / 2}px + 14px)`,
           left: 0, display: 'flex', gap: GAP, willChange: 'transform',
         }}>
           {steps.map((s, i) => (
-            <SceneCard key={i} index={i} floatIdx={floatIdx as MotionValue<number>} data={s} cardH={CARD_H} cardW={CARD_W} />
+            <SceneCard key={i} index={i} floatIdx={floatIdx as MotionValue<number>} data={s} cardH={cardH} cardW={cardW} sideXOffset={sideXOffset} />
           ))}
         </motion.div>
 
@@ -150,8 +148,8 @@ function StepPill({ index, floatIdx, step }: { key?: React.Key; index: number; f
   )
 }
 
-function SceneCard({ index, floatIdx, data, cardH, cardW }: {
-  key?: React.Key; index: number; floatIdx: MotionValue<number>; data: WorkflowStep; cardH: number; cardW: number
+function SceneCard({ index, floatIdx, data, cardH, cardW, sideXOffset }: {
+  key?: React.Key; index: number; floatIdx: MotionValue<number>; data: WorkflowStep; cardH: number; cardW: number; sideXOffset: number
 }) {
   const [active, setActive] = useState(index === 0)
 

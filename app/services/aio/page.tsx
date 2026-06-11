@@ -1,7 +1,6 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import AioCapabilities from './AioCapabilities'
@@ -124,8 +123,6 @@ export default function AioPage() {
         </div>
       </section>
 
-      <AioHowItWorks />
-
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="The results" title="What AIO delivers for security brands." />
@@ -140,12 +137,7 @@ export default function AioPage() {
         </div>
       </section>
 
-      <CTABand
-        title="Get cited by AI →"
-        subtitle="Find out exactly how ChatGPT, Perplexity and Gemini describe your security brand today — and how to become the answer they cite."
-        ctaLabel="Get my AI visibility audit →"
-        ctaHref="/contact/"
-      />
+      <AioHowItWorks />
     </>
   )
 }
