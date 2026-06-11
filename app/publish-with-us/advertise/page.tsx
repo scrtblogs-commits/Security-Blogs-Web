@@ -144,7 +144,7 @@ export default function AdvertisePage() {
               <p className="text-soft" style={{ fontSize: 14.5, marginBottom: 20 }}>
                 Get our complete media kit with audience demographics, traffic data, ad specs and rate card.
               </p>
-              <MagneticButton href="/contact/">Download media kit →</MagneticButton>
+              <a href="/SecurityBlogs-Media-Kit.pdf" download="SecurityBlogs-Media-Kit.pdf" className="btn btn-primary" style={{ display: 'inline-block' }}>Download media kit →</a>
             </div>
           </Reveal>
         </div>

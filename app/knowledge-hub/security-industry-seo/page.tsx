@@ -43,7 +43,6 @@ const faqs = [
 const related = [
   { title: 'In-Depth Security Marketing Guides', href: '/knowledge-hub/security-guides/' },
   { title: 'Definitions & Glossary', href: '/knowledge-hub/definitions-glossary/' },
-  { title: 'Security Trends 2026', href: '/knowledge-hub/security-trends-2026/' },
 ]
 
 export default function SecurityIndustrySEOPage() {
