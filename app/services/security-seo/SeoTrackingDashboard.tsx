@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import { motion } from 'framer-motion'
 
 const ACCENT = '#1e9e75'
@@ -205,9 +206,8 @@ function KeywordPerformanceWidget() {
         <span style={{ fontSize: 9.5, color: '#8896af', fontFamily: 'var(--font-mono)', textAlign: 'right' }}>CLICKS</span>
         <span style={{ fontSize: 9.5, color: '#8896af', fontFamily: 'var(--font-mono)', textAlign: 'right' }}>IMP</span>
         {kws.map((k, i) => (
-          <>
+          <React.Fragment key={k.kw}>
             <motion.span
-              key={k.kw}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.07 }}
@@ -222,7 +222,7 @@ function KeywordPerformanceWidget() {
             }}>#{k.pos}</span>
             <span style={{ textAlign: 'right', fontSize: 11, color: '#0f2244', fontFamily: 'var(--font-mono)' }}>{k.clicks}</span>
             <span style={{ textAlign: 'right', fontSize: 11, color: '#8896af', fontFamily: 'var(--font-mono)' }}>{k.imp}</span>
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>
