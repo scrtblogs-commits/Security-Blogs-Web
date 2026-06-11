@@ -62,23 +62,15 @@ export default function ServiceWorkflowCards({
   // ── Entry overlay: fades out as intro phase ends ─────────
   const entryOp = useTransform(scrollYProgress, [introEnd * 0.55, introEnd], [1, 0])
 
-  // ── Card progress: 0 … total (footer is index=total) ─────
-  const rawCardP = useTransform(
-    scrollYProgress,
-    [introEnd, cardsEnd],
-    [0, hasFooter ? total : total - 1]
-  )
+  // ── Card progress: 0 … total-1 (cards only) ──────────────
+  const rawCardP = useTransform(scrollYProgress, [introEnd, cardsEnd], [0, total - 1])
   const floatIdx = rawCardP
 
   // ── Horizontal strip position ─────────────────────────────
-  // Center card in full viewport; footer card (width=vw) also centered
-  const startX    = vw / 2 - cardW / 2
-  const lastCardX = startX - (total - 1) * (cardW + GAP)
-  // Footer needs the strip shifted one more step
-  const footerX   = hasFooter ? startX - total * (cardW + GAP) : lastCardX
-  const endX      = hasFooter ? footerX : lastCardX
+  const startX = vw / 2 - cardW / 2
+  const endX   = startX - (total - 1) * (cardW + GAP)
 
-  const rawX = useTransform(rawCardP, [0, hasFooter ? total : total - 1], [startX, endX])
+  const rawX = useTransform(rawCardP, [0, total - 1], [startX, endX])
   const x    = useSpring(rawX, { stiffness: 70, damping: 22, mass: 0.6 })
 
   // ── Card strip fade-in (enters during intro→card transition) ──
@@ -261,13 +253,6 @@ export default function ServiceWorkflowCards({
                 sideXOffset={sideXOffset}
               />
             ))}
-
-            {/* Footer as the last "card" in the strip — width = full viewport */}
-            {hasFooter && (
-              <FooterCard cardH={cardH} vw={vw} floatIdx={floatIdx as MotionValue<number>} footerIdx={total}>
-                {footerSlot}
-              </FooterCard>
-            )}
           </motion.div>
 
           {/* Step pills + scroll nudge */}
@@ -280,9 +265,6 @@ export default function ServiceWorkflowCards({
               {steps.map((s, i) => (
                 <StepPill key={i} index={i} floatIdx={floatIdx as MotionValue<number>} step={s} />
               ))}
-              {hasFooter && (
-                <FooterPill floatIdx={floatIdx as MotionValue<number>} footerIdx={total} />
-              )}
             </div>
             <motion.div
               animate={{ opacity: [0.35, 0.9, 0.35] }}
