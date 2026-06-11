@@ -8,15 +8,12 @@ import StatsStrip from '@/components/ui/StatsStrip'
 import CTABand from '@/components/ui/CTABand'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import Reveal from '@/components/ui/Reveal'
-import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 import JsonLd from '@/components/JsonLd'
 import { stats, services } from '@/lib/site'
 import { siteConfig } from '@/lib/siteConfig'
 import { faqSchema, webPageSchema, itemListSchema } from '@/lib/schema'
 import HeroAIIcons from './HeroAIIcons'
-import ScrollStackSection from './ScrollStackSection'
-import TestimonialsSection from './TestimonialsSection'
-import AIScoreWithVideo from './AIScoreWithVideo'
+import { DynamicAIScore, DynamicScrollStack, DynamicTestimonials, DynamicLocalCheck } from './DynamicSections'
 
 export const metadata: Metadata = {
   title: 'Security Blogs Australia | SEO, AEO & AI Visibility for Security Companies',
@@ -139,7 +136,7 @@ export default function HomePage() {
             sub="Our engine checks 10+ AI platforms and scores your brand's citation rate in real time."
             dark
           />
-          <AIScoreWithVideo />
+          <DynamicAIScore />
         </div>
       </section>
 
@@ -148,7 +145,7 @@ export default function HomePage() {
           Cards slide up one by one as you scroll
       ───────────────────────────────────────── */}
       <section id="services" style={{ paddingBottom: 0 }}>
-        <ScrollStackSection />
+        <DynamicScrollStack />
       </section>
 
       {/* ─────────────────────────────────────────
@@ -166,7 +163,7 @@ export default function HomePage() {
           "Here's what our users say"
           Scroll-triggered entrance + hover lift
       ───────────────────────────────────────── */}
-      <TestimonialsSection items={siteConfig.testimonials} />
+      <DynamicTestimonials />
 
       {/* ─────────────────────────────────────────
           7. CTA BAND — animated gradient cycling
@@ -177,7 +174,7 @@ export default function HomePage() {
           8. MAP — UNCHANGED
           Who shows up when locals search?
       ───────────────────────────────────────── */}
-      <LocalVisibilityCheck service="security companies" />
+      <DynamicLocalCheck />
 
       {/* ─────────────────────────────────────────
           9. SERVICES HUB — keyword-rich internal links

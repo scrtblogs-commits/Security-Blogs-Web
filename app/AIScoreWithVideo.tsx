@@ -181,6 +181,7 @@ export default function AIScoreWithVideo() {
             <video
               autoPlay muted loop playsInline
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              preload="none"
               src="/score-bg.mp4"
             />
 

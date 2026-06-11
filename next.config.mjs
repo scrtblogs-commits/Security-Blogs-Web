@@ -20,12 +20,12 @@
 const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
+  compress: true,
 
-  // Images served from the Payload Media collection live on the same
-  // VPS in Phase D. The remotePatterns list is the allow-list for the
-  // built-in <Image /> component. Add additional hosts here when the
-  // CMS serves media from S3/CDN.
   images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       { protocol: 'http',  hostname: 'localhost' },
       { protocol: 'https', hostname: 'cms.securityblogs.com.au' },
