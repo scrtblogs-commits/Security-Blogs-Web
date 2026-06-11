@@ -141,15 +141,7 @@ export default function HomePage() {
       </section>
 
       {/* ─────────────────────────────────────────
-          4. SERVICES — scroll-sticky card stack
-          Cards slide up one by one as you scroll
-      ───────────────────────────────────────── */}
-      <section id="services" style={{ paddingBottom: 0 }}>
-        <DynamicScrollStack />
-      </section>
-
-      {/* ─────────────────────────────────────────
-          5. STATS
+          4. STATS
       ───────────────────────────────────────── */}
       <section className="section" id="stats" style={{ background: '#fff' }}>
         <div className="container">
@@ -159,25 +151,22 @@ export default function HomePage() {
       </section>
 
       {/* ─────────────────────────────────────────
-          6. TESTIMONIALS
-          "Here's what our users say"
-          Scroll-triggered entrance + hover lift
+          5. TESTIMONIALS
       ───────────────────────────────────────── */}
       <DynamicTestimonials />
 
       {/* ─────────────────────────────────────────
-          7. CTA BAND — animated gradient cycling
+          6. CTA BAND
       ───────────────────────────────────────── */}
       <CTABand ctaHref="/contact/" />
 
       {/* ─────────────────────────────────────────
-          8. MAP — UNCHANGED
-          Who shows up when locals search?
+          7. MAP — Who shows up when locals search?
       ───────────────────────────────────────── */}
       <DynamicLocalCheck />
 
       {/* ─────────────────────────────────────────
-          9. SERVICES HUB — keyword-rich internal links
+          8. SERVICES HUB — keyword-rich internal links
              to all major service pages (SEO)
       ───────────────────────────────────────── */}
       <section className="section" id="all-services" style={{ background: '#f8f9fb', paddingTop: 56, paddingBottom: 56 }}>
@@ -225,7 +214,7 @@ export default function HomePage() {
       </section>
 
       {/* ─────────────────────────────────────────
-          10. FAQ
+          9. FAQ
       ───────────────────────────────────────── */}
       <section className="section" id="faq">
         <div className="container">
@@ -238,6 +227,15 @@ export default function HomePage() {
             <FAQAccordion items={siteConfig.faqs} />
           </div>
         </div>
+      </section>
+
+      {/* ─────────────────────────────────────────
+          10. SERVICES — scroll-sticky card stack
+          Last section before footer — horizontal
+          scroll naturally transitions to footer
+      ───────────────────────────────────────── */}
+      <section id="services" style={{ paddingBottom: 0 }}>
+        <DynamicScrollStack />
       </section>
     </>
   )

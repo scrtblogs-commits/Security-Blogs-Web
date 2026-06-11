@@ -2,14 +2,6 @@
 import { motion } from 'framer-motion'
 import MagneticButton from './MagneticButton'
 
-// Gradient cycles through brand colours on a 10-second loop
-const gradients = [
-  'linear-gradient(135deg, #1e5fe0, #6f4dff)',
-  'linear-gradient(135deg, #6f4dff, #e23744)',
-  'linear-gradient(135deg, #e23744, #1e9e75)',
-  'linear-gradient(135deg, #1e9e75, #1e5fe0)',
-]
-
 export default function CTABand({
   title    = 'Ready to be the answer AI gives?',
   subtitle = 'Get a free AI visibility audit and see exactly where your security brand wins — and where competitors get cited instead of you.',
@@ -24,25 +16,37 @@ export default function CTABand({
   return (
     <section className="section">
       <div className="container">
-        <motion.div
-          style={{
-            position: 'relative',
-            overflow: 'hidden',
-            borderRadius: 'var(--radius-lg)',
-            padding: 'clamp(40px,6vw,72px) 32px',
-            textAlign: 'center',
-            color: '#fff',
-          }}
-          animate={{ background: gradients }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-        >
-          {/* Decorative blobs */}
-          <div className="blob blob-yellow" style={{ top: -60, right: -40, opacity: 0.22 }} />
-          <div className="blob blob-blue"   style={{ bottom: -80, left: -60, opacity: 0.18 }} />
+        <div style={{
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: 'var(--radius-lg)',
+          padding: 'clamp(40px,6vw,72px) 32px',
+          textAlign: 'center',
+          background: '#fff',
+          border: '1.5px solid rgba(30,95,224,0.13)',
+          boxShadow: '0 8px 40px -8px rgba(30,95,224,0.10)',
+        }}>
+          {/* Subtle blue accent line at top */}
+          <div style={{
+            position: 'absolute', top: 0, left: '10%', right: '10%', height: 3,
+            background: 'linear-gradient(90deg, transparent, #1e5fe0 40%, #6f4dff 60%, transparent)',
+            borderRadius: '0 0 4px 4px',
+          }} />
+
+          {/* Soft ambient glow orbs */}
+          <div style={{
+            position: 'absolute', top: -80, right: -60, width: 320, height: 320, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(30,95,224,0.06) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+          <div style={{
+            position: 'absolute', bottom: -60, left: -40, width: 260, height: 260, borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(111,77,255,0.05) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
 
           <motion.h2
-            className="z1"
-            style={{ fontSize: 'clamp(26px,4vw,44px)', marginBottom: 16, position: 'relative' }}
+            style={{ fontSize: 'clamp(26px,4vw,44px)', marginBottom: 16, position: 'relative', color: 'var(--text)' }}
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -52,13 +56,10 @@ export default function CTABand({
           </motion.h2>
 
           <motion.p
-            className="z1 mx-auto"
             style={{
-              maxWidth: 560,
-              opacity: 0.92,
-              marginBottom: 30,
-              fontSize: 17,
-              position: 'relative',
+              maxWidth: 560, marginInline: 'auto',
+              marginBottom: 30, fontSize: 17,
+              position: 'relative', color: 'var(--text-dim)',
             }}
             initial={{ opacity: 0, y: 22 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,28 +70,17 @@ export default function CTABand({
           </motion.p>
 
           <motion.div
-            className="z1"
             style={{ position: 'relative' }}
             initial={{ opacity: 0, scale: 0.88 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <MagneticButton href={ctaHref} className="btn btn-lg">
-              <span
-                style={{
-                  background: '#fff',
-                  color: 'var(--blue)',
-                  padding: '15px 32px',
-                  borderRadius: 12,
-                  fontWeight: 600,
-                }}
-              >
-                {ctaLabel}
-              </span>
+            <MagneticButton href={ctaHref} className="btn btn-primary btn-lg">
+              {ctaLabel}
             </MagneticButton>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

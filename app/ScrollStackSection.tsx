@@ -7,13 +7,13 @@ import { ServiceFace } from './service-card-faces'
 // Scroll-hijack carousel — maximised card sizes on light #F6F6F6 bg.
 // Center card takes up as much screen as possible; side cards peek in.
 
-const CENTER_W = 'min(760px, 72vw)'
-const SIDE_W   = 'min(300px, 26vw)'
-const CENTER_H = 'min(560px, 68vh)'
-const SIDE_H   = 'min(440px, 55vh)'
+const CENTER_W = 'min(920px, 88vw)'
+const SIDE_W   = 'min(320px, 28vw)'
+const CENTER_H = 'min(640px, 82vh)'
+const SIDE_H   = 'min(500px, 64vh)'
 
 // Pixel offset to position side cards next to center — approximate, visual
-const SIDE_X_OFFSET = 570
+const SIDE_X_OFFSET = 660
 
 export default function ScrollStackSection() {
   const outerRef = useRef<HTMLDivElement>(null)
