@@ -7,6 +7,7 @@ import WebDesignHowItWorks from './WebDesignHowItWorks'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
 import SpiralAnimation from '@/components/ui/SpiralAnimation'
+import WebDesignHeroVisual from './WebDesignHeroVisual'
 import CodeTypingAnimation from '@/components/ui/CodeTypingAnimation'
 import DualSerp from './DualSerp'
 import JsonLd from '@/components/JsonLd'
@@ -90,24 +91,31 @@ export default function WebDesignPage() {
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
         <SpiralAnimation tint={ACCENT} />
         <div className="container z1">
-          <Reveal>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Web Design' }]} />
-            <span className="badge badge-blue" style={{ marginBottom: 22 }}>
-              <span className="dot dot-pulse" /> AI-READY SECURITY WEB DESIGN
-            </span>
-            <h1 className="h1" style={{ marginBottom: 20, maxWidth: 940 }}>
-              AI-Ready Security Websites That{' '}
-              <span style={{ color: ACCENT, fontStyle: 'italic' }}>Rank, Convert &amp; Get Cited</span>
-            </h1>
-            <p className="lead" style={{ maxWidth: 700, marginBottom: 28 }}>
-              We don&apos;t just build beautiful security websites — we build AI-optimised, schema-rich,
-              conversion-focused websites that get your brand found on Google, Bing and every AI platform.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Start your project →</MagneticButton>
-              <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
+          <div style={{ display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1 1 380px', minWidth: 0 }}>
+              <Reveal>
+                <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Web Design' }]} />
+                <span className="badge badge-blue" style={{ marginBottom: 22 }}>
+                  <span className="dot dot-pulse" /> AI-READY SECURITY WEB DESIGN
+                </span>
+                <h1 className="h1" style={{ marginBottom: 20, maxWidth: 940 }}>
+                  AI-Ready Security Websites That{' '}
+                  <span style={{ color: ACCENT, fontStyle: 'italic' }}>Rank, Convert &amp; Get Cited</span>
+                </h1>
+                <p className="lead" style={{ maxWidth: 700, marginBottom: 28 }}>
+                  We don&apos;t just build beautiful security websites — we build AI-optimised, schema-rich,
+                  conversion-focused websites that get your brand found on Google, Bing and every AI platform.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Start your project →</MagneticButton>
+                  <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+            <div style={{ flex: '1 1 380px', minWidth: 0, display: 'flex', justifyContent: 'center' }}>
+              <WebDesignHeroVisual />
+            </div>
+          </div>
         </div>
       </section>
 

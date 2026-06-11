@@ -1,4 +1,5 @@
 import HeroBg from '@/components/ui/HeroBg'
+import BingHeroVisual from './BingHeroVisual'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
 import Reveal from '@/components/ui/Reveal'
@@ -248,24 +249,31 @@ export default function BingAdsPage() {
         serviceType: 'Search Engine Marketing',
       })} />
       <HeroBg grid>
-        <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Bing Ads' }]} />
-          <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}66`, background: `${ACCENT}14` }}>
-            <span className="dot dot-pulse" style={{ background: ACCENT }} /> MICROSOFT ADVERTISING · B2B SECURITY
-          </span>
-          <h1 className="h1" style={{ marginBottom: 20, maxWidth: 920 }}>
-            Capture the B2B Security Buyers{' '}
-            <span style={{ color: ACCENT, fontStyle: 'italic' }}>Google Misses</span>
-          </h1>
-          <p className="lead" style={{ maxWidth: 660, marginBottom: 28 }}>
-            Microsoft Advertising puts your security brand in front of 41% of B2B decision-makers — at
-            roughly half the cost-per-click of Google, with LinkedIn profile targeting built in.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
-            <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
+        <div style={{ display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 380px', minWidth: 0 }}>
+            <Reveal>
+              <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Bing Ads' }]} />
+              <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}66`, background: `${ACCENT}14` }}>
+                <span className="dot dot-pulse" style={{ background: ACCENT }} /> MICROSOFT ADVERTISING · B2B SECURITY
+              </span>
+              <h1 className="h1" style={{ marginBottom: 20, maxWidth: 920 }}>
+                Capture the B2B Security Buyers{' '}
+                <span style={{ color: ACCENT, fontStyle: 'italic' }}>Google Misses</span>
+              </h1>
+              <p className="lead" style={{ maxWidth: 660, marginBottom: 28 }}>
+                Microsoft Advertising puts your security brand in front of 41% of B2B decision-makers — at
+                roughly half the cost-per-click of Google, with LinkedIn profile targeting built in.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
+                <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
+              </div>
+            </Reveal>
           </div>
-        </Reveal>
+          <div style={{ flex: '1 1 380px', minWidth: 0, display: 'flex', justifyContent: 'center' }}>
+            <BingHeroVisual />
+          </div>
+        </div>
       </HeroBg>
 
       <section className="section" style={{ paddingTop: 0 }}>
