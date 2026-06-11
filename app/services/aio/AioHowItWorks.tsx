@@ -1,7 +1,7 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import ServiceWorkflowCards, { type WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion'
+import type { WorkflowStep } from '@/components/ui/ServiceWorkflowCards'
 
 // ─── AIO Workflow: 4 scroll-driven scenes ───────────────────────────────────
 const STEPS: WorkflowStep[] = [
@@ -11,14 +11,228 @@ const STEPS: WorkflowStep[] = [
   { step: '04', tag: 'OPTIMISE',   title: 'Monitor & Optimise',      color: '#059669', glow: 'rgba(5,150,105,0.45)',   Scene: MonitorScene },
 ]
 
+const CARD_W    = 1060
+const CARD_H    = 520
+const GAP       = 48
+const TOTAL     = STEPS.length
+
+// Laptop screen center in the robot image (as % of image dimensions)
+// Robot sits right, laptop left-center. Screen center is ~35% left, 44% top.
+const ZOOM_ORIGIN_X = '35%'
+const ZOOM_ORIGIN_Y = '44%'
+
 export default function AioHowItWorks() {
-  return <ServiceWorkflowCards
-    steps={STEPS}
-    cardW={1060}
-    cardH={560}
-    sideXOffset={9999}
-    sectionBg="#f6f8ff"
-  />
+  const outerRef = useRef<HTMLDivElement>(null)
+  const [vw, setVw] = useState(1280)
+  const [activeIdx, setActiveIdx] = useState(0)
+
+  useEffect(() => {
+    const up = () => setVw(window.innerWidth)
+    up()
+    window.addEventListener('resize', up)
+    return () => window.removeEventListener('resize', up)
+  }, [])
+
+  // totalPhases: 1 zoom-intro + TOTAL cards
+  const totalPhases = 1 + TOTAL // 5
+  const introEnd    = 1 / totalPhases  // 0.2
+
+  const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start start', 'end end'] })
+
+  // ── Zoom into laptop screen ─────────────────────────────────
+  const imgScale   = useTransform(scrollYProgress, [0, introEnd], [1, 14])
+  const imgOpacity = useTransform(scrollYProgress, [introEnd * 0.75, introEnd], [1, 0])
+  const overlayOp  = useTransform(scrollYProgress, [introEnd * 0.5, introEnd], [0, 1])
+
+  // ── Horizontal card scroll ──────────────────────────────────
+  const rawCardP   = useTransform(scrollYProgress, [introEnd, 1], [0, TOTAL - 1])
+  const cardP      = useSpring(rawCardP, { stiffness: 80, damping: 24 })
+  const startX     = vw / 2 - CARD_W / 2
+  const endX       = startX - (TOTAL - 1) * (CARD_W + GAP)
+  const cardX      = useTransform(cardP, [0, TOTAL - 1], [startX, endX])
+
+  // Cards section opacity
+  const cardsOp = useTransform(scrollYProgress, [introEnd * 0.85, introEnd * 1.05 > 1 ? 0.98 : introEnd * 1.05], [0, 1])
+
+  // Track active card index
+  useMotionValueEvent(cardP, 'change', v => setActiveIdx(Math.round(Math.max(0, Math.min(TOTAL - 1, v)))))
+
+  return (
+    <div ref={outerRef} style={{ height: `${totalPhases * 100}vh`, position: 'relative' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', background: '#060d1e' }}>
+
+        {/* ── Robot image zoom-into-laptop ──────────────────── */}
+        <motion.div
+          style={{
+            position: 'absolute', inset: 0,
+            scale: imgScale,
+            transformOrigin: `${ZOOM_ORIGIN_X} ${ZOOM_ORIGIN_Y}`,
+            opacity: imgOpacity,
+            willChange: 'transform, opacity',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/robot-aio.jpg"
+            alt=""
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          {/* Dark overlay fades in as zoom progresses — transitions into laptop world */}
+          <motion.div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse at 35% 44%, #0a1535 0%, #020810 100%)',
+            opacity: overlayOp,
+          }} />
+        </motion.div>
+
+        {/* ── Scroll hint text on intro ─────────────────────── */}
+        <motion.div
+          style={{
+            position: 'absolute', bottom: 40, left: '50%', translateX: '-50%',
+            opacity: useTransform(scrollYProgress, [0, introEnd * 0.4], [1, 0]),
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+            pointerEvents: 'none',
+          }}
+        >
+          <div style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: 'rgba(0,200,255,0.7)', letterSpacing: '0.18em' }}>
+            SCROLL TO ENTER
+          </div>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+            style={{ width: 24, height: 38, borderRadius: 12, border: '2px solid rgba(0,200,255,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 6 }}
+          >
+            <motion.div
+              animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ width: 4, height: 8, borderRadius: 2, background: 'rgba(0,200,255,0.6)' }}
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* ── Inside-laptop world: cards ────────────────────── */}
+        <motion.div
+          style={{
+            position: 'absolute', inset: 0,
+            opacity: cardsOp,
+            overflow: 'hidden',
+          }}
+        >
+          {/* Tech grid background */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: `
+              linear-gradient(rgba(0,180,255,0.04) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,180,255,0.04) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+          }} />
+
+          {/* Ambient glow at laptop-screen entry point */}
+          <div style={{
+            position: 'absolute',
+            top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 900, height: 600,
+            background: 'radial-gradient(ellipse, rgba(0,120,255,0.08) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
+
+          {/* Step indicator — top */}
+          <div style={{
+            position: 'absolute', top: 28, left: '50%', transform: 'translateX(-50%)',
+            display: 'flex', alignItems: 'center', gap: 8, zIndex: 10,
+          }}>
+            <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(0,200,255,0.5)', letterSpacing: '0.18em' }}>AIO WORKFLOW</div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              {STEPS.map((s, i) => (
+                <div key={s.step}
+                  style={{
+                    width: i === activeIdx ? 28 : 8,
+                    height: 8, borderRadius: 4,
+                    background: i === activeIdx ? s.color : 'rgba(255,255,255,0.15)',
+                    transition: 'width 0.35s ease, background 0.35s ease',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Active step label */}
+          <div style={{
+            position: 'absolute', top: 60, left: '50%', transform: 'translateX(-50%)',
+            fontSize: 11, fontFamily: 'var(--font-mono)',
+            color: STEPS[activeIdx]?.color ?? '#0af',
+            letterSpacing: '0.14em', transition: 'color 0.35s ease',
+            zIndex: 10,
+          }}>
+            STEP {STEPS[activeIdx]?.step} · {STEPS[activeIdx]?.tag}
+          </div>
+
+          {/* Horizontal card strip */}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
+            <motion.div style={{ display: 'flex', gap: GAP, x: cardX, willChange: 'transform' }}>
+              {STEPS.map((step, i) => (
+                <LaptopCard
+                  key={step.step}
+                  step={step}
+                  index={i}
+                  activeIdx={activeIdx}
+                  cardW={CARD_W}
+                  cardH={CARD_H}
+                />
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Scanline overlay — subtle CRT feel */}
+          <div style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none',
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px)',
+            zIndex: 20,
+          }} />
+        </motion.div>
+
+      </div>
+    </div>
+  )
+}
+
+// ─── Individual card inside the laptop world ─────────────────────────────────
+function LaptopCard({
+  step, index, activeIdx, cardW, cardH,
+}: {
+  step: WorkflowStep
+  index: number
+  activeIdx: number
+  cardW: number
+  cardH: number
+}) {
+  const dist  = Math.abs(index - activeIdx)
+  const scale = dist === 0 ? 1 : dist === 1 ? 0.94 : 0.88
+  const blur  = dist === 0 ? 0 : dist === 1 ? 1 : 3
+
+  return (
+    <motion.div
+      animate={{ scale, filter: `blur(${blur}px)`, opacity: dist > 2 ? 0.3 : 1 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 28 }}
+      style={{
+        width: cardW,
+        height: cardH,
+        flexShrink: 0,
+        borderRadius: 20,
+        overflow: 'hidden',
+        background: '#ffffff',
+        border: `2px solid ${dist === 0 ? step.color : 'rgba(255,255,255,0.08)'}`,
+        boxShadow: dist === 0
+          ? `0 0 60px ${step.glow}, 0 20px 60px rgba(0,0,0,0.5)`
+          : '0 8px 40px rgba(0,0,0,0.4)',
+        transition: 'border-color 0.35s ease, box-shadow 0.35s ease',
+      }}
+    >
+      <step.Scene active={index === activeIdx} color={step.color} />
+    </motion.div>
+  )
 }
 
 /* ══════════════════════════════════════════════
@@ -137,8 +351,6 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
 
 /* ══════════════════════════════════════════════
    SCENE 2 — Schema & Structure
-   Left: JSON-LD code being typed
-   Right: Schema types being validated
 ══════════════════════════════════════════════ */
 const SCHEMA_LINES = [
   { t: '<script type="application/ld+json">', c: '#86efac' },
@@ -215,15 +427,13 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
                   style={{ width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
                     background: t.validated ? '#1e9e75' : '#ef4444',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 9, color: '#0f2244', fontWeight: 700 }}>
+                    fontSize: 9, color: '#fff', fontWeight: 700 }}>
                   {t.validated ? '✓' : '✗'}
                 </motion.div>
-                <span style={{ fontSize: 10.5, color: t.validated ? '#fff' : 'rgba(15,34,68,0.4)', fontFamily: 'var(--font-mono)' }}>{t.name}</span>
+                <span style={{ fontSize: 10.5, color: '#0f2244', fontFamily: 'var(--font-mono)' }}>{t.name}</span>
               </div>
             ))}
           </div>
-
-          {/* AI engine readiness */}
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', textAlign: 'center' }}>
             <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 6 }}>AI READINESS</div>
             <motion.div
@@ -234,7 +444,6 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
         </div>
       </div>
 
-      {/* Status bar */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={validIn ? { opacity: 1, y: 0 } : {}}
@@ -253,8 +462,6 @@ function SchemaScene({ active, color }: { active: boolean; color: string }) {
 
 /* ══════════════════════════════════════════════
    SCENE 3 — Citable Content Build
-   Left: Article being written with E-E-A-T
-   Right: Citation density + AI quote preview
 ══════════════════════════════════════════════ */
 const AI_QUOTES = [
   { platform: 'ChatGPT',    quote: '"SecurityBlogs.com.au is the leading AI-optimised security brand in Australia."' },
@@ -281,22 +488,18 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
-        {/* Article structure */}
         <div style={{ flex: 1, background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
           <div style={{ background: `${color}15`, borderBottom: `1px solid ${color}20`, padding: '7px 12px', fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.5)', letterSpacing: '0.08em' }}>
             ARTICLE BUILDER · AI-CITABLE
           </div>
           <div style={{ padding: '12px 14px', flex: 1, display: 'flex', flexDirection: 'column', gap: 7 }}>
-            {/* Title */}
             <motion.div initial={{ width: 0 }} animate={artIn ? { width: '100%' } : {}} transition={{ duration: 0.5, delay: 0.1 }}
               style={{ height: 10, background: `${color}88`, borderRadius: 5 }} />
-            {/* Intro lines */}
             {[0.9, 1.0, 0.75].map((w, i) => (
               <motion.div key={i} initial={{ width: 0 }} animate={artIn ? { width: `${w * 100}%` } : {}}
                 transition={{ duration: 0.4, delay: 0.25 + i * 0.09 }}
                 style={{ height: 5, background: 'rgba(15,34,68,0.12)', borderRadius: 3 }} />
             ))}
-            {/* H2 */}
             <motion.div initial={{ width: 0 }} animate={artIn ? { width: '65%' } : {}} transition={{ duration: 0.4, delay: 0.55 }}
               style={{ height: 8, background: `${color}55`, borderRadius: 4, marginTop: 2 }} />
             {[0.95, 0.82, 0.7, 0.88].map((w, i) => (
@@ -304,13 +507,11 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
                 transition={{ duration: 0.4, delay: 0.65 + i * 0.08 }}
                 style={{ height: 5, background: 'rgba(15,34,68,0.09)', borderRadius: 3 }} />
             ))}
-            {/* Stats callout */}
             <motion.div initial={{ opacity: 0, y: 5 }} animate={artIn ? { opacity: 1, y: 0 } : {}} transition={{ delay: 1.1 }}
               style={{ background: `${color}18`, borderRadius: 8, padding: '7px 10px', border: `1px solid ${color}30`, marginTop: 2 }}>
               <div style={{ fontSize: 10, color, fontWeight: 700 }}>📊 "AI citations increase 3.2× after AIO optimisation"</div>
             </motion.div>
           </div>
-          {/* E-E-A-T badges */}
           <div style={{ padding: '8px 14px', borderTop: '1px solid rgba(15,34,68,0.05)', display: 'flex', gap: 5 }}>
             {['Experience','Expertise','Authority','Trust'].map((tag, i) => (
               <motion.div key={tag} initial={{ opacity: 0, scale: 0.7 }} animate={artIn ? { opacity: 1, scale: 1 } : {}}
@@ -322,7 +523,6 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
           </div>
         </div>
 
-        {/* AI quote preview */}
         <div style={{ width: 184, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px', flex: 1 }}>
             <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 10, letterSpacing: '0.08em' }}>AI IS NOW CITING</div>
@@ -337,7 +537,6 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
               </motion.div>
             ))}
           </div>
-
           <div style={{ background: `${color}12`, borderRadius: 14, border: `1px solid ${color}30`, padding: '12px', textAlign: 'center' }}>
             <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4 }}>CITATION DENSITY</div>
             <motion.div
@@ -353,8 +552,6 @@ function ContentScene({ active, color }: { active: boolean; color: string }) {
 
 /* ══════════════════════════════════════════════
    SCENE 4 — Monitor & Optimise
-   Left: Citation dashboard across platforms
-   Right: Trend chart + alert feed
 ══════════════════════════════════════════════ */
 const MONITOR_PLATFORMS = [
   { name: 'ChatGPT',    curr: 94, prev: 62, c: '#10a37f' },
@@ -394,7 +591,6 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
       </div>
 
       <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
-        {/* Platform citation scores */}
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', letterSpacing: '0.1em', marginBottom: 2 }}>CITATION RATES · AFTER AIO</div>
           {MONITOR_PLATFORMS.map((p, i) => (
@@ -417,9 +613,7 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
           ))}
         </div>
 
-        {/* Trend chart + alerts */}
         <div style={{ width: 192, display: 'flex', flexDirection: 'column', gap: 10 }}>
-          {/* Trend */}
           <div style={{ background: 'rgba(15,34,68,0.03)', borderRadius: 14, border: `1px solid ${color}25`, padding: '12px' }}>
             <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>CITATION TREND · 12M</div>
             <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', height: 56, overflow: 'visible' }}>
@@ -442,7 +636,6 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
             </svg>
           </div>
 
-          {/* Alert feed */}
           <div style={{ background: 'rgba(15,34,68,0.02)', borderRadius: 14, border: '1px solid rgba(15,34,68,0.06)', padding: '10px', flex: 1 }}>
             <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 8, letterSpacing: '0.08em' }}>ALERTS</div>
             {ALERTS.map((a, i) => (
