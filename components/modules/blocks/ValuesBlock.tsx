@@ -25,7 +25,7 @@ export default function ValuesBlock({ eyebrow, title, items }: Props) {
             <div key={i} className="card value-card">
               {v.iconToken && (
                 <div style={{ marginBottom: 12, color: 'var(--blue)' }}>
-                  <Glyph token={v.iconToken} size={28} />
+                  <Glyph icon={v.iconToken} size={28} />
                 </div>
               )}
               <h3 className="h3">{v.title}</h3>

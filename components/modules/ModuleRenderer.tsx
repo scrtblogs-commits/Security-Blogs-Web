@@ -32,15 +32,15 @@ export default function ModuleRenderer({ modules }: Props) {
       {modules.map((block, i) => {
         const key = `${block.blockType}-${i}`
         switch (block.blockType) {
-          case 'hero':           return <HeroBlock           key={key} {...(block as never)} />
-          case 'capabilities':   return <CapabilitiesBlock   key={key} {...(block as never)} />
-          case 'stats':          return <StatsBlock          key={key} {...(block as never)} />
-          case 'faqs':           return <FaqsBlock           key={key} {...(block as never)} />
-          case 'cta-band':       return <CtaBandBlock        key={key} {...(block as never)} />
-          case 'rich-text':      return <RichTextBlock       key={key} {...(block as never)} />
-          case 'image':          return <ImageBlock          key={key} {...(block as never)} />
-          case 'process-steps':  return <ProcessStepsBlock   key={key} {...(block as never)} />
-          case 'values':         return <ValuesBlock         key={key} {...(block as never)} />
+          case 'hero':           return <HeroBlock           key={key} {...(block as any)} />
+          case 'capabilities':   return <CapabilitiesBlock   key={key} {...(block as any)} />
+          case 'stats':          return <StatsBlock          key={key} {...(block as any)} />
+          case 'faqs':           return <FaqsBlock           key={key} {...(block as any)} />
+          case 'cta-band':       return <CtaBandBlock        key={key} {...(block as any)} />
+          case 'rich-text':      return <RichTextBlock       key={key} {...(block as any)} />
+          case 'image':          return <ImageBlock          key={key} {...(block as any)} />
+          case 'process-steps':  return <ProcessStepsBlock   key={key} {...(block as any)} />
+          case 'values':         return <ValuesBlock         key={key} {...(block as any)} />
           default:
             if (process.env.NODE_ENV !== 'production') {
               console.warn(`[ModuleRenderer] Unknown blockType: ${block.blockType}`)

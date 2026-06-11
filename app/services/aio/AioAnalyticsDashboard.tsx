@@ -130,7 +130,7 @@ export default function AioAnalyticsDashboard() {
           <span style={{ fontSize: 11 }}>📊</span>
           <span style={{ fontSize: 11, color: '#555', fontFamily: 'var(--font-mono)' }}>analytics.google.com › securityblogs.com.au</span>
         </div>
-        <div style={{ marginLeft: 'auto', display: 'flex', align: 'center', gap: 8 }}>
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ fontSize: 10.5, fontFamily: 'var(--font-mono)', color: '#888', background: '#f4f6fb', padding: '4px 10px', borderRadius: 7 }}>Last 90 days ▾</div>
           <motion.div
             animate={{ opacity: [1, 0.5, 1] }} transition={{ duration: 1.4, repeat: Infinity }}
