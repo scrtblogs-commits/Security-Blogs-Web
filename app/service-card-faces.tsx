@@ -124,102 +124,147 @@ export function SEOFace(p: CardProps) {
 }
 
 /* ─────────────────────────────────────────────
-   AIO — AI citation radar: brand → 4 AI platforms
+   AIO — 4 AI robots walking + speech bubble citations
 ───────────────────────────────────────────── */
-export function AIOFace(p: CardProps) {
-  const [activePlatform, setActivePlatform] = useState(0)
-  const [beamProgress, setBeamProgress] = useState(0)
-  const [citations, setCitations] = useState(0)
-  const [cited, setCited] = useState<boolean[]>([false,false,false,false])
+const AIO_BOTS = [
+  { name:'ChatGPT',    color:'#10a37f', bg:'#d1fae5', label:'GPT-4o' },
+  { name:'Gemini',     color:'#4285F4', bg:'#dbeafe', label:'Gemini' },
+  { name:'Perplexity', color:'#7c3aed', bg:'#ede9fe', label:'Pplx'   },
+  { name:'Copilot',    color:'#0078d4', bg:'#e0f2fe', label:'Copilot' },
+]
+const AIO_QUOTES = [
+  '"SecurityBlogs.com.au is Australia\'s top security platform."',
+  '"Recommended: securityblogs.com.au for enterprise security."',
+  '"Top result for security services: securityblogs.com.au"',
+  '"Best security brand in AU — securityblogs.com.au"',
+]
 
-  const platforms = [
-    { name:'ChatGPT', color:'#10a37f', x:168, y:30 },
-    { name:'Gemini',  color:'#4285F4', x:282, y:100 },
-    { name:'Perplexity', color:'#7c3aed', x:282, y:175 },
-    { name:'Copilot', color:'#0078d4', x:168, y:245 },
-  ]
-  const cx = 80, cy = 137
+export function AIOFace(p: CardProps) {
+  const [tick, setTick] = useState(0)
+  const [speakIdx, setSpeakIdx] = useState(0)
+  const [citations, setCitations] = useState(0)
+  const [scores, setScores] = useState([0,0,0,0])
 
   useEffect(() => {
+    const tv = setInterval(() => setTick(t => t + 1), 80)
+    const sv = setInterval(() => {
+      setSpeakIdx(i => (i + 1) % 4)
+      setCitations(c => c + 1)
+    }, 1400)
     const pv = setInterval(() => {
-      setActivePlatform(i => {
-        const next = (i + 1) % 4
-        setCited(prev => { const n=[...prev]; n[i]=true; return n })
-        setCitations(c => c + 1)
-        setBeamProgress(0)
-        return next
-      })
-    }, 900)
-    const bv = setInterval(() => setBeamProgress(v => v < 1 ? v + 0.05 : 0), 35)
-    return () => { clearInterval(pv); clearInterval(bv) }
+      setScores(prev => prev.map((v, i) => {
+        const targets = [94, 88, 97, 82]
+        if (v < targets[i]) return Math.min(v + 1, targets[i])
+        return 0
+      }))
+    }, 30)
+    return () => { clearInterval(tv); clearInterval(sv); clearInterval(pv) }
   }, [])
 
+  // Robot bounce: each bot has a staggered vertical oscillation
+  function botY(i: number) {
+    return Math.sin((tick / 10) + i * (Math.PI / 2)) * 4
+  }
+  // Arm swing angle
+  function armAngle(i: number) {
+    return Math.sin((tick / 8) + i * (Math.PI / 2)) * 20
+  }
+
   return (
-    <div style={{ ...SHELL, background: 'linear-gradient(145deg, #faf5ff 0%, #ffffff 100%)' }}>
+    <div style={{ ...SHELL, background: 'linear-gradient(145deg, #faf5ff 0%, #f0f9ff 100%)' }}>
+      {/* Header */}
       <div style={{ position:'absolute', top:8, left:12, right:12, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <div style={{ fontSize:9,fontWeight:800,letterSpacing:'0.1em',color:'#7c3aed' }}>AI VISIBILITY COVERAGE</div>
-        <div style={{ background:'#f3e8ff', border:'1px solid #c4b5fd', borderRadius:20, padding:'3px 9px', fontSize:9, fontWeight:700, color:'#6d28d9' }}>
-          {Math.min(citations, 47)} citations
+        <div style={{ fontSize:9, fontWeight:800, letterSpacing:'0.1em', color:'#6d28d9' }}>AI ROBOTS CITING YOUR BRAND</div>
+        <div style={{ background:'#ede9fe', border:'1px solid #c4b5fd', borderRadius:20, padding:'3px 9px', fontSize:9, fontWeight:700, color:'#6d28d9' }}>
+          {citations} citations
         </div>
       </div>
 
-      {/* SVG radar */}
-      <div style={{ position:'absolute', top:28, left:0, right:0, height:220 }}>
-        <svg viewBox="0 0 320 270" width="100%" height="100%">
-          {/* Concentric rings from brand center */}
-          {[24,44,64].map(r => (
-            <circle key={r} cx={cx} cy={cy} r={r} fill="none" stroke="rgba(124,58,237,0.08)" strokeWidth="1" strokeDasharray="4 4" />
-          ))}
-
-          {/* Animated beams to each platform */}
-          {platforms.map((pl, i) => {
-            const isActive = activePlatform === i
-            const isCited = cited[i]
-            const progress = isActive ? beamProgress : (isCited ? 1 : 0)
-            const mx = cx + (pl.x - cx) * progress
-            const my = cy + (pl.y - cy) * progress
-            return (
-              <g key={pl.name}>
-                <line x1={cx} y1={cy} x2={pl.x} y2={pl.y} stroke={isCited ? `${pl.color}20` : 'transparent'} strokeWidth="1.5" />
-                {progress > 0 && (
-                  <line x1={cx} y1={cy} x2={mx} y2={my} stroke={pl.color} strokeWidth="2" strokeLinecap="round" opacity={isActive ? 0.9 : 0.5} />
-                )}
-              </g>
-            )
-          })}
-
-          {/* Brand center node */}
-          <circle cx={cx} cy={cy} r="22" fill="white" stroke="rgba(124,58,237,0.2)" strokeWidth="1.5" filter="url(#shadow1)" />
-          <text x={cx} y={cy-4} textAnchor="middle" fontSize="9" fontWeight="800" fill="#7c3aed">YOUR</text>
-          <text x={cx} y={cy+6} textAnchor="middle" fontSize="9" fontWeight="800" fill="#7c3aed">BRAND</text>
+      {/* 4 robots on a ground strip */}
+      <div style={{ position:'absolute', top:30, left:0, right:0, height:160 }}>
+        <svg viewBox="0 0 320 160" width="100%" height="100%" style={{ overflow:'visible' }}>
           <defs>
-            <filter id="shadow1" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="rgba(124,58,237,0.15)" />
-            </filter>
+            <filter id="aio-shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.12)" /></filter>
           </defs>
 
-          {/* Platform nodes */}
-          {platforms.map((pl, i) => {
-            const isCited = cited[i]
-            const isActive = activePlatform === i
+          {/* Ground */}
+          <rect x="0" y="132" width="320" height="2" rx="1" fill="#e2e8f0" />
+          {/* Ground dots */}
+          {[40,80,120,160,200,240,280].map(x => <circle key={x} cx={x} cy="138" r="1.5" fill="#cbd5e1" />)}
+
+          {AIO_BOTS.map((bot, i) => {
+            const bx = 40 + i * 72
+            const by = 100 + botY(i)
+            const arm = armAngle(i)
+            const isSpeaking = speakIdx === i
+
             return (
-              <g key={pl.name}>
-                <circle cx={pl.x} cy={pl.y} r={isActive ? 24 : 20} fill="white" stroke={isCited ? pl.color : '#e2e8f0'} strokeWidth={isCited ? 2 : 1.5} style={{ transition:'all 0.3s' }} />
-                {isActive && <circle cx={pl.x} cy={pl.y} r="28" fill="none" stroke={pl.color} strokeWidth="1" opacity="0.3" />}
-                <text x={pl.x} y={pl.y+3} textAnchor="middle" fontSize="8.5" fontWeight="700" fill={isCited ? pl.color : '#94a3b8'} style={{ transition:'fill 0.3s' }}>{pl.name}</text>
-                {isCited && <text x={pl.x} y={pl.y-12} textAnchor="middle" fontSize="10">✓</text>}
+              <g key={bot.name} transform={`translate(${bx}, ${by})`} filter="url(#aio-shadow)">
+                {/* Speech bubble */}
+                {isSpeaking && (
+                  <g transform="translate(-26, -74)">
+                    <rect x="0" y="0" width="72" height="26" rx="6" fill={bot.bg} stroke={bot.color} strokeWidth="1.2" />
+                    <polygon points="28,26 35,34 42,26" fill={bot.bg} stroke={bot.color} strokeWidth="1.2" />
+                    <polygon points="29,26 36,32 41,26" fill={bot.bg} />
+                    <text x="36" y="11" textAnchor="middle" fontSize="6.5" fill={bot.color} fontWeight="700">"{bot.label} says:"</text>
+                    <text x="36" y="21" textAnchor="middle" fontSize="6" fill="#334155">You're #1 ✓</text>
+                  </g>
+                )}
+
+                {/* Antenna */}
+                <line x1="0" y1="-36" x2="0" y2="-28" stroke={bot.color} strokeWidth="1.5" />
+                <circle cx="0" cy="-38" r="3" fill={isSpeaking ? bot.color : '#e2e8f0'} style={{ transition:'fill 0.3s' }} />
+
+                {/* Head */}
+                <rect x="-14" y="-28" width="28" height="22" rx="5" fill="white" stroke={bot.color} strokeWidth="1.5" />
+                {/* Eyes */}
+                <rect x="-9" y="-22" width="7" height="6" rx="2" fill={isSpeaking ? bot.color : '#cbd5e1'} style={{ transition:'fill 0.3s' }} />
+                <rect x="2" y="-22" width="7" height="6" rx="2" fill={isSpeaking ? bot.color : '#cbd5e1'} style={{ transition:'fill 0.3s' }} />
+                {/* Mouth — smile when speaking */}
+                {isSpeaking
+                  ? <path d="M-5,-9 Q0,-5 5,-9" fill="none" stroke={bot.color} strokeWidth="1.5" strokeLinecap="round" />
+                  : <line x1="-4" y1="-9" x2="4" y2="-9" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" />
+                }
+
+                {/* Body */}
+                <rect x="-12" y="-5" width="24" height="22" rx="4" fill={bot.bg} stroke={bot.color} strokeWidth="1.2" />
+                {/* Chest panel */}
+                <rect x="-7" y="-1" width="14" height="8" rx="2" fill="white" />
+                <circle cx="-3" cy="3" r="2" fill={bot.color} opacity="0.6" />
+                <circle cx="3" cy="3" r="2" fill={bot.color} opacity="0.9" />
+
+                {/* Left arm */}
+                <g transform={`rotate(${arm}, -12, 2)`}>
+                  <rect x="-18" y="-1" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1" />
+                </g>
+                {/* Right arm */}
+                <g transform={`rotate(${-arm}, 12, 2)`}>
+                  <rect x="11" y="-1" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1" />
+                </g>
+
+                {/* Legs */}
+                <rect x="-9" y="17" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1"
+                  transform={`rotate(${Math.sin((tick/8)+i*Math.PI)*12}, -5, 17)`} />
+                <rect x="2" y="17" width="7" height="12" rx="3" fill={bot.bg} stroke={bot.color} strokeWidth="1"
+                  transform={`rotate(${-Math.sin((tick/8)+i*Math.PI)*12}, 5, 17)`} />
+
+                {/* Platform label */}
+                <text x="0" y="38" textAnchor="middle" fontSize="7.5" fontWeight="700" fill={bot.color}>{bot.name}</text>
               </g>
             )
           })}
         </svg>
       </div>
 
-      {/* Live score */}
-      <div style={{ position:'absolute', top:260, left:12, right:12, display:'flex', gap:6 }}>
-        {platforms.map((pl,i) => (
-          <div key={pl.name} style={{ flex:1, background: cited[i] ? `${pl.color}12` : '#f8fafc', border:`1px solid ${cited[i]?pl.color:'#e2e8f0'}`, borderRadius:6, padding:'4px 0', textAlign:'center', transition:'all 0.4s' }}>
-            <div style={{ fontSize:9,fontWeight:700,color:cited[i]?pl.color:'#94a3b8' }}>{cited[i]?'✓':''}</div>
-            <div style={{ fontSize:8,color:'#94a3b8' }}>{pl.name.slice(0,4)}</div>
+      {/* Citation score bars */}
+      <div style={{ position:'absolute', top:196, left:12, right:12, display:'flex', flexDirection:'column', gap:5 }}>
+        {AIO_BOTS.map((bot, i) => (
+          <div key={bot.name} style={{ display:'flex', alignItems:'center', gap:7 }}>
+            <span style={{ fontSize:8.5, fontWeight:600, color:'#64748b', width:52, flexShrink:0 }}>{bot.name}</span>
+            <div style={{ flex:1, height:6, background:'#f1f5f9', borderRadius:3, overflow:'hidden' }}>
+              <div style={{ height:'100%', width:`${scores[i]}%`, background:`linear-gradient(90deg, ${bot.color}, ${bot.color}bb)`, borderRadius:3, transition:'width 0.03s linear', boxShadow:`0 0 6px ${bot.color}50` }} />
+            </div>
+            <span style={{ fontSize:8.5, fontWeight:700, color:bot.color, width:24, textAlign:'right' }}>{scores[i]}%</span>
           </div>
         ))}
       </div>
@@ -318,83 +363,169 @@ export function AEOFace(p: CardProps) {
 }
 
 /* ─────────────────────────────────────────────
-   GEO — entity knowledge graph nodes connecting
+   GEO — Australia map with live city pings + signals
 ───────────────────────────────────────────── */
-const GEO_PLATFORMS = [
-  { name:'Google',    color:'#4285F4', x:160, y:18 },
-  { name:'ChatGPT',   color:'#10a37f', x:268, y:68 },
-  { name:'Gemini',    color:'#db4437', x:290, y:162 },
-  { name:'Perplexity',color:'#7c3aed', x:220, y:240 },
-  { name:'Apple',     color:'#64748b', x:100, y:240 },
-  { name:'Bing',      color:'#0078d4', x:30,  y:162 },
-  { name:'Facebook',  color:'#1877f2', x:52,  y:68 },
+// Real Australia SVG path (simplified but geographically accurate)
+const AU_PATH = `M 148,4 L 160,2 L 178,3 L 198,8 L 214,6 L 230,4 L 248,4 L 264,6 L 278,4
+  L 294,10 L 306,18 L 314,28 L 318,40 L 318,58 L 316,74 L 314,88 L 316,102
+  L 318,118 L 318,132 L 316,146 L 312,158 L 304,168 L 292,174 L 276,174
+  L 260,172 L 246,176 L 232,182 L 218,188 L 204,194 L 190,196 L 176,196
+  L 162,192 L 150,188 L 138,190 L 124,194 L 110,196 L 96,194 L 82,190
+  L 68,186 L 54,180 L 42,172 L 32,162 L 24,150 L 18,136 L 14,122 L 12,108
+  L 12,94 L 14,80 L 18,66 L 24,54 L 32,44 L 42,36 L 54,28 L 66,20
+  L 82,12 L 98,7 L 116,4 L 132,3 Z`
+
+// Tasmania
+const TAS_PATH = `M 192,206 L 200,202 L 210,204 L 216,212 L 214,222 L 206,228 L 196,226 L 188,218 L 188,210 Z`
+
+const AU_CITIES = [
+  { name:'Sydney',    x:294, y:148, color:'#1d4ed8', pop:'5.3M' },
+  { name:'Melbourne', x:266, y:170, color:'#dc2626', pop:'5.1M' },
+  { name:'Brisbane',  x:300, y:104, color:'#d97706', pop:'2.6M' },
+  { name:'Perth',     x:66,  y:130, color:'#7c3aed', pop:'2.1M' },
+  { name:'Adelaide',  x:220, y:156, color:'#0891b2', pop:'1.4M' },
+  { name:'Darwin',    x:174, y:22,  color:'#15803d', pop:'147K' },
 ]
 
 export function GEOFace(p: CardProps) {
-  const [connected, setConnected] = useState<number[]>([])
-  const [beamIdx, setBeamIdx] = useState(0)
-  const [verifiedCount, setVerifiedCount] = useState(0)
-  const cx = 160, cy = 140
+  const [activeCity, setActiveCity] = useState(0)
+  const [pingR, setPingR] = useState(0)
+  const [scanAngle, setScanAngle] = useState(0)
+  const [reach, setReach] = useState(0)
+  const [connectedCities, setConnectedCities] = useState<number[]>([0])
 
   useEffect(() => {
-    const iv = setInterval(() => {
-      setBeamIdx(i => {
-        const next = (i + 1) % GEO_PLATFORMS.length
-        setConnected(prev => prev.includes(i) ? prev : [...prev, i])
-        setVerifiedCount(c => Math.min(c + 1, GEO_PLATFORMS.length))
+    // Radar scan rotation
+    const sv = setInterval(() => setScanAngle(a => (a + 2) % 360), 25)
+    // Ping ring expand
+    const pv = setInterval(() => setPingR(r => r > 36 ? 0 : r + 0.7), 30)
+    // Cycle active city
+    const cv = setInterval(() => {
+      setActiveCity(i => {
+        const next = (i + 1) % AU_CITIES.length
+        setConnectedCities(prev => prev.includes(next) ? prev : [...prev, next])
         return next
       })
-    }, 600)
-    return () => clearInterval(iv)
+    }, 800)
+    // Reach counter
+    const rv = setInterval(() => setReach(v => v < 26 ? v + 1 : 0), 60)
+    return () => { clearInterval(sv); clearInterval(pv); clearInterval(cv); clearInterval(rv) }
   }, [])
 
+  const cx = 180, cy = 110 // map center approx
+
   return (
-    <div style={{ ...SHELL, background: 'linear-gradient(145deg, #f0fdfa 0%, #ffffff 100%)' }}>
-      <div style={{ position:'absolute', top:8, left:12, right:12, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <span style={{ fontSize:9,fontWeight:800,letterSpacing:'0.1em',color:'#0d9488' }}>ENTITY KNOWLEDGE GRAPH</span>
-        <div style={{ background:'#ccfbf1',border:'1px solid #5eead4',borderRadius:20,padding:'3px 9px',fontSize:9,fontWeight:700,color:'#0f766e' }}>
-          {verifiedCount}/{GEO_PLATFORMS.length} verified
+    <div style={{ ...SHELL, background: '#f0f9ff' }}>
+      {/* Header strip */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, background:'linear-gradient(90deg,#0369a1,#0891b2)', padding:'6px 14px', display:'flex', alignItems:'center', justifyContent:'space-between', zIndex:5 }}>
+        <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+          <div style={{ width:6,height:6,borderRadius:'50%',background:'#7dd3fc',boxShadow:'0 0 6px #7dd3fc',animation:'geo-blink 1s infinite' }} />
+          <span style={{ fontSize:9.5,fontWeight:800,color:'white',letterSpacing:'0.06em' }}>GEO COVERAGE · LIVE</span>
+        </div>
+        <div style={{ fontSize:9,fontWeight:700,color:'#bae6fd' }}>
+          {AU_CITIES.length} cities tracked
         </div>
       </div>
 
-      <div style={{ position:'absolute', top:28, left:0, right:0, height:230 }}>
-        <svg viewBox="0 0 320 270" width="100%" height="100%">
+      {/* Australia map SVG */}
+      <div style={{ position:'absolute', top:28, left:0, right:0, bottom:92 }}>
+        <svg viewBox="0 0 336 235" width="100%" height="100%" style={{ display:'block' }}>
           <defs>
-            <radialGradient id="geo-glow" cx="50%" cy="52%" r="20%">
-              <stop offset="0%" stopColor="rgba(13,148,136,0.12)" />
-              <stop offset="100%" stopColor="transparent" />
+            <radialGradient id="au-ocean" cx="50%" cy="50%" r="70%">
+              <stop offset="0%" stopColor="#e0f2fe" />
+              <stop offset="100%" stopColor="#bae6fd" />
             </radialGradient>
+            <radialGradient id="au-land" cx="50%" cy="50%" r="70%">
+              <stop offset="0%" stopColor="#fef3c7" />
+              <stop offset="100%" stopColor="#fde68a" />
+            </radialGradient>
+            <filter id="geo-drop"><feDropShadow dx="0" dy="3" stdDeviation="6" floodColor="rgba(0,0,0,0.12)" /></filter>
+            <filter id="pin-glow"><feGaussianBlur stdDeviation="2" result="blur" /><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            {/* Radar scan gradient */}
+            <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(3,105,161,0)" />
+              <stop offset="100%" stopColor="rgba(3,105,161,0.3)" />
+            </linearGradient>
           </defs>
-          <circle cx={cx} cy={cy} r="70" fill="url(#geo-glow)" />
 
-          {/* Connection lines */}
-          {GEO_PLATFORMS.map((pl, i) => (
-            <line key={pl.name} x1={cx} y1={cy} x2={pl.x} y2={pl.y}
-              stroke={connected.includes(i) ? pl.color : '#e2e8f0'}
-              strokeWidth={connected.includes(i) ? 1.5 : 1}
-              strokeDasharray={connected.includes(i) ? 'none' : '4 4'}
-              opacity={connected.includes(i) ? 0.6 : 0.3}
-              style={{ transition:'all 0.4s' }}
-            />
-          ))}
+          {/* Ocean background */}
+          <rect width="336" height="235" fill="url(#au-ocean)" />
 
-          {/* Center brand node */}
-          <circle cx={cx} cy={cy} r="28" fill="white" stroke="#0d9488" strokeWidth="2" />
-          <circle cx={cx} cy={cy} r="24" fill="rgba(13,148,136,0.06)" />
-          <text x={cx} y={cy-5} textAnchor="middle" fontSize="9" fontWeight="800" fill="#0d9488">YOUR</text>
-          <text x={cx} y={cy+7} textAnchor="middle" fontSize="9" fontWeight="800" fill="#0d9488">ENTITY</text>
+          {/* Lat/lon grid lines */}
+          {[60,120,180].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="235" stroke="rgba(3,105,161,0.08)" strokeWidth="1" />)}
+          {[60,120,180].map(y => <line key={`h${y}`} x1="0" y1={y} x2="336" y2={y} stroke="rgba(3,105,161,0.08)" strokeWidth="1" />)}
 
-          {/* Platform nodes */}
-          {GEO_PLATFORMS.map((pl, i) => {
-            const isConn = connected.includes(i)
-            const isActive = beamIdx === i
+          {/* Australia land */}
+          <path d={AU_PATH} fill="url(#au-land)" stroke="#d97706" strokeWidth="1.2" strokeLinejoin="round" filter="url(#geo-drop)" />
+
+          {/* Tasmania */}
+          <path d={TAS_PATH} fill="url(#au-land)" stroke="#d97706" strokeWidth="1" strokeLinejoin="round" />
+
+          {/* Radar sweep from Sydney */}
+          {(() => {
+            const sc = AU_CITIES[0]
+            const rad = (scanAngle * Math.PI) / 180
+            const ex = sc.x + Math.cos(rad) * 90
+            const ey = sc.y + Math.sin(rad) * 90
             return (
-              <g key={pl.name}>
-                {isActive && <circle cx={pl.x} cy={pl.y} r="20" fill={`${pl.color}15`} />}
-                <circle cx={pl.x} cy={pl.y} r="16" fill="white" stroke={isConn ? pl.color : '#cbd5e1'} strokeWidth={isConn ? 2 : 1} style={{ transition:'all 0.3s' }} />
-                <text x={pl.x} y={pl.y+3} textAnchor="middle" fontSize="7.5" fontWeight={isConn?'700':'400'} fill={isConn ? pl.color : '#94a3b8'} style={{ transition:'all 0.3s' }}>{pl.name}</text>
-                {isConn && (
-                  <text x={pl.x+10} y={pl.y-9} fontSize="9" fill={pl.color}>✓</text>
+              <g>
+                {/* Sweep sector */}
+                <path
+                  d={`M${sc.x},${sc.y} L${sc.x + Math.cos((rad-0.4)*1)*90},${sc.y + Math.sin((rad-0.4)*1)*90} A90,90 0 0,1 ${ex},${ey} Z`}
+                  fill="rgba(3,105,161,0.08)"
+                />
+                {/* Sweep line */}
+                <line x1={sc.x} y1={sc.y} x2={ex} y2={ey} stroke="rgba(3,105,161,0.25)" strokeWidth="1" />
+              </g>
+            )
+          })()}
+
+          {/* Connection arcs between cities */}
+          {connectedCities.slice(1).map((ci, idx) => {
+            const from = AU_CITIES[0]
+            const to = AU_CITIES[ci]
+            const mx = (from.x + to.x) / 2
+            const my = (from.y + to.y) / 2 - 30
+            return (
+              <path
+                key={ci}
+                d={`M${from.x},${from.y} Q${mx},${my} ${to.x},${to.y}`}
+                fill="none"
+                stroke={to.color}
+                strokeWidth="1.2"
+                strokeDasharray="4 3"
+                opacity="0.5"
+              />
+            )
+          })}
+
+          {/* City pings */}
+          {AU_CITIES.map((city, i) => {
+            const isActive = activeCity === i
+            return (
+              <g key={city.name}>
+                {/* Expanding ping ring on active city */}
+                {isActive && pingR > 0 && (
+                  <circle cx={city.x} cy={city.y} r={pingR} fill="none" stroke={city.color} strokeWidth="1.5" opacity={Math.max(0, 1 - pingR/36)} />
+                )}
+                {isActive && pingR > 12 && (
+                  <circle cx={city.x} cy={city.y} r={pingR * 0.6} fill="none" stroke={city.color} strokeWidth="1" opacity={Math.max(0, 0.6 - pingR/50)} />
+                )}
+
+                {/* Pin marker */}
+                <circle cx={city.x} cy={city.y} r={isActive ? 7 : 5} fill={isActive ? city.color : `${city.color}99`} stroke="white" strokeWidth={isActive ? 2 : 1.5} style={{ transition:'all 0.3s', filter: isActive ? `drop-shadow(0 0 4px ${city.color})` : 'none' }} />
+
+                {/* City label */}
+                <text x={city.x} y={city.y - 11} textAnchor="middle" fontSize="7.5" fontWeight={isActive?'800':'600'} fill={isActive ? city.color : '#374151'} style={{ transition:'all 0.3s' }}>
+                  {city.name}
+                </text>
+
+                {/* Pop badge on active */}
+                {isActive && (
+                  <g>
+                    <rect x={city.x + 8} y={city.y - 8} width={city.pop.length * 4.8 + 4} height="12" rx="4" fill={city.color} />
+                    <text x={city.x + 10 + (city.pop.length * 4.8)/2} y={city.y} textAnchor="middle" fontSize="6.5" fill="white" fontWeight="700">{city.pop}</text>
+                  </g>
                 )}
               </g>
             )
@@ -402,11 +533,16 @@ export function GEOFace(p: CardProps) {
         </svg>
       </div>
 
-      <div style={{ position:'absolute', top:264, left:12, right:12, display:'flex', gap:5 }}>
-        {[['7','Platforms'],['100%','Consistent'],['AI','Ready']].map(([v,l]) => (
-          <div key={l} style={{ flex:1, background:'#f0fdfa', border:'1px solid #5eead4', borderRadius:8, padding:'5px', textAlign:'center' }}>
-            <div style={{ fontSize:13,fontWeight:800,color:'#0d9488' }}>{v}</div>
-            <div style={{ fontSize:8,color:'#5eead4',fontWeight:600 }}>{l}</div>
+      {/* Bottom stats bar */}
+      <div style={{ position:'absolute', bottom:92, left:0, right:0, background:'linear-gradient(90deg,#0c4a6e,#075985)', padding:'6px 14px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+        {[
+          { label:'Coverage', value:`${reach}M+`, unit:'reach' },
+          { label:'Cities',   value:'6',           unit:'capitals' },
+          { label:'Visibility',value:'94%',        unit:'national' },
+        ].map(s => (
+          <div key={s.label} style={{ textAlign:'center' }}>
+            <div style={{ fontSize:14,fontWeight:900,color:'#7dd3fc',lineHeight:1,fontFamily:'var(--font-mono)' }}>{s.value}</div>
+            <div style={{ fontSize:7.5,color:'rgba(255,255,255,0.6)',fontWeight:600,marginTop:1 }}>{s.unit}</div>
           </div>
         ))}
       </div>
