@@ -320,5 +320,5 @@ function BingIntroScene() {
 }
 
 export default function BingAdsHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<BingIntroScene />} sectionBg="#f0f6ff" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<BingIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#f0f6ff" />
 }

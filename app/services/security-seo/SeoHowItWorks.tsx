@@ -76,7 +76,7 @@ function SeoIntroScene() {
 }
 
 export default function SeoHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<SeoIntroScene />} sectionBg="#f0f7ff" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<SeoIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#f0f7ff" />
 }
 
 /* ══════════════════════════════════════════════

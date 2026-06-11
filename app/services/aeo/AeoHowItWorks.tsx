@@ -74,7 +74,7 @@ function AeoIntroScene() {
 }
 
 export default function AeoHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<AeoIntroScene />} sectionBg="#f9f8ff" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<AeoIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#f9f8ff" />
 }
 
 /* ══════════════════════════════════════════════

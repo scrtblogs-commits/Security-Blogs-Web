@@ -335,5 +335,5 @@ function WebDesignIntroScene() {
 }
 
 export default function WebDesignHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<WebDesignIntroScene />} sectionBg="#f5f0ff" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<WebDesignIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#f5f0ff" />
 }

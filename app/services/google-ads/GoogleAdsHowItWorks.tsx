@@ -262,5 +262,5 @@ function GoogleAdsIntroScene() {
 }
 
 export default function GoogleAdsHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<GoogleAdsIntroScene />} sectionBg="#f8f9ff" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<GoogleAdsIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#f8f9ff" />
 }

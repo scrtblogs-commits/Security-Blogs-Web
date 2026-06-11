@@ -230,5 +230,5 @@ function GmbIntroScene() {
 }
 
 export default function GmbHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<GmbIntroScene />} sectionBg="#fff8f6" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<GmbIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#fff8f6" />
 }

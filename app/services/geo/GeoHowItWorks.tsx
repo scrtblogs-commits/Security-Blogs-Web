@@ -480,5 +480,5 @@ function GeoIntroScene() {
 }
 
 export default function GeoHowItWorks() {
-  return <ServiceWorkflowCards steps={STEPS} introNode={<GeoIntroScene />} sectionBg="#f0fffe" />
+  return <ServiceWorkflowCards steps={STEPS} introNode={<GeoIntroScene />} cardW={1060} cardH={520} sideXOffset={9999} sectionBg="#f0fffe" />
 }
