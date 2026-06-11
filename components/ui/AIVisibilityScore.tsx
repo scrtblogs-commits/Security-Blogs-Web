@@ -31,16 +31,18 @@ function useCountUp(target: number, duration = 1600, started = false) {
   const [val, setVal] = useState(0)
   useEffect(() => {
     if (!started) return
+    let cancelled = false
     let start: number | null = null
     let raf: number
     const tick = (ts: number) => {
+      if (cancelled) return
       if (!start) start = ts
       const p = Math.min((ts - start) / duration, 1)
       setVal(Math.round(easeOutExpo(p) * target))
       if (p < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => { cancelled = true; cancelAnimationFrame(raf) }
   }, [target, duration, started])
   return val
 }
@@ -49,16 +51,18 @@ function DonutChart({ started }: { started: boolean }) {
   const [progress, setProgress] = useState(0)
   useEffect(() => {
     if (!started) return
+    let cancelled = false
     let start: number | null = null
     let raf: number
     const tick = (ts: number) => {
+      if (cancelled) return
       if (!start) start = ts
       const p = Math.min((ts - start) / 1600, 1)
       setProgress(easeOutExpo(p))
       if (p < 1) raf = requestAnimationFrame(tick)
     }
     raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
+    return () => { cancelled = true; cancelAnimationFrame(raf) }
   }, [started])
 
   let rot = 0
@@ -132,6 +136,7 @@ export default function AIVisibilityScore({ externalStarted }: { externalStarted
   // which fires too early when the card is inside a sticky scroll section).
   useEffect(() => {
     if (externalStarted) setStarted(true)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [externalStarted])
 
   useEffect(() => {

@@ -47,10 +47,16 @@ export default function AIScoreWithVideo() {
 
   // ── Trigger card counters only once user scrolls into this section ────────
   const [cardStarted, setCardStarted] = useState(false)
+  const cardStartedRef = useRef(false)
   useEffect(() => {
-    return scrollYProgress.on('change', v => {
-      if (v > 0.04) setCardStarted(true)
+    const unsub = scrollYProgress.on('change', v => {
+      if (v > 0.04 && !cardStartedRef.current) {
+        cardStartedRef.current = true
+        setCardStarted(true)
+        unsub()
+      }
     })
+    return unsub
   }, [scrollYProgress])
 
   return (
