@@ -73,7 +73,7 @@ export default function AioHowItWorks() {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/robot-aio.jpg"
+            src="/robot-aio.png"
             alt=""
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
