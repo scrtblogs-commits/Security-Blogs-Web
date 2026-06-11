@@ -15,19 +15,47 @@ const CARD_H = 520
 const GAP    = 48
 const TOTAL  = STEPS.length
 
-// ── Floating icon cards (matching the cyan panels in the robot image) ─────────
-const FLOAT_ICONS = [
-  { icon: '👤', label: 'Profile',   x: '14%', y: '20%', flyX: -600, flyY: -500, floatAmp: 14, dur: 3.2, delay: 0,   size: 52 },
-  { icon: '⭐', label: 'Rating',    x:  '8%', y: '50%', flyX: -700, flyY:  -80, floatAmp: 10, dur: 2.8, delay: 0.4, size: 48 },
-  { icon: '🔒', label: 'Security',  x: '18%', y: '74%', flyX: -450, flyY:  600, floatAmp: 16, dur: 3.6, delay: 0.8, size: 44 },
-  { icon: '📊', label: 'Analytics', x: '38%', y: '16%', flyX:  -80, flyY: -700, floatAmp: 12, dur: 3.0, delay: 0.2, size: 50 },
-  { icon: '🛡️', label: 'Shield',    x: '52%', y: '28%', flyX:  600, flyY: -400, floatAmp: 18, dur: 2.6, delay: 0.6, size: 56 },
-  { icon: '⚡', label: 'Speed',     x: '44%', y: '68%', flyX:  200, flyY:  700, floatAmp: 10, dur: 3.4, delay: 1.0, size: 46 },
+// Deterministic star field (golden-ratio distribution — no Math.random hydration issues)
+const STARS = Array.from({ length: 70 }, (_, i) => ({
+  x: (i * 137.508) % 100,
+  y: (i * 97.321)  % 100,
+  r: i % 5 === 0 ? 1.8 : i % 3 === 0 ? 1.4 : 0.9,
+  op: 0.25 + (i % 6) * 0.09,
+  twinkle: i % 4 === 0,
+  dur: 1.8 + (i % 5) * 0.4,
+}))
+
+// Neural network nodes (% of viewport)
+const NODES = [
+  { x: 14, y: 18 }, { x: 35, y:  9 }, { x: 62, y: 11 }, { x: 80, y: 24 },
+  { x: 88, y: 50 }, { x: 78, y: 74 }, { x: 52, y: 83 }, { x: 26, y: 76 },
+  { x: 10, y: 52 }, { x: 34, y: 36 }, { x: 66, y: 36 }, { x: 50, y: 64 },
+]
+const EDGES = [
+  [0,8],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],
+  [8,9],[1,9],[3,10],[5,11],[9,10],[10,11],[9,11],
+]
+
+// Floating icon cards
+const PANELS = [
+  { icon: '🤖', label: 'AI Engine',   sub: 'Processing',  x: '8%',  y: '16%', flyX: -700, flyY: -600, dur: 3.2, delay: 0   },
+  { icon: '📡', label: 'Signal',      sub: 'Scanning',    x: '5%',  y: '52%', flyX: -800, flyY:  -60, dur: 2.8, delay: 0.3 },
+  { icon: '🔐', label: 'Authority',   sub: 'Verified',    x: '14%', y: '74%', flyX: -500, flyY:  700, dur: 3.6, delay: 0.7 },
+  { icon: '📊', label: 'Analytics',   sub: 'Live',        x: '72%', y: '12%', flyX:  500, flyY: -700, dur: 3.0, delay: 0.2 },
+  { icon: '⚡', label: 'Speed',       sub: 'Optimised',   x: '80%', y: '56%', flyX:  700, flyY:  200, dur: 2.6, delay: 0.5 },
+  { icon: '🌐', label: 'Citations',   sub: 'Indexed',     x: '66%', y: '78%', flyX:  300, flyY:  800, dur: 3.4, delay: 0.9 },
+]
+
+// Orbital rings config
+const ORBITS = [
+  { r: 180, speed: 18, dotCount: 3, color: 'rgba(0,200,255,0.9)',  dotSize: 6 },
+  { r: 130, speed: 12, dotCount: 2, color: 'rgba(120,80,255,0.9)', dotSize: 5 },
+  { r:  90, speed:  8, dotCount: 2, color: 'rgba(0,255,180,0.9)',  dotSize: 4 },
 ]
 
 export default function AioHowItWorks() {
   const outerRef = useRef<HTMLDivElement>(null)
-  const [vw, setVw]         = useState(1280)
+  const [vw, setVw] = useState(1280)
   const [activeIdx, setActiveIdx] = useState(0)
 
   useEffect(() => {
@@ -42,22 +70,13 @@ export default function AioHowItWorks() {
 
   const { scrollYProgress } = useScroll({ target: outerRef, offset: ['start start', 'end end'] })
 
-  // ── Robot image: zoom + 3D tilt ─────────────────────────────────────────────
-  const imgScale  = useTransform(scrollYProgress, [0, introEnd], [1, 16])
-  const rotateX   = useTransform(scrollYProgress, [0, introEnd * 0.35, introEnd * 0.7, introEnd], [0, -10, 6, 0])
-  const rotateY   = useTransform(scrollYProgress, [0, introEnd * 0.4, introEnd], [0, 5, -3])
-  const imgOp     = useTransform(scrollYProgress, [introEnd * 0.7, introEnd], [1, 0])
-
-  // ── Overlays ─────────────────────────────────────────────────────────────────
-  const darkOverlayOp = useTransform(scrollYProgress, [introEnd * 0.45, introEnd], [0, 1])
-  const vignetteOp    = useTransform(scrollYProgress, [0, introEnd * 0.2], [0, 0.85])
-  const flashOp       = useTransform(scrollYProgress, [introEnd * 0.82, introEnd * 0.94, introEnd], [0, 1, 0])
-  const glowOp        = useTransform(scrollYProgress, [introEnd * 0.1, introEnd * 0.6], [0, 1])
-  const scrollHintOp  = useTransform(scrollYProgress, [0, introEnd * 0.25], [1, 0])
-
-  // ── Warp lines ───────────────────────────────────────────────────────────────
-  const warpOp    = useTransform(scrollYProgress, [introEnd * 0.2, introEnd * 0.65, introEnd * 0.88], [0, 0.7, 0])
-  const warpScale = useTransform(scrollYProgress, [introEnd * 0.2, introEnd], [0.3, 3])
+  // ── Portal zoom (always centered) ───────────────────────────────────────────
+  const portalScale = useTransform(scrollYProgress, [0, introEnd], [1, 18])
+  const rotateX     = useTransform(scrollYProgress, [0, introEnd * 0.4, introEnd * 0.75, introEnd], [0, -12, 7, 0])
+  const sceneOp     = useTransform(scrollYProgress, [introEnd * 0.72, introEnd], [1, 0])
+  const flashOp     = useTransform(scrollYProgress, [introEnd * 0.8, introEnd * 0.93, introEnd], [0, 1, 0])
+  const darkOp      = useTransform(scrollYProgress, [introEnd * 0.42, introEnd], [0, 1])
+  const scrollHintOp = useTransform(scrollYProgress, [0, introEnd * 0.2], [1, 0])
 
   // ── Cards ────────────────────────────────────────────────────────────────────
   const rawCardP = useTransform(scrollYProgress, [introEnd, 1], [0, TOTAL - 1])
@@ -73,132 +92,253 @@ export default function AioHowItWorks() {
 
   return (
     <div ref={outerRef} style={{ height: `${totalPhases * 100}vh`, position: 'relative' }}>
-      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', background: '#040b18' }}>
+      <div style={{ position: 'sticky', top: 0, height: '100vh', overflow: 'hidden', background: '#030a18' }}>
 
-        {/* ── INTRO: Robot → zoom into laptop ───────────────────────────────── */}
-        <motion.div style={{ position: 'absolute', inset: 0, opacity: imgOp }}>
+        {/* ── INTRO: AI Portal Universe ─────────────────────────────────────── */}
+        <motion.div style={{ position: 'absolute', inset: 0, opacity: sceneOp }}>
 
-          {/* Perspective wrapper for 3D tilt */}
-          <div style={{ width: '100%', height: '100%', perspective: 1400, perspectiveOrigin: '35% 44%' }}>
-            <motion.div
-              style={{
-                width: '100%', height: '100%',
-                scale: imgScale,
-                rotateX, rotateY,
-                transformOrigin: '35% 44%',
-                willChange: 'transform',
-                position: 'relative',
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/robot-aio.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          {/* Background nebula */}
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(5,20,60,0.9) 0%, rgba(2,6,18,1) 70%)',
+          }} />
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'radial-gradient(ellipse 40% 40% at 30% 70%, rgba(80,0,120,0.12) 0%, transparent 60%), radial-gradient(ellipse 35% 35% at 70% 30%, rgba(0,100,200,0.10) 0%, transparent 60%)',
+          }} />
 
-              {/* Laptop screen cyan glow — pulses then brightens on zoom */}
-              <motion.div
-                style={{
+          {/* Stars */}
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+            {STARS.map((s, i) => (
+              <circle key={i} cx={`${s.x}%`} cy={`${s.y}%`} r={s.r} fill={`rgba(200,220,255,${s.op})`}>
+                {s.twinkle && (
+                  <animate attributeName="opacity" values={`${s.op};${s.op * 0.2};${s.op}`} dur={`${s.dur}s`} repeatCount="indefinite" />
+                )}
+              </circle>
+            ))}
+          </svg>
+
+          {/* Neural network edges */}
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} preserveAspectRatio="none">
+            {EDGES.map(([a, b], i) => (
+              <line key={i}
+                x1={`${NODES[a].x}%`} y1={`${NODES[a].y}%`}
+                x2={`${NODES[b].x}%`} y2={`${NODES[b].y}%`}
+                stroke="rgba(0,180,255,0.18)" strokeWidth="1"
+              >
+                <animate attributeName="opacity" values="0.18;0.55;0.18" dur={`${2.5 + (i % 4) * 0.6}s`} begin={`${i * 0.3}s`} repeatCount="indefinite" />
+              </line>
+            ))}
+          </svg>
+
+          {/* Neural network nodes */}
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} preserveAspectRatio="none">
+            {NODES.map((n, i) => (
+              <circle key={i} cx={`${n.x}%`} cy={`${n.y}%`} r="4" fill="none" stroke="rgba(0,200,255,0.5)" strokeWidth="1.5">
+                <animate attributeName="r" values="3;5;3" dur={`${1.8 + (i % 5) * 0.4}s`} begin={`${i * 0.2}s`} repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.5;1;0.5" dur={`${1.8 + (i % 5) * 0.4}s`} begin={`${i * 0.2}s`} repeatCount="indefinite" />
+              </circle>
+            ))}
+          </svg>
+
+          {/* ── Central AI Portal ──────────────────────────────────────────── */}
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+            {/* Outer ambient glow */}
+            <div style={{
+              position: 'absolute',
+              width: 500, height: 500,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0,150,255,0.08) 0%, transparent 70%)',
+              animation: 'aio-pulse 3s ease-in-out infinite',
+            }} />
+
+            {/* Orbiting rings + dots */}
+            {ORBITS.map((orb, oi) => (
+              <div key={oi} style={{ position: 'absolute' }}>
+                {/* Ring track */}
+                <div style={{
+                  width: orb.r * 2, height: orb.r * 2,
+                  borderRadius: '50%',
+                  border: `1px solid ${orb.color.replace('0.9', '0.12')}`,
                   position: 'absolute',
-                  left: '18%', top: '22%', width: '34%', height: '46%',
-                  background: 'radial-gradient(ellipse, rgba(0,220,255,0.22) 0%, rgba(0,180,255,0.08) 50%, transparent 75%)',
-                  opacity: glowOp,
-                  borderRadius: '8%',
-                  filter: 'blur(8px)',
-                }}
-                animate={{ opacity: [null, 0.6, 0.9, 0.6] }}
-                transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                  top: -orb.r, left: -orb.r,
+                }} />
+                {/* Orbiting dots */}
+                {Array.from({ length: orb.dotCount }).map((_, di) => (
+                  <motion.div key={di}
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: orb.speed, repeat: Infinity, ease: 'linear', delay: (di / orb.dotCount) * orb.speed }}
+                  >
+                    <div style={{
+                      position: 'absolute',
+                      top: -orb.r, left: -(orb.dotSize / 2),
+                      width: orb.dotSize, height: orb.dotSize,
+                      borderRadius: '50%',
+                      background: orb.color,
+                      boxShadow: `0 0 ${orb.dotSize * 4}px ${orb.color}`,
+                    }} />
+                  </motion.div>
+                ))}
+              </div>
+            ))}
+
+            {/* Rotating outer ring */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+              style={{
+                position: 'absolute',
+                width: 240, height: 240, borderRadius: '50%',
+                border: '1.5px dashed rgba(0,200,255,0.3)',
+              }}
+            />
+
+            {/* Counter-rotating middle ring */}
+            <motion.div
+              animate={{ rotate: -360 }}
+              transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+              style={{
+                position: 'absolute',
+                width: 190, height: 190, borderRadius: '50%',
+                border: '2px solid transparent',
+                borderTopColor: 'rgba(0,200,255,0.6)',
+                borderRightColor: 'rgba(120,80,255,0.4)',
+                boxShadow: '0 0 20px rgba(0,200,255,0.15)',
+              }}
+            />
+
+            {/* Inner spinning arc */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+              style={{
+                position: 'absolute',
+                width: 148, height: 148, borderRadius: '50%',
+                border: '2px solid transparent',
+                borderBottomColor: 'rgba(0,255,180,0.7)',
+                borderLeftColor: 'rgba(0,180,255,0.5)',
+              }}
+            />
+
+            {/* Core glow disc */}
+            <motion.div
+              animate={{ scale: [1, 1.12, 1], opacity: [0.8, 1, 0.8] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute',
+                width: 110, height: 110, borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(0,220,255,0.22) 0%, rgba(0,100,255,0.10) 50%, transparent 75%)',
+                boxShadow: '0 0 60px rgba(0,200,255,0.25), 0 0 120px rgba(0,100,255,0.12)',
+              }}
+            />
+
+            {/* Inner hex border */}
+            <div style={{
+              position: 'absolute',
+              width: 90, height: 90, borderRadius: '50%',
+              border: '1px solid rgba(0,220,255,0.4)',
+              background: 'radial-gradient(circle, rgba(0,30,60,0.95) 0%, rgba(2,8,20,0.98) 100%)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexDirection: 'column',
+              boxShadow: 'inset 0 0 30px rgba(0,200,255,0.10)',
+            }}>
+              <div style={{ fontSize: 11, fontWeight: 800, fontFamily: 'var(--font-mono)', color: 'rgba(0,220,255,0.9)', letterSpacing: '0.12em', lineHeight: 1.2, textAlign: 'center' }}>
+                AI
+              </div>
+              <motion.div
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.4, repeat: Infinity }}
+                style={{ width: 4, height: 4, borderRadius: '50%', background: '#00dcff', marginTop: 4, boxShadow: '0 0 8px #00dcff' }}
+              />
+            </div>
+
+            {/* Lines from portal to outer nodes */}
+            <svg style={{ position: 'absolute', width: '100vw', height: '100vh', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', pointerEvents: 'none', overflow: 'visible' }}>
+              {NODES.map((n, i) => (
+                <line key={i}
+                  x1="0" y1="0"
+                  x2={`${(n.x - 50) / 100 * (typeof window !== 'undefined' ? window.innerWidth : 1280)}px`}
+                  y2={`${(n.y - 50) / 100 * (typeof window !== 'undefined' ? window.innerHeight : 720)}px`}
+                  stroke="rgba(0,200,255,0.07)" strokeWidth="1"
+                >
+                  <animate attributeName="opacity" values="0.07;0.22;0.07" dur={`${3 + (i % 4)}s`} begin={`${i * 0.4}s`} repeatCount="indefinite" />
+                </line>
+              ))}
+            </svg>
+          </div>
+
+          {/* Floating icon panels */}
+          {PANELS.map((cfg, i) => (
+            <FloatingPanel key={i} scrollYProgress={scrollYProgress} introEnd={introEnd} cfg={cfg} />
+          ))}
+
+          {/* Scroll hint */}
+          <motion.div style={{
+            position: 'absolute', bottom: 36, left: '50%', translateX: '-50%',
+            opacity: scrollHintOp, pointerEvents: 'none',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+          }}>
+            <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(0,220,255,0.8)', letterSpacing: '0.2em', textShadow: '0 0 20px rgba(0,220,255,0.5)' }}>
+              SCROLL TO ENTER
+            </div>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              style={{ width: 24, height: 40, borderRadius: 12, border: '2px solid rgba(0,220,255,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 6 }}
+            >
+              <motion.div
+                animate={{ y: [0, 14, 0], opacity: [1, 0.15, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                style={{ width: 4, height: 8, borderRadius: 2, background: 'rgba(0,220,255,0.7)' }}
               />
             </motion.div>
-          </div>
-
-          {/* ── Floating icon cards (fly toward viewer on scroll) ─────────── */}
-          {FLOAT_ICONS.map((cfg, i) => (
-            <FloatingIcon key={i} scrollYProgress={scrollYProgress} introEnd={introEnd} cfg={cfg} />
-          ))}
-        </motion.div>
-
-        {/* ── Vignette (darkens edges as zoom starts) ───────────────────────── */}
-        <motion.div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at 35% 44%, transparent 20%, rgba(2,8,20,0.92) 80%)',
-          opacity: vignetteOp,
-        }} />
-
-        {/* ── Warp speed lines from laptop screen ──────────────────────────── */}
-        <motion.div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          opacity: warpOp, scale: warpScale,
-          transformOrigin: '35% 44%',
-        }}>
-          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
-            {Array.from({ length: 24 }).map((_, i) => {
-              const angle = (i / 24) * 360
-              const rad   = (angle * Math.PI) / 180
-              const cx    = 35, cy = 44
-              const len   = 120
-              return (
-                <line key={i}
-                  x1={`${cx}%`} y1={`${cy}%`}
-                  x2={`${cx + Math.cos(rad) * len}%`}
-                  y2={`${cy + Math.sin(rad) * len}%`}
-                  stroke="rgba(0,200,255,0.35)" strokeWidth="1.2"
-                  strokeLinecap="round"
-                />
-              )
-            })}
-          </svg>
-        </motion.div>
-
-        {/* ── Chromatic flash on entry ──────────────────────────────────────── */}
-        <motion.div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at 35% 44%, rgba(0,220,255,0.9) 0%, rgba(255,255,255,0.6) 30%, transparent 70%)',
-          opacity: flashOp,
-        }} />
-
-        {/* ── Dark overlay (transitions to laptop world) ────────────────────── */}
-        <motion.div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at 35% 44%, #0a1535 0%, #020810 100%)',
-          opacity: darkOverlayOp,
-        }} />
-
-        {/* ── Scroll hint ───────────────────────────────────────────────────── */}
-        <motion.div style={{
-          position: 'absolute', bottom: 36, left: '50%', translateX: '-50%',
-          opacity: scrollHintOp, pointerEvents: 'none',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
-        }}>
-          <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(0,220,255,0.75)', letterSpacing: '0.2em', textShadow: '0 0 20px rgba(0,220,255,0.5)' }}>
-            SCROLL TO ENTER
-          </div>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ width: 24, height: 40, borderRadius: 12, border: '2px solid rgba(0,220,255,0.4)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 6 }}
-          >
-            <motion.div
-              animate={{ y: [0, 14, 0], opacity: [1, 0.15, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              style={{ width: 4, height: 8, borderRadius: 2, background: 'rgba(0,220,255,0.7)' }}
-            />
           </motion.div>
         </motion.div>
 
-        {/* ══════════════════════════════════════════════════════════════════════
-            CARDS WORLD — inside the laptop
-        ══════════════════════════════════════════════════════════════════════ */}
-        <motion.div style={{ position: 'absolute', inset: 0, opacity: cardsOp, overflow: 'hidden' }}>
+        {/* ── Zoom wrapper: 3D perspective + scale toward center ───────────── */}
+        <motion.div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          scale: portalScale,
+          rotateX,
+          transformOrigin: '50% 50%',
+          willChange: 'transform',
+          opacity: useTransform(scrollYProgress, [introEnd * 0.65, introEnd], [0, 1]),
+          background: 'radial-gradient(circle at 50% 50%, rgba(0,180,255,0.35) 0%, rgba(0,60,140,0.6) 20%, rgba(2,8,20,0.98) 55%)',
+        }} />
 
-          {/* Tech grid */}
+        {/* Cyan entry flash */}
+        <motion.div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(0,220,255,0.85) 0%, rgba(80,180,255,0.5) 30%, transparent 65%)',
+          opacity: flashOp,
+        }} />
+
+        {/* Dark fill (becomes the card world bg) */}
+        <motion.div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: '#030a18',
+          opacity: darkOp,
+        }} />
+
+        {/* CSS keyframes for portal pulse */}
+        <style>{`
+          @keyframes aio-pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50%       { transform: scale(1.15); opacity: 1; }
+          }
+        `}</style>
+
+        {/* ══════════════════════════════════════════════════════════════════
+            CARDS WORLD
+        ══════════════════════════════════════════════════════════════════ */}
+        <motion.div style={{ position: 'absolute', inset: 0, opacity: cardsOp, overflow: 'hidden' }}>
           <div style={{
             position: 'absolute', inset: 0,
-            backgroundImage: `
-              linear-gradient(rgba(0,180,255,0.045) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(0,180,255,0.045) 1px, transparent 1px)
-            `,
+            backgroundImage: `linear-gradient(rgba(0,180,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0,180,255,0.045) 1px, transparent 1px)`,
             backgroundSize: '60px 60px',
           }} />
-
-          {/* Central ambient glow */}
           <div style={{
             position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)',
             width: 1000, height: 700,
@@ -206,29 +346,22 @@ export default function AioHowItWorks() {
             pointerEvents: 'none',
           }} />
 
-          {/* Step dots + active tag */}
           <div style={{ position: 'absolute', top: 28, left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: 10, zIndex: 10 }}>
             <div style={{ fontSize: 10, fontFamily: 'var(--font-mono)', color: 'rgba(0,200,255,0.5)', letterSpacing: '0.18em' }}>AIO WORKFLOW</div>
             <div style={{ display: 'flex', gap: 8 }}>
               {STEPS.map((s, i) => (
-                <div key={s.step} style={{
-                  width: i === activeIdx ? 28 : 8, height: 8, borderRadius: 4,
-                  background: i === activeIdx ? s.color : 'rgba(255,255,255,0.15)',
-                  transition: 'width 0.35s ease, background 0.35s ease',
-                }} />
+                <div key={s.step} style={{ width: i === activeIdx ? 28 : 8, height: 8, borderRadius: 4, background: i === activeIdx ? s.color : 'rgba(255,255,255,0.15)', transition: 'width 0.35s ease, background 0.35s ease' }} />
               ))}
             </div>
           </div>
           <div style={{
             position: 'absolute', top: 60, left: '50%', transform: 'translateX(-50%)',
-            fontSize: 11, fontFamily: 'var(--font-mono)',
-            color: STEPS[activeIdx]?.color ?? '#0af',
+            fontSize: 11, fontFamily: 'var(--font-mono)', color: STEPS[activeIdx]?.color ?? '#0af',
             letterSpacing: '0.14em', transition: 'color 0.35s ease', zIndex: 10,
           }}>
             STEP {STEPS[activeIdx]?.step} · {STEPS[activeIdx]?.tag}
           </div>
 
-          {/* Horizontal card strip */}
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
             <motion.div style={{ display: 'flex', gap: GAP, x: cardX, willChange: 'transform' }}>
               {STEPS.map((step, i) => (
@@ -237,11 +370,7 @@ export default function AioHowItWorks() {
             </motion.div>
           </div>
 
-          {/* Scanline */}
-          <div style={{
-            position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 20,
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px)',
-          }} />
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 20, backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px)' }} />
         </motion.div>
 
       </div>
@@ -249,72 +378,45 @@ export default function AioHowItWorks() {
   )
 }
 
-// ─── FloatingIcon: each icon flies toward the viewer as you scroll ────────────
-function FloatingIcon({
+// ─── Floating panel: idles with bob, flies toward viewer on scroll ─────────────
+function FloatingPanel({
   scrollYProgress, introEnd, cfg,
 }: {
   scrollYProgress: MotionValue<number>
   introEnd: number
-  cfg: typeof FLOAT_ICONS[number]
+  cfg: typeof PANELS[number]
 }) {
-  // Fly out toward viewer: starts at 30% of introEnd, gone by 88%
-  const flyStart = introEnd * 0.28
+  const flyStart = introEnd * 0.25
   const flyEnd   = introEnd * 0.88
 
   const flyX  = useTransform(scrollYProgress, [flyStart, flyEnd], [0, cfg.flyX])
   const flyY  = useTransform(scrollYProgress, [flyStart, flyEnd], [0, cfg.flyY])
-  const scale = useTransform(scrollYProgress, [flyStart, flyEnd], [1, 2.6])
-  const op    = useTransform(scrollYProgress, [flyStart, flyEnd * 0.75, flyEnd], [1, 1, 0])
+  const scale = useTransform(scrollYProgress, [flyStart, flyEnd], [1, 2.8])
+  const op    = useTransform(scrollYProgress, [flyStart, flyEnd * 0.72, flyEnd], [1, 1, 0])
 
   return (
-    <motion.div style={{
-      position: 'absolute', left: cfg.x, top: cfg.y,
-      x: flyX, y: flyY, scale, opacity: op,
-      zIndex: 5,
-    }}>
-      {/* idle float animation — separate from scroll-driven transforms */}
+    <motion.div style={{ position: 'absolute', left: cfg.x, top: cfg.y, x: flyX, y: flyY, scale, opacity: op, zIndex: 5 }}>
       <motion.div
-        animate={{
-          y: [-cfg.floatAmp / 2, cfg.floatAmp / 2, -cfg.floatAmp / 2],
-          rotate: [-3, 3, -3],
-        }}
+        animate={{ y: [-8, 8, -8], rotate: [-2, 2, -2] }}
         transition={{ duration: cfg.dur, repeat: Infinity, ease: 'easeInOut', delay: cfg.delay }}
         style={{
-          background: 'linear-gradient(135deg, rgba(0,40,80,0.9) 0%, rgba(0,20,50,0.95) 100%)',
-          border: '1.5px solid rgba(0,220,255,0.45)',
-          borderRadius: 16,
-          padding: '10px 14px',
+          background: 'linear-gradient(135deg, rgba(0,30,70,0.88) 0%, rgba(0,15,40,0.94) 100%)',
+          border: '1.5px solid rgba(0,220,255,0.4)',
+          borderRadius: 16, padding: '10px 14px',
           display: 'flex', alignItems: 'center', gap: 9,
-          boxShadow: '0 8px 32px rgba(0,180,255,0.25), 0 0 20px rgba(0,220,255,0.15), inset 0 1px 0 rgba(255,255,255,0.08)',
-          backdropFilter: 'blur(12px)',
-          minWidth: 110,
-          cursor: 'default',
+          boxShadow: '0 8px 40px rgba(0,180,255,0.2), 0 0 20px rgba(0,220,255,0.10), inset 0 1px 0 rgba(255,255,255,0.07)',
+          backdropFilter: 'blur(14px)',
+          minWidth: 120,
         }}
       >
-        {/* Cyan dot indicator */}
-        <motion.div
-          animate={{ scale: [1, 1.4, 1], opacity: [0.7, 1, 0.7] }}
-          transition={{ duration: 1.6, repeat: Infinity, delay: cfg.delay }}
-          style={{
-            position: 'absolute', top: 8, right: 8,
-            width: 6, height: 6, borderRadius: '50%',
-            background: '#00dcff',
-            boxShadow: '0 0 8px rgba(0,220,255,0.8)',
-          }}
-        />
-        {/* Icon bubble */}
-        <div style={{
-          width: cfg.size, height: cfg.size, borderRadius: 12,
-          background: 'linear-gradient(135deg, rgba(0,180,255,0.25) 0%, rgba(0,100,255,0.15) 100%)',
-          border: '1px solid rgba(0,220,255,0.3)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: cfg.size * 0.5, flexShrink: 0,
-        }}>
+        <motion.div animate={{ scale: [1, 1.5, 1], opacity: [0.6, 1, 0.6] }} transition={{ duration: 1.8, repeat: Infinity, delay: cfg.delay }}
+          style={{ position: 'absolute', top: 8, right: 8, width: 6, height: 6, borderRadius: '50%', background: '#00dcff', boxShadow: '0 0 8px rgba(0,220,255,0.8)' }} />
+        <div style={{ width: 40, height: 40, borderRadius: 12, background: 'linear-gradient(135deg, rgba(0,180,255,0.2), rgba(0,80,200,0.15))', border: '1px solid rgba(0,220,255,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
           {cfg.icon}
         </div>
         <div>
-          <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.9)', whiteSpace: 'nowrap' }}>{cfg.label}</div>
-          <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(0,220,255,0.6)', marginTop: 2 }}>ACTIVE</div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.92)', whiteSpace: 'nowrap' }}>{cfg.label}</div>
+          <div style={{ fontSize: 9, fontFamily: 'var(--font-mono)', color: 'rgba(0,220,255,0.65)', marginTop: 2 }}>{cfg.sub}</div>
         </div>
       </motion.div>
     </motion.div>
@@ -326,21 +428,15 @@ function LaptopCard({ step, index, activeIdx, cardW, cardH }: {
   step: WorkflowStep; index: number; activeIdx: number; cardW: number; cardH: number
 }) {
   const dist  = Math.abs(index - activeIdx)
-  const scale = dist === 0 ? 1 : dist === 1 ? 0.94 : 0.88
-  const blur  = dist === 0 ? 0 : dist === 1 ? 1 : 3
-
   return (
     <motion.div
-      animate={{ scale, filter: `blur(${blur}px)`, opacity: dist > 2 ? 0.3 : 1 }}
+      animate={{ scale: dist === 0 ? 1 : dist === 1 ? 0.94 : 0.88, filter: `blur(${dist === 0 ? 0 : dist === 1 ? 1 : 3}px)`, opacity: dist > 2 ? 0.3 : 1 }}
       transition={{ type: 'spring', stiffness: 120, damping: 28 }}
       style={{
-        width: cardW, height: cardH, flexShrink: 0,
-        borderRadius: 20, overflow: 'hidden',
+        width: cardW, height: cardH, flexShrink: 0, borderRadius: 20, overflow: 'hidden',
         background: '#ffffff',
         border: `2px solid ${dist === 0 ? step.color : 'rgba(255,255,255,0.08)'}`,
-        boxShadow: dist === 0
-          ? `0 0 60px ${step.glow}, 0 20px 60px rgba(0,0,0,0.5)`
-          : '0 8px 40px rgba(0,0,0,0.4)',
+        boxShadow: dist === 0 ? `0 0 60px ${step.glow}, 0 20px 60px rgba(0,0,0,0.5)` : '0 8px 40px rgba(0,0,0,0.4)',
         transition: 'border-color 0.35s ease, box-shadow 0.35s ease',
       }}
     >
@@ -379,8 +475,7 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 7 }}>
           <div style={{ fontSize: 9.5, fontFamily: 'var(--font-mono)', color: 'rgba(15,34,68,0.35)', marginBottom: 4, letterSpacing: '0.1em' }}>AI PLATFORM SCAN</div>
           {AI_TESTS.map((t, i) => (
-            <motion.div key={t.platform}
-              initial={{ opacity: 0, x: -14 }} animate={idx >= i ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.3 }}
+            <motion.div key={t.platform} initial={{ opacity: 0, x: -14 }} animate={idx >= i ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.3 }}
               style={{ display: 'flex', alignItems: 'center', gap: 9, background: 'rgba(15,34,68,0.03)', borderRadius: 10, padding: '7px 10px', border: `1px solid ${t.c}18` }}>
               <div style={{ width: 22, height: 22, borderRadius: 7, background: t.c, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, color: '#0f2244', flexShrink: 0 }}>{t.platform[0]}</div>
               <div style={{ flex: 1 }}>
@@ -401,8 +496,7 @@ function AuditScene({ active, color }: { active: boolean; color: string }) {
               <svg viewBox="0 0 64 64" style={{ width: 64, height: 64, transform: 'rotate(-90deg)' }}>
                 <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(15,34,68,0.07)" strokeWidth="6" />
                 <motion.circle cx="32" cy="32" r="26" fill="none" stroke={color} strokeWidth="6" strokeLinecap="round"
-                  strokeDasharray={`${2 * Math.PI * 26}`}
-                  initial={{ strokeDashoffset: 2 * Math.PI * 26 }}
+                  strokeDasharray={`${2 * Math.PI * 26}`} initial={{ strokeDashoffset: 2 * Math.PI * 26 }}
                   animate={active ? { strokeDashoffset: 2 * Math.PI * 26 * 0.58 } : {}}
                   transition={{ duration: 1.2, delay: 0.4, ease: [0.22, 0.8, 0.2, 1] }} />
               </svg>
@@ -533,7 +627,7 @@ const AI_QUOTES = [
 ]
 
 function ContentScene({ active, color }: { active: boolean; color: string }) {
-  const [artIn, setArtIn]       = useState(false)
+  const [artIn, setArtIn] = useState(false)
   const [quoteIdx, setQuoteIdx] = useState(-1)
   useEffect(() => {
     if (!active) { setArtIn(false); setQuoteIdx(-1); return }
@@ -645,8 +739,7 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
                 <span style={{ fontSize: 10, color: '#1e9e75', fontFamily: 'var(--font-mono)', fontWeight: 700 }}>→ {p.curr}%</span>
               </div>
               <div style={{ height: 5, background: 'rgba(15,34,68,0.06)', borderRadius: 999, overflow: 'hidden' }}>
-                <motion.div initial={{ width: `${p.prev}%` }} animate={phase >= 1 ? { width: `${p.curr}%` } : {}}
-                  transition={{ delay: i * 0.1, duration: 0.8, ease: [0.22, 0.8, 0.2, 1] }}
+                <motion.div initial={{ width: `${p.prev}%` }} animate={phase >= 1 ? { width: `${p.curr}%` } : {}} transition={{ delay: i * 0.1, duration: 0.8, ease: [0.22, 0.8, 0.2, 1] }}
                   style={{ height: '100%', background: p.c, borderRadius: 999 }} />
               </div>
             </div>
@@ -662,10 +755,7 @@ function MonitorScene({ active, color }: { active: boolean; color: string }) {
                   <stop offset="100%" stopColor={color} stopOpacity="0" />
                 </linearGradient>
                 <clipPath id="mt-clip">
-                  <motion.rect x="0" y="0" width={W} height={H}
-                    initial={{ scaleX: 0 }} animate={phase >= 1 ? { scaleX: 1 } : {}}
-                    style={{ transformOrigin: 'left' }}
-                    transition={{ duration: 1.0, delay: 0.2, ease: [0.22, 0.8, 0.2, 1] }} />
+                  <motion.rect x="0" y="0" width={W} height={H} initial={{ scaleX: 0 }} animate={phase >= 1 ? { scaleX: 1 } : {}} style={{ transformOrigin: 'left' }} transition={{ duration: 1.0, delay: 0.2, ease: [0.22, 0.8, 0.2, 1] }} />
                 </clipPath>
               </defs>
               <g clipPath="url(#mt-clip)">
