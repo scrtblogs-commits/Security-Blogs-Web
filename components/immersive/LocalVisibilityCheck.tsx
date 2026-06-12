@@ -62,8 +62,11 @@ export default function LocalVisibilityCheck({ service: defaultService = 'securi
   const where = loc ?? FALLBACK
 
   const embedUrl = useMemo(() => {
-    if (!GMAPS_KEY || !activeQuery) return ''
-    return `https://www.google.com/maps/embed/v1/search?key=${GMAPS_KEY}&q=${encodeURIComponent(activeQuery)}&zoom=12`
+    if (!activeQuery) return ''
+    // Keyless embed works for basic search queries
+    if (GMAPS_KEY)
+      return `https://www.google.com/maps/embed/v1/search?key=${GMAPS_KEY}&q=${encodeURIComponent(activeQuery)}&zoom=12`
+    return `https://maps.google.com/maps?q=${encodeURIComponent(activeQuery)}&output=embed&z=12`
   }, [activeQuery])
 
   return (
@@ -186,11 +189,11 @@ export default function LocalVisibilityCheck({ service: defaultService = 'securi
         </motion.div>
 
         {/* ── Bottom row: 3 stats + info panel ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1.1fr', gap: 16, alignItems: 'start' }}>
+        <div className="lvc-bottom" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1.1fr', gap: 16, alignItems: 'start' }}>
           {[
-            { value: '3',     label: 'Avg local pack spots', sub: `Top 3 win 70% of local clicks in ${where.city}` },
-            { value: '40+',   label: 'Avg local pack spots', sub: `Top 3 win 70% of local clicks in ${where.city}` },
-            { value: '60-90', label: 'Avg local pack spots', sub: `Top 3 win 70% of local clicks in ${where.city}` },
+            { value: '3',     label: 'Local pack spots',   sub: `Only 3 businesses appear — top 3 capture 70% of clicks in ${where.city}` },
+            { value: '40+',   label: 'Citations needed',   sub: 'Directory listings that boost your local authority with Google' },
+            { value: '60-90', label: 'Days to results',    sub: 'Average weeks before significant local ranking movement' },
           ].map((s, i) => (
             <motion.div
               key={i}
