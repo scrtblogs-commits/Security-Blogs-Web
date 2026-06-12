@@ -299,8 +299,8 @@ function SignalDistributionPreview({ hovered: _hovered, inView, accent }: { hove
       <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
         {SIGNAL_NODES.map((node, i) => {
           const rad = (node.angle * Math.PI) / 180
-          const nx = cx + Math.cos(rad) * (node.dist * 0.38)
-          const ny = cy + Math.sin(rad) * (node.dist * 0.32)
+          const nx = Math.round((cx + Math.cos(rad) * (node.dist * 0.38)) * 100) / 100
+          const ny = Math.round((cy + Math.sin(rad) * (node.dist * 0.32)) * 100) / 100
           const color = node.status === 'synced' ? '#34d399' : '#60a5fa'
           return (
             <motion.line
@@ -335,8 +335,8 @@ function SignalDistributionPreview({ hovered: _hovered, inView, accent }: { hove
       </motion.div>
       {SIGNAL_NODES.map((node, i) => {
         const rad = (node.angle * Math.PI) / 180
-        const nx = cx + Math.cos(rad) * (node.dist * 0.38)
-        const ny = cy + Math.sin(rad) * (node.dist * 0.32)
+        const nx = Math.round((cx + Math.cos(rad) * (node.dist * 0.38)) * 100) / 100
+        const ny = Math.round((cy + Math.sin(rad) * (node.dist * 0.32)) * 100) / 100
         const color = node.status === 'synced' ? '#34d399' : '#60a5fa'
         return (
           <div
