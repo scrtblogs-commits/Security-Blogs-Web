@@ -116,7 +116,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-header.webp" alt="SecurityBlogs" style={{ height: 52, width: 'auto', display: 'block' }} />
+          <img src="/logo-header.webp" alt="SecurityBlogs" className="sg-logo-img" style={{ height: 52, width: 'auto', display: 'block' }} />
         </Link>
 
         {/* Desktop nav */}

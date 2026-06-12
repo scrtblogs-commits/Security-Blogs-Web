@@ -53,6 +53,7 @@ export default function BacklinkHeroVisual() {
       boxShadow: '0 20px 56px -10px rgba(30,95,224,0.16), 0 0 0 1.5px rgba(30,95,224,0.08)',
       fontFamily: 'var(--font-sans)',
     }}>
+    <style>{`.blk-trust{grid-template-columns:repeat(4,1fr)!important}@media(max-width:380px){.blk-trust{grid-template-columns:repeat(2,1fr)!important}}`}</style>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(90deg,#0f1e4a,#1a1060)', padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -100,7 +101,7 @@ export default function BacklinkHeroVisual() {
       </div>
 
       {/* Trust signals */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid #e2e8f0' }}>
+      <div className="blk-trust" style={{ display: 'grid', borderBottom: '1px solid #e2e8f0' }}>
         {TRUST.map((t, i) => (
           <div key={t.label} style={{ padding: '10px 6px', textAlign: 'center', borderRight: i < 3 ? '1px solid #e2e8f0' : 'none' }}>
             <div style={{ fontSize: 14, marginBottom: 3 }}>{t.icon}</div>

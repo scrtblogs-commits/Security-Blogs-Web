@@ -82,7 +82,7 @@ export default function HomePage() {
           1. HERO
           Centered headline + large dashboard card
       ───────────────────────────────────────── */}
-      <section style={{
+      <section className="hero-page-section" style={{
         position: 'relative',
         paddingTop: 'calc(var(--nav-h) + 72px)',
         paddingBottom: 0,

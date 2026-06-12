@@ -185,7 +185,7 @@ export default function GeoHeroVisual() {
       </svg>
 
       {/* Popup card */}
-      <div style={{
+      <div className="geo-popup" style={{
         position: 'absolute', bottom: 16, right: 16,
         background: '#1e2433', borderRadius: 10, padding: '11px 15px',
         minWidth: 170, maxWidth: 210,

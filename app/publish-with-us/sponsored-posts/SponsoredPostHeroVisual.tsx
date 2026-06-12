@@ -102,6 +102,7 @@ export default function SponsoredPostHeroVisual() {
       boxShadow: '0 28px 72px -12px rgba(30,95,224,0.18), 0 0 0 1.5px rgba(30,95,224,0.08)',
       fontFamily: 'var(--font-sans)',
     }}>
+    <style>{`.spv-metrics{grid-template-columns:repeat(4,1fr)!important}@media(max-width:480px){.spv-metrics{grid-template-columns:repeat(2,1fr)!important}}`}</style>
 
       {/* ── Top bar ── */}
       <div style={{ background: 'linear-gradient(90deg, #0f1e4a, #1a1060)', padding: '11px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -163,7 +164,7 @@ export default function SponsoredPostHeroVisual() {
       </div>
 
       {/* ── Metrics row ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', borderBottom: '1px solid #e2e8f0' }}>
+      <div className="spv-metrics" style={{ display: 'grid', borderBottom: '1px solid #e2e8f0' }}>
         {METRICS.map((m, i) => (
           <div key={m.label} style={{ padding: '12px 10px', textAlign: 'center', borderRight: i < 3 ? '1px solid #e2e8f0' : 'none' }}>
             <div style={{ fontSize: 20, fontWeight: 800, color: m.color, lineHeight: 1, fontFamily: 'var(--font-mono)', marginBottom: 3 }}>

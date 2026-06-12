@@ -68,6 +68,25 @@ export default function HeroDashboardCard() {
       fontFamily: 'var(--font-sans)',
       userSelect: 'none',
     }}>
+    <style>{`
+      .hdb-topbar-subtitle { display: inline; }
+      .hdb-sidebar { display: flex; }
+      .hdb-stats { grid-template-columns: repeat(4,1fr); }
+      .hdb-bottom { grid-template-columns: 1fr 270px; }
+      .hdb-gauge { display: flex; }
+      @media (max-width: 900px) {
+        .hdb-sidebar { display: none !important; }
+        .hdb-bottom { grid-template-columns: 1fr !important; }
+        .hdb-gauge { flex-direction: row !important; align-items: flex-start !important; }
+      }
+      @media (max-width: 640px) {
+        .hdb-stats { grid-template-columns: repeat(2,1fr) !important; }
+        .hdb-topbar-subtitle { display: none !important; }
+      }
+      @media (max-width: 420px) {
+        .hdb-stats { grid-template-columns: repeat(2,1fr) !important; }
+      }
+    `}</style>
 
       {/* ── Top bar ── */}
       <div style={{
@@ -79,7 +98,7 @@ export default function HeroDashboardCard() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 34, height: 34, borderRadius: 9, background: 'linear-gradient(135deg,#1e5fe0,#6f4dff)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#fff', fontWeight: 700 }}>S</div>
           <span style={{ color: '#f1f5f9', fontWeight: 600, fontSize: 15 }}>SecurityBlogs</span>
-          <span style={{ color: '#475569', fontSize: 13 }}>/ AI Visibility Dashboard</span>
+          <span className="hdb-topbar-subtitle" style={{ color: '#475569', fontSize: 13 }}>/ AI Visibility Dashboard</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{
@@ -102,8 +121,9 @@ export default function HeroDashboardCard() {
       <div style={{ display: 'flex', minHeight: 520 }}>
 
         {/* Sidebar */}
-        <div style={{
+        <div className="hdb-sidebar" style={{
           width: 210, flexShrink: 0,
+          flexDirection: 'column',
           background: '#f8fafc',
           borderRight: '1px solid #e2e8f0',
           padding: '20px 0',
@@ -142,7 +162,7 @@ export default function HeroDashboardCard() {
         <div style={{ flex: 1, padding: '22px 26px', display: 'flex', flexDirection: 'column', gap: 18, background: '#fff' }}>
 
           {/* Stats row */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 14 }}>
+          <div className="hdb-stats" style={{ display: 'grid', gap: 14 }}>
             {STATS.map(s => (
               <div key={s.label} style={{
                 background: '#f8fafc', borderRadius: 12,
@@ -157,7 +177,7 @@ export default function HeroDashboardCard() {
           </div>
 
           {/* Bottom row: feed + score */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 270px', gap: 16, flex: 1 }}>
+          <div className="hdb-bottom" style={{ display: 'grid', gap: 16, flex: 1 }}>
 
             {/* Citation feed */}
             <div style={{ background: '#f8fafc', borderRadius: 14, border: '1px solid #e2e8f0', padding: '18px', overflow: 'hidden' }}>
@@ -190,7 +210,7 @@ export default function HeroDashboardCard() {
             </div>
 
             {/* Score gauge */}
-            <div style={{ background: '#f8fafc', borderRadius: 14, border: '1px solid #e2e8f0', padding: '18px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+            <div className="hdb-gauge" style={{ background: '#f8fafc', borderRadius: 14, border: '1px solid #e2e8f0', padding: '18px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
               <span style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', alignSelf: 'flex-start' }}>AI Score</span>
               <svg width="140" height="140" viewBox="0 0 140 140">
                 <circle cx="70" cy="70" r="56" fill="none" stroke="#e2e8f0" strokeWidth="11" />

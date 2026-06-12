@@ -116,6 +116,7 @@ export default function ProductPromoHeroVisual() {
       boxShadow: '0 28px 72px -12px rgba(30,95,224,0.18), 0 0 0 1.5px rgba(30,95,224,0.08)',
       fontFamily: 'var(--font-sans)',
     }}>
+    <style>{`.ppv-split{grid-template-columns:1fr 1px 1fr!important}@media(max-width:420px){.ppv-split{grid-template-columns:1fr!important}.ppv-divider{display:none!important}}`}</style>
 
       {/* ── Top bar ── */}
       <div style={{ background: 'linear-gradient(90deg,#0f1e4a,#1a1060)', padding: '11px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -191,7 +192,7 @@ export default function ProductPromoHeroVisual() {
       </div>
 
       {/* ── Formats + reach ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', borderBottom: '1px solid #e2e8f0' }}>
+      <div className="ppv-split" style={{ display: 'grid', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ padding: '12px 14px' }}>
           <div style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.07em', marginBottom: 8 }}>FORMATS</div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 5 }}>
@@ -207,7 +208,7 @@ export default function ProductPromoHeroVisual() {
             ))}
           </div>
         </div>
-        <div style={{ background: '#e2e8f0' }} />
+        <div className="ppv-divider" style={{ background: '#e2e8f0' }} />
         <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.07em', marginBottom: 4 }}>SUBSCRIBER REACH</div>

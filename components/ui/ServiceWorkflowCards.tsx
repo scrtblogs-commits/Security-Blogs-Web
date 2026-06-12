@@ -114,6 +114,41 @@ export default function ServiceWorkflowCards({
   const footerYNum    = useSpring(rawFooterY, { stiffness: 90, damping: 26 })
   const footerY       = useTransform(footerYNum, (v: number) => `${v}%`)
 
+  // ── Mobile fallback: simple vertical stack ───────────────
+  if (vw > 0 && vw < 768) {
+    return (
+      <div style={{ background: sectionBg, padding: '48px 0' }}>
+        <div className="container">
+          <h2 style={{ fontSize: 'clamp(26px,5vw,36px)', fontWeight: 800, textAlign: 'center', marginBottom: 32, color: 'var(--text)' }}>
+            How It Works
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {steps.map((s, i) => (
+              <div key={i} style={{
+                background: '#fff', borderRadius: 18,
+                border: `1.5px solid ${s.color}30`,
+                padding: '24px 20px',
+                boxShadow: `0 4px 24px -8px ${s.color}22`,
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                  <span style={{
+                    display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                    width: 36, height: 36, borderRadius: '50%',
+                    background: `${s.color}18`, color: s.color,
+                    fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', flexShrink: 0,
+                  }}>{i + 1}</span>
+                  <span style={{ fontSize: 10.5, fontWeight: 700, fontFamily: 'var(--font-mono)', color: s.color, letterSpacing: '0.1em', textTransform: 'uppercase' }}>{s.tag}</span>
+                </div>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', lineHeight: 1.2 }}>{s.title}</h3>
+              </div>
+            ))}
+          </div>
+          {footerSlot && <div style={{ marginTop: 40 }}>{footerSlot}</div>}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div ref={outerRef} style={{ height: `${totalPhases * 100}vh`, position: 'relative' }}>
       <div style={{

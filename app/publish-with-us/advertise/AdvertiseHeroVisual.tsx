@@ -61,6 +61,7 @@ export default function AdvertiseHeroVisual() {
       boxShadow: '0 20px 56px -10px rgba(30,95,224,0.16), 0 0 0 1.5px rgba(30,95,224,0.08)',
       fontFamily: 'var(--font-sans)',
     }}>
+    <style>{`.adv-placements{grid-template-columns:repeat(4,1fr)!important}@media(max-width:400px){.adv-placements{grid-template-columns:repeat(2,1fr)!important}}`}</style>
 
       {/* Header */}
       <div style={{ background: 'linear-gradient(90deg,#0f1e4a,#1a1060)', padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -102,7 +103,7 @@ export default function AdvertiseHeroVisual() {
       {/* Placement type selector */}
       <div style={{ padding: '11px 14px', borderBottom: '1px solid #e2e8f0' }}>
         <div style={{ fontSize: 9.5, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.07em', marginBottom: 8 }}>PLACEMENT TYPES</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 5 }}>
+        <div className="adv-placements" style={{ display: 'grid', gap: 5 }}>
           {PLACEMENTS.map((pl, i) => (
             <motion.div
               key={pl.type}

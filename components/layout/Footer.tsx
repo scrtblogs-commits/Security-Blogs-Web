@@ -303,7 +303,7 @@ export default function Footer() {
 
       {/* ── Social + contact ── */}
       <div style={{ borderTop: '1px solid var(--line)', padding: '16px 24px' }}>
-        <div className="container" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center' }}>
+        <div className="container ft-social-row" style={{ display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'center' }}>
           <a href="mailto:info@securityblogs.com.au" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>✉ info@securityblogs.com.au</a>
           <a href="tel:+61411212418" style={{ fontSize: 13, color: 'var(--text-soft)', textDecoration: 'none' }}>✆ +61 411 212 418</a>
           <div style={{ display: 'flex', gap: 6, marginLeft: 'auto' }}>

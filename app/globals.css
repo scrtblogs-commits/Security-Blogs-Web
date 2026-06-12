@@ -779,3 +779,62 @@ body::before {
 @media (max-width: 640px) {
   .blog-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ── Mobile responsive additions ──────────────────────────────────── */
+
+/* Hero section — reduce top padding on mobile */
+@media (max-width: 768px) {
+  .hero-page-section { padding-top: calc(var(--nav-h) + 40px) !important; padding-bottom: 0 !important; }
+}
+
+/* Ensure all hero visuals scale down properly */
+@media (max-width: 540px) {
+  .hero-visual-wrap { width: 100% !important; max-width: 100% !important; }
+}
+
+/* Grid-2 hero layouts — center visual on mobile */
+@media (max-width: 980px) {
+  .grid-2 > * { max-width: 100%; }
+}
+
+/* Make hero dashboard card main content scrollable on tiny screens */
+@media (max-width: 480px) {
+  .hdb-main { padding: 14px 14px !important; }
+}
+
+/* ProductPromoHeroVisual — collapse left/right split on small screens */
+@media (max-width: 420px) {
+  .ppv-split { grid-template-columns: 1fr !important; }
+  .ppv-divider { display: none !important; }
+}
+
+/* Footer social row — stack on very small screens */
+@media (max-width: 480px) {
+  .ft-social-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+  .ft-social-row > div { margin-left: 0 !important; }
+}
+
+/* Ensure CTA buttons wrap cleanly on very small screens */
+@media (max-width: 380px) {
+  .cta-buttons > * { width: 100% !important; justify-content: center; }
+}
+
+/* GeoHeroVisual popup — prevent overflow on small screens */
+@media (max-width: 480px) {
+  .geo-popup { min-width: 140px !important; max-width: 180px !important; font-size: 11px !important; }
+}
+
+/* Navbar logo size on mobile */
+@media (max-width: 480px) {
+  .sg-logo-img { height: 40px !important; }
+}
+
+/* Prevent horizontal overflow from any fixed-width element */
+@media (max-width: 768px) {
+  .overflow-fix { overflow-x: hidden !important; }
+}
+
+/* Ensure form fields are full-width and easy to tap on mobile */
+@media (max-width: 600px) {
+  .field { font-size: 16px; } /* prevents iOS zoom on iOS Safari */
+}
