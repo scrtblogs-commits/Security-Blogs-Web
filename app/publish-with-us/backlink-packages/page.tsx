@@ -1,6 +1,8 @@
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
+import BacklinkHeroVisual from './BacklinkHeroVisual'
 import PricingCards from '@/components/ui/PricingCards'
 import Bento from '@/components/ui/Bento'
 import FAQAccordion from '@/components/ui/FAQAccordion'
@@ -152,22 +154,30 @@ export default function BacklinkPackagesPage() {
         ],
       })} />
       <HeroBg grid>
-        <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Editorial Placements' }]} />
-          <span className="badge badge-blue" style={{ marginBottom: 20 }}>
-            <span className="dot dot-pulse" /> SPONSORED EDITORIAL PLACEMENTS
-          </span>
-          <h1 className="h1" style={{ maxWidth: 880, marginBottom: 18 }}>
-            Sponsored Editorial Placements for{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Security Brands</span>
-          </h1>
-          <p className="lead" style={{ maxWidth: 680 }}>
-            Disclosed, compliant, permanent. Your brand featured in original editorial articles on
-            Australia&apos;s specialist security publication. Every paid link uses{' '}
-            <code>rel=&quot;sponsored&quot;</code> per Google&apos;s published link policies — earning
-            qualified exposure, not PageRank manipulation.
-          </p>
-        </Reveal>
+        <div className="grid-2" style={{ alignItems: 'center', gap: 52 }}>
+          <Reveal>
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Editorial Placements' }]} />
+            <span className="badge badge-blue" style={{ marginBottom: 20 }}>
+              <span className="dot dot-pulse" /> SPONSORED EDITORIAL PLACEMENTS
+            </span>
+            <h1 className="h1" style={{ marginBottom: 18 }}>
+              Sponsored Editorial Placements for{' '}
+              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Security Brands</span>
+            </h1>
+            <p className="lead" style={{ maxWidth: 520, marginBottom: 28 }}>
+              Disclosed, compliant, permanent. Your brand featured in original editorial articles on
+              Australia&apos;s specialist security publication. Every paid link uses{' '}
+              <code>rel=&quot;sponsored&quot;</code> per Google&apos;s published link policies.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Request a placement →</MagneticButton>
+              <MagneticButton href="#pricing" className="btn btn-outline btn-lg">View pricing</MagneticButton>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <BacklinkHeroVisual />
+          </Reveal>
+        </div>
       </HeroBg>
 
       <section className="section" style={{ paddingTop: 32, paddingBottom: 0 }}>
