@@ -237,27 +237,27 @@ export function AIOFace(p: CardProps) {
   }, [])
 
   return (
-    <div style={{ ...SHELL, background: '#0f0f13' }}>
+    <div style={{ ...SHELL, background: '#ffffff' }}>
       {/* Header bar */}
-      <div style={{ position:'absolute', top:0, left:0, right:0, background:'#18181f', borderBottom:'1px solid rgba(255,255,255,0.06)', padding:'7px 12px', display:'flex', alignItems:'center', justifyContent:'space-between', zIndex:5 }}>
+      <div style={{ position:'absolute', top:0, left:0, right:0, background:'#f8fafc', borderBottom:'1px solid #e2e8f0', padding:'7px 12px', display:'flex', alignItems:'center', justifyContent:'space-between', zIndex:5 }}>
         <div style={{ display:'flex', alignItems:'center', gap:7 }}>
-          <div style={{ width:6,height:6,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 8px #22c55e' }} />
-          <span style={{ fontSize:10,fontWeight:700,color:'rgba(255,255,255,0.9)',letterSpacing:'0.02em' }}>AI Mention Monitor</span>
+          <div style={{ width:6,height:6,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 6px #22c55e' }} />
+          <span style={{ fontSize:10,fontWeight:700,color:'#0f172a',letterSpacing:'0.02em' }}>AI Mention Monitor</span>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:5 }}>
-          <span style={{ fontSize:9,color:'rgba(255,255,255,0.4)' }}>total citations</span>
-          <span style={{ fontSize:11,fontWeight:800,color:'#22c55e',fontFamily:'var(--font-mono)' }}>{totalCitations.toLocaleString()}</span>
+          <span style={{ fontSize:9,color:'#94a3b8' }}>citations</span>
+          <span style={{ fontSize:11,fontWeight:800,color:'#16a34a',fontFamily:'var(--font-mono)' }}>{totalCitations.toLocaleString()}</span>
         </div>
       </div>
 
       {/* Platform logos strip */}
-      <div style={{ position:'absolute', top:32, left:0, right:0, background:'#13131a', borderBottom:'1px solid rgba(255,255,255,0.05)', padding:'8px 12px', display:'flex', alignItems:'center', gap:6 }}>
+      <div style={{ position:'absolute', top:32, left:0, right:0, background:'#f1f5f9', borderBottom:'1px solid #e2e8f0', padding:'8px 12px', display:'flex', alignItems:'center', gap:6 }}>
         {AIO_PLATFORMS.map((pl, i) => (
-          <div key={pl.name} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:3, opacity: activeIdx===i?1:0.45, transition:'opacity 0.4s', flex:1 }}>
-            <div style={{ width:26,height:26,borderRadius:8,overflow:'hidden',border:`1.5px solid ${activeIdx===i?pl.color:'rgba(255,255,255,0.08)'}`,boxShadow:activeIdx===i?`0 0 10px ${pl.color}50`:'none',transition:'all 0.4s',flexShrink:0 }}>
+          <div key={pl.name} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:3, opacity: activeIdx===i?1:0.5, transition:'opacity 0.4s', flex:1 }}>
+            <div style={{ width:26,height:26,borderRadius:8,overflow:'hidden',border:`1.5px solid ${activeIdx===i?pl.color:'#e2e8f0'}`,boxShadow:activeIdx===i?`0 0 10px ${pl.color}40`:'none',transition:'all 0.4s',flexShrink:0 }}>
               <svg viewBox="0 0 20 20" width="26" height="26">{pl.logo(pl.color)}</svg>
             </div>
-            <span style={{ fontSize:7,fontWeight:600,color:activeIdx===i?pl.color:'rgba(255,255,255,0.3)',transition:'color 0.4s',whiteSpace:'nowrap' }}>{pl.short}</span>
+            <span style={{ fontSize:7,fontWeight:600,color:activeIdx===i?pl.color:'#94a3b8',transition:'color 0.4s',whiteSpace:'nowrap' }}>{pl.short}</span>
           </div>
         ))}
       </div>
@@ -269,7 +269,7 @@ export function AIOFace(p: CardProps) {
           return (
             <div key={item.id} style={{
               display:'flex', alignItems:'flex-start', gap:8, padding:'6px 12px',
-              background: i===0 ? `${pl.color}12` : 'transparent',
+              background: i===0 ? `${pl.color}08` : 'transparent',
               borderLeft: i===0 ? `2px solid ${pl.color}` : '2px solid transparent',
               marginBottom:2, transition:'all 0.4s',
             }}>
@@ -279,9 +279,9 @@ export function AIOFace(p: CardProps) {
               <div style={{ flex:1, minWidth:0 }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:2 }}>
                   <span style={{ fontSize:9.5,fontWeight:700,color:pl.color }}>{item.p}</span>
-                  <span style={{ fontSize:8,color:'rgba(255,255,255,0.2)',flexShrink:0,marginLeft:4 }}>{item.ts}</span>
+                  <span style={{ fontSize:8,color:'#94a3b8',flexShrink:0,marginLeft:4 }}>{item.ts}</span>
                 </div>
-                <div style={{ fontSize:9.5,color:'rgba(255,255,255,0.65)',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap' }}>{item.t}</div>
+                <div style={{ fontSize:9.5,color:'#475569',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap' }}>{item.t}</div>
               </div>
             </div>
           )
@@ -289,14 +289,14 @@ export function AIOFace(p: CardProps) {
       </div>
 
       {/* Score bars strip */}
-      <div style={{ position:'absolute', bottom:92, left:0, right:0, background:'#18181f', borderTop:'1px solid rgba(255,255,255,0.06)', padding:'7px 12px', display:'flex', gap:6, alignItems:'flex-end' }}>
+      <div style={{ position:'absolute', bottom:92, left:0, right:0, background:'#f8fafc', borderTop:'1px solid #e2e8f0', padding:'7px 12px', display:'flex', gap:6, alignItems:'flex-end' }}>
         {AIO_PLATFORMS.map((pl, i) => (
           <div key={pl.name} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:3 }}>
             <span style={{ fontSize:8,fontWeight:700,color:pl.color,fontFamily:'var(--font-mono)' }}>{scores[i]}%</span>
-            <div style={{ width:'100%',height:28,background:'rgba(255,255,255,0.04)',borderRadius:3,overflow:'hidden',display:'flex',alignItems:'flex-end' }}>
-              <div style={{ width:'100%',height:`${scores[i]}%`,background:pl.color,opacity:0.85,transition:'height 0.03s linear',borderRadius:'2px 2px 0 0' }} />
+            <div style={{ width:'100%',height:28,background:'#e2e8f0',borderRadius:3,overflow:'hidden',display:'flex',alignItems:'flex-end' }}>
+              <div style={{ width:'100%',height:`${scores[i]}%`,background:pl.color,transition:'height 0.03s linear',borderRadius:'2px 2px 0 0' }} />
             </div>
-            <span style={{ fontSize:7,color:'rgba(255,255,255,0.3)',textAlign:'center' }}>{pl.short}</span>
+            <span style={{ fontSize:7,color:'#94a3b8',textAlign:'center' }}>{pl.short}</span>
           </div>
         ))}
       </div>
@@ -394,190 +394,169 @@ export function AEOFace(p: CardProps) {
   )
 }
 
-/* ─────────────────────────────────────────────
-   GEO — Australia map with live city pings + signals
-───────────────────────────────────────────── */
-/* ─────────────────────────────────────────────
-   GEO — Realistic Google Maps city view + live pins
-───────────────────────────────────────────── */
-// Google Maps pin path: teardrop shape centred at 0,0, pointing down
-function GMapPin({ x, y, color, scale = 1 }: { x:number; y:number; color:string; scale?:number }) {
-  return (
-    <g transform={`translate(${x},${y}) scale(${scale})`}>
-      <path d="M0-14 C-6-14 -10-9 -10-4 C-10 3 0 14 0 14 C0 14 10 3 10-4 C10-9 6-14 0-14 Z"
-        fill={color} stroke="white" strokeWidth="1.2" />
-      <circle cx="0" cy="-4" r="4" fill="white" opacity="0.9" />
-    </g>
-  )
-}
 
-const GEO_PINS = [
-  { x:172, y:126, color:'#EA4335', name:'SecureGuard Pro',     rating:4.9, reviews:142, isClient:true },
-  { x:210, y:104, color:'#1a73e8', name:'SafeShield Security', rating:4.6, reviews:89  },
-  { x:138, y:114, color:'#1a73e8', name:'TrustWatch Alarms',   rating:4.3, reviews:54  },
+/* ─────────────────────────────────────────────
+   GEO — Dotted world map + animated city pins
+───────────────────────────────────────────── */
+// Continent outlines as clip-path polygons (400×210 viewBox)
+// Coords: x=(lon+180)/360*400, y=(80-lat)/140*210
+const WORLD_CLIP = [
+  // North America
+  "M14,18 L31,34 L62,46 L64,64 L78,85 L103,96 L107,107 L110,82 L117,67 L130,54 L141,49 L139,40 L129,27 L108,12 L78,6 L36,15 Z",
+  // South America
+  "M112,106 L132,103 L162,124 L156,153 L152,154 L136,177 L124,202 L118,183 L110,135 L111,120 Z",
+  // Europe
+  "M190,64 L191,55 L196,48 L200,43 L210,34 L216,15 L228,15 L231,18 L231,33 L233,51 L231,63 L224,64 L217,63 L203,55 L198,54 Z",
+  // UK island
+  "M189,42 L191,37 L194,33 L197,33 L200,37 L201,43 L194,45 Z",
+  // Greenland
+  "M143,30 L136,11 L156,5 L178,9 L180,23 L172,30 Z",
+  // Africa
+  "M193,67 L200,66 L212,64 L228,72 L238,73 L248,102 L257,103 L244,127 L239,150 L236,165 L220,172 L213,163 L211,127 L204,109 L198,112 L181,99 L181,78 Z",
+  // Asia (mainland + Arabia)
+  "M231,63 L240,63 L251,57 L270,36 L300,10 L378,15 L389,30 L378,42 L350,69 L343,67 L333,87 L321,102 L316,117 L289,108 L280,87 L264,87 L256,81 L241,76 Z",
+  // Indian subcontinent
+  "M272,80 L280,87 L284,100 L280,112 L272,108 L268,95 Z",
+  // SE Asia peninsula
+  "M306,100 L316,117 L310,125 L302,112 Z",
+  // Japan
+  "M344,73 L352,66 L359,54 L361,56 L354,68 L348,75 Z",
+  // Australia
+  "M327,153 L346,138 L361,135 L370,160 L368,177 L355,178 L350,172 L327,171 Z",
+  // Tasmania
+  "M357,182 L362,181 L364,187 L358,188 Z",
+  // New Zealand N
+  "M385,170 L389,163 L392,168 L388,174 Z",
+]
+
+const GEO_WORLD_PINS = [
+  { x: 69,  y: 69,  city: 'Los Angeles',      country: 'USA',       addr: '123 Wilshire Blvd, CA 90010' },
+  { x: 118, y: 58,  city: 'New York',          country: 'USA',       addr: '350 Fifth Ave, NY 10118' },
+  { x: 148, y: 156, city: 'São Paulo',         country: 'Brazil',    addr: 'Av. Paulista 1578, SP' },
+  { x: 200, y: 43,  city: 'London',            country: 'UK',        addr: '30 St Mary Axe, EC3A 8BF' },
+  { x: 210, y: 45,  city: 'Frankfurt',         country: 'Germany',   addr: 'Bockenheimer Anlage 46' },
+  { x: 241, y: 121, city: 'Nairobi',           country: 'Kenya',     addr: 'Upper Hill, Nairobi 00100' },
+  { x: 261, y: 82,  city: 'Dubai',             country: 'UAE',       addr: 'Sheikh Zayed Rd, Dubai' },
+  { x: 281, y: 91,  city: 'Mumbai',            country: 'India',     addr: 'Bandra Kurla Complex, MH' },
+  { x: 316, y: 115, city: 'Singapore',         country: 'Singapore', addr: '1 Raffles Place, 048616' },
+  { x: 356, y: 67,  city: 'Tokyo',             country: 'Japan',     addr: '1-1 Marunouchi, Chiyoda-ku' },
+  { x: 361, y: 177, city: 'Melbourne',         country: 'Australia', addr: '100 Smith Street, Collingwood VIC 3066 AU', isMain: true },
+  { x: 368, y: 169, city: 'Sydney',            country: 'Australia', addr: '1 Martin Place, NSW 2000' },
 ]
 
 export function GEOFace(p: CardProps) {
+  const [activePin, setActivePin] = useState(GEO_WORLD_PINS.findIndex(p => p.isMain))
   const [pingR, setPingR] = useState(0)
-  const [activePin, setActivePin] = useState(0)
-  const [showCard, setShowCard] = useState(true)
-  const [views, setViews] = useState(2841)
+  const [showPopup, setShowPopup] = useState(true)
 
   useEffect(() => {
-    // Pulse ring from main pin
-    const pr = setInterval(() => setPingR(r => r > 44 ? 0 : r + 0.65), 28)
-    // Cycle active pin
+    const pr = setInterval(() => setPingR(r => r > 38 ? 0 : r + 0.7), 28)
     const ac = setInterval(() => {
-      setActivePin(i => (i + 1) % GEO_PINS.length)
-    }, 2200)
-    // Live view counter
-    const vv = setInterval(() => setViews(v => v + 1), 700)
-    return () => { clearInterval(pr); clearInterval(ac); clearInterval(vv) }
+      setShowPopup(false)
+      setTimeout(() => {
+        setActivePin(i => (i + 1) % GEO_WORLD_PINS.length)
+        setShowPopup(true)
+        setPingR(0)
+      }, 300)
+    }, 2400)
+    return () => { clearInterval(pr); clearInterval(ac) }
   }, [])
 
-  const act = GEO_PINS[activePin]
+  const pin = GEO_WORLD_PINS[activePin]
 
   return (
-    <div style={{ ...SHELL, background: '#f2efe9' }}>
+    <div style={{ ...SHELL, background: '#f8f9fb' }}>
+      <svg
+        viewBox="0 0 400 210"
+        width="100%"
+        style={{ position:'absolute', top:0, left:0, right:0, bottom:90, height:'calc(100% - 90px)' }}
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <defs>
+          {/* Dot pattern for continents */}
+          <pattern id="geo-dots" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
+            <circle cx="2.5" cy="2.5" r="1.3" fill="#c8cdd6" />
+          </pattern>
+          {/* Clip path = all continent polygons combined */}
+          <clipPath id="geo-land">
+            {WORLD_CLIP.map((d, i) => <path key={i} d={d} />)}
+          </clipPath>
+          <filter id="geo-pin-shadow">
+            <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="rgba(0,0,0,0.3)" />
+          </filter>
+        </defs>
 
-      {/* Google Maps search bar */}
-      <div style={{ position:'absolute', top:8, left:8, right:8, zIndex:10, background:'white', borderRadius:26, padding:'7px 13px', display:'flex', alignItems:'center', gap:8, boxShadow:'0 2px 10px rgba(0,0,0,0.18)' }}>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#9aa0a6" strokeWidth="2.5"/><path d="m21 21-4.35-4.35" stroke="#9aa0a6" strokeWidth="2.5" strokeLinecap="round"/></svg>
-        <span style={{ fontSize:11, color:'#202124', flex:1 }}>Security companies near me</span>
-        <div style={{ display:'flex', gap:1.5 }}>
-          {['#4285F4','#EA4335','#FBBC05','#34A853'].map(c => <div key={c} style={{ width:5,height:5,borderRadius:'50%',background:c }} />)}
-        </div>
-      </div>
+        {/* Ocean background */}
+        <rect width="400" height="210" fill="#f8f9fb" />
 
-      {/* Map tile — Google Maps accurate color scheme */}
-      <div style={{ position:'absolute', top:42, left:0, right:0, bottom:90 }}>
-        <svg viewBox="0 0 320 210" width="100%" height="100%" style={{ display:'block' }}>
-          <defs>
-            <filter id="gmap-shadow"><feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="rgba(0,0,0,0.3)" /></filter>
-            <filter id="pin-shadow"><feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="rgba(0,0,0,0.35)" /></filter>
-          </defs>
+        {/* Continent dots */}
+        <rect width="400" height="210" fill="url(#geo-dots)" clipPath="url(#geo-land)" />
 
-          {/* Land base — Google Maps beige */}
-          <rect width="320" height="210" fill="#f2efe9" />
+        {/* Pulse rings on active pin */}
+        {pingR > 0 && (
+          <>
+            <circle cx={pin.x} cy={pin.y} r={pingR} fill="none" stroke="#2563eb" strokeWidth="1.2" opacity={Math.max(0, 1 - pingR / 38)} />
+            {pingR > 12 && <circle cx={pin.x} cy={pin.y} r={pingR * 0.55} fill="none" stroke="#2563eb" strokeWidth="0.8" opacity={Math.max(0, 0.6 - pingR / 50)} />}
+          </>
+        )}
 
-          {/* Water body (harbour/river) at top */}
-          <path d="M0 0 L320 0 L320 32 Q280 28 240 30 Q200 32 160 30 Q120 28 80 31 Q40 34 0 30 Z" fill="#a8d4f5" />
-          {/* Water label */}
-          <text x="160" y="20" textAnchor="middle" fontSize="7.5" fill="#5c8a9f" fontStyle="italic" letterSpacing="2">Sydney Harbour</text>
+        {/* All city dots */}
+        {GEO_WORLD_PINS.map((wp, i) => {
+          const isAct = activePin === i
+          return (
+            <g key={wp.city} filter={isAct ? 'url(#geo-pin-shadow)' : undefined}>
+              {isAct && <circle cx={wp.x} cy={wp.y} r="8" fill="#2563eb" opacity="0.15" />}
+              <circle
+                cx={wp.x} cy={wp.y}
+                r={isAct ? 5.5 : 4}
+                fill="#2563eb"
+                stroke="white"
+                strokeWidth={isAct ? 1.8 : 1.5}
+                style={{ transition: 'all 0.35s' }}
+              />
+              {isAct && <circle cx={wp.x} cy={wp.y} r="2" fill="white" />}
+            </g>
+          )
+        })}
+      </svg>
 
-          {/* Waterfront road */}
-          <rect x="0" y="30" width="320" height="6" fill="#ffffff" />
-          <rect x="0" y="30" width="320" height="6" fill="none" stroke="#e8e0d8" strokeWidth="0.5" />
-
-          {/* Park / Hyde Park */}
-          <rect x="198" y="82" width="52" height="64" rx="3" fill="#c8e8b0" />
-          <rect x="200" y="84" width="48" height="60" rx="2" fill="none" stroke="#9ec87a" strokeWidth="0.8" strokeDasharray="3 2" />
-          <text x="224" y="116" textAnchor="middle" fontSize="7" fill="#4a7c2f" fontWeight="600">Hyde Park</text>
-
-          {/* Second park */}
-          <rect x="48" y="136" width="36" height="30" rx="2" fill="#c8e8b0" />
-
-          {/* Major roads — Google Maps yellow/orange arterials */}
-          {/* Horizontal major: y=60 (Bridge St), y=100 (Market St), y=140 (Park St), y=175 (Ultimo) */}
-          <rect x="0" y="58" width="320" height="5" fill="#fdd663" />
-          <rect x="0" y="100" width="320" height="5" fill="#fdd663" />
-          <rect x="0" y="140" width="320" height="5" fill="#fdd663" />
-
-          {/* Vertical major: x=80 (George St), x=155 (Pitt St), x=260 (Elizabeth St) */}
-          <rect x="78" y="36" width="5" height="174" fill="#fdd663" />
-          <rect x="153" y="36" width="5" height="174" fill="#fdd663" />
-          <rect x="258" y="36" width="5" height="174" fill="#fdd663" />
-
-          {/* Minor roads — white */}
-          {[46,120,160].map(x => <rect key={`mv${x}`} x={x} y="36" width="3" height="174" fill="#ffffff" opacity="0.8" />)}
-          {[76,122,158,180].map(y => <rect key={`mh${y}`} x="0" y={y} width="320" height="3" fill="#ffffff" opacity="0.8" />)}
-
-          {/* Building footprints — slightly darker than land */}
-          {[
-            [8,40,32,16],[44,40,28,16],[10,62,28,14],[44,62,28,14],[76,62,12,14],
-            [8,80,32,18],[44,80,26,18],[8,104,32,15],[44,104,26,15],[8,128,32,10],
-            [44,128,26,10],[8,148,26,18],[38,148,36,18],[8,168,32,12],[44,168,26,12],
-            [92,40,55,16],[162,40,85,16],[92,64,28,16],[124,64,25,16],[162,64,26,16],[192,64,28,16],[222,64,30,16],
-            [92,84,28,14],[124,84,25,14],[162,84,26,14],[92,108,28,16],[124,108,25,16],[162,108,26,14],
-            [92,128,28,10],[124,128,25,10],[92,148,28,16],[124,148,55,16],[92,168,28,12],[124,168,55,12],
-            [264,40,48,16],[264,64,48,16],[264,84,48,14],[264,108,48,16],[264,128,48,10],[264,148,48,16],[264,168,48,12],
-          ].map(([bx,by,bw,bh],i) => (
-            <rect key={i} x={bx} y={by} width={bw} height={bh} rx="1" fill="#e9e1da" stroke="#ddd5ca" strokeWidth="0.3" />
-          ))}
-
-          {/* Road name labels */}
-          <text x="82" y="57" fontSize="6" fill="#635d52" transform="rotate(-90,82,57)" textAnchor="end">George St</text>
-          <text x="157" y="57" fontSize="6" fill="#635d52" transform="rotate(-90,157,57)" textAnchor="end">Pitt St</text>
-          <text x="260" y="95" fontSize="6" fill="#635d52" transform="rotate(-90,260,95)" textAnchor="end">Elizabeth St</text>
-          <text x="40" y="97" fontSize="6" fill="#635d52" textAnchor="middle">Market St</text>
-          <text x="40" y="137" fontSize="6" fill="#635d52" textAnchor="middle">Park St</text>
-
-          {/* Pulse rings on active pin */}
-          {pingR > 0 && (
-            <>
-              <circle cx={act.x} cy={act.y} r={pingR} fill="none" stroke={act.color} strokeWidth="1.5" opacity={Math.max(0, 0.9 - pingR/44)} />
-              {pingR > 14 && <circle cx={act.x} cy={act.y} r={pingR * 0.55} fill="none" stroke={act.color} strokeWidth="1" opacity={Math.max(0, 0.5 - pingR/60)} />}
-            </>
-          )}
-
-          {/* All pins */}
-          {GEO_PINS.map((pin, i) => {
-            const isAct = activePin === i
-            return (
-              <g key={pin.name} filter="url(#pin-shadow)" style={{ transition:'all 0.3s' }}>
-                <GMapPin x={pin.x} y={pin.y} color={pin.color} scale={isAct ? 1.25 : 1} />
-              </g>
-            )
-          })}
-        </svg>
-
-        {/* Google Maps info card (floating, positioned over map) */}
+      {/* Info popup card — styled exactly like the reference image */}
+      <div style={{
+        position: 'absolute',
+        bottom: 94,
+        right: 10,
+        background: '#1e2433',
+        borderRadius: 8,
+        padding: '9px 12px',
+        minWidth: 160,
+        maxWidth: 190,
+        boxShadow: '0 6px 24px rgba(0,0,0,0.28)',
+        opacity: showPopup ? 1 : 0,
+        transform: showPopup ? 'translateY(0) scale(1)' : 'translateY(6px) scale(0.97)',
+        transition: 'opacity 0.3s, transform 0.3s',
+        zIndex: 10,
+      }}>
+        {/* Triangle pointer */}
         <div style={{
-          position:'absolute', bottom:8, left:8, right:8,
-          background:'white', borderRadius:10, padding:'9px 12px',
-          boxShadow:'0 4px 16px rgba(0,0,0,0.22)',
-          display:'flex', alignItems:'center', gap:10,
-        }}>
-          <div style={{ flex:1, minWidth:0 }}>
-            <div style={{ display:'flex', alignItems:'center', gap:5, marginBottom:2 }}>
-              <span style={{ fontSize:11.5, fontWeight:700, color:'#202124', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{act.name}</span>
-              {act.isClient && <span style={{ background:'#e8f5e9', color:'#2e7d32', fontSize:8, fontWeight:700, padding:'1px 5px', borderRadius:3, flexShrink:0 }}>Your Listing</span>}
-            </div>
-            <div style={{ display:'flex', alignItems:'center', gap:4 }}>
-              <span style={{ fontSize:10.5, fontWeight:700, color:'#e37400' }}>{act.rating}</span>
-              <div style={{ display:'flex', gap:1 }}>
-                {Array.from({length:5}).map((_,si) => (
-                  <span key={si} style={{ fontSize:9, color: si < Math.round(act.rating) ? '#fbbc04' : '#e0e0e0' }}>★</span>
-                ))}
-              </div>
-              <span style={{ fontSize:9.5, color:'#70757a' }}>({act.reviews})</span>
-              <span style={{ fontSize:9, color:'#70757a', marginLeft:2 }}>· Security company</span>
-            </div>
-          </div>
-          <div style={{ display:'flex', gap:4, flexShrink:0 }}>
-            <div style={{ background:'#e8f0fe', borderRadius:6, padding:'4px 8px', fontSize:8.5, fontWeight:600, color:'#1a73e8' }}>Directions</div>
-            <div style={{ background:'#e8f0fe', borderRadius:6, padding:'4px 8px', fontSize:8.5, fontWeight:600, color:'#1a73e8' }}>Save</div>
-          </div>
+          position:'absolute', bottom:-7, right:24,
+          width:0, height:0,
+          borderLeft:'7px solid transparent',
+          borderRight:'7px solid transparent',
+          borderTop:'7px solid #1e2433',
+        }} />
+        <div style={{ fontSize:11, fontWeight:700, color:'#ffffff', marginBottom:4 }}>
+          {pin.city}, {pin.country}
         </div>
-      </div>
-
-      {/* Map controls — Google Maps style */}
-      <div style={{ position:'absolute', top:50, right:8, display:'flex', flexDirection:'column', gap:1, zIndex:5 }}>
-        {['+','−'].map(s => (
-          <div key={s} style={{ width:22,height:22,background:'white',borderRadius:3,display:'grid',placeItems:'center',fontSize:13,fontWeight:400,color:'#666',boxShadow:'0 1px 4px rgba(0,0,0,0.2)',cursor:'default',lineHeight:1 }}>{s}</div>
-        ))}
-      </div>
-
-      {/* Live views badge */}
-      <div style={{ position:'absolute', top:50, left:8, background:'white', borderRadius:5, padding:'3px 8px', boxShadow:'0 1px 4px rgba(0,0,0,0.18)', display:'flex', alignItems:'center', gap:4, zIndex:5 }}>
-        <div style={{ width:5,height:5,borderRadius:'50%',background:'#34a853',boxShadow:'0 0 5px #34a853' }} />
-        <span style={{ fontSize:8.5,fontWeight:600,color:'#202124',fontFamily:'var(--font-mono)' }}>{views.toLocaleString()} views today</span>
+        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.6)', lineHeight:1.5 }}>
+          {pin.addr}
+        </div>
       </div>
 
       <CardCTA {...p} />
     </div>
   )
 }
+
 
 /* ─────────────────────────────────────────────
    Google Ads — live auction bid + ROAS meter
