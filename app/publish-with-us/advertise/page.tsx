@@ -1,6 +1,7 @@
 import Glyph from '@/components/ui/Glyph'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import AdvertiseHeroVisual from './AdvertiseHeroVisual'
 import SectionHead from '@/components/ui/SectionHead'
 import StatsStrip from '@/components/ui/StatsStrip'
 import PricingCards from '@/components/ui/PricingCards'
@@ -75,23 +76,29 @@ export default function AdvertisePage() {
         serviceType: 'Advertising',
       })} />
       <HeroBg grid>
-        <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Advertise' }]} />
-          <span className="badge badge-blue" style={{ marginBottom: 20 }}>
-            <span className="dot dot-pulse" /> MEDIA KIT
-          </span>
-          <h1 className="h1" style={{ maxWidth: 820, marginBottom: 18 }}>
-            Advertise With{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityBlogs</span>.
-          </h1>
-          <p className="lead" style={{ maxWidth: 640, marginBottom: 24 }}>
-            Reach a focused, in-market audience of security buyers and decision-makers. Banners,
-            newsletter sponsorships, category takeovers and native content — all in one media kit.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <MagneticButton href="/contact/">Book a campaign →</MagneticButton>
-          </div>
-        </Reveal>
+        <div className="grid-2" style={{ alignItems: 'center', gap: 52 }}>
+          <Reveal>
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Advertise' }]} />
+            <span className="badge badge-blue" style={{ marginBottom: 20 }}>
+              <span className="dot dot-pulse" /> ADVERTISE
+            </span>
+            <h1 className="h1" style={{ marginBottom: 18 }}>
+              Advertise With{' '}
+              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>SecurityBlogs</span>.
+            </h1>
+            <p className="lead" style={{ maxWidth: 520, marginBottom: 28 }}>
+              Reach a focused, in-market audience of security buyers and decision-makers. Banners,
+              newsletter sponsorships, category takeovers and native content.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Book a campaign →</MagneticButton>
+              <MagneticButton href="#pricing" className="btn btn-outline btn-lg">View packages</MagneticButton>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <AdvertiseHeroVisual />
+          </Reveal>
+        </div>
       </HeroBg>
 
       <section className="section">
@@ -136,21 +143,6 @@ export default function AdvertisePage() {
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <Reveal>
-            <div className="glass glow-border center" style={{ maxWidth: 720, marginInline: 'auto', padding: 32 }}>
-              <span className="badge badge-blue" style={{ marginBottom: 12 }}>MEDIA KIT</span>
-              <h3 style={{ marginBottom: 8 }}>Want the full media kit?</h3>
-              <p className="text-soft" style={{ fontSize: 14.5, marginBottom: 20 }}>
-                Get our complete media kit with audience demographics, traffic data, ad specs and rate card.
-              </p>
-              <a href="/SecurityBlogs-Media-Kit.pdf" download="SecurityBlogs-Media-Kit.pdf" className="btn btn-primary" style={{ display: 'inline-block' }}>Download media kit →</a>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section" style={{ paddingTop: 0 }}>
         <div className="container" style={{ maxWidth: 720 }}>
           <SectionHead eyebrow="Get in touch" title="Plan your advertising campaign." />
           <Reveal>
@@ -172,7 +164,7 @@ export default function AdvertisePage() {
 
       <CTABand
         title="Ready to put your brand in front of security buyers?"
-        subtitle="Book a campaign or request the full media kit and rate card today."
+        subtitle="Book a campaign or request a custom rate card today."
         ctaLabel="Start advertising →"
         ctaHref="/contact/"
       />
