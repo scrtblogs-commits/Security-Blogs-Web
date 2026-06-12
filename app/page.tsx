@@ -12,7 +12,7 @@ import JsonLd from '@/components/JsonLd'
 import { stats, services } from '@/lib/site'
 import { siteConfig } from '@/lib/siteConfig'
 import { faqSchema, webPageSchema, itemListSchema } from '@/lib/schema'
-import HeroAIIcons from './HeroAIIcons'
+import HeroDashboardCard from './HeroDashboardCard'
 import { DynamicAIScore, DynamicScrollStack, DynamicTestimonials, DynamicLocalCheck } from './DynamicSections'
 
 export const metadata: Metadata = {
@@ -80,43 +80,63 @@ export default function HomePage() {
 
       {/* ─────────────────────────────────────────
           1. HERO
-          Left  → headline + buttons
-          Right → floating AI platform icons
+          Centered headline + large dashboard card
       ───────────────────────────────────────── */}
-      <HeroBg>
-        <div className="grid-2" style={{ alignItems: 'center', gap: 56 }}>
+      <section style={{
+        position: 'relative',
+        paddingTop: 'calc(var(--nav-h) + 72px)',
+        paddingBottom: 0,
+        background: 'linear-gradient(160deg, #0c1a4e 0%, #1a1060 45%, #0e2a5c 100%)',
+        overflow: 'visible',
+      }}>
+        {/* Grid overlay */}
+        <div className="grid-overlay" />
+
+        {/* Ambient glow blobs */}
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', top: -120, left: '20%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(30,95,224,0.18) 0%, transparent 70%)', filter: 'blur(32px)' }} />
+          <div style={{ position: 'absolute', top: -60, right: '15%', width: 380, height: 380, borderRadius: '50%', background: 'radial-gradient(circle, rgba(111,77,255,0.14) 0%, transparent 70%)', filter: 'blur(28px)' }} />
+        </div>
+
+        {/* Centered text */}
+        <div className="container z1" style={{ textAlign: 'center', paddingBottom: 48 }}>
           <Reveal>
-            <span className="badge badge-blue" style={{ marginBottom: 22 }}>
-              <span className="dot dot-pulse" /> LIVE · AI VISIBILITY ENGINE
+            <span className="badge" style={{ marginBottom: 22, color: '#60a5fa', borderColor: 'rgba(96,165,250,0.35)', background: 'rgba(96,165,250,0.08)' }}>
+              <span className="dot dot-pulse" style={{ background: '#60a5fa' }} /> LIVE · AI VISIBILITY ENGINE
             </span>
-            <h1 className="h1" style={{ marginBottom: 20 }}>
+            <h1 className="h1" style={{ marginBottom: 20, color: '#fff' }}>
               Be the{' '}
-              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>answer</span>{' '}
-              <span style={{ color: 'var(--red)' }}>AI</span> gives.
+              <span style={{ color: '#60a5fa', fontStyle: 'italic' }}>answer</span>{' '}
+              <span style={{ color: '#f87171' }}>AI</span> gives.
             </h1>
-            <p className="lead" style={{ maxWidth: 520, marginBottom: 28 }}>
+            <p className="lead" style={{ maxWidth: 560, marginBottom: 32, color: 'rgba(255,255,255,0.72)', marginInline: 'auto' }}>
               When buyers ask ChatGPT, Gemini or Google AI for the best security
               provider — your brand should be named. We make that happen.
             </p>
-            <div className="flex flex-wrap gap-3" style={{ marginBottom: 24 }}>
+            <div className="flex flex-wrap gap-3" style={{ marginBottom: 18, justifyContent: 'center' }}>
               <MagneticButton href="/contact/" className="btn btn-primary btn-lg">
                 Get your free audit →
               </MagneticButton>
-              <MagneticButton href="/free-tools/" className="btn btn-outline btn-lg">
-                Try the live score
+              <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg hero-outline-btn">
+                Book a strategy call
               </MagneticButton>
             </div>
-            <p className="text-dim" style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}>
-              Trusted across AU · US · UK · UAE · SG
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(255,255,255,0.38)', letterSpacing: '0.06em' }}>
+              30-day results · No lock-in · Trusted across AU · US · UK · UAE · SG
             </p>
           </Reveal>
+        </div>
 
-          {/* Floating AI brand icons with micro-oscillation */}
-          <Reveal delay={0.15}>
-            <HeroAIIcons />
+        {/* Dashboard card — protrudes below hero */}
+        <div className="container z1" style={{ paddingBottom: 0, position: 'relative', zIndex: 2 }}>
+          <Reveal delay={0.2}>
+            <HeroDashboardCard />
           </Reveal>
         </div>
-      </HeroBg>
+
+        {/* Fade bottom edge so card blends into next section */}
+        <div style={{ height: 80, background: 'linear-gradient(to bottom, transparent, #f6f6f6)', position: 'relative', zIndex: 1, marginTop: -20 }} />
+      </section>
 
       {/* ─────────────────────────────────────────
           2. MARQUEE — AI platforms strip
