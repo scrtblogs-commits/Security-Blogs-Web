@@ -1,6 +1,7 @@
 import Glyph from '@/components/ui/Glyph'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
+import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
 import PricingCards from '@/components/ui/PricingCards'
 import ProcessSteps from '@/components/ui/ProcessSteps'
@@ -8,6 +9,7 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import JsonLd from '@/components/JsonLd'
+import SponsoredPostHeroVisual from './SponsoredPostHeroVisual'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
@@ -78,20 +80,29 @@ export default function SponsoredPostsPage() {
         serviceType: 'Sponsored Content',
       })} />
       <HeroBg grid>
-        <Reveal>
-          <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Posts' }]} />
-          <span className="badge badge-blue" style={{ marginBottom: 20 }}>
-            <span className="dot dot-pulse" /> SPONSORED CONTENT
-          </span>
-          <h1 className="h1" style={{ maxWidth: 820, marginBottom: 18 }}>
-            Sponsored{' '}
-            <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Posts</span>.
-          </h1>
-          <p className="lead" style={{ maxWidth: 640 }}>
-            Get your security brand in front of an engaged, in-market audience with permanent,
-            editorially-promoted placements that carry real dofollow link authority.
-          </p>
-        </Reveal>
+        <div className="grid-2" style={{ alignItems: 'center', gap: 52 }}>
+          <Reveal>
+            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Publish With Us', href: '/publish-with-us/' }, { label: 'Sponsored Posts' }]} />
+            <span className="badge badge-blue" style={{ marginBottom: 20 }}>
+              <span className="dot dot-pulse" /> SPONSORED CONTENT
+            </span>
+            <h1 className="h1" style={{ marginBottom: 18 }}>
+              Sponsored{' '}
+              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Posts</span>.
+            </h1>
+            <p className="lead" style={{ maxWidth: 520, marginBottom: 28 }}>
+              Get your security brand in front of an engaged, in-market audience with permanent,
+              editorially-promoted placements that carry real dofollow link authority.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get a sponsored post →</MagneticButton>
+              <MagneticButton href="#pricing" className="btn btn-outline btn-lg">View pricing</MagneticButton>
+            </div>
+          </Reveal>
+          <Reveal delay={0.15}>
+            <SponsoredPostHeroVisual />
+          </Reveal>
+        </div>
       </HeroBg>
 
       <section className="section">
