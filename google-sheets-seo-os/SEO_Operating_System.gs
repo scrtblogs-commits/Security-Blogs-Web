@@ -142,9 +142,9 @@ function altRows(sh, startRow, numRows, numCols) {
   }
 }
 
-function freezeAndFormat(sh, rows, cols) {
+function freezeAndFormat(sh, rows) {
+  // Only freeze rows — column freeze conflicts with merged title cells in row 1
   sh.setFrozenRows(rows);
-  sh.setFrozenColumns(cols || 1);
 }
 
 // ════════════════════════════════════════════════════════════
