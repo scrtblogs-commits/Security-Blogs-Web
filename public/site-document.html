@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SecurityBlogs — Website Content Document</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --blue: #1e5fe0;
+    --indigo: #6366f1;
+    --green: #10b981;
+    --red: #e23744;
+    --amber: #f59e0b;
+    --cyan: #06b6d4;
+    --navy: #0f172a;
+    --slate: #475569;
+    --muted: #94a3b8;
+    --line: #e2e8f0;
+    --bg: #f8fafc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #fff;
+    color: var(--navy);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(145deg, #060d1f 0%, #0c1a4e 45%, #1a0a3e 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(30,95,224,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(111,77,255,0.10) 0%, transparent 50%);
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(30,95,224,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,95,224,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .cover-content { position: relative; text-align: center; max-width: 800px; }
+
+  .cover-logo {
+    display: inline-flex; align-items: center; gap: 14px;
+    margin-bottom: 48px;
+  }
+  .cover-logo-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: linear-gradient(135deg, #1e5fe0, #6f4dff);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; font-weight: 900; color: #fff;
+  }
+  .cover-logo-text { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+
+  .cover h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+  .cover h1 span { color: #60a5fa; }
+  .cover-sub {
+    font-size: 18px; color: rgba(255,255,255,0.6); margin-bottom: 48px; line-height: 1.6;
+  }
+
+  .cover-meta {
+    display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;
+    font-size: 13px; color: rgba(255,255,255,0.45);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cover-meta span { display: flex; align-items: center; gap: 6px; }
+  .dot-live { width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block; }
+
+  /* ── PAGE LAYOUT ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 64px 40px; }
+
+  /* ── TOC ── */
+  .toc-page { background: var(--bg); border-bottom: 2px solid var(--line); page-break-after: always; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; }
+  .toc-section h3 { font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  .toc-item {
+    display: flex; align-items: center; gap: 10; padding: 8px 0;
+    border-bottom: 1px dashed var(--line); font-size: 13.5px;
+    text-decoration: none; color: var(--navy);
+  }
+  .toc-item:hover { color: var(--blue); }
+  .toc-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); min-width: 28px; }
+  .toc-dot { flex: 1; border-bottom: 1px dashed var(--line); margin: 0 8px; }
+  .toc-page-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex; align-items: flex-start; gap: 20;
+    padding: 48px 0 32px; border-bottom: 2px solid var(--line);
+    margin-bottom: 40px;
+  }
+  .section-num {
+    font-size: 72px; font-weight: 900;
+    color: var(--line); line-height: 1;
+    font-family: 'JetBrains Mono', monospace;
+    flex-shrink: 0;
+  }
+  .section-title-wrap { padding-top: 8px; }
+  .section-eyebrow { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .section-title { font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--navy); }
+  .section-sub { font-size: 15px; color: var(--slate); margin-top: 8px; max-width: 640px; }
+
+  /* ── CARDS ── */
+  .card-grid { display: grid; gap: 16px; }
+  .card-grid-2 { grid-template-columns: 1fr 1fr; }
+  .card-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card-grid-4 { grid-template-columns: repeat(4,1fr); }
+
+  .card {
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: 14px;
+    padding: 20px;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: 0 8px 32px -8px rgba(30,95,224,0.12); }
+  .card-icon { font-size: 22px; margin-bottom: 10px; }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .card-desc { font-size: 13px; color: var(--slate); line-height: 1.6; }
+  .card-badge { display: inline-block; margin-top: 10px; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .card-url { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); margin-top: 6px; }
+
+  .page-card { border-left: 3px solid var(--blue); }
+  .page-card-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .page-card-route { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--blue); margin-bottom: 8px; }
+  .page-card-desc { font-size: 12.5px; color: var(--slate); line-height: 1.55; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600; padding: 3px 9px;
+    border-radius: 999px; border: 1px solid;
+  }
+  .tag-blue { background: rgba(30,95,224,0.08); color: var(--blue); border-color: rgba(30,95,224,0.2); }
+  .tag-green { background: rgba(16,185,129,0.08); color: var(--green); border-color: rgba(16,185,129,0.2); }
+  .tag-red { background: rgba(226,55,68,0.08); color: var(--red); border-color: rgba(226,55,68,0.2); }
+  .tag-amber { background: rgba(245,158,11,0.08); color: var(--amber); border-color: rgba(245,158,11,0.2); }
+  .tag-indigo { background: rgba(99,102,241,0.08); color: var(--indigo); border-color: rgba(99,102,241,0.2); }
+  .tag-cyan { background: rgba(6,182,212,0.08); color: var(--cyan); border-color: rgba(6,182,212,0.2); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    padding: 16px 20px; border-radius: 12px; margin: 24px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+    border: 1.5px solid;
+  }
+  .callout-blue { background: rgba(30,95,224,0.05); border-color: rgba(30,95,224,0.2); }
+  .callout-green { background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.2); }
+  .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .callout-text { font-size: 13.5px; color: var(--slate); line-height: 1.6; }
+  .callout-text strong { color: var(--navy); }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--line); margin: 40px 0; }
+  .divider-lg { height: 2px; margin: 56px 0; }
+
+  /* ── COLOR SWATCHES ── */
+  .swatch-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+  .swatch { border-radius: 10px; overflow: hidden; width: 100px; border: 1px solid var(--line); }
+  .swatch-color { height: 52px; }
+  .swatch-label { padding: 6px 8px; background: #fff; }
+  .swatch-name { font-size: 11px; font-weight: 700; color: var(--navy); }
+  .swatch-hex { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+
+  /* ── STATS ── */
+  .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin: 24px 0; }
+  .stat-box {
+    background: var(--bg); border: 1.5px solid var(--line); border-radius: 12px;
+    padding: 20px 16px; text-align: center;
+  }
+  .stat-val { font-size: 30px; font-weight: 900; color: var(--blue); font-family: 'JetBrains Mono', monospace; line-height: 1; }
+  .stat-label { font-size: 11.5px; color: var(--slate); margin-top: 4px; font-weight: 500; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
+  th { background: var(--bg); padding: 10px 14px; text-align: left; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 2px solid var(--line); }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--line); color: var(--slate); vertical-align: top; }
+  td:first-child { color: var(--navy); font-weight: 500; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--blue); }
+
+  /* ── PAGE BREAK ── */
+  .page-break { page-break-before: always; }
+
+  /* ── FOOTER ── */
+  .doc-footer {
+    background: var(--navy); color: rgba(255,255,255,0.5);
+    padding: 32px 40px; text-align: center; font-size: 12px;
+    margin-top: 80px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-content">
+    <div class="cover-logo">
+      <div class="cover-logo-icon">S</div>
+      <div class="cover-logo-text">SecurityBlogs</div>
+    </div>
+
+    <h1>Website <span>Content</span><br>& Architecture Document</h1>
+    <p class="cover-sub">
+      A complete reference covering every page, service, feature, and UI system<br>
+      across the SecurityBlogs Australia platform.
+    </p>
+
+    <div class="cover-meta">
+      <span><span class="dot-live"></span> Version 1.0</span>
+      <span>June 2026</span>
+      <span>securityblogs.com.au</span>
+      <span>Next.js 15.5 · React 19 · TypeScript</span>
+    </div>
+  </div>
+
+  <!-- Decorative SVG diagram at bottom of cover -->
+  <svg style="position:absolute;bottom:0;left:0;right:0;width:100%;opacity:0.12" viewBox="0 0 1100 120" preserveAspectRatio="none">
+    <path d="M0,60 Q275,10 550,60 T1100,60 L1100,120 L0,120Z" fill="#1e5fe0"/>
+    <path d="M0,80 Q275,40 550,80 T1100,80 L1100,120 L0,120Z" fill="#6f4dff" opacity="0.6"/>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     TABLE OF CONTENTS
+════════════════════════════════════════════════════ -->
+<div class="toc-page">
+  <div class="page">
+    <div class="section-eyebrow">Contents</div>
+    <h2 style="font-size:36px;font-weight:900;margin-bottom:6px">Table of Contents</h2>
+    <p style="color:var(--slate);font-size:15px;margin-bottom:0">Navigate this document by section number.</p>
+
+    <div class="toc-grid">
+      <div class="toc-section">
+        <h3>Brand & Overview</h3>
+        <a class="toc-item" href="#s1"><span class="toc-num">01</span> Brand Identity & Mission<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s2"><span class="toc-num">02</span> Design System & Colours<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s3"><span class="toc-num">03</span> Site Architecture<span class="toc-dot"></span></a>
+
+        <h3 style="margin-top:32px">Core Pages</h3>
+        <a class="toc-item" href="#s4"><span class="toc-num">04</span> Homepage<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s5"><span class="toc-num">05</span> Services Overview<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s6"><span class="toc-num">06</span> Service Deep-Dive Pages<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s7"><span class="toc-num">07</span> Pricing<span class="toc-dot"></span></a>
+
+        <h3 style="margin-top:32px">Publish With Us</h3>
+        <a class="toc-item" href="#s8"><span class="toc-num">08</span> Publishing Hub<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s9"><span class="toc-num">09</span> Guest Posting<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s10"><span class="toc-num">10</span> Sponsored Posts<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s11"><span class="toc-num">11</span> Backlink Packages<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s12"><span class="toc-num">12</span> Product Promotion<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s13"><span class="toc-num">13</span> Advertise<span class="toc-dot"></span></a>
+      </div>
+
+      <div class="toc-section">
+        <h3>Knowledge & Trust</h3>
+        <a class="toc-item" href="#s14"><span class="toc-num">14</span> Knowledge Hub<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s15"><span class="toc-num">15</span> Case Studies<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s16"><span class="toc-num">16</span> Security Directory<span class="toc-dot"></span></a>
+
+        <h3 style="margin-top:32px">Utility Pages</h3>
+        <a class="toc-item" href="#s17"><span class="toc-num">17</span> About Us<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s18"><span class="toc-num">18</span> Contact & Strategy Call<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s19"><span class="toc-num">19</span> Legal Pages<span class="toc-dot"></span></a>
+
+        <h3 style="margin-top:32px">Platform</h3>
+        <a class="toc-item" href="#s20"><span class="toc-num">20</span> Admin Panel<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s21"><span class="toc-num">21</span> UI Component Library<span class="toc-dot"></span></a>
+        <a class="toc-item" href="#s22"><span class="toc-num">22</span> Tech Stack<span class="toc-dot"></span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 1 — BRAND IDENTITY
+════════════════════════════════════════════════════ -->
+<div class="page" id="s1">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Brand Identity</div>
+      <div class="section-title">Mission, Voice & Positioning</div>
+      <div class="section-sub">Who SecurityBlogs is, what it does, and who it serves.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-text">
+      <strong>Core Mission:</strong> SecurityBlogs Australia is the specialist AI Visibility, SEO, AEO and GEO platform built exclusively for security companies. The platform helps CCTV installers, access control firms, alarm monitoring services and enterprise security brands get found and cited by search engines <em>and</em> AI assistants.
+    </div>
+  </div>
+
+  <div class="card-grid card-grid-3" style="margin-top:28px">
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <div class="card-title">Niche Focus</div>
+      <div class="card-desc">Works exclusively with the security industry — CCTV, access control, alarms, monitoring, cyber security and integrated security brands.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <div class="card-title">AI-First Approach</div>
+      <div class="card-desc">Beyond traditional SEO — optimises brands to be cited by ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌏</div>
+      <div class="card-title">Geographic Reach</div>
+      <div class="card-desc">Headquartered in Melbourne, Australia. Serves clients across AU, US, UK, UAE and Singapore.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">Key Stats & Social Proof</h3>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-val">180K+</div><div class="stat-label">Monthly readers</div></div>
+    <div class="stat-box"><div class="stat-val">24K+</div><div class="stat-label">Newsletter subscribers</div></div>
+    <div class="stat-box"><div class="stat-val">95%</div><div class="stat-label">Client retention rate</div></div>
+    <div class="stat-box"><div class="stat-val">10+</div><div class="stat-label">AI platforms monitored</div></div>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Brand Voice Principles</h3>
+  <div class="card-grid card-grid-2">
+    <div class="card">
+      <div class="card-title">✅ Do</div>
+      <ul style="color:var(--slate);font-size:13px;line-height:2;padding-left:18px;margin-top:8px">
+        <li>Direct, confident, data-backed claims</li>
+        <li>Industry-specific terminology (E-E-A-T, schema, entity signals)</li>
+        <li>Specific numbers over vague superlatives</li>
+        <li>Australian English spellings</li>
+        <li>Active voice, short sentences</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">❌ Don't</div>
+      <ul style="color:var(--slate);font-size:13px;line-height:2;padding-left:18px;margin-top:8px">
+        <li>Generic marketing language ("solutions provider")</li>
+        <li>Unsubstantiated ranking guarantees</li>
+        <li>Jargon without explanation</li>
+        <li>Passive, hedging language</li>
+        <li>Talking to non-security audiences</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 2 — DESIGN SYSTEM
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s2">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Design System</div>
+      <div class="section-title">Colours, Typography & Components</div>
+    </div>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">Brand Colour Palette</h3>
+  <div class="swatch-row">
+    <div class="swatch"><div class="swatch-color" style="background:#1e5fe0"></div><div class="swatch-label"><div class="swatch-name">Blue</div><div class="swatch-hex">#1e5fe0</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#6f4dff"></div><div class="swatch-label"><div class="swatch-name">Purple</div><div class="swatch-hex">#6f4dff</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#e23744"></div><div class="swatch-label"><div class="swatch-name">Red</div><div class="swatch-hex">#e23744</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#10b981"></div><div class="swatch-label"><div class="swatch-name">Green</div><div class="swatch-hex">#10b981</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f59e0b"></div><div class="swatch-label"><div class="swatch-name">Amber</div><div class="swatch-hex">#f59e0b</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#06b6d4"></div><div class="swatch-label"><div class="swatch-name">Cyan</div><div class="swatch-hex">#06b6d4</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#0f172a"></div><div class="swatch-label"><div class="swatch-name">Navy</div><div class="swatch-hex">#0f172a</div></div></div>
+    <div class="swatch"><div class="swatch-color" style="background:#f8fafc;border-top:1px solid #e2e8f0"></div><div class="swatch-label"><div class="swatch-name">Background</div><div class="swatch-hex">#f8fafc</div></div></div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-top:8px">
+    <div class="callout-icon">ℹ️</div>
+    <div class="callout-text">Each service page uses a dedicated accent colour: SEO = <strong style="color:#1e9e75">#1e9e75</strong>, AIO = <strong style="color:#6f4dff">#6f4dff</strong>, AEO = <strong style="color:#7f77dd">#7f77dd</strong>, GEO = <strong style="color:#e23744">#e23744</strong>, Web Design = <strong style="color:#6366f1">#6366f1</strong>.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Typography</h3>
+  <table>
+    <thead><tr><th>Element</th><th>Font</th><th>Size / Weight</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td>Display H1</td><td>Inter</td><td>48–72px / 900</td><td>Hero headlines</td></tr>
+      <tr><td>H2</td><td>Inter</td><td>32–40px / 800</td><td>Section titles</td></tr>
+      <tr><td>H3</td><td>Inter</td><td>22–28px / 700</td><td>Card titles, sub-sections</td></tr>
+      <tr><td>Body Lead</td><td>Inter</td><td>17–19px / 400</td><td>Hero sub-copy</td></tr>
+      <tr><td>Body</td><td>Inter</td><td>14–15px / 400</td><td>Paragraph text</td></tr>
+      <tr><td>Mono / Code</td><td>JetBrains Mono</td><td>12–13px / 400</td><td>Routes, badges, metrics</td></tr>
+    </tbody>
+  </table>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">Core UI Patterns</h3>
+  <div class="card-grid card-grid-3">
+    <div class="card" style="border-color:rgba(30,95,224,0.3);background:rgba(30,95,224,0.03)">
+      <div class="card-title" style="color:var(--blue)">Badge / Pill</div>
+      <div class="card-desc">Used as eyebrow labels on hero sections. Small coloured pill with live dot.</div>
+      <div style="margin-top:10px">
+        <span class="tag tag-blue"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue);display:inline-block"></span> LIVE · AI ENGINE</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Glass Card</div>
+      <div class="card-desc">Frosted-glass effect cards with subtle border and glow used throughout the platform for feature showcases.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Magnetic Button</div>
+      <div class="card-desc">Interactive buttons that follow the cursor magnetically. Primary uses gradient background; outline uses border only.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Animated components diagram -->
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">Animation System</h3>
+  <svg viewBox="0 0 900 200" style="width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--bg)">
+    <!-- Timeline -->
+    <line x1="80" y1="100" x2="820" y2="100" stroke="#e2e8f0" stroke-width="2"/>
+    <!-- Nodes -->
+    <circle cx="80" cy="100" r="8" fill="#1e5fe0"/>
+    <circle cx="220" cy="100" r="8" fill="#6366f1"/>
+    <circle cx="380" cy="100" r="8" fill="#10b981"/>
+    <circle cx="540" cy="100" r="8" fill="#f59e0b"/>
+    <circle cx="700" cy="100" r="8" fill="#e23744"/>
+    <circle cx="820" cy="100" r="8" fill="#6f4dff"/>
+    <!-- Labels top -->
+    <text x="80" y="72" text-anchor="middle" font-size="11" font-family="Inter" fill="#475569">Page Load</text>
+    <text x="220" y="72" text-anchor="middle" font-size="11" font-family="Inter" fill="#475569">Hero Reveal</text>
+    <text x="380" y="72" text-anchor="middle" font-size="11" font-family="Inter" fill="#475569">Scroll Trigger</text>
+    <text x="540" y="72" text-anchor="middle" font-size="11" font-family="Inter" fill="#475569">Card Stagger</text>
+    <text x="700" y="72" text-anchor="middle" font-size="11" font-family="Inter" fill="#475569">Counter Up</text>
+    <text x="820" y="72" text-anchor="middle" font-size="11" font-family="Inter" fill="#475569">Live Data</text>
+    <!-- Labels bottom -->
+    <text x="80" y="128" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#94a3b8">0ms</text>
+    <text x="220" y="128" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#94a3b8">350ms</text>
+    <text x="380" y="128" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#94a3b8">on scroll</text>
+    <text x="540" y="128" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#94a3b8">stagger 80ms</text>
+    <text x="700" y="128" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#94a3b8">inView</text>
+    <text x="820" y="128" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="#94a3b8">interval</text>
+    <!-- Library label -->
+    <rect x="10" y="160" width="160" height="28" rx="7" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.3)" stroke-width="1"/>
+    <text x="90" y="178" text-anchor="middle" font-size="11" font-family="Inter" font-weight="600" fill="#6366f1">Framer Motion 11</text>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 3 — SITE ARCHITECTURE
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s3">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Architecture</div>
+      <div class="section-title">Site Map & URL Structure</div>
+      <div class="section-sub">Full navigation tree of all public pages across the SecurityBlogs platform.</div>
+    </div>
+  </div>
+
+  <!-- Sitemap SVG Diagram -->
+  <svg viewBox="0 0 1060 620" style="width:100%;border:1.5px solid var(--line);border-radius:16px;background:var(--bg);padding:8px">
+    <!-- ROOT -->
+    <rect x="430" y="20" width="200" height="48" rx="10" fill="#1e5fe0"/>
+    <text x="530" y="49" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Inter">securityblogs.com.au</text>
+
+    <!-- Level 1 connector lines -->
+    <line x1="530" y1="68" x2="530" y2="110" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Horizontal bar -->
+    <line x1="100" y1="110" x2="960" y2="110" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- Vertical drops -->
+    <line x1="100" y1="110" x2="100" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="250" y1="110" x2="250" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="400" y1="110" x2="400" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="530" y1="110" x2="530" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="660" y1="110" x2="660" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="800" y1="110" x2="800" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="960" y1="110" x2="960" y2="140" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Level 1 nodes -->
+    <!-- Services -->
+    <rect x="40" y="140" width="120" height="36" rx="8" fill="#0f172a"/>
+    <text x="100" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Services</text>
+    <!-- Pricing -->
+    <rect x="190" y="140" width="120" height="36" rx="8" fill="#0f172a"/>
+    <text x="250" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Pricing</text>
+    <!-- Publish -->
+    <rect x="340" y="140" width="120" height="36" rx="8" fill="#6f4dff"/>
+    <text x="400" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Publish With Us</text>
+    <!-- Knowledge Hub -->
+    <rect x="470" y="140" width="120" height="36" rx="8" fill="#10b981"/>
+    <text x="530" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Knowledge Hub</text>
+    <!-- Case Studies -->
+    <rect x="600" y="140" width="120" height="36" rx="8" fill="#0f172a"/>
+    <text x="660" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Case Studies</text>
+    <!-- Directory -->
+    <rect x="740" y="140" width="120" height="36" rx="8" fill="#e23744"/>
+    <text x="800" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Directory</text>
+    <!-- About/Contact -->
+    <rect x="900" y="140" width="120" height="36" rx="8" fill="#0f172a"/>
+    <text x="960" y="163" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">About / Contact</text>
+
+    <!-- SERVICES children -->
+    <line x1="100" y1="176" x2="100" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="50" y1="210" x2="150" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="50" y1="210" x2="50" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="100" y1="210" x2="100" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="150" y1="210" x2="150" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="18" y="228" width="64" height="28" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="50" y="247" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">SEO</text>
+    <rect x="68" y="228" width="64" height="28" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="100" y="247" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">AIO/AEO/GEO</text>
+    <rect x="118" y="228" width="64" height="28" rx="6" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="150" y="247" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Ads + Web</text>
+
+    <!-- PUBLISH children -->
+    <line x1="400" y1="176" x2="400" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="300" y1="210" x2="500" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="300" y1="210" x2="300" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="350" y1="210" x2="350" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="400" y1="210" x2="400" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="450" y1="210" x2="450" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="500" y1="210" x2="500" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="268" y="228" width="64" height="28" rx="6" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+    <text x="300" y="247" text-anchor="middle" font-size="9" fill="#6f4dff" font-family="Inter">Guest Post</text>
+    <rect x="318" y="228" width="64" height="28" rx="6" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+    <text x="350" y="247" text-anchor="middle" font-size="9" fill="#6f4dff" font-family="Inter">Sponsored</text>
+    <rect x="368" y="228" width="64" height="28" rx="6" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+    <text x="400" y="247" text-anchor="middle" font-size="9" fill="#6f4dff" font-family="Inter">Backlinks</text>
+    <rect x="418" y="228" width="64" height="28" rx="6" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+    <text x="450" y="247" text-anchor="middle" font-size="9" fill="#6f4dff" font-family="Inter">Products</text>
+    <rect x="468" y="228" width="64" height="28" rx="6" fill="#ede9fe" stroke="#c4b5fd" stroke-width="1"/>
+    <text x="500" y="247" text-anchor="middle" font-size="9" fill="#6f4dff" font-family="Inter">Advertise</text>
+
+    <!-- KNOWLEDGE HUB children -->
+    <line x1="530" y1="176" x2="530" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="470" y1="210" x2="590" y2="210" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="470" y1="210" x2="470" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="530" y1="210" x2="530" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="590" y1="210" x2="590" y2="228" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="438" y="228" width="64" height="28" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1"/>
+    <text x="470" y="247" text-anchor="middle" font-size="9" fill="#10b981" font-family="Inter">Blogs</text>
+    <rect x="498" y="228" width="64" height="28" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1"/>
+    <text x="530" y="247" text-anchor="middle" font-size="9" fill="#10b981" font-family="Inter">Guides</text>
+    <rect x="558" y="228" width="64" height="28" rx="6" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1"/>
+    <text x="590" y="247" text-anchor="middle" font-size="9" fill="#10b981" font-family="Inter">Glossary</text>
+
+    <!-- ADMIN section (separate bottom) -->
+    <rect x="400" y="340" width="260" height="44" rx="10" fill="#475569"/>
+    <text x="530" y="368" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Inter">🔐  Admin Panel (auth-gated)</text>
+    <line x1="530" y1="300" x2="530" y2="340" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 3"/>
+
+    <!-- Admin children -->
+    <line x1="530" y1="384" x2="530" y2="410" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="310" y1="410" x2="750" y2="410" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="310" y1="410" x2="310" y2="428" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="390" y1="410" x2="390" y2="428" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="470" y1="410" x2="470" y2="428" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="590" y1="410" x2="590" y2="428" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="670" y1="410" x2="670" y2="428" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="750" y1="410" x2="750" y2="428" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="278" y="428" width="64" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="310" y="446" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Blog</text>
+    <rect x="358" y="428" width="64" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="390" y="446" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Leads</text>
+    <rect x="438" y="428" width="64" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="470" y="446" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Services</text>
+    <rect x="558" y="428" width="64" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="590" y="446" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Pricing</text>
+    <rect x="638" y="428" width="64" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="670" y="446" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Testimonials</text>
+    <rect x="718" y="428" width="64" height="26" rx="6" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="750" y="446" text-anchor="middle" font-size="9" fill="#475569" font-family="Inter">Settings</text>
+
+    <!-- Legend -->
+    <rect x="20" y="490" width="14" height="14" rx="3" fill="#1e5fe0"/>
+    <text x="40" y="502" font-size="10" font-family="Inter" fill="#475569">Public route</text>
+    <rect x="120" y="490" width="14" height="14" rx="3" fill="#475569"/>
+    <text x="140" y="502" font-size="10" font-family="Inter" fill="#475569">Auth-gated</text>
+    <rect x="220" y="490" width="14" height="14" rx="3" fill="#6f4dff"/>
+    <text x="240" y="502" font-size="10" font-family="Inter" fill="#475569">Publish With Us</text>
+    <rect x="360" y="490" width="14" height="14" rx="3" fill="#10b981"/>
+    <text x="380" y="502" font-size="10" font-family="Inter" fill="#475569">Knowledge Hub</text>
+    <text x="530" y="580" text-anchor="middle" font-size="11" font-family="JetBrains Mono" fill="#94a3b8">82+ total routes · Next.js 15 App Router</text>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 4 — HOMEPAGE
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s4">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Core Pages</div>
+      <div class="section-title">Homepage</div>
+      <div class="section-sub">Route: <span class="mono">/</span> — The master landing page and primary conversion surface.</div>
+    </div>
+  </div>
+
+  <!-- Homepage wireframe diagram -->
+  <svg viewBox="0 0 800 600" style="width:100%;border:1.5px solid var(--line);border-radius:14px;background:#fff;margin-bottom:28px">
+    <!-- Browser chrome -->
+    <rect x="0" y="0" width="800" height="30" rx="8" fill="#f1f5f9"/>
+    <circle cx="18" cy="15" r="5" fill="#ff5f57"/><circle cx="34" cy="15" r="5" fill="#febc2e"/><circle cx="50" cy="15" r="5" fill="#28c840"/>
+    <rect x="70" y="7" width="400" height="16" rx="8" fill="#e2e8f0"/>
+    <text x="270" y="19" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">securityblogs.com.au</text>
+
+    <!-- NAV -->
+    <rect x="0" y="30" width="800" height="36" fill="#0f172a"/>
+    <text x="20" y="53" font-size="11" font-weight="700" fill="#fff" font-family="Inter">SecurityBlogs</text>
+    <text x="200" y="53" font-size="10" fill="rgba(255,255,255,0.6)" font-family="Inter">Services</text>
+    <text x="270" y="53" font-size="10" fill="rgba(255,255,255,0.6)" font-family="Inter">Knowledge Hub</text>
+    <text x="370" y="53" font-size="10" fill="rgba(255,255,255,0.6)" font-family="Inter">Pricing</text>
+    <rect x="690" y="38" width="96" height="20" rx="6" fill="#1e5fe0"/>
+    <text x="738" y="52" text-anchor="middle" font-size="10" fill="#fff" font-family="Inter">Free Audit →</text>
+
+    <!-- HERO -->
+    <rect x="0" y="66" width="800" height="160" fill="#f8fafc"/>
+    <text x="400" y="116" text-anchor="middle" font-size="10" fill="#94a3b8" font-family="JetBrains Mono">● LIVE · AI VISIBILITY ENGINE</text>
+    <text x="400" y="140" text-anchor="middle" font-size="18" font-weight="900" fill="#0f172a" font-family="Inter">Be the answer AI gives.</text>
+    <text x="400" y="160" text-anchor="middle" font-size="11" fill="#475569" font-family="Inter">When buyers ask ChatGPT, Gemini or Google AI for the best</text>
+    <text x="400" y="175" text-anchor="middle" font-size="11" fill="#475569" font-family="Inter">security provider — your brand should be named.</text>
+    <rect x="278" y="188" width="120" height="26" rx="7" fill="#1e5fe0"/>
+    <text x="338" y="205" text-anchor="middle" font-size="10" fill="#fff" font-family="Inter">Get your free audit →</text>
+    <rect x="406" y="188" width="120" height="26" rx="7" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="466" y="205" text-anchor="middle" font-size="10" fill="#475569" font-family="Inter">Book strategy call</text>
+
+    <!-- DASHBOARD CARD -->
+    <rect x="30" y="236" width="740" height="120" rx="12" fill="#fff" stroke="#e2e8f0" stroke-width="1.5"/>
+    <rect x="30" y="236" width="740" height="28" rx="12" fill="#0f172a"/>
+    <text x="56" y="255" font-size="10" fill="#e2e8f0" font-family="Inter">SecurityBlogs · AI Visibility Dashboard</text>
+    <circle cx="748" cy="250" r="5" fill="#10b981"/>
+    <!-- Dashboard content mock -->
+    <rect x="46" y="272" width="100" height="68" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="158" y="272" width="100" height="68" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="270" y="272" width="100" height="68" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="382" y="272" width="100" height="68" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="494" y="272" width="180" height="68" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <rect x="686" y="272" width="68" height="68" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="96" y="302" text-anchor="middle" font-size="16" font-weight="900" fill="#10b981" font-family="JetBrains Mono">87%</text>
+    <text x="96" y="318" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Citation Rate</text>
+    <text x="208" y="302" text-anchor="middle" font-size="16" font-weight="900" fill="#1e5fe0" font-family="JetBrains Mono">#1</text>
+    <text x="208" y="318" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">AI Rank</text>
+    <text x="320" y="302" text-anchor="middle" font-size="16" font-weight="900" fill="#6f4dff" font-family="JetBrains Mono">10+</text>
+    <text x="320" y="318" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Platforms</text>
+    <text x="432" y="302" text-anchor="middle" font-size="16" font-weight="900" fill="#e23744" font-family="JetBrains Mono">↑93%</text>
+    <text x="432" y="318" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Visibility</text>
+
+    <!-- MARQUEE -->
+    <rect x="0" y="368" width="800" height="28" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="400" y="386" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">ChatGPT · Gemini · Perplexity · Claude · Copilot · Google AI · Bing AI · Meta AI ···</text>
+
+    <!-- SERVICES SECTION label -->
+    <rect x="0" y="396" width="800" height="40" fill="white"/>
+    <text x="400" y="422" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a" font-family="Inter">Our Services — scroll-sticky card stack</text>
+
+    <!-- STATS SECTION -->
+    <rect x="0" y="436" width="800" height="40" fill="#f8fafc"/>
+    <text x="400" y="462" text-anchor="middle" font-size="11" fill="#475569" font-family="Inter">Stats · Testimonials · Local Visibility Map · FAQ · CTA Band</text>
+
+    <!-- Section labels on right -->
+    <text x="790" y="156" text-anchor="end" font-size="9" fill="#94a3b8" font-family="JetBrains Mono" transform="rotate(-90,790,156)">① HERO</text>
+    <text x="790" y="306" text-anchor="end" font-size="9" fill="#94a3b8" font-family="JetBrains Mono" transform="rotate(-90,790,306)">② DASHBOARD</text>
+    <text x="790" y="396" text-anchor="end" font-size="9" fill="#94a3b8" font-family="JetBrains Mono" transform="rotate(-90,790,396)">③ MARQUEE</text>
+    <text x="790" y="460" text-anchor="end" font-size="9" fill="#94a3b8" font-family="JetBrains Mono" transform="rotate(-90,790,460)">④ CONTENT</text>
+  </svg>
+
+  <h3 style="font-size:17px;font-weight:700;margin-bottom:14px">Homepage Section Breakdown</h3>
+  <table>
+    <thead><tr><th>#</th><th>Section</th><th>Content</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Hero</td><td>H1, lead copy, 2 CTAs, trust line</td><td>Immediate value proposition + lead capture</td></tr>
+      <tr><td>2</td><td>AI Dashboard Card</td><td>Live animated SecurityBlogs dashboard with metrics</td><td>Product proof, visual engagement</td></tr>
+      <tr><td>3</td><td>Marquee Strip</td><td>Scrolling AI platform logos</td><td>Authority signal, platform coverage</td></tr>
+      <tr><td>4</td><td>AI Visibility Score</td><td>Interactive brand visibility checker tool</td><td>Lead capture via tool engagement</td></tr>
+      <tr><td>5</td><td>Services Stack</td><td>Scroll-sticky card stack — 8 service cards</td><td>Service discovery</td></tr>
+      <tr><td>6</td><td>Stats Strip</td><td>+180% traffic, 28 #1 keywords, 95% retention</td><td>Social proof</td></tr>
+      <tr><td>7</td><td>Testimonials</td><td>Client quotes with star ratings</td><td>Trust building</td></tr>
+      <tr><td>8</td><td>Local Visibility Map</td><td>Live Google Maps + "Who shows up when locals search?"</td><td>Local SEO relevance demo</td></tr>
+      <tr><td>9</td><td>CTA Band</td><td>Final CTA with headline</td><td>Last-chance conversion</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 5 — SERVICES OVERVIEW
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s5">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Services</div>
+      <div class="section-title">Services Overview</div>
+      <div class="section-sub">Route: <span class="mono">/services/</span> — Hub page showcasing all 8 services with animated flip cards.</div>
+    </div>
+  </div>
+
+  <!-- Services diagram -->
+  <svg viewBox="0 0 900 320" style="width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:28px">
+    <text x="450" y="30" text-anchor="middle" font-size="13" font-weight="700" fill="#0f172a" font-family="Inter">SecurityBlogs Services Ecosystem</text>
+
+    <!-- Central hub -->
+    <circle cx="450" cy="170" r="52" fill="#0f172a"/>
+    <text x="450" y="164" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Inter">Security</text>
+    <text x="450" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#60a5fa" font-family="Inter">Blogs</text>
+
+    <!-- Service nodes with lines -->
+    <!-- SEO -->
+    <line x1="404" y1="130" x2="290" y2="80" stroke="#1e9e75" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="270" cy="72" r="36" fill="#1e9e75" opacity="0.12" stroke="#1e9e75" stroke-width="1.5"/>
+    <text x="270" y="68" text-anchor="middle" font-size="10" font-weight="700" fill="#1e9e75" font-family="Inter">Security</text>
+    <text x="270" y="82" text-anchor="middle" font-size="10" font-weight="700" fill="#1e9e75" font-family="Inter">SEO</text>
+
+    <!-- AIO -->
+    <line x1="450" y1="118" x2="450" y2="60" stroke="#6f4dff" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="450" cy="46" r="36" fill="#6f4dff" opacity="0.12" stroke="#6f4dff" stroke-width="1.5"/>
+    <text x="450" y="42" text-anchor="middle" font-size="10" font-weight="700" fill="#6f4dff" font-family="Inter">AIO</text>
+    <text x="450" y="56" text-anchor="middle" font-size="10" fill="#6f4dff" font-family="Inter">AI Optimisation</text>
+
+    <!-- AEO -->
+    <line x1="496" y1="130" x2="610" y2="80" stroke="#7f77dd" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="630" cy="72" r="36" fill="#7f77dd" opacity="0.12" stroke="#7f77dd" stroke-width="1.5"/>
+    <text x="630" y="68" text-anchor="middle" font-size="10" font-weight="700" fill="#7f77dd" font-family="Inter">AEO</text>
+    <text x="630" y="82" text-anchor="middle" font-size="10" fill="#7f77dd" font-family="Inter">Answer Engine</text>
+
+    <!-- GEO -->
+    <line x1="498" y1="172" x2="630" y2="172" stroke="#e23744" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="666" cy="172" r="36" fill="#e23744" opacity="0.12" stroke="#e23744" stroke-width="1.5"/>
+    <text x="666" y="168" text-anchor="middle" font-size="10" font-weight="700" fill="#e23744" font-family="Inter">GEO</text>
+    <text x="666" y="182" text-anchor="middle" font-size="10" fill="#e23744" font-family="Inter">Generative</text>
+
+    <!-- Google Ads -->
+    <line x1="496" y1="212" x2="610" y2="264" stroke="#4285f4" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="630" cy="272" r="36" fill="#4285f4" opacity="0.12" stroke="#4285f4" stroke-width="1.5"/>
+    <text x="630" y="268" text-anchor="middle" font-size="10" font-weight="700" fill="#4285f4" font-family="Inter">Google</text>
+    <text x="630" y="282" text-anchor="middle" font-size="10" fill="#4285f4" font-family="Inter">Ads</text>
+
+    <!-- Web Design -->
+    <line x1="450" y1="222" x2="450" y2="280" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="450" cy="296" r="36" fill="#6366f1" opacity="0.12" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="450" y="292" text-anchor="middle" font-size="10" font-weight="700" fill="#6366f1" font-family="Inter">Web</text>
+    <text x="450" y="306" text-anchor="middle" font-size="10" fill="#6366f1" font-family="Inter">Design</text>
+
+    <!-- GMB -->
+    <line x1="404" y1="212" x2="290" y2="264" stroke="#ea4335" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="270" cy="272" r="36" fill="#ea4335" opacity="0.12" stroke="#ea4335" stroke-width="1.5"/>
+    <text x="270" y="268" text-anchor="middle" font-size="10" font-weight="700" fill="#ea4335" font-family="Inter">GMB</text>
+    <text x="270" y="282" text-anchor="middle" font-size="10" fill="#ea4335" font-family="Inter">Profile</text>
+
+    <!-- Bing Ads -->
+    <line x1="402" y1="172" x2="270" y2="172" stroke="#0078d4" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="234" cy="172" r="36" fill="#0078d4" opacity="0.12" stroke="#0078d4" stroke-width="1.5"/>
+    <text x="234" y="168" text-anchor="middle" font-size="10" font-weight="700" fill="#0078d4" font-family="Inter">Bing</text>
+    <text x="234" y="182" text-anchor="middle" font-size="10" fill="#0078d4" font-family="Inter">Ads</text>
+  </svg>
+
+  <h3 style="font-size:17px;font-weight:700;margin-bottom:14px">All Services</h3>
+  <table>
+    <thead><tr><th>Service</th><th>Route</th><th>Accent</th><th>Core Value Prop</th></tr></thead>
+    <tbody>
+      <tr><td>Security SEO</td><td class="mono">/services/security-seo/</td><td><span class="tag tag-green">#1e9e75</span></td><td>Rank #1 for every security keyword that matters</td></tr>
+      <tr><td>AIO</td><td class="mono">/services/aio/</td><td><span class="tag tag-indigo">#6f4dff</span></td><td>Get cited by ChatGPT, Gemini, Perplexity and every AI</td></tr>
+      <tr><td>AEO</td><td class="mono">/services/aeo/</td><td><span class="tag" style="background:rgba(127,119,221,0.08);color:#7f77dd;border-color:rgba(127,119,221,0.3)">#7f77dd</span></td><td>Become the answer AI recommends for security</td></tr>
+      <tr><td>GEO</td><td class="mono">/services/geo/</td><td><span class="tag tag-red">#e23744</span></td><td>Build your security brand's AI knowledge graph</td></tr>
+      <tr><td>Google Ads</td><td class="mono">/services/google-ads/</td><td><span class="tag tag-blue">#4285f4</span></td><td>High-intent PPC campaigns for security buyers</td></tr>
+      <tr><td>Bing Ads</td><td class="mono">/services/bing-ads/</td><td><span class="tag tag-blue">#0078d4</span></td><td>Bing / Microsoft Ads for security companies</td></tr>
+      <tr><td>GMB Profile</td><td class="mono">/services/gmb-profile/</td><td><span class="tag tag-red">#ea4335</span></td><td>Dominate Google Maps for local security searches</td></tr>
+      <tr><td>Web Design</td><td class="mono">/services/web-design/</td><td><span class="tag tag-indigo">#6366f1</span></td><td>AI-ready, Core Web Vitals-optimised security websites</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTIONS 6–7 — SERVICE DEEP-DIVES & PRICING
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s6">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Service Pages</div>
+      <div class="section-title">Service Page Structure</div>
+      <div class="section-sub">Every service page follows a consistent 7-section layout template.</div>
+    </div>
+  </div>
+
+  <!-- Section flow diagram -->
+  <svg viewBox="0 0 880 140" style="width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:28px">
+    <defs>
+      <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L6,3 z" fill="#94a3b8"/>
+      </marker>
+    </defs>
+    <!-- Blocks -->
+    <rect x="10" y="50" width="100" height="40" rx="8" fill="#1e5fe0"/>
+    <text x="60" y="75" text-anchor="middle" font-size="10" fill="#fff" font-weight="700" font-family="Inter">Hero</text>
+    <line x1="110" y1="70" x2="128" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="130" y="50" width="100" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="180" y="75" text-anchor="middle" font-size="10" fill="#475569" font-weight="600" font-family="Inter">Visual / Demo</text>
+    <line x1="230" y1="70" x2="248" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="250" y="50" width="100" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="300" y="75" text-anchor="middle" font-size="10" fill="#475569" font-weight="600" font-family="Inter">Capabilities</text>
+    <line x1="350" y1="70" x2="368" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="370" y="50" width="100" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="420" y="75" text-anchor="middle" font-size="10" fill="#475569" font-weight="600" font-family="Inter">Stats Strip</text>
+    <line x1="470" y1="70" x2="488" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="490" y="50" width="100" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="540" y="75" text-anchor="middle" font-size="10" fill="#475569" font-weight="600" font-family="Inter">How It Works</text>
+    <line x1="590" y1="70" x2="608" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="610" y="50" width="100" height="40" rx="8" fill="#f1f5f9" stroke="#e2e8f0"/>
+    <text x="660" y="75" text-anchor="middle" font-size="10" fill="#475569" font-weight="600" font-family="Inter">FAQ</text>
+    <line x1="710" y1="70" x2="728" y2="70" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <rect x="730" y="50" width="110" height="40" rx="8" fill="#10b981"/>
+    <text x="785" y="75" text-anchor="middle" font-size="10" fill="#fff" font-weight="700" font-family="Inter">Contact / CTA</text>
+
+    <!-- Step numbers -->
+    <text x="60" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">①</text>
+    <text x="180" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">②</text>
+    <text x="300" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">③</text>
+    <text x="420" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">④</text>
+    <text x="540" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">⑤</text>
+    <text x="660" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">⑥</text>
+    <text x="785" y="38" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="JetBrains Mono">⑦</text>
+  </svg>
+
+  <div class="card-grid card-grid-2">
+    <div class="card page-card">
+      <div class="page-card-route">/services/security-seo/</div>
+      <div class="page-card-title">Security SEO</div>
+      <div class="page-card-desc">Hero visual with SEO ranking animation. Globe network showing keyword clusters. Tracking dashboard. Stats: +180% traffic, 28 #1 keywords. 6 FAQs. Contact form + PromoVideoSection.</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag tag-green">On-Page SEO</span><span class="tag tag-green">Technical SEO</span><span class="tag tag-green">Local SEO</span><span class="tag tag-green">Link Building</span>
+      </div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/services/aio/</div>
+      <div class="page-card-title">AIO — AI Optimisation</div>
+      <div class="page-card-desc">Hero with AioSearchVisual. Analytics dashboard. Capabilities grid. Stats: 87% citation rate, 6 platforms, 47 AI mentions/month. 4 FAQs.</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag tag-indigo">Schema Markup</span><span class="tag tag-indigo">Entity Signals</span><span class="tag tag-indigo">Citation Monitoring</span>
+      </div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/services/aeo/</div>
+      <div class="page-card-title">AEO — Answer Engine Optimisation</div>
+      <div class="page-card-desc">Hero with AeoHeroVisual. Capabilities. Stats: +340% AI answer appearances, 91% featured snippet rate. HowItWorks. FAQ. PromoVideoSection.</div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/services/geo/</div>
+      <div class="page-card-title">GEO — Generative Engine Optimisation</div>
+      <div class="page-card-desc">Hero with animated dotted world map + live geolocation (shows user distance to Melbourne HQ). Entity building capabilities. Before/After. Stats. FAQ.</div>
+      <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+        <span class="tag tag-red">Entity Building</span><span class="tag tag-red">Knowledge Graph</span><span class="tag tag-red">Live Geolocation</span>
+      </div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/services/web-design/</div>
+      <div class="page-card-title">Web Design</div>
+      <div class="page-card-desc">Hero with animated browser mockup showing live page score, Core Web Vitals (LCP 1.1s / INP 98ms / CLS 0.02) and visitor counter. Dual SERP demo. FAQ.</div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/services/google-ads/ · /services/bing-ads/ · /services/gmb-profile/</div>
+      <div class="page-card-title">Google Ads, Bing Ads, GMB</div>
+      <div class="page-card-desc">Paid media service pages each with hero visual, campaign capabilities, stats strip, how-it-works steps, FAQ and contact form.</div>
+    </div>
+  </div>
+
+  <div class="divider-lg"></div>
+
+  <div id="s7">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div class="section-title-wrap">
+        <div class="section-eyebrow">Pricing</div>
+        <div class="section-title">Pricing Page</div>
+        <div class="section-sub">Route: <span class="mono">/pricing/</span> — All services, packages and rates on one transparent page.</div>
+      </div>
+    </div>
+    <div class="callout callout-green">
+      <div class="callout-icon">💰</div>
+      <div class="callout-text">
+        <strong>Transparent Pricing Policy:</strong> SecurityBlogs publishes all rates openly. Packages across SEO (from $1,500/mo), AIO/AEO/GEO, Google Ads management, web design, sponsored posts (from $149 AUD), backlinks (from $199 AUD), product reviews (from $249 AUD), directory listings and advertising (from $499/mo) are all listed with exact pricing in AUD.
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTIONS 8–13 — PUBLISH WITH US
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s8">
+  <div class="section-header">
+    <div class="section-num">08–13</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Publish With Us</div>
+      <div class="section-title">Publishing & Advertising Hub</div>
+      <div class="section-sub">Route: <span class="mono">/publish-with-us/</span> — Six publishing and advertising options for security brands.</div>
+    </div>
+  </div>
+
+  <!-- Publishing flow diagram -->
+  <svg viewBox="0 0 900 180" style="width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:28px">
+    <text x="450" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a" font-family="Inter">Publish With Us — Channel Overview</text>
+    <rect x="20" y="50" width="130" height="80" rx="10" fill="rgba(99,102,241,0.08)" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="85" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#6366f1" font-family="Inter">Guest</text>
+    <text x="85" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#6366f1" font-family="Inter">Posting</text>
+    <text x="85" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">Free / Paid</text>
+
+    <rect x="165" y="50" width="130" height="80" rx="10" fill="rgba(30,95,224,0.08)" stroke="#1e5fe0" stroke-width="1.5"/>
+    <text x="230" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#1e5fe0" font-family="Inter">Sponsored</text>
+    <text x="230" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#1e5fe0" font-family="Inter">Posts</text>
+    <text x="230" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">from $149 AUD</text>
+
+    <rect x="310" y="50" width="130" height="80" rx="10" fill="rgba(16,185,129,0.08)" stroke="#10b981" stroke-width="1.5"/>
+    <text x="375" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#10b981" font-family="Inter">Backlink</text>
+    <text x="375" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#10b981" font-family="Inter">Packages</text>
+    <text x="375" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">from $199 AUD</text>
+
+    <rect x="455" y="50" width="130" height="80" rx="10" fill="rgba(245,158,11,0.08)" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="520" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#f59e0b" font-family="Inter">Product</text>
+    <text x="520" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#f59e0b" font-family="Inter">Promotion</text>
+    <text x="520" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">from $249 AUD</text>
+
+    <rect x="600" y="50" width="130" height="80" rx="10" fill="rgba(226,55,68,0.08)" stroke="#e23744" stroke-width="1.5"/>
+    <text x="665" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#e23744" font-family="Inter">Press</text>
+    <text x="665" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#e23744" font-family="Inter">Release</text>
+    <text x="665" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">from $99 AUD</text>
+
+    <rect x="745" y="50" width="135" height="80" rx="10" fill="rgba(6,182,212,0.08)" stroke="#06b6d4" stroke-width="1.5"/>
+    <text x="812" y="86" text-anchor="middle" font-size="11" font-weight="700" fill="#06b6d4" font-family="Inter">Advertise</text>
+    <text x="812" y="100" text-anchor="middle" font-size="11" font-weight="700" fill="#06b6d4" font-family="Inter">(Banners/NL)</text>
+    <text x="812" y="118" text-anchor="middle" font-size="9" fill="#94a3b8" font-family="Inter">from $499/mo</text>
+  </svg>
+
+  <div class="card-grid card-grid-2">
+    <div class="card page-card" id="s9">
+      <div class="page-card-route">/publish-with-us/guest-posting/</div>
+      <div class="page-card-title" style="color:var(--indigo)">Guest Posting</div>
+      <div class="page-card-desc">Submit original articles to reach SecurityBlogs' audience. Guidelines, submission form, editorial standards. Topics: security technology, industry trends, installation guides, cyber security.</div>
+    </div>
+    <div class="card page-card" id="s10">
+      <div class="page-card-route">/publish-with-us/sponsored-posts/</div>
+      <div class="page-card-title" style="color:var(--blue)">Sponsored Posts</div>
+      <div class="page-card-desc">Animated editorial dashboard hero (typing article title, publishing pipeline stages, live activity feed). 3 pricing tiers: Standard $149, Featured $299, Authority Series $1,250. Permanent placement, dofollow links.</div>
+      <div style="margin-top:8px;display:flex;gap:5px">
+        <span class="tag tag-blue">🔗 Dofollow</span><span class="tag tag-green">♾ Permanent</span>
+      </div>
+    </div>
+    <div class="card page-card" id="s11">
+      <div class="page-card-route">/publish-with-us/backlink-packages/</div>
+      <div class="page-card-title" style="color:var(--green)">Backlink / Editorial Placements</div>
+      <div class="page-card-desc">Compact animated placement tracker hero. Disclosed rel="sponsored" links per Google policy. 3 tiers: Starter $199, Growth $549, Authority $1,290. No DA guarantees, transparent compliance.</div>
+    </div>
+    <div class="card page-card" id="s12">
+      <div class="page-card-route">/publish-with-us/product-promotion/</div>
+      <div class="page-card-title" style="color:var(--amber)">Product Promotion</div>
+      <div class="page-card-desc">Animated product review dashboard with star rating animation, comparison bars (3-competitor), format picker (Review/Compare/Demo/Buyer's Guide), 24.6k subscriber reach counter. Tiers: Spotlight $249, Featured $499, Launch Campaign $1,450.</div>
+    </div>
+    <div class="card page-card" id="s13">
+      <div class="page-card-route">/publish-with-us/advertise/</div>
+      <div class="page-card-title" style="color:var(--cyan)">Advertise</div>
+      <div class="page-card-desc">Ad campaign dashboard hero with 180K reader counter, 8-country cycling chips, placement type selector, live campaign feed. Packages: Starter $499/mo, Growth $1,200/mo, Dominate $2,750/mo. Note: Media kit section removed.</div>
+      <div style="margin-top:8px;display:flex;gap:5px">
+        <span class="tag tag-cyan">Homepage Banner</span><span class="tag tag-cyan">Newsletter Sponsor</span><span class="tag tag-cyan">Category Takeover</span>
+      </div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/publish-with-us/press-release/</div>
+      <div class="page-card-title">Press Release</div>
+      <div class="page-card-desc">Security industry press release distribution service. Published on SecurityBlogs and syndicated to industry publications. Pricing from $99 AUD per release.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTIONS 14–16 — KNOWLEDGE HUB + TRUST
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s14">
+  <div class="section-header">
+    <div class="section-num">14</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Knowledge & Trust</div>
+      <div class="section-title">Knowledge Hub</div>
+      <div class="section-sub">Route: <span class="mono">/knowledge-hub/</span> — Content hub driving organic traffic and E-E-A-T authority.</div>
+    </div>
+  </div>
+
+  <div class="card-grid card-grid-3">
+    <div class="card" style="border-color:var(--green);border-top:3px solid var(--green)">
+      <div class="card-title">📰 Blogs</div>
+      <div class="card-desc">Security Marketing & AI Visibility blog. Category filters: SEO, AIO/AEO, GEO, Paid Ads, Industry. Dynamic <span class="mono">/knowledge-hub/blog/[slug]/</span> for individual posts.</div>
+    </div>
+    <div class="card" style="border-color:var(--blue);border-top:3px solid var(--blue)">
+      <div class="card-title">📘 Security Guides</div>
+      <div class="card-desc">Step-by-step playbooks for security marketing tactics. Individual guides at <span class="mono">/knowledge-hub/security-guides/[slug]/</span>.</div>
+    </div>
+    <div class="card" style="border-color:var(--indigo);border-top:3px solid var(--indigo)">
+      <div class="card-title">📰 Industry News</div>
+      <div class="card-desc">Security industry news and trend updates. Keeps the site fresh for crawlers and readers.</div>
+    </div>
+    <div class="card" style="border-color:var(--amber);border-top:3px solid var(--amber)">
+      <div class="card-title">📊 Research Reports</div>
+      <div class="card-desc">Downloadable research on AI engine citation rates of security vendors. Data-backed authority builder.</div>
+    </div>
+    <div class="card" style="border-color:var(--cyan);border-top:3px solid var(--cyan)">
+      <div class="card-title">📖 Glossary</div>
+      <div class="card-desc">Plain-English definitions of AIO, AEO, GEO, schema markup, entity signals, E-E-A-T and all major industry terms.</div>
+    </div>
+    <div class="card" style="border-color:var(--red);border-top:3px solid var(--red)">
+      <div class="card-title">🔎 Security Industry SEO</div>
+      <div class="card-desc">Comprehensive pillar page on security SEO fundamentals. High keyword-density cornerstone content at <span class="mono">/knowledge-hub/security-industry-seo/</span>.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div id="s15">
+    <h3 style="font-size:20px;font-weight:800;margin-bottom:6px">15 — Case Studies</h3>
+    <p style="color:var(--slate);font-size:14px;margin-bottom:18px">Route: <span class="mono">/case-studies/</span> — Portfolio of client results with channel filters and journey timeline.</p>
+    <div class="callout callout-green">
+      <div class="callout-icon">📈</div>
+      <div class="callout-text">Case study pages include: before/after metrics, AI visibility improvement timeline, keywords won, AI citation rate before vs after, and client testimonial. Individual case studies at <strong>/case-studies/[slug]/</strong>.</div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div id="s16">
+    <h3 style="font-size:20px;font-weight:800;margin-bottom:6px">16 — Security Directory</h3>
+    <p style="color:var(--slate);font-size:14px;margin-bottom:18px">Route: <span class="mono">/security-directory/</span> — Australia's AI-verified security company directory.</p>
+    <div class="card-grid card-grid-2">
+      <div class="card">
+        <div class="card-title">Free Listing</div>
+        <div class="card-desc">Basic company profile with name, category, location. Auto-submitted for AI verification across major platforms.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Paid Premium</div>
+        <div class="card-desc">Enhanced profile with description, photos, service areas, review collection, featured placement, and priority AI entity confirmation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTIONS 17–19 — UTILITY PAGES
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s17">
+  <div class="section-header">
+    <div class="section-num">17–19</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Utility Pages</div>
+      <div class="section-title">About, Contact, Legal</div>
+    </div>
+  </div>
+
+  <div class="card-grid card-grid-3" style="margin-bottom:28px">
+    <div class="card page-card">
+      <div class="page-card-route">/about-us/</div>
+      <div class="page-card-title">About Us</div>
+      <div class="page-card-desc">Team intro, mission statement, 10-step process timeline, company values (Security-first, Transparent, Results-only). Includes Spline 3D interactive model and AI visibility challenge quiz.</div>
+    </div>
+    <div class="card page-card" id="s18">
+      <div class="page-card-route">/contact/</div>
+      <div class="page-card-title">Contact</div>
+      <div class="page-card-desc">Hero: "Let's get your brand cited." Contact form with full field set. AI Visibility Challenge interactive quiz. Response time guarantee: 1 business day. Melbourne HQ details.</div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/book-strategy-call/</div>
+      <div class="page-card-title">Book Strategy Call</div>
+      <div class="page-card-desc">Free 30-min AI Visibility Strategy Call booking page. Agenda preview, FAQ, what to expect. Integrates with calendar booking system.</div>
+    </div>
+    <div class="card page-card" id="s19">
+      <div class="page-card-route">/privacy-policy/</div>
+      <div class="page-card-title">Privacy Policy</div>
+      <div class="page-card-desc">GDPR/CCPA/APP-compliant privacy policy. Table of contents, clear sections on data collection, usage, cookies, third parties, user rights and contact details for DPO.</div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/terms-of-service/</div>
+      <div class="page-card-title">Terms of Service</div>
+      <div class="page-card-desc">Service engagement terms, intellectual property ownership, liability limitations, payment terms, and cancellation policy.</div>
+    </div>
+    <div class="card page-card">
+      <div class="page-card-route">/thank-you/</div>
+      <div class="page-card-title">Thank You</div>
+      <div class="page-card-desc">Post-form submission confirmation. Response time confirmation (1 business day), suggested next reading, links to Knowledge Hub and Case Studies.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 20 — ADMIN PANEL
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s20">
+  <div class="section-header">
+    <div class="section-num">20</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Platform</div>
+      <div class="section-title">Admin Panel</div>
+      <div class="section-sub">Route: <span class="mono">/admin/</span> — Authentication-gated CMS for managing all site content.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue" style="margin-bottom:24px">
+    <div class="callout-icon">🔐</div>
+    <div class="callout-text"><strong>Access Control:</strong> All admin routes require authentication. Login at <span class="mono">/admin/login/</span>. No public access to any admin route. Credentials-based auth with session management.</div>
+  </div>
+
+  <table>
+    <thead><tr><th>Admin Route</th><th>Page Title</th><th>Capability</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">/admin/</td><td>Dashboard</td><td>Stats overview, quick access links, recent lead submissions</td></tr>
+      <tr><td class="mono">/admin/login/</td><td>Welcome back</td><td>Credential login form</td></tr>
+      <tr><td class="mono">/admin/blog/</td><td>Blog Posts</td><td>List, create, edit, publish/unpublish blog articles</td></tr>
+      <tr><td class="mono">/admin/blog/new/</td><td>New Blog Post</td><td>Rich text blog post editor with metadata fields</td></tr>
+      <tr><td class="mono">/admin/blog/[id]/</td><td>Edit Post</td><td>Edit existing post with live preview link</td></tr>
+      <tr><td class="mono">/admin/leads/</td><td>Form Submissions</td><td>View, filter, search and manage all contact form leads</td></tr>
+      <tr><td class="mono">/admin/leads/[id]/</td><td>Lead Detail</td><td>Full contact + message view, status management, notes</td></tr>
+      <tr><td class="mono">/admin/services/</td><td>Services</td><td>Edit service title, description, icon and accent colour</td></tr>
+      <tr><td class="mono">/admin/pricing/</td><td>Pricing</td><td>Update pricing plans, features and CTA links</td></tr>
+      <tr><td class="mono">/admin/testimonials/</td><td>Testimonials</td><td>Add/edit/remove client testimonials with star ratings</td></tr>
+      <tr><td class="mono">/admin/faqs/</td><td>FAQs</td><td>Manage FAQ questions, answers and display order</td></tr>
+      <tr><td class="mono">/admin/homepage/</td><td>Homepage Content</td><td>Edit hero headline, badge text and key stats</td></tr>
+      <tr><td class="mono">/admin/site-settings/</td><td>Site Settings</td><td>Global site name, contact details, CTA configuration</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 21 — UI COMPONENT LIBRARY
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s21">
+  <div class="section-header">
+    <div class="section-num">21</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Platform</div>
+      <div class="section-title">UI Component Library</div>
+      <div class="section-sub">50+ components in <span class="mono">/components/ui/</span> — shared across all pages.</div>
+    </div>
+  </div>
+
+  <!-- Component categories diagram -->
+  <svg viewBox="0 0 900 280" style="width:100%;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);margin-bottom:28px">
+    <text x="450" y="28" text-anchor="middle" font-size="12" font-weight="700" fill="#0f172a" font-family="Inter">Component Architecture</text>
+
+    <!-- Category boxes -->
+    <rect x="20" y="48" width="165" height="200" rx="10" fill="rgba(30,95,224,0.04)" stroke="rgba(30,95,224,0.2)" stroke-width="1.5"/>
+    <text x="102" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#1e5fe0" font-family="Inter">Layout</text>
+    <text x="40" y="88" font-size="10" fill="#475569" font-family="Inter">HeroBg</text>
+    <text x="40" y="104" font-size="10" fill="#475569" font-family="Inter">ArticleLayout</text>
+    <text x="40" y="120" font-size="10" fill="#475569" font-family="Inter">SectionHead</text>
+    <text x="40" y="136" font-size="10" fill="#475569" font-family="Inter">Breadcrumb</text>
+    <text x="40" y="152" font-size="10" fill="#475569" font-family="Inter">CTABand</text>
+    <text x="40" y="168" font-size="10" fill="#475569" font-family="Inter">MarqueeStrip</text>
+    <text x="40" y="184" font-size="10" fill="#475569" font-family="Inter">Bento</text>
+    <text x="40" y="200" font-size="10" fill="#475569" font-family="Inter">StatsStrip</text>
+    <text x="40" y="216" font-size="10" fill="#475569" font-family="Inter">PricingCards</text>
+    <text x="40" y="232" font-size="10" fill="#475569" font-family="Inter">ProcessSteps</text>
+
+    <rect x="198" y="48" width="165" height="200" rx="10" fill="rgba(16,185,129,0.04)" stroke="rgba(16,185,129,0.2)" stroke-width="1.5"/>
+    <text x="280" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#10b981" font-family="Inter">Forms & Data</text>
+    <text x="216" y="88" font-size="10" fill="#475569" font-family="Inter">ContactForm</text>
+    <text x="216" y="104" font-size="10" fill="#475569" font-family="Inter">FAQAccordion</text>
+    <text x="216" y="120" font-size="10" fill="#475569" font-family="Inter">AIVisibilityChallenge</text>
+    <text x="216" y="136" font-size="10" fill="#475569" font-family="Inter">AnimatedCounter</text>
+    <text x="216" y="152" font-size="10" fill="#475569" font-family="Inter">GaugeRing</text>
+    <text x="216" y="168" font-size="10" fill="#475569" font-family="Inter">BeforeAfter</text>
+    <text x="216" y="184" font-size="10" fill="#475569" font-family="Inter">AIVisibilityScore</text>
+    <text x="216" y="200" font-size="10" fill="#475569" font-family="Inter">PlatformTabs</text>
+    <text x="216" y="216" font-size="10" fill="#475569" font-family="Inter">AIChatDemo</text>
+
+    <rect x="376" y="48" width="165" height="200" rx="10" fill="rgba(99,102,241,0.04)" stroke="rgba(99,102,241,0.2)" stroke-width="1.5"/>
+    <text x="458" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#6366f1" font-family="Inter">Animation</text>
+    <text x="394" y="88" font-size="10" fill="#475569" font-family="Inter">Reveal / Stagger</text>
+    <text x="394" y="104" font-size="10" fill="#475569" font-family="Inter">MagneticButton</text>
+    <text x="394" y="120" font-size="10" fill="#475569" font-family="Inter">ContainerScroll</text>
+    <text x="394" y="136" font-size="10" fill="#475569" font-family="Inter">AnimatedSVGTimeline</text>
+    <text x="394" y="152" font-size="10" fill="#475569" font-family="Inter">card-stack</text>
+    <text x="394" y="168" font-size="10" fill="#475569" font-family="Inter">SpiralAnimation</text>
+    <text x="394" y="184" font-size="10" fill="#475569" font-family="Inter">CodeTypingAnimation</text>
+    <text x="394" y="200" font-size="10" fill="#475569" font-family="Inter">ScrollProgress</text>
+    <text x="394" y="216" font-size="10" fill="#475569" font-family="Inter">InteractiveE3D</text>
+
+    <rect x="554" y="48" width="165" height="200" rx="10" fill="rgba(245,158,11,0.04)" stroke="rgba(245,158,11,0.2)" stroke-width="1.5"/>
+    <text x="636" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#f59e0b" font-family="Inter">AI Visuals</text>
+    <text x="572" y="88" font-size="10" fill="#475569" font-family="Inter">NeuralNetworkCanvas</text>
+    <text x="572" y="104" font-size="10" fill="#475569" font-family="Inter">KnowledgeGraphCanvas</text>
+    <text x="572" y="120" font-size="10" fill="#475569" font-family="Inter">SerpAnimation</text>
+    <text x="572" y="136" font-size="10" fill="#475569" font-family="Inter">radial-orbital-timeline</text>
+    <text x="572" y="152" font-size="10" fill="#475569" font-family="Inter">AdPreviewCard</text>
+    <text x="572" y="168" font-size="10" fill="#475569" font-family="Inter">GlassCard</text>
+    <text x="572" y="184" font-size="10" fill="#475569" font-family="Inter">CapabilityCard</text>
+    <text x="572" y="200" font-size="10" fill="#475569" font-family="Inter">ServiceWorkflowCards</text>
+
+    <rect x="732" y="48" width="148" height="200" rx="10" fill="rgba(6,182,212,0.04)" stroke="rgba(6,182,212,0.2)" stroke-width="1.5"/>
+    <text x="806" y="68" text-anchor="middle" font-size="11" font-weight="700" fill="#06b6d4" font-family="Inter">Backgrounds</text>
+    <text x="750" y="88" font-size="10" fill="#475569" font-family="Inter">AuroraBackground</text>
+    <text x="750" y="104" font-size="10" fill="#475569" font-family="Inter">DotNoise</text>
+    <text x="750" y="120" font-size="10" fill="#475569" font-family="Inter">ParticleField</text>
+    <text x="750" y="136" font-size="10" fill="#475569" font-family="Inter">MeshGradient</text>
+    <text x="750" y="152" font-size="10" fill="#475569" font-family="Inter">GlobalSignalBg</text>
+    <text x="750" y="168" font-size="10" fill="#475569" font-family="Inter">GlowBackground</text>
+    <text x="750" y="184" font-size="10" fill="#475569" font-family="Inter">SkyAtmosphere</text>
+    <text x="750" y="200" font-size="10" fill="#475569" font-family="Inter">SiteBackground</text>
+    <text x="750" y="216" font-size="10" fill="#475569" font-family="Inter">WebWireframe</text>
+  </svg>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     SECTION 22 — TECH STACK
+════════════════════════════════════════════════════ -->
+<div class="page page-break" id="s22">
+  <div class="section-header">
+    <div class="section-num">22</div>
+    <div class="section-title-wrap">
+      <div class="section-eyebrow">Technical</div>
+      <div class="section-title">Technology Stack</div>
+      <div class="section-sub">Full list of frameworks, libraries and services powering the platform.</div>
+    </div>
+  </div>
+
+  <div class="card-grid card-grid-2">
+    <div>
+      <h3 style="font-size:15px;font-weight:700;margin-bottom:14px;color:var(--blue)">Frontend</h3>
+      <table>
+        <tbody>
+          <tr><td>Framework</td><td>Next.js 15.5.18 (App Router)</td></tr>
+          <tr><td>Runtime</td><td>React 19</td></tr>
+          <tr><td>Language</td><td>TypeScript (strict mode)</td></tr>
+          <tr><td>Styling</td><td>CSS Variables + inline styles</td></tr>
+          <tr><td>Animation</td><td>Framer Motion 11</td></tr>
+          <tr><td>3D</td><td>Spline (interactive 3D models)</td></tr>
+          <tr><td>Fonts</td><td>Inter + JetBrains Mono (Google Fonts)</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:15px;font-weight:700;margin:20px 0 14px;color:var(--green)">SEO & Schema</h3>
+      <table>
+        <tbody>
+          <tr><td>Metadata</td><td>Next.js Metadata API</td></tr>
+          <tr><td>Structured Data</td><td>JSON-LD (serviceSchema, faqSchema, webPageSchema, itemListSchema)</td></tr>
+          <tr><td>Canonical URLs</td><td>Set on every page via alternates</td></tr>
+          <tr><td>Sitemaps</td><td>next-sitemap auto-generated</td></tr>
+          <tr><td>OG/Twitter</td><td>Full og: and twitter: meta on every page</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div>
+      <h3 style="font-size:15px;font-weight:700;margin-bottom:14px;color:var(--indigo)">Backend & Data</h3>
+      <table>
+        <tbody>
+          <tr><td>API Routes</td><td>Next.js Route Handlers</td></tr>
+          <tr><td>Database</td><td>Supabase (PostgreSQL)</td></tr>
+          <tr><td>Auth</td><td>Supabase Auth (admin panel)</td></tr>
+          <tr><td>CMS</td><td>Custom admin panel (in-app)</td></tr>
+          <tr><td>Forms</td><td>Server actions + Resend email</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:15px;font-weight:700;margin:20px 0 14px;color:var(--amber)">External Services</h3>
+      <table>
+        <tbody>
+          <tr><td>IP Geolocation</td><td>ipapi.co + ipwho.is (fallback)</td></tr>
+          <tr><td>Maps Embed</td><td>Google Maps (keyless embed)</td></tr>
+          <tr><td>Geolocation</td><td>navigator.geolocation Web API</td></tr>
+          <tr><td>Video</td><td>YouTube embed (PromoVideoSection)</td></tr>
+          <tr><td>Analytics</td><td>Vercel Analytics</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:15px;font-weight:700;margin:20px 0 14px;color:var(--red)">Deployment</h3>
+      <table>
+        <tbody>
+          <tr><td>Hosting</td><td>Vercel (Edge Network)</td></tr>
+          <tr><td>CI/CD</td><td>GitHub → Vercel auto-deploy</td></tr>
+          <tr><td>Branch</td><td>claude/lucid-euler-hT0LF (active dev)</td></tr>
+          <tr><td>Rendering</td><td>SSR + Static (per-page)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="font-size:17px;font-weight:700;margin-bottom:16px">Page Performance Targets</h3>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-val" style="color:var(--green)">1.1s</div><div class="stat-label">LCP target</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--green)">98ms</div><div class="stat-label">INP target</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--green)">0.02</div><div class="stat-label">CLS target</div></div>
+    <div class="stat-box"><div class="stat-val" style="color:var(--blue)">98</div><div class="stat-label">Lighthouse score</div></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════ -->
+<div class="doc-footer">
+  <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:8px">
+    <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#1e5fe0,#6f4dff);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff">S</div>
+    <span style="color:rgba(255,255,255,0.7);font-weight:600;font-size:14px">SecurityBlogs Australia</span>
+  </div>
+  <p>Website Content & Architecture Document · Version 1.0 · June 2026</p>
+  <p style="margin-top:4px">securityblogs.com.au · Melbourne, VIC, Australia</p>
+</div>
+
+</body>
+</html>
