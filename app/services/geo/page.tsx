@@ -8,7 +8,7 @@ import GeoHowItWorks from './GeoHowItWorks'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
-import GeoMapDemo from './GeoMapDemo'
+import GeoHeroVisual from './GeoHeroVisual'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 import PromoVideoSection from '@/components/ui/PromoVideoSection'
@@ -97,9 +97,7 @@ export default function GeoPage() {
             </div>
           </Reveal>
           <Reveal delay={0.15}>
-            {/* Live AI-Maps demo replaces the orbital diagram — Australia
-                with pulsing capitals + SecurityBlogs at position 1 */}
-            <GeoMapDemo />
+            <GeoHeroVisual />
           </Reveal>
         </div>
       </HeroBg>
