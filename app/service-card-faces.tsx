@@ -444,28 +444,93 @@ const GEO_WORLD_PINS = [
   { x: 368, y: 169, city: 'Sydney',            country: 'Australia', addr: '1 Martin Place, NSW 2000' },
 ]
 
+// SecurityBlogs HQ — Melbourne
+const HQ_LAT = -37.81, HQ_LON = 144.96
+const HQ_X = 361, HQ_Y = 177
+
+function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number) {
+  const R = 6371, r = Math.PI / 180
+  const dLat = (lat2 - lat1) * r, dLon = (lon2 - lon1) * r
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*r) * Math.cos(lat2*r) * Math.sin(dLon/2)**2
+  return Math.round(R * 2 * Math.asin(Math.sqrt(a)))
+}
+
+function latLonToSVG(lat: number, lon: number) {
+  return {
+    x: Math.max(6, Math.min(394, (lon + 180) / 360 * 400)),
+    y: Math.max(6, Math.min(204, (80 - lat) / 140 * 210)),
+  }
+}
+
 export function GEOFace(p: CardProps) {
-  const [activePin, setActivePin] = useState(GEO_WORLD_PINS.findIndex(p => p.isMain))
-  const [pingR, setPingR] = useState(0)
+  const [activePin, setActivePin] = useState(GEO_WORLD_PINS.findIndex(wp => wp.isMain))
+  const [pingR, setPingR]     = useState(0)
+  const [userPingR, setUserPingR] = useState(0)
   const [showPopup, setShowPopup] = useState(true)
+  const [geoStatus, setGeoStatus] = useState<'idle'|'requesting'|'granted'|'denied'>('idle')
+  const [userPin, setUserPin]   = useState<{x:number; y:number; distKm:number}|null>(null)
+
+  // keep a ref so the city-cycling interval can read current geo status without stale closure
+  const geoRef = { current: 'idle' as typeof geoStatus }
+  geoRef.current = geoStatus
 
   useEffect(() => {
+    // --- ping ring animations ---
     const pr = setInterval(() => setPingR(r => r > 38 ? 0 : r + 0.7), 28)
+    const up = setInterval(() => setUserPingR(r => r > 26 ? 0 : r + 0.55), 30)
+
+    // --- cycle city pins (only when no live geo) ---
     const ac = setInterval(() => {
-      setShowPopup(false)
-      setTimeout(() => {
-        setActivePin(i => (i + 1) % GEO_WORLD_PINS.length)
-        setShowPopup(true)
-        setPingR(0)
-      }, 300)
+      if (geoRef.current !== 'granted') {
+        setShowPopup(false)
+        setTimeout(() => {
+          setActivePin(i => (i + 1) % GEO_WORLD_PINS.length)
+          setShowPopup(true)
+          setPingR(0)
+        }, 300)
+      }
     }, 2400)
-    return () => { clearInterval(pr); clearInterval(ac) }
+
+    // --- request live location ---
+    if (typeof navigator !== 'undefined' && 'geolocation' in navigator) {
+      setGeoStatus('requesting')
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const { latitude: lat, longitude: lon } = pos.coords
+          const { x, y } = latLonToSVG(lat, lon)
+          const distKm = haversineKm(lat, lon, HQ_LAT, HQ_LON)
+          setUserPin({ x, y, distKm })
+          setGeoStatus('granted')
+          setShowPopup(true)  // show live distance card
+        },
+        () => setGeoStatus('denied'),
+        { timeout: 8000, maximumAge: 120000, enableHighAccuracy: false }
+      )
+    }
+
+    return () => { clearInterval(pr); clearInterval(up); clearInterval(ac) }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const pin = GEO_WORLD_PINS[activePin]
+  const cyclePin = GEO_WORLD_PINS[activePin]
+
+  // Format distance
+  const fmtDist = (km: number) =>
+    km < 1 ? 'Right here!' :
+    km < 1000 ? `${km.toLocaleString()} km away` :
+    `${km.toLocaleString()} km away`
 
   return (
     <div style={{ ...SHELL, background: '#f8f9fb' }}>
+
+      {/* "Requesting location" top badge */}
+      {geoStatus === 'requesting' && (
+        <div style={{ position:'absolute', top:6, left:'50%', transform:'translateX(-50%)', zIndex:20, background:'#1e2433', borderRadius:20, padding:'4px 12px', display:'flex', alignItems:'center', gap:6, boxShadow:'0 2px 8px rgba(0,0,0,0.2)' }}>
+          <div style={{ width:5,height:5,borderRadius:'50%',background:'#3b82f6',animation:'blink 0.9s infinite' }} />
+          <span style={{ fontSize:9,fontWeight:600,color:'white',whiteSpace:'nowrap' }}>Detecting your location…</span>
+        </div>
+      )}
+
       <svg
         viewBox="0 0 400 210"
         width="100%"
@@ -473,11 +538,9 @@ export function GEOFace(p: CardProps) {
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
-          {/* Dot pattern for continents */}
           <pattern id="geo-dots" x="0" y="0" width="5" height="5" patternUnits="userSpaceOnUse">
             <circle cx="2.5" cy="2.5" r="1.3" fill="#c8cdd6" />
           </pattern>
-          {/* Clip path = all continent polygons combined */}
           <clipPath id="geo-land">
             {WORLD_CLIP.map((d, i) => <path key={i} d={d} />)}
           </clipPath>
@@ -486,70 +549,114 @@ export function GEOFace(p: CardProps) {
           </filter>
         </defs>
 
-        {/* Ocean background */}
         <rect width="400" height="210" fill="#f8f9fb" />
-
-        {/* Continent dots */}
         <rect width="400" height="210" fill="url(#geo-dots)" clipPath="url(#geo-land)" />
 
-        {/* Pulse rings on active pin */}
-        {pingR > 0 && (
-          <>
-            <circle cx={pin.x} cy={pin.y} r={pingR} fill="none" stroke="#2563eb" strokeWidth="1.2" opacity={Math.max(0, 1 - pingR / 38)} />
-            {pingR > 12 && <circle cx={pin.x} cy={pin.y} r={pingR * 0.55} fill="none" stroke="#2563eb" strokeWidth="0.8" opacity={Math.max(0, 0.6 - pingR / 50)} />}
-          </>
-        )}
+        {/* ── Great-circle arc: user → Melbourne HQ ── */}
+        {userPin && (() => {
+          const mx = (userPin.x + HQ_X) / 2
+          const my = (userPin.y + HQ_Y) / 2 - 28
+          return (
+            <path
+              d={`M${userPin.x},${userPin.y} Q${mx},${my} ${HQ_X},${HQ_Y}`}
+              fill="none" stroke="#2563eb" strokeWidth="1.2"
+              strokeDasharray="4 3" opacity="0.55"
+            />
+          )
+        })()}
 
-        {/* All city dots */}
-        {GEO_WORLD_PINS.map((wp, i) => {
+        {/* ── City pins (shown when no live geo) ── */}
+        {geoStatus !== 'granted' && GEO_WORLD_PINS.map((wp, i) => {
           const isAct = activePin === i
           return (
             <g key={wp.city} filter={isAct ? 'url(#geo-pin-shadow)' : undefined}>
-              {isAct && <circle cx={wp.x} cy={wp.y} r="8" fill="#2563eb" opacity="0.15" />}
-              <circle
-                cx={wp.x} cy={wp.y}
-                r={isAct ? 5.5 : 4}
-                fill="#2563eb"
-                stroke="white"
-                strokeWidth={isAct ? 1.8 : 1.5}
-                style={{ transition: 'all 0.35s' }}
-              />
+              {isAct && pingR > 0 && (
+                <>
+                  <circle cx={wp.x} cy={wp.y} r={pingR} fill="none" stroke="#2563eb" strokeWidth="1.1" opacity={Math.max(0, 1 - pingR/38)} />
+                  {pingR > 12 && <circle cx={wp.x} cy={wp.y} r={pingR*0.55} fill="none" stroke="#2563eb" strokeWidth="0.7" opacity={Math.max(0, 0.5 - pingR/50)} />}
+                </>
+              )}
+              {isAct && <circle cx={wp.x} cy={wp.y} r="8" fill="#2563eb" opacity="0.12" />}
+              <circle cx={wp.x} cy={wp.y} r={isAct?5.5:4} fill="#2563eb" stroke="white" strokeWidth={isAct?1.8:1.5} style={{ transition:'all 0.35s' }} />
               {isAct && <circle cx={wp.x} cy={wp.y} r="2" fill="white" />}
             </g>
           )
         })}
+
+        {/* ── Live geo: all city dots dimmed + HQ pin ── */}
+        {geoStatus === 'granted' && (
+          <>
+            {GEO_WORLD_PINS.map(wp => (
+              <circle key={wp.city} cx={wp.x} cy={wp.y} r="3.5" fill="#2563eb" stroke="white" strokeWidth="1.2" opacity="0.4" />
+            ))}
+            {/* HQ pin highlighted */}
+            <g filter="url(#geo-pin-shadow)">
+              <circle cx={HQ_X} cy={HQ_Y} r="7" fill="#2563eb" opacity="0.15" />
+              <circle cx={HQ_X} cy={HQ_Y} r="5.5" fill="#2563eb" stroke="white" strokeWidth="1.8" />
+              <circle cx={HQ_X} cy={HQ_Y} r="2" fill="white" />
+              <text x={HQ_X} y={HQ_Y - 10} textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#1e2433">HQ</text>
+            </g>
+          </>
+        )}
+
+        {/* ── User "You Are Here" dot ── */}
+        {userPin && (
+          <g filter="url(#geo-pin-shadow)">
+            {/* Accuracy halo */}
+            <circle cx={userPin.x} cy={userPin.y} r={userPingR + 8} fill="#22c55e" opacity={Math.max(0, 0.12 - userPingR/200)} />
+            {/* Outer pulse ring */}
+            {userPingR > 0 && <circle cx={userPin.x} cy={userPin.y} r={userPingR + 4} fill="none" stroke="#22c55e" strokeWidth="1" opacity={Math.max(0, 0.7 - userPingR/26)} />}
+            {/* White border ring */}
+            <circle cx={userPin.x} cy={userPin.y} r="8" fill="white" />
+            {/* Blue filled dot */}
+            <circle cx={userPin.x} cy={userPin.y} r="6" fill="#22c55e" />
+            {/* White center */}
+            <circle cx={userPin.x} cy={userPin.y} r="2.5" fill="white" />
+            {/* "You" label */}
+            <text x={userPin.x} y={userPin.y - 12} textAnchor="middle" fontSize="6.5" fontWeight="800" fill="#15803d">YOU</text>
+          </g>
+        )}
       </svg>
 
-      {/* Info popup card — styled exactly like the reference image */}
+      {/* ── Popup card ── */}
       <div style={{
-        position: 'absolute',
-        bottom: 94,
-        right: 10,
-        background: '#1e2433',
-        borderRadius: 8,
-        padding: '9px 12px',
-        minWidth: 160,
-        maxWidth: 190,
-        boxShadow: '0 6px 24px rgba(0,0,0,0.28)',
+        position:'absolute', bottom:94, right:10,
+        background:'#1e2433', borderRadius:8, padding:'9px 12px',
+        minWidth:158, maxWidth:190,
+        boxShadow:'0 6px 24px rgba(0,0,0,0.28)',
         opacity: showPopup ? 1 : 0,
         transform: showPopup ? 'translateY(0) scale(1)' : 'translateY(6px) scale(0.97)',
-        transition: 'opacity 0.3s, transform 0.3s',
-        zIndex: 10,
+        transition:'opacity 0.3s, transform 0.3s',
+        zIndex:10,
       }}>
-        {/* Triangle pointer */}
-        <div style={{
-          position:'absolute', bottom:-7, right:24,
-          width:0, height:0,
-          borderLeft:'7px solid transparent',
-          borderRight:'7px solid transparent',
-          borderTop:'7px solid #1e2433',
-        }} />
-        <div style={{ fontSize:11, fontWeight:700, color:'#ffffff', marginBottom:4 }}>
-          {pin.city}, {pin.country}
-        </div>
-        <div style={{ fontSize:9.5, color:'rgba(255,255,255,0.6)', lineHeight:1.5 }}>
-          {pin.addr}
-        </div>
+        <div style={{ position:'absolute', bottom:-7, right:22, width:0, height:0, borderLeft:'7px solid transparent', borderRight:'7px solid transparent', borderTop:'7px solid #1e2433' }} />
+
+        {geoStatus === 'granted' && userPin ? (
+          <>
+            <div style={{ display:'flex', alignItems:'center', gap:5, marginBottom:4 }}>
+              <div style={{ width:7,height:7,borderRadius:'50%',background:'#22c55e',boxShadow:'0 0 6px #22c55e',flexShrink:0 }} />
+              <span style={{ fontSize:11,fontWeight:700,color:'#ffffff' }}>You are here</span>
+            </div>
+            <div style={{ fontSize:9.5,color:'rgba(255,255,255,0.55)',marginBottom:5 }}>
+              {fmtDist(userPin.distKm)} from SecurityBlogs
+            </div>
+            <div style={{ background:'rgba(37,99,235,0.25)', borderRadius:5, padding:'4px 8px', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+              <span style={{ fontSize:9,color:'rgba(255,255,255,0.6)' }}>Melbourne HQ</span>
+              <span style={{ fontSize:10,fontWeight:800,color:'#60a5fa',fontFamily:'var(--font-mono)' }}>
+                {userPin.distKm.toLocaleString()} km
+              </span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize:11,fontWeight:700,color:'#ffffff',marginBottom:4 }}>
+              {cyclePin.city}, {cyclePin.country}
+            </div>
+            <div style={{ fontSize:9.5,color:'rgba(255,255,255,0.6)',lineHeight:1.5 }}>
+              {cyclePin.addr}
+            </div>
+          </>
+        )}
       </div>
 
       <CardCTA {...p} />
