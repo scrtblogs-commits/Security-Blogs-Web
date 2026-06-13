@@ -1,0 +1,1892 @@
+{
+  "ground_truth": {
+    "repo_files_scanned": 302,
+    "payload_collections": [
+      "case-studies",
+      "leads",
+      "media",
+      "pages",
+      "partners",
+      "posts",
+      "redirects",
+      "services",
+      "settings",
+      "users"
+    ],
+    "env_vars_known": [
+      "CMS_URL",
+      "DATABASE_URI",
+      "EMAIL_FROM_ADDRESS",
+      "EMAIL_FROM_NAME",
+      "HOME",
+      "MEDIA_LOCAL_PATH",
+      "NEXT_PUBLIC_GMAPS_KEY",
+      "NEXT_PUBLIC_MAPBOX_TOKEN",
+      "NEXT_PUBLIC_MEDIA_BASE_URL",
+      "NEXT_PUBLIC_SERVER_URL",
+      "NEXT_PUBLIC_SITE_URL",
+      "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+      "NODE_ENV",
+      "PATH",
+      "PAYLOAD_API_KEY",
+      "PAYLOAD_SECRET",
+      "PLAUSIBLE_DASHBOARD_URL",
+      "PORT",
+      "SEED_ADMIN_EMAIL",
+      "SEED_ADMIN_NAME",
+      "SEED_ADMIN_PASSWORD",
+      "SMTP_HOST",
+      "SMTP_PASSWORD",
+      "SMTP_PORT",
+      "SMTP_SECURE",
+      "SMTP_USER",
+      "TURNSTILE_SECRET_KEY",
+      "TURNSTILE_SITE_KEY",
+      "WEBHOOK_SECRET"
+    ],
+    "airtable_tables_known": [
+      "SB \u00b7 00 \u00b7 Pages Index",
+      "SB \u00b7 01 \u00b7 Home",
+      "SB \u00b7 02 \u00b7 Services",
+      "SB \u00b7 03 \u00b7 Security SEO",
+      "SB \u00b7 04 \u00b7 AIO",
+      "SB \u00b7 05 \u00b7 AEO",
+      "SB \u00b7 06 \u00b7 GEO",
+      "SB \u00b7 07 \u00b7 Google Ads",
+      "SB \u00b7 08 \u00b7 Bing Ads",
+      "SB \u00b7 09 \u00b7 Web Design",
+      "SB \u00b7 10 \u00b7 Knowledge Hub",
+      "SB \u00b7 11 \u00b7 Blog",
+      "SB \u00b7 12 \u00b7 Definitions & Glossary",
+      "SB \u00b7 13 \u00b7 Industry News",
+      "SB \u00b7 14 \u00b7 Research Reports",
+      "SB \u00b7 15 \u00b7 Security Guides",
+      "SB \u00b7 16 \u00b7 Security Industry SEO (Pillar)",
+      "SB \u00b7 17 \u00b7 Security Trends 2026",
+      "SB \u00b7 18 \u00b7 Publish With Us",
+      "SB \u00b7 19 \u00b7 Advertise",
+      "SB \u00b7 20 \u00b7 Backlink Packages",
+      "SB \u00b7 21 \u00b7 Guest Posting",
+      "SB \u00b7 22 \u00b7 Press Release",
+      "SB \u00b7 23 \u00b7 Pricing & Guidelines",
+      "SB \u00b7 24 \u00b7 Product Promotion",
+      "SB \u00b7 25 \u00b7 Sponsored Posts",
+      "SB \u00b7 26 \u00b7 About Us",
+      "SB \u00b7 27 \u00b7 Contact",
+      "SB \u00b7 28 \u00b7 Case Studies",
+      "SB \u00b7 29 \u00b7 Security Directory",
+      "SB \u00b7 30 \u00b7 AI Visibility Center",
+      "SB \u00b7 31 \u00b7 Free Tools",
+      "SB \u00b7 32 \u00b7 Career",
+      "SB \u00b7 33 \u00b7 Book Strategy Call",
+      "SB \u00b7 34 \u00b7 Privacy Policy",
+      "SB \u00b7 35 \u00b7 Terms of Service",
+      "SB \u00b7 36 \u00b7 Content Guidelines",
+      "SB \u00b7 TEMPLATE \u00b7 Page"
+    ],
+    "marketing_routes": [
+      "/api/leads"
+    ]
+  },
+  "results": [
+    {
+      "doc": "AIRTABLE_ARCHITECTURE.md",
+      "total_refs_extracted": 164,
+      "files": {
+        "checked": 7,
+        "ok": 4,
+        "broken": [
+          "Documentation/Markdown/PAGE_NAME.md",
+          "lib/airtable.ts"
+        ]
+      },
+      "endpoints": {
+        "checked": 2,
+        "ok": 2,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "pg_tables": {
+        "checked": 13,
+        "ok": 13,
+        "broken": []
+      },
+      "airtable_tables": {
+        "checked": 40,
+        "ok": 40,
+        "broken": []
+      },
+      "commands": {
+        "checked": 0,
+        "ok": 0
+      },
+      "total_checked": 62,
+      "total_ok": 59,
+      "accuracy_pct": 95.2,
+      "developer_safe": false
+    },
+    {
+      "doc": "DATABASE_ARCHITECTURE.md",
+      "total_refs_extracted": 94,
+      "files": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "pg_tables": {
+        "checked": 47,
+        "ok": 33,
+        "broken": [
+          "case_studies_slug_uq",
+          "leads_assigned_to_idx",
+          "leads_source_idx",
+          "leads_status_idx",
+          "media_filename_idx",
+          "pages_slug_uq",
+          "partners_slug_uq",
+          "posts_category_idx",
+          "posts_published_at_idx",
+          "posts_slug_uq",
+          "redirects_active_idx",
+          "redirects_from_path_uq",
+          "services_slug_uq",
+          "users_email_uq"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "commands": {
+        "checked": 1,
+        "ok": 1
+      },
+      "total_checked": 48,
+      "total_ok": 34,
+      "accuracy_pct": 70.8,
+      "developer_safe": false
+    },
+    {
+      "doc": "DEPLOYMENT_GUIDE.md",
+      "total_refs_extracted": 29,
+      "files": {
+        "checked": 2,
+        "ok": 1,
+        "broken": [
+          "rclone copy b2:sb-backups/latest.dump.gpg ."
+        ]
+      },
+      "endpoints": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "pg_tables": {
+        "checked": 2,
+        "ok": 0,
+        "broken": [
+          "pg_restore",
+          "stats"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "commands": {
+        "checked": 7,
+        "ok": 7
+      },
+      "total_checked": 11,
+      "total_ok": 8,
+      "accuracy_pct": 72.7,
+      "developer_safe": false
+    },
+    {
+      "doc": "DEVELOPER_HANDBOOK.md",
+      "total_refs_extracted": 159,
+      "files": {
+        "checked": 47,
+        "ok": 40,
+        "broken": [
+          "Markdown/",
+          "PDFs/",
+          "book-strategy-call/",
+          "cms/src/payload-types.ts",
+          "layout/",
+          "modules/",
+          "ui/"
+        ]
+      },
+      "endpoints": {
+        "checked": 2,
+        "ok": 2,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 28,
+        "ok": 28,
+        "broken": []
+      },
+      "pg_tables": {
+        "checked": 17,
+        "ok": 0,
+        "broken": [
+          "access",
+          "admin",
+          "bash",
+          "development",
+          "editor",
+          "glibc",
+          "interface",
+          "main",
+          "modules",
+          "production",
+          "slug",
+          "source",
+          "super_admin",
+          "type",
+          "unknown"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 1,
+        "ok": 1,
+        "broken": []
+      },
+      "commands": {
+        "checked": 1,
+        "ok": 1
+      },
+      "total_checked": 96,
+      "total_ok": 72,
+      "accuracy_pct": 75.0,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_01_HOME.md",
+      "total_refs_extracted": 112,
+      "files": {
+        "checked": 29,
+        "ok": 25,
+        "broken": [
+          "components/previews/AdMetricsPreview.tsx",
+          "lib/cms.ts \u2192 getPage('home')",
+          "lib/cms.ts \u2192 getServices()",
+          "lib/cms.ts \u2192 getSettings()"
+        ]
+      },
+      "endpoints": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 8,
+        "ok": 7,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 12,
+        "ok": 9,
+        "broken": [
+          "capabilities",
+          "company_url",
+          "image"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 4,
+        "ok": 4
+      },
+      "total_checked": 67,
+      "total_ok": 59,
+      "accuracy_pct": 88.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_02_SERVICES.md",
+      "total_refs_extracted": 48,
+      "files": {
+        "checked": 11,
+        "ok": 11,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 5,
+        "ok": 5,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 02 \u00b7 Services Hub"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 34,
+      "total_ok": 30,
+      "accuracy_pct": 88.2,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_03_SECURITY_SEO.md",
+      "total_refs_extracted": 47,
+      "files": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 32,
+      "total_ok": 30,
+      "accuracy_pct": 93.8,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_04_AIO.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 04 \u00b7 AIO (AI Optimisation)"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 27,
+      "accuracy_pct": 87.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_05_AEO.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 05 \u00b7 AEO (Answer Engine Optimisation)"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 27,
+      "accuracy_pct": 87.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_06_GEO.md",
+      "total_refs_extracted": 47,
+      "files": {
+        "checked": 10,
+        "ok": 9,
+        "broken": [
+          "app/services/geo/AustraliaMap.tsx (or similar)"
+        ]
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 6,
+        "ok": 5,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 06 \u00b7 GEO (Generative Engine Optimisation)"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 33,
+      "total_ok": 28,
+      "accuracy_pct": 84.8,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_07_GOOGLE_ADS.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 07 \u00b7 Google Ads for Security"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 27,
+      "accuracy_pct": 87.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_08_BING_ADS.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 08 \u00b7 Bing Ads / Microsoft Ads"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 27,
+      "accuracy_pct": 87.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_09_WEB_DESIGN.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 29,
+      "accuracy_pct": 93.5,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_10_KNOWLEDGE_HUB.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 5,
+        "ok": 5,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 10 \u00b7 Knowledge Hub Index"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 32,
+      "total_ok": 28,
+      "accuracy_pct": 87.5,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_11_BLOG.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 11 \u00b7 Blog Listing"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 32,
+      "total_ok": 28,
+      "accuracy_pct": 87.5,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_12_DEFINITIONS_GLOSSARY.md",
+      "total_refs_extracted": 45,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 5,
+        "ok": 5,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 29,
+      "accuracy_pct": 93.5,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_13_INDUSTRY_NEWS.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 32,
+      "total_ok": 30,
+      "accuracy_pct": 93.8,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_14_RESEARCH_REPORTS.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 42,
+      "accuracy_pct": 85.7,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_15_SECURITY_GUIDES.md",
+      "total_refs_extracted": 44,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 30,
+      "total_ok": 28,
+      "accuracy_pct": 93.3,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_16_SECURITY_INDUSTRY_SEO.md",
+      "total_refs_extracted": 47,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 6,
+        "ok": 6,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 4,
+        "ok": 3,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 33,
+      "total_ok": 31,
+      "accuracy_pct": 93.9,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_17_SECURITY_TRENDS_2026.md",
+      "total_refs_extracted": 46,
+      "files": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 5,
+        "ok": 5,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 32,
+      "total_ok": 30,
+      "accuracy_pct": 93.8,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_18_PUBLISH_WITH_US.md",
+      "total_refs_extracted": 45,
+      "files": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 18 \u00b7 Publish With Us Hub"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 27,
+      "accuracy_pct": 87.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_19_ADVERTISE.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 19 \u00b7 Advertise With Us"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 40,
+      "accuracy_pct": 81.6,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_20_BACKLINK_PACKAGES.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 20 \u00b7 Sponsored Editorial Placements"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 40,
+      "accuracy_pct": 81.6,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_21_GUEST_POSTING.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 15,
+        "ok": 15,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 7,
+        "ok": 7,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 9,
+        "ok": 3,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 42,
+      "accuracy_pct": 85.7,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_22_PRESS_RELEASE.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 22 \u00b7 Press Release Distribution"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 40,
+      "accuracy_pct": 81.6,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_23_PRICING_GUIDELINES.md",
+      "total_refs_extracted": 44,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 30,
+      "total_ok": 28,
+      "accuracy_pct": 93.3,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_24_PRODUCT_PROMOTION.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 42,
+      "accuracy_pct": 85.7,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_25_SPONSORED_POSTS.md",
+      "total_refs_extracted": 68,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 49,
+      "total_ok": 42,
+      "accuracy_pct": 85.7,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_26_ABOUT_US.md",
+      "total_refs_extracted": 44,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 30,
+      "total_ok": 28,
+      "accuracy_pct": 93.3,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_27_CONTACT.md",
+      "total_refs_extracted": 71,
+      "files": {
+        "checked": 15,
+        "ok": 15,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 7,
+        "ok": 7,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 11,
+        "ok": 10,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 10,
+        "ok": 4,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 52,
+      "total_ok": 45,
+      "accuracy_pct": 86.5,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_28_CASE_STUDIES.md",
+      "total_refs_extracted": 49,
+      "files": {
+        "checked": 10,
+        "ok": 10,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 6,
+        "ok": 6,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 28 \u00b7 Case Studies Index"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 35,
+      "total_ok": 31,
+      "accuracy_pct": 88.6,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_29_SECURITY_DIRECTORY.md",
+      "total_refs_extracted": 45,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 5,
+        "ok": 5,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 31,
+      "total_ok": 29,
+      "accuracy_pct": 93.5,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_30_AI_VISIBILITY_CENTER.md",
+      "total_refs_extracted": 70,
+      "files": {
+        "checked": 17,
+        "ok": 16,
+        "broken": [
+          "app/api/ai-score/route.ts"
+        ]
+      },
+      "endpoints": {
+        "checked": 8,
+        "ok": 8,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 51,
+      "total_ok": 43,
+      "accuracy_pct": 84.3,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_31_FREE_TOOLS.md",
+      "total_refs_extracted": 70,
+      "files": {
+        "checked": 17,
+        "ok": 17,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 8,
+        "ok": 8,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 2,
+        "broken": [
+          "SB \u00b7 31 \u00b7 Free Tools Hub"
+        ]
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 51,
+      "total_ok": 42,
+      "accuracy_pct": 82.4,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_32_CAREER.md",
+      "total_refs_extracted": 69,
+      "files": {
+        "checked": 16,
+        "ok": 15,
+        "broken": [
+          "app/api/leads/upload/route.ts"
+        ]
+      },
+      "endpoints": {
+        "checked": 7,
+        "ok": 7,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 9,
+        "ok": 3,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 50,
+      "total_ok": 42,
+      "accuracy_pct": 84.0,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_33_BOOK_STRATEGY_CALL.md",
+      "total_refs_extracted": 66,
+      "files": {
+        "checked": 14,
+        "ok": 14,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 7,
+        "ok": 7,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 8,
+        "ok": 2,
+        "broken": [
+          "company_url",
+          "email",
+          "name",
+          "siteverify",
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 47,
+      "total_ok": 40,
+      "accuracy_pct": 85.1,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_34_PRIVACY_POLICY.md",
+      "total_refs_extracted": 44,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 30,
+      "total_ok": 28,
+      "accuracy_pct": 93.3,
+      "developer_safe": true
+    },
+    {
+      "doc": "PAGE_35_TERMS_OF_SERVICE.md",
+      "total_refs_extracted": 44,
+      "files": {
+        "checked": 9,
+        "ok": 8,
+        "broken": [
+          "app/terms-of-service/page.tsx (TBD if exists; verify before edit)"
+        ]
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 30,
+      "total_ok": 27,
+      "accuracy_pct": 90.0,
+      "developer_safe": false
+    },
+    {
+      "doc": "PAGE_36_CONTENT_GUIDELINES.md",
+      "total_refs_extracted": 44,
+      "files": {
+        "checked": 9,
+        "ok": 9,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 5,
+        "ok": 4,
+        "broken": [
+          "SENTRY_DSN"
+        ]
+      },
+      "pg_tables": {
+        "checked": 3,
+        "ok": 2,
+        "broken": [
+          "super_admin"
+        ]
+      },
+      "airtable_tables": {
+        "checked": 4,
+        "ok": 4,
+        "broken": []
+      },
+      "commands": {
+        "checked": 5,
+        "ok": 5
+      },
+      "total_checked": 30,
+      "total_ok": 28,
+      "accuracy_pct": 93.3,
+      "developer_safe": true
+    },
+    {
+      "doc": "SYSTEM_ARCHITECTURE.md",
+      "total_refs_extracted": 24,
+      "files": {
+        "checked": 11,
+        "ok": 11,
+        "broken": []
+      },
+      "endpoints": {
+        "checked": 2,
+        "ok": 2,
+        "broken": []
+      },
+      "env_vars": {
+        "checked": 1,
+        "ok": 1,
+        "broken": []
+      },
+      "pg_tables": {
+        "checked": 1,
+        "ok": 1,
+        "broken": []
+      },
+      "airtable_tables": {
+        "checked": 0,
+        "ok": 0,
+        "broken": []
+      },
+      "commands": {
+        "checked": 0,
+        "ok": 0
+      },
+      "total_checked": 15,
+      "total_ok": 15,
+      "accuracy_pct": 100.0,
+      "developer_safe": true
+    }
+  ]
+}

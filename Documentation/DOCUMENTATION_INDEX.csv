@@ -1,0 +1,42 @@
+Page Name,System Name,Documentation Type,PDF Path,Markdown Path,Last Updated
+System Architecture,All systems (overview),Architecture,Documentation/PDFs/SYSTEM_ARCHITECTURE.pdf,Documentation/Markdown/SYSTEM_ARCHITECTURE.md,2026-06-14
+Database Architecture,PostgreSQL,Architecture,Documentation/PDFs/DATABASE_ARCHITECTURE.pdf,Documentation/Markdown/DATABASE_ARCHITECTURE.md,2026-06-14
+Airtable Architecture,Airtable,Architecture,Documentation/PDFs/AIRTABLE_ARCHITECTURE.pdf,Documentation/Markdown/AIRTABLE_ARCHITECTURE.md,2026-06-14
+Deployment Guide,Production Server (Phase D),Guide,Documentation/PDFs/DEPLOYMENT_GUIDE.pdf,Documentation/Markdown/DEPLOYMENT_GUIDE.md,2026-06-14
+Developer Handbook,All systems (onboarding),Handbook,Documentation/PDFs/DEVELOPER_HANDBOOK.pdf,Documentation/Markdown/DEVELOPER_HANDBOOK.md,2026-06-14
+Home (/),Per-Page,Page Spec,Documentation/PDFs/PAGE_01_HOME.pdf,Documentation/Markdown/PAGE_01_HOME.md,2026-06-14
+Services Hub (/services/),Per-Page,Page Spec,Documentation/PDFs/PAGE_02_SERVICES.pdf,Documentation/Markdown/PAGE_02_SERVICES.md,2026-06-14
+Security SEO (/services/security-seo/),Per-Page,Page Spec,Documentation/PDFs/PAGE_03_SECURITY_SEO.pdf,Documentation/Markdown/PAGE_03_SECURITY_SEO.md,2026-06-14
+AIO (/services/aio/),Per-Page,Page Spec,Documentation/PDFs/PAGE_04_AIO.pdf,Documentation/Markdown/PAGE_04_AIO.md,2026-06-14
+AEO (/services/aeo/),Per-Page,Page Spec,Documentation/PDFs/PAGE_05_AEO.pdf,Documentation/Markdown/PAGE_05_AEO.md,2026-06-14
+GEO (/services/geo/),Per-Page,Page Spec,Documentation/PDFs/PAGE_06_GEO.pdf,Documentation/Markdown/PAGE_06_GEO.md,2026-06-14
+Google Ads (/services/google-ads/),Per-Page,Page Spec,Documentation/PDFs/PAGE_07_GOOGLE_ADS.pdf,Documentation/Markdown/PAGE_07_GOOGLE_ADS.md,2026-06-14
+Bing Ads (/services/bing-ads/),Per-Page,Page Spec,Documentation/PDFs/PAGE_08_BING_ADS.pdf,Documentation/Markdown/PAGE_08_BING_ADS.md,2026-06-14
+Web Design (/services/web-design/),Per-Page,Page Spec,Documentation/PDFs/PAGE_09_WEB_DESIGN.pdf,Documentation/Markdown/PAGE_09_WEB_DESIGN.md,2026-06-14
+Knowledge Hub (/knowledge-hub/),Per-Page,Page Spec,Documentation/PDFs/PAGE_10_KNOWLEDGE_HUB.pdf,Documentation/Markdown/PAGE_10_KNOWLEDGE_HUB.md,2026-06-14
+Blog (/knowledge-hub/blogs/),Per-Page,Page Spec,Documentation/PDFs/PAGE_11_BLOG.pdf,Documentation/Markdown/PAGE_11_BLOG.md,2026-06-14
+Definitions & Glossary (/knowledge-hub/definitions-glossary/),Per-Page,Page Spec,Documentation/PDFs/PAGE_12_DEFINITIONS_GLOSSARY.pdf,Documentation/Markdown/PAGE_12_DEFINITIONS_GLOSSARY.md,2026-06-14
+Industry News (/knowledge-hub/industry-news/),Per-Page,Page Spec,Documentation/PDFs/PAGE_13_INDUSTRY_NEWS.pdf,Documentation/Markdown/PAGE_13_INDUSTRY_NEWS.md,2026-06-14
+Research Reports (/knowledge-hub/research-reports/),Per-Page,Page Spec,Documentation/PDFs/PAGE_14_RESEARCH_REPORTS.pdf,Documentation/Markdown/PAGE_14_RESEARCH_REPORTS.md,2026-06-14
+Security Guides (/knowledge-hub/security-guides/),Per-Page,Page Spec,Documentation/PDFs/PAGE_15_SECURITY_GUIDES.pdf,Documentation/Markdown/PAGE_15_SECURITY_GUIDES.md,2026-06-14
+Security Industry SEO Pillar (/knowledge-hub/security-industry-seo/),Per-Page,Page Spec,Documentation/PDFs/PAGE_16_SECURITY_INDUSTRY_SEO.pdf,Documentation/Markdown/PAGE_16_SECURITY_INDUSTRY_SEO.md,2026-06-14
+Security Trends 2026 (/knowledge-hub/security-trends-2026/),Per-Page,Page Spec,Documentation/PDFs/PAGE_17_SECURITY_TRENDS_2026.pdf,Documentation/Markdown/PAGE_17_SECURITY_TRENDS_2026.md,2026-06-14
+Publish With Us (/publish-with-us/),Per-Page,Page Spec,Documentation/PDFs/PAGE_18_PUBLISH_WITH_US.pdf,Documentation/Markdown/PAGE_18_PUBLISH_WITH_US.md,2026-06-14
+Advertise (/publish-with-us/advertise/),Per-Page,Page Spec,Documentation/PDFs/PAGE_19_ADVERTISE.pdf,Documentation/Markdown/PAGE_19_ADVERTISE.md,2026-06-14
+Backlink Packages (/publish-with-us/backlink-packages/),Per-Page,Page Spec,Documentation/PDFs/PAGE_20_BACKLINK_PACKAGES.pdf,Documentation/Markdown/PAGE_20_BACKLINK_PACKAGES.md,2026-06-14
+Guest Posting (/publish-with-us/guest-posting/),Per-Page,Page Spec,Documentation/PDFs/PAGE_21_GUEST_POSTING.pdf,Documentation/Markdown/PAGE_21_GUEST_POSTING.md,2026-06-14
+Press Release (/publish-with-us/press-release/),Per-Page,Page Spec,Documentation/PDFs/PAGE_22_PRESS_RELEASE.pdf,Documentation/Markdown/PAGE_22_PRESS_RELEASE.md,2026-06-14
+Pricing & Guidelines (/publish-with-us/pricing-guidelines/),Per-Page,Page Spec,Documentation/PDFs/PAGE_23_PRICING_GUIDELINES.pdf,Documentation/Markdown/PAGE_23_PRICING_GUIDELINES.md,2026-06-14
+Product Promotion (/publish-with-us/product-promotion/),Per-Page,Page Spec,Documentation/PDFs/PAGE_24_PRODUCT_PROMOTION.pdf,Documentation/Markdown/PAGE_24_PRODUCT_PROMOTION.md,2026-06-14
+Sponsored Posts (/publish-with-us/sponsored-posts/),Per-Page,Page Spec,Documentation/PDFs/PAGE_25_SPONSORED_POSTS.pdf,Documentation/Markdown/PAGE_25_SPONSORED_POSTS.md,2026-06-14
+About Us (/about-us/),Per-Page,Page Spec,Documentation/PDFs/PAGE_26_ABOUT_US.pdf,Documentation/Markdown/PAGE_26_ABOUT_US.md,2026-06-14
+Contact (/contact/),Per-Page,Page Spec,Documentation/PDFs/PAGE_27_CONTACT.pdf,Documentation/Markdown/PAGE_27_CONTACT.md,2026-06-14
+Case Studies (/case-studies/),Per-Page,Page Spec,Documentation/PDFs/PAGE_28_CASE_STUDIES.pdf,Documentation/Markdown/PAGE_28_CASE_STUDIES.md,2026-06-14
+Security Directory (/security-directory/),Per-Page,Page Spec,Documentation/PDFs/PAGE_29_SECURITY_DIRECTORY.pdf,Documentation/Markdown/PAGE_29_SECURITY_DIRECTORY.md,2026-06-14
+AI Visibility Center (/ai-visibility-center/),Per-Page,Page Spec,Documentation/PDFs/PAGE_30_AI_VISIBILITY_CENTER.pdf,Documentation/Markdown/PAGE_30_AI_VISIBILITY_CENTER.md,2026-06-14
+Free Tools (/free-tools/),Per-Page,Page Spec,Documentation/PDFs/PAGE_31_FREE_TOOLS.pdf,Documentation/Markdown/PAGE_31_FREE_TOOLS.md,2026-06-14
+Career (/career/),Per-Page,Page Spec,Documentation/PDFs/PAGE_32_CAREER.pdf,Documentation/Markdown/PAGE_32_CAREER.md,2026-06-14
+Book Strategy Call (/book-strategy-call/),Per-Page,Page Spec,Documentation/PDFs/PAGE_33_BOOK_STRATEGY_CALL.pdf,Documentation/Markdown/PAGE_33_BOOK_STRATEGY_CALL.md,2026-06-14
+Privacy Policy (/privacy-policy/),Per-Page,Page Spec,Documentation/PDFs/PAGE_34_PRIVACY_POLICY.pdf,Documentation/Markdown/PAGE_34_PRIVACY_POLICY.md,2026-06-14
+Terms of Service (/terms-of-service/),Per-Page,Page Spec,Documentation/PDFs/PAGE_35_TERMS_OF_SERVICE.pdf,Documentation/Markdown/PAGE_35_TERMS_OF_SERVICE.md,2026-06-14
+Content Guidelines (/content-guidelines/),Per-Page,Page Spec,Documentation/PDFs/PAGE_36_CONTENT_GUIDELINES.pdf,Documentation/Markdown/PAGE_36_CONTENT_GUIDELINES.md,2026-06-14

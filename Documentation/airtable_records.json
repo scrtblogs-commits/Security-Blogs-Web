@@ -1,0 +1,586 @@
+[
+  [
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "System Architecture",
+        "fldRBNDRTgdTsOvGN": "All systems (overview)",
+        "fldHQZIvQdNfuj8CI": "Architecture",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/SYSTEM_ARCHITECTURE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/SYSTEM_ARCHITECTURE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "None \u2014 all references verified",
+        "fldtfPGRGoz1SHhOc": 100.0
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Database Architecture",
+        "fldRBNDRTgdTsOvGN": "PostgreSQL",
+        "fldHQZIvQdNfuj8CI": "Architecture",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/DATABASE_ARCHITECTURE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/DATABASE_ARCHITECTURE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "FAIL",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "PG tables (14): case_studies_slug_uq, leads_assigned_to_idx, leads_source_idx",
+        "fldtfPGRGoz1SHhOc": 70.8
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Airtable Architecture",
+        "fldRBNDRTgdTsOvGN": "Airtable",
+        "fldHQZIvQdNfuj8CI": "Architecture",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/AIRTABLE_ARCHITECTURE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/AIRTABLE_ARCHITECTURE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (2): Documentation/Markdown/PAGE_NAME.md, lib/airtable.ts",
+        "fldtfPGRGoz1SHhOc": 95.2
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Deployment Guide",
+        "fldRBNDRTgdTsOvGN": "Production Server (Phase D)",
+        "fldHQZIvQdNfuj8CI": "Guide",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/DEPLOYMENT_GUIDE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/DEPLOYMENT_GUIDE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "FAIL",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (1): rclone copy b2:sb-backups/latest.dump.gpg .\nPG tables (2): pg_restore, stats",
+        "fldtfPGRGoz1SHhOc": 72.7
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Developer Handbook",
+        "fldRBNDRTgdTsOvGN": "All systems (onboarding)",
+        "fldHQZIvQdNfuj8CI": "Handbook",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/DEVELOPER_HANDBOOK.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/DEVELOPER_HANDBOOK.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "FAIL",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (7): Markdown/, PDFs/, book-strategy-call/\nPG tables (15): access, admin, bash",
+        "fldtfPGRGoz1SHhOc": 75.0
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Home (/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_01_HOME.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_01_HOME.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (4): components/previews/AdMetricsPreview.tsx, lib/cms.ts \u2192 getPage('home'), lib/cms.ts \u2192 getServices()\nEnv vars (1): SENTRY_DSN\nPG tables (3): capabilities, company_url, image",
+        "fldtfPGRGoz1SHhOc": 88.1
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Services Hub (/services/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_02_SERVICES.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_02_SERVICES.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 88.2
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Security SEO (/services/security-seo/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_03_SECURITY_SEO.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_03_SECURITY_SEO.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.8
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "AIO (/services/aio/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_04_AIO.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_04_AIO.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.1
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "AEO (/services/aeo/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_05_AEO.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_05_AEO.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.1
+      }
+    }
+  ],
+  [
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "GEO (/services/geo/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_06_GEO.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_06_GEO.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (1): app/services/geo/AustraliaMap.tsx (or similar)\nEnv vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 84.8
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Google Ads (/services/google-ads/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_07_GOOGLE_ADS.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_07_GOOGLE_ADS.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.1
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Bing Ads (/services/bing-ads/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_08_BING_ADS.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_08_BING_ADS.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.1
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Web Design (/services/web-design/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_09_WEB_DESIGN.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_09_WEB_DESIGN.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.5
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Knowledge Hub (/knowledge-hub/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_10_KNOWLEDGE_HUB.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_10_KNOWLEDGE_HUB.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.5
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Blog (/knowledge-hub/blogs/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_11_BLOG.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_11_BLOG.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.5
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Definitions & Glossary (/knowledge-hub/definitions-glossary/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_12_DEFINITIONS_GLOSSARY.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_12_DEFINITIONS_GLOSSARY.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.5
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Industry News (/knowledge-hub/industry-news/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_13_INDUSTRY_NEWS.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_13_INDUSTRY_NEWS.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.8
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Research Reports (/knowledge-hub/research-reports/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_14_RESEARCH_REPORTS.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_14_RESEARCH_REPORTS.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 85.7
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Security Guides (/knowledge-hub/security-guides/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_15_SECURITY_GUIDES.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_15_SECURITY_GUIDES.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.3
+      }
+    }
+  ],
+  [
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Security Industry SEO Pillar (/knowledge-hub/security-industry-seo/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_16_SECURITY_INDUSTRY_SEO.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_16_SECURITY_INDUSTRY_SEO.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.9
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Security Trends 2026 (/knowledge-hub/security-trends-2026/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_17_SECURITY_TRENDS_2026.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_17_SECURITY_TRENDS_2026.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.8
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Publish With Us (/publish-with-us/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_18_PUBLISH_WITH_US.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_18_PUBLISH_WITH_US.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 87.1
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Advertise (/publish-with-us/advertise/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_19_ADVERTISE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_19_ADVERTISE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 81.6
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Backlink Packages (/publish-with-us/backlink-packages/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_20_BACKLINK_PACKAGES.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_20_BACKLINK_PACKAGES.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 81.6
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Guest Posting (/publish-with-us/guest-posting/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_21_GUEST_POSTING.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_21_GUEST_POSTING.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 85.7
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Press Release (/publish-with-us/press-release/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_22_PRESS_RELEASE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_22_PRESS_RELEASE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 81.6
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Pricing & Guidelines (/publish-with-us/pricing-guidelines/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_23_PRICING_GUIDELINES.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_23_PRICING_GUIDELINES.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.3
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Product Promotion (/publish-with-us/product-promotion/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_24_PRODUCT_PROMOTION.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_24_PRODUCT_PROMOTION.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 85.7
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Sponsored Posts (/publish-with-us/sponsored-posts/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_25_SPONSORED_POSTS.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_25_SPONSORED_POSTS.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 85.7
+      }
+    }
+  ],
+  [
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "About Us (/about-us/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_26_ABOUT_US.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_26_ABOUT_US.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.3
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Contact (/contact/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_27_CONTACT.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_27_CONTACT.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 86.5
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Case Studies (/case-studies/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_28_CASE_STUDIES.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_28_CASE_STUDIES.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 88.6
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Security Directory (/security-directory/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_29_SECURITY_DIRECTORY.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_29_SECURITY_DIRECTORY.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.5
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "AI Visibility Center (/ai-visibility-center/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_30_AI_VISIBILITY_CENTER.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_30_AI_VISIBILITY_CENTER.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (1): app/api/ai-score/route.ts\nEnv vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 84.3
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Free Tools (/free-tools/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_31_FREE_TOOLS.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_31_FREE_TOOLS.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 82.4
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Career (/career/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_32_CAREER.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_32_CAREER.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (1): app/api/leads/upload/route.ts\nEnv vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 84.0
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Book Strategy Call (/book-strategy-call/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_33_BOOK_STRATEGY_CALL.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_33_BOOK_STRATEGY_CALL.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (5): company_url, email, name",
+        "fldtfPGRGoz1SHhOc": 85.1
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Privacy Policy (/privacy-policy/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_34_PRIVACY_POLICY.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_34_PRIVACY_POLICY.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.3
+      }
+    },
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Terms of Service (/terms-of-service/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_35_TERMS_OF_SERVICE.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_35_TERMS_OF_SERVICE.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "REVIEW",
+        "fldUPLDQAgIqBv9SW": false,
+        "fldWvxl4uZefSH19T": "Files (1): app/terms-of-service/page.tsx (TBD if exists; verify before edit)\nEnv vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 90.0
+      }
+    }
+  ],
+  [
+    {
+      "fields": {
+        "fld8S8CFn20qitQuq": "Content Guidelines (/content-guidelines/)",
+        "fldRBNDRTgdTsOvGN": "Per-Page",
+        "fldHQZIvQdNfuj8CI": "Page Spec",
+        "fldT2Vb0gumjvZQAt": "Documentation/Markdown/PAGE_36_CONTENT_GUIDELINES.md",
+        "fld3ytWfoSLc2cS8X": "Documentation/PDFs/PAGE_36_CONTENT_GUIDELINES.pdf",
+        "fldQW1DrllculqRf5": "2026-06-14",
+        "fld0a0JZJ91KZTf4S": "PASS",
+        "fldUPLDQAgIqBv9SW": true,
+        "fldWvxl4uZefSH19T": "Env vars (1): SENTRY_DSN\nPG tables (1): super_admin",
+        "fldtfPGRGoz1SHhOc": 93.3
+      }
+    }
+  ]
+]
