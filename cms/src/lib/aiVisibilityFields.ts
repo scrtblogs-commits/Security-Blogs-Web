@@ -34,6 +34,7 @@ export const aiVisibilityField: Field = {
   name: 'aiVisibility',
   type: 'group',
   label: 'AI Visibility',
+  dbName: 'aiv',
   admin: {
     description:
       'How this piece of content is engineered to be discovered and cited by AI answer engines.',
@@ -97,11 +98,13 @@ export const aiVisibilityField: Field = {
       type: 'array',
       label: 'Entity Relationships',
       labels: { singular: 'Relationship', plural: 'Relationships' },
+      dbName: 'ent_rels',
       fields: [
         { name: 'relatedEntity', type: 'text', required: true },
         {
           name: 'relationshipType',
           type: 'select',
+          dbName: 'rel_type',
           options: [
             { label: 'Publishes',    value: 'publishes' },
             { label: 'Authored by',  value: 'authored_by' },
@@ -131,8 +134,9 @@ export const aiVisibilityField: Field = {
       type: 'array',
       label: 'Audit Results',
       labels: { singular: 'Result', plural: 'Results' },
+      dbName: 'audits',
       fields: [
-        { name: 'platform', type: 'select', options: ENGINE_OPTIONS, required: true },
+        { name: 'platform', type: 'select', dbName: 'pf', options: ENGINE_OPTIONS, required: true },
         { name: 'cited', type: 'checkbox', defaultValue: false },
         { name: 'position', type: 'number', admin: { description: 'Position within the AI answer if cited (1 = primary citation).' } },
         { name: 'snapshotUrl', type: 'text', label: 'Snapshot URL', admin: { description: 'Archive.org or screenshot URL.' } },
