@@ -33,6 +33,15 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'SecurityBlogs',
     type: 'website',
+    locale: 'en_AU',
+    images: ['/logo.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
+    description:
+      'Be the answer AI gives. AI visibility, SEO and paid media for security brands.',
+    images: ['/logo.png'],
   },
 }
 
