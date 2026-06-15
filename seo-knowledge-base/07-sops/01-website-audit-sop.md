@@ -1,350 +1,323 @@
-# SOP-01: Website SEO Audit
+# SOP 01 — Website SEO Audit
 
 **Organisation:** SecurityBlogs Australia
 **Department:** SEO / Digital Marketing
-**Version:** 1.0
+**Document Version:** 1.0
 **Last Reviewed:** June 2026
-**Owner:** SEO Lead
+**Review Frequency:** Quarterly
 
 ---
 
 ## Purpose
 
-To establish a repeatable, comprehensive process for auditing the SecurityBlogs Australia website and client websites for technical SEO issues, on-page deficiencies, and performance problems that may be limiting organic search visibility and rankings.
+To provide a repeatable, comprehensive process for auditing the SecurityBlogs Australia website for SEO health, technical issues, and content quality. The audit identifies problems that may suppress organic rankings, impair crawlability, or degrade user experience, and produces a prioritised action plan to resolve them.
 
 ---
 
 ## Scope
 
-This SOP applies to:
-- The SecurityBlogs Australia website (securityblogs.com.au)
-- Client websites managed under the SecurityBlogs digital marketing agency arm
-- Any new website onboarding requiring a baseline SEO health assessment
-
-This SOP covers technical SEO, on-page SEO, and performance — it does not cover off-page SEO or content strategy (see SOP-07 and SOP-04 respectively).
+Applies to all pages within the SecurityBlogs Australia domain (and any subdomain properties). Conducted quarterly as a full audit and monthly as a lighter monitoring sweep. Applicable to the SEO team lead, content strategist, and technical SEO consultant.
 
 ---
 
 ## Tools Required
 
-| Tool | Purpose | Access Level |
+| Tool | Purpose | Licence |
 |---|---|---|
-| Screaming Frog SEO Spider (licensed) | Full site crawl | Desktop — SEO team |
-| Google Search Console | Indexation, coverage, Core Web Vitals | Property owner access |
-| Google PageSpeed Insights | Page speed and CWV per URL | Free / public |
-| GTmetrix (Pro) | Waterfall analysis, speed testing | Agency account |
-| Ahrefs Site Audit | Supplementary crawl, backlink data | Agency account |
-| Google Rich Results Test | Structured data validation | Free / public |
-| Redirect Checker (httpstatus.io) | Redirect chain analysis | Free / public |
-| Screaming Frog Log File Analyser | Log file review (quarterly) | Desktop — SEO team |
-| Google Analytics 4 | Traffic and behavioural data | Property access |
-| W3C Markup Validator | HTML validation | Free / public |
+| Screaming Frog SEO Spider (v21+) | Full site crawl | Paid |
+| Google Search Console | Indexation, coverage, CWV | Free |
+| Google PageSpeed Insights | Page speed, CWV per URL | Free |
+| GTmetrix | Waterfall analysis, speed | Free/Paid |
+| Ahrefs | Backlinks, organic traffic, broken links | Paid |
+| Google Rich Results Test | Structured data validation | Free |
+| Semrush Site Audit | Supplementary crawl checks | Paid |
+| Mobile-Friendly Test (Google) | Mobile usability | Free |
+| Copyscape / Siteliner | Duplicate content | Paid/Free |
+| SSL Labs (ssllabs.com) | HTTPS/SSL certificate check | Free |
+| Screaming Frog Log Analyser | Log file analysis (quarterly) | Paid |
 
 ---
 
 ## Step-by-Step Process
 
-### Phase 1: Pre-Crawl Setup
+### Phase 1 — Crawl Setup (Screaming Frog)
 
-1. **Create an audit project folder** using the naming convention: `YYYY-MM_ClientName_SEO-Audit`. Store in the shared drive under `/Audits/`.
+1. Open Screaming Frog SEO Spider. Navigate to **Configuration > Spider** and confirm the following settings:
+   - Crawl JavaScript: enabled (if site uses JS rendering)
+   - Maximum URL depth: unlimited
+   - Respect robots.txt: **disabled** (to surface blocked URLs)
+   - Crawl delay: 0.5–1 second (to avoid server load)
+2. Navigate to **Configuration > Custom > Search** and add regex patterns to flag thin content (e.g., word count fewer than 300).
+3. Under **Configuration > API Access**, connect Google Search Console and Google Analytics integrations.
+4. Enter the root domain (e.g., `https://securityblogs.com.au`) and click **Start**.
+5. Allow the crawl to complete fully. Export the raw crawl data in CSV format to the audit working folder.
+6. Save the Screaming Frog project file (.seospider) with the date stamp (e.g., `audit-2026-06-15.seospider`).
 
-2. **Download or export the current XML sitemap** from the target domain (e.g., `https://domain.com.au/sitemap.xml`). Save locally.
+### Phase 2 — Indexation Check
 
-3. **Open Screaming Frog SEO Spider.** Go to **Configuration > Spider** and confirm the following settings:
-   - Check HTML, JavaScript, CSS, Images, and PDFs
-   - Enable "Follow internal nofollow links" — ON
-   - Enable "Crawl outside of start folder" — OFF (unless subdomain audit required)
-   - Set "Max Threads" appropriate to site size (start at 5 for shared hosting)
+7. In Google Search Console, navigate to **Index > Pages** (Coverage report).
+8. Document the count of:
+   - Valid pages indexed
+   - Valid pages with warnings
+   - Excluded pages (reason-by-reason breakdown)
+   - Error pages (404, server errors, redirect errors)
+9. Cross-reference excluded pages against the site crawl to determine whether exclusions are intentional (e.g., noindex tags) or problematic.
+10. Run a `site:securityblogs.com.au` search in Google and note the approximate index count. Compare to actual page count from the crawl.
+11. Identify any important pages (service pages, pillar posts, category pages) that are not indexed. Record in the audit log.
 
-4. **Configure custom extraction** in Screaming Frog if required:
-   - Extract schema markup (JSON-LD)
-   - Extract Open Graph tags
-   - Custom: any CMS-specific meta fields
+### Phase 3 — Core Web Vitals (CWV)
 
-5. **Upload the sitemap to Screaming Frog** via **Mode > List Mode** if you want to audit sitemap URLs only. For a full crawl, use Spider mode.
+12. In Google Search Console, navigate to **Experience > Core Web Vitals** and download both Mobile and Desktop reports.
+13. Identify URLs marked as **Poor** (LCP > 4s, FID > 300ms, CLS > 0.25) and **Needs Improvement**.
+14. For each Poor or Needs Improvement URL, run through **Google PageSpeed Insights** to get per-page diagnostics.
+15. Record CWV issues in the audit log with their category (LCP, FID/INP, CLS) and recommended fix.
+16. Priority: fix all Poor URLs first, then Needs Improvement.
 
-6. **Set user agent** to Googlebot (Configuration > User-Agent) to simulate how Google crawls.
+### Phase 4 — Mobile Usability
 
-7. **Enter the target URL** and click **Start**. Allow the crawl to complete fully before exporting data.
+17. In Google Search Console, navigate to **Experience > Mobile Usability**.
+18. Document any mobile usability errors (e.g., clickable elements too close together, content wider than screen, text too small).
+19. Test the 10 highest-traffic pages individually in the **Google Mobile-Friendly Test** tool.
+20. Record errors and affected URLs in the audit log.
 
----
+### Phase 5 — Duplicate Content
 
-### Phase 2: Crawl Data Analysis
+21. In Screaming Frog, filter by **Duplicate Page Titles** and **Duplicate Meta Descriptions**. Export.
+22. Run the crawl export through **Siteliner** to identify duplicate body content across internal pages.
+23. For suspected duplicate content, check canonical tags in Screaming Frog (**Canonicals** tab).
+24. Identify cases where:
+    - Two URLs serve identical or near-identical content
+    - Canonical tag is missing or self-referencing incorrectly
+    - Pagination pages duplicate the parent page content
+25. Record all instances with recommended fix (consolidate, canonical, noindex, 301 redirect).
 
-8. **Export all crawl data** to CSV. Go to **Reports > Crawl Overview** first for a summary.
+### Phase 6 — Broken Links and Redirect Chains
 
-9. **Check Response Codes tab:**
-   - Filter for `4xx` errors — log all broken URLs, note referring pages
-   - Filter for `5xx` errors — flag for developer
-   - Filter for `3xx` redirects — identify redirect chains (3+ hops)
-   - Note any pages returning 200 status that should be 404 (soft 404s)
-
-10. **Check Page Titles tab:**
-    - Filter: Missing titles (critical fix)
-    - Filter: Duplicate titles (consolidation required)
-    - Filter: Titles over 60 characters (risk of truncation)
-    - Filter: Titles under 20 characters (thin/weak)
-    - Filter: Same as H1 (not necessarily an error but note for review)
-
-11. **Check Meta Description tab:**
-    - Filter: Missing meta descriptions
-    - Filter: Duplicate meta descriptions
-    - Filter: Over 155 characters
-    - Filter: Under 50 characters
-
-12. **Check H1 tab:**
-    - Filter: Missing H1
-    - Filter: Multiple H1 tags on a single page
-    - Filter: H1 over 70 characters
-    - Cross-reference H1 vs page title for alignment
-
-13. **Check H2–H6 tabs** for structural issues and keyword usage patterns.
-
-14. **Check Canonicals tab:**
-    - Pages with no canonical tag
-    - Pages with a canonical pointing to a different URL (intentional vs error)
-    - Canonical chains (canonical → page that also has a different canonical)
-    - Non-indexable pages with self-referencing canonicals
-
-15. **Check Images tab:**
-    - Filter: Missing alt text
-    - Filter: Alt text over 100 characters
-    - Filter: Large images (over 100KB) — flag for compression
-    - Filter: Broken images (4xx)
-
-16. **Check Directives tab:**
-    - Pages marked `noindex` — confirm intentional
-    - Pages marked `nofollow` — confirm intentional
-    - Orphan pages (not linked internally)
-
-17. **Check Links tab:**
-    - Internal links to broken pages
-    - Pages with no internal inlinks (orphan pages)
-    - Pages with excessive outbound links
-
-18. **Check Hreflang tab** (if site targets AU/US/UK):
-    - Missing hreflang annotations
-    - Incorrect country/language codes
-    - Non-reciprocal hreflang relationships
-
-19. **Run Duplicate Content check:**
-    - In Screaming Frog: **Reports > Duplicate Content**
-    - Export near-duplicate and exact duplicate URLs
-    - Note URL pairs and which to canonicalise or consolidate
-
----
-
-### Phase 3: Indexation Check
-
-20. **Log in to Google Search Console.** Navigate to **Coverage (Index) report.**
-
-21. **Review each status tab:**
-    - **Error:** Pages Google tried to index but could not — document each error type
-    - **Valid with Warning:** Submitted URLs with issues (e.g., submitted and noindexed)
-    - **Excluded:** Review "Crawled but not indexed", "Discovered but not indexed", "Duplicate" clusters
-    - **Valid:** Confirm total indexed pages aligns with expected site size
-
-22. **Cross-reference indexed page count** with Screaming Frog crawl total. A significant gap indicates either blocked pages or indexing issues.
-
-23. **Run a site: operator search** in Google (`site:domain.com.au`) to get a rough indexed page count and check for unexpected pages appearing in the index.
-
-24. **Review robots.txt** at `domain.com.au/robots.txt`:
-    - Check for accidental disallow rules blocking important URLs
-    - Check sitemap declaration is present and correct
-    - Validate using **Google Search Console > robots.txt Tester** (if available) or robotstxt.org
-
-25. **Audit XML sitemap:**
-    - All URLs in sitemap return 200 status
-    - No noindex pages included in sitemap
-    - No redirect URLs in sitemap
-    - Sitemap last modified date is current
-    - Image sitemap present (if applicable)
-
----
-
-### Phase 4: Core Web Vitals and Performance
-
-26. **Export Core Web Vitals data from Google Search Console** (Experience > Core Web Vitals). Note which URLs are in "Poor", "Needs Improvement", or "Good" status for both mobile and desktop.
-
-27. **Run PageSpeed Insights** on the top 10 most important pages (homepage, key pillar pages, highest traffic pages per GA4):
-    - Record LCP (target: under 2.5s)
-    - Record FID/INP (target: FID under 100ms, INP under 200ms)
-    - Record CLS (target: under 0.1)
-    - Record Performance Score (target: 75+)
-
-28. **Run GTmetrix** on the same top 10 pages:
-    - Review Waterfall chart for render-blocking resources
-    - Note largest resources (images, scripts, fonts)
-    - Check time-to-first-byte (TTFB) — target under 600ms
-    - Note any third-party scripts significantly impacting load time
-
-29. **Document performance findings** by URL in the audit spreadsheet.
-
----
-
-### Phase 5: Mobile Usability
-
-30. **In Google Search Console**, go to **Experience > Mobile Usability.** Note any pages with mobile usability errors (clickable elements too close, content wider than screen, text too small).
-
-31. **Manually test key pages** using Google's Mobile-Friendly Test (search.google.com/test/mobile-friendly) and Chrome DevTools (toggle device toolbar — test at 375px width for iPhone SE and 390px for iPhone 14).
-
-32. **Check touch target sizes** — minimum 48x48px recommended.
-
-33. **Confirm viewport meta tag** is present on all pages: `<meta name="viewport" content="width=device-width, initial-scale=1">`.
-
----
-
-### Phase 6: Security and HTTPS
-
-34. **Confirm HTTPS is enforced** across the entire site:
-    - HTTP URLs redirect to HTTPS (301, not 302)
-    - No mixed content warnings (use Chrome DevTools Console or whynopadlock.com)
-    - SSL certificate is valid, not expiring within 30 days
-    - HSTS header is present (check via securityheaders.com)
-
-35. **Check for www/non-www redirect:** One version should 301 to the other consistently.
-
-36. **Run SSL Labs test** (ssllabs.com/ssltest/) — target grade A or A+.
-
----
-
-### Phase 7: Structured Data
-
-37. **In Screaming Frog,** go to **Structured Data tab** to see pages with schema markup present.
-
-38. **Validate structured data** on key page types using **Google Rich Results Test:**
-    - Homepage (Organisation schema)
-    - Blog posts (Article schema)
-    - Author pages (Person schema)
-    - FAQ pages (FAQPage schema)
-    - Product/service pages (Service schema)
-
-39. **Check Google Search Console > Enhancements** for any structured data errors or warnings flagged by Google.
-
-40. **Note any missed opportunities** for structured data (e.g., breadcrumbs, HowTo, LocalBusiness for AU-based clients).
-
----
-
-### Phase 8: Thin Content Review
-
-41. **In Screaming Frog,** filter **Word Count column** (requires JavaScript rendering or custom extraction). Flag pages under 300 words that are not intentional thin pages (e.g., contact, thank you pages).
-
-42. **Export page list with word count** and cross-reference with GA4 traffic data. Thin pages with no traffic and no inbound links are candidates for consolidation or removal.
-
-43. **Identify doorway pages, near-duplicate content**, and pages that may be cannibalising each other's rankings via keyword similarity.
-
----
-
-### Phase 9: Redirect Audit
-
-44. **Export all 3xx redirect URLs** from Screaming Frog.
-
-45. **Paste into httpstatus.io** or use Screaming Frog's Redirect Chains report to identify:
-    - Redirect chains (A → B → C — should be A → C)
+26. In Screaming Frog, navigate to **Response Codes** and filter by **4xx** (client errors). Export.
+27. Filter by **5xx** (server errors). Export.
+28. Navigate to **Redirects** and filter by **3xx**. Identify:
+    - Redirect chains (3 or more hops)
     - Redirect loops
-    - 302 redirects that should be 301s (temporary vs permanent)
+    - 302 redirects being used where 301 is appropriate
+29. In Ahrefs **Site Audit**, run the Broken Links report to capture both internal and external broken outbound links.
+30. Record all broken links (source URL + broken URL) and redirect chains in the audit log with priority (inbound-linked broken pages = high priority).
 
-46. **Document each redirect chain** and provide a fix recommendation (update the redirect to go directly to the final destination).
+### Phase 7 — Canonical Issues
 
----
+31. In Screaming Frog, navigate to **Canonicals** tab.
+32. Identify and record:
+    - Pages with no canonical tag
+    - Pages with a canonical pointing to a different URL (non-self-referencing)
+    - Pages with multiple canonical tags
+    - Pages where canonical URL returns a non-200 response
+    - HTTP pages with a canonical pointing to HTTPS (or vice versa)
+33. Check that paginated pages (/page/2, /page/3 etc.) use correct canonical or rel=prev/next (if applicable).
 
-## Quality Checklist
+### Phase 8 — Thin Content Pages
 
-- [ ] Screaming Frog crawl completed with 0 errors/interruptions
-- [ ] All crawl data exported to CSV and saved in project folder
-- [ ] Response codes reviewed (4xx, 5xx, 3xx)
-- [ ] Title tags reviewed (missing, duplicate, length)
-- [ ] Meta descriptions reviewed (missing, duplicate, length)
-- [ ] H1 tags reviewed (missing, multiple)
-- [ ] Canonical tags reviewed
-- [ ] Images reviewed (alt text, file size, broken)
-- [ ] Indexation confirmed via GSC Coverage report
-- [ ] robots.txt reviewed and validated
-- [ ] XML sitemap audited
-- [ ] Core Web Vitals pulled from GSC and PageSpeed Insights
-- [ ] GTmetrix run on top 10 pages
-- [ ] Mobile usability check completed
-- [ ] HTTPS/SSL confirmed valid
-- [ ] Mixed content issues checked
-- [ ] Structured data validated on key page types
-- [ ] Thin content pages identified
-- [ ] Redirect chains documented
-- [ ] Duplicate content report exported
-- [ ] All findings entered into the audit report template
-- [ ] Prioritised recommendations list created (P1/P2/P3)
+34. In Screaming Frog, use **Custom > Search** or the **Page Word Count** export to identify pages with fewer than 300 words of body text.
+35. Export all URLs with low word count.
+36. Manually review each thin page and classify as:
+    - Genuinely thin (needs content expansion)
+    - Intentionally short (contact page, thank-you page — consider noindex)
+    - Near-duplicate of another page (consider consolidation)
+37. Record recommendations (expand, consolidate, noindex) in the audit log.
+
+### Phase 9 — Meta Data Issues
+
+38. In Screaming Frog, navigate to **Page Titles** tab. Export. Identify:
+    - Missing title tags
+    - Duplicate title tags
+    - Title tags over 60 characters (may be truncated in SERPs)
+    - Title tags under 30 characters (under-optimised)
+39. Navigate to **Meta Description** tab. Export. Identify:
+    - Missing meta descriptions
+    - Duplicate meta descriptions
+    - Descriptions over 160 characters
+40. Navigate to **H1** tab. Identify:
+    - Missing H1 tags
+    - Pages with multiple H1 tags
+    - H1 not matching or misaligned with title tag
+41. Record all issues with affected URLs in the audit log.
+
+### Phase 10 — Structured Data Errors
+
+42. In Screaming Frog, navigate to **Structured Data** tab (requires JS rendering enabled).
+43. Export all detected schema types and note any errors or warnings.
+44. Run the 10 most important URLs through **Google Rich Results Test** and check for errors.
+45. In Google Search Console, navigate to **Enhancements** and review any structured data reports (Articles, FAQPage, BreadcrumbList, Organisation).
+46. Record schema errors and missing schema opportunities (e.g., Article schema on blog posts, FAQPage on FAQ sections).
+
+### Phase 11 — Page Speed
+
+47. Using **GTmetrix**, test the homepage, top 5 blog posts, and top 5 service or landing pages.
+48. Record: Performance score, LCP, TBT, CLS, page size, number of requests, and time to fully loaded.
+49. Identify specific GTmetrix recommendations (e.g., unminified CSS/JS, render-blocking resources, uncompressed images, missing caching headers).
+50. Run the same pages through **Google PageSpeed Insights** and record Mobile and Desktop scores.
+51. Identify the top 3 speed issues across the site and record in the audit log with estimated impact.
+
+### Phase 12 — Security (HTTPS)
+
+52. Visit `https://www.ssllabs.com/ssltest/` and run the SecurityBlogs domain.
+53. Confirm SSL certificate grade is A or A+.
+54. Confirm SSL certificate expiry date — flag if fewer than 60 days to expiry.
+55. In Screaming Frog, filter URLs by **HTTP** (non-secure). Any HTTP URLs present should be flagged.
+56. Confirm that HTTP URLs 301 redirect to HTTPS equivalents.
+57. Check the **Strict-Transport-Security (HSTS)** header is present in site response headers.
+58. Record any HTTPS or security issues in the audit log.
+
+### Phase 13 — XML Sitemap
+
+59. Locate the XML sitemap (typically at `/sitemap.xml` or via `robots.txt`).
+60. Open the sitemap and confirm:
+    - All important pages are included
+    - No 301, 302, 4xx, or 5xx URLs are listed
+    - No noindex pages are listed
+    - `<lastmod>` dates are present and accurate
+    - Sitemap is submitted to Google Search Console
+61. If using a sitemap index, check all child sitemaps are accessible and valid.
+62. In Google Search Console, navigate to **Sitemaps** and confirm the latest submission shows no errors.
+63. Record any sitemap issues in the audit log.
+
+### Phase 14 — Robots.txt
+
+64. Access `https://securityblogs.com.au/robots.txt` and review the file.
+65. Confirm:
+    - Sitemap URL is declared in robots.txt
+    - No important pages or directories are accidentally blocked
+    - No `Disallow: /` rule is active on the production site
+    - User-agent rules are correctly formatted
+66. Cross-reference blocked URLs in robots.txt against the GSC Coverage report (Excluded > Blocked by robots.txt).
+67. Record any robots.txt issues in the audit log.
+
+### Phase 15 — Compile Audit Report
+
+68. Consolidate all findings from the audit log into the Audit Report Template (see below).
+69. Assign each issue a **Priority** (P1 Critical, P2 High, P3 Medium, P4 Low) based on:
+    - P1: Issues causing indexation loss, security risk, or significant ranking suppression
+    - P2: Issues directly impacting user experience or significant crawlability problems
+    - P3: Issues with moderate ranking impact
+    - P4: Minor improvements and best practices
+70. Create a prioritised action plan with assigned owner and due date for each item.
+71. Share the report with the SEO team lead and relevant stakeholders for review.
 
 ---
 
 ## Audit Report Template Structure
 
 ```
-# SEO Audit Report — [Domain] — [Month Year]
+# SecurityBlogs Australia — SEO Audit Report
+Audit Date: [Date]
+Auditor: [Name]
+Domain: securityblogs.com.au
+Audit Period: [Month Year]
+
+---
 
 ## Executive Summary
-- Overall health score (Red / Amber / Green)
-- Top 3 critical issues
-- Estimated impact of fixes
+[3–5 sentence overview of overall site health and top priority findings]
 
-## 1. Crawl Overview
-- Total URLs crawled
-- Total indexed URLs
-- Gap analysis
-
-## 2. Critical Issues (P1 — Fix Immediately)
-| Issue | Affected URLs | Recommendation | Effort |
+## Key Metrics Summary
+| Metric | Current | Previous | Change |
 |---|---|---|---|
+| Total URLs Crawled | | | |
+| Indexed Pages (GSC) | | | |
+| Crawl Errors | | | |
+| 4xx Errors | | | |
+| Redirect Chains | | | |
+| Duplicate Pages | | | |
+| Thin Content Pages | | | |
+| CWV — Poor (Mobile) | | | |
+| CWV — Poor (Desktop) | | | |
+| PageSpeed Score (Mobile avg) | | | |
+| PageSpeed Score (Desktop avg) | | | |
 
-## 3. High Priority Issues (P2 — Fix Within 30 Days)
-| Issue | Affected URLs | Recommendation | Effort |
-|---|---|---|---|
+## Priority Issues
 
-## 4. Improvements (P3 — Fix Within 90 Days)
-| Issue | Affected URLs | Recommendation | Effort |
-|---|---|---|---|
+### P1 — Critical
+| Issue | Affected URLs | Recommended Fix | Owner | Due Date |
+|---|---|---|---|---|
 
-## 5. Response Codes Summary
-## 6. On-Page SEO Summary
-## 7. Technical SEO Summary
-## 8. Performance Summary
-## 9. Structured Data Summary
-## 10. Appendix — Full Data Exports
+### P2 — High
+| Issue | Affected URLs | Recommended Fix | Owner | Due Date |
+|---|---|---|---|---|
+
+### P3 — Medium
+| Issue | Affected URLs | Recommended Fix | Owner | Due Date |
+|---|---|---|---|---|
+
+### P4 — Low
+| Issue | Affected URLs | Recommended Fix | Owner | Due Date |
+|---|---|---|---|---|
+
+## Detailed Findings
+1. Indexation
+2. Core Web Vitals
+3. Mobile Usability
+4. Duplicate Content
+5. Broken Links and Redirects
+6. Canonical Issues
+7. Thin Content
+8. Meta Data
+9. Structured Data
+10. Page Speed
+11. Security (HTTPS)
+12. XML Sitemap
+13. Robots.txt
+
+## Appendix
+- Screaming Frog crawl export (linked)
+- GSC Coverage export (linked)
+- CWV report export (linked)
 ```
+
+---
+
+## Quality Checklist
+
+- [ ] Screaming Frog crawl completed with 100% of URLs discovered
+- [ ] Google Search Console data exported (Coverage, CWV, Mobile Usability)
+- [ ] All 14 audit phases completed and documented
+- [ ] Audit report compiled with priority classifications
+- [ ] Action plan created with owners and due dates
+- [ ] Previous audit findings compared (delta reported)
+- [ ] Report reviewed by SEO team lead before distribution
+- [ ] Audit project file saved with date stamp to shared drive
 
 ---
 
 ## Common Mistakes to Avoid
 
-- **Starting the crawl without configuring Screaming Frog correctly** — incorrect settings lead to incomplete or misleading data.
-- **Ignoring JavaScript-rendered content** — if the site uses React/Vue/Angular, enable JS rendering in Screaming Frog or use a rendered crawl tool.
-- **Reporting all issues equally** — always prioritise by impact. A missing meta description on a low-traffic page is not P1.
-- **Confusing 302 redirects with 301s** — always confirm which type is being used before documenting.
-- **Not cross-referencing crawl data with GSC** — crawl data alone can miss indexation-specific issues that only GSC reveals.
-- **Auditing without access to GA4** — traffic context is essential for prioritising which issues to fix first.
-- **Not saving raw data exports** — always keep original CSV files in the project folder for future comparison.
+- **Crawling with robots.txt respected** — always disable robots.txt enforcement in Screaming Frog to surface all blocked URLs; just document what is blocked.
+- **Ignoring mobile CWV** — Desktop scores can mask serious mobile performance issues. Always check both.
+- **Treating all thin content as bad** — Contact, confirmation, and legal pages are legitimately short. Assess intent before recommending expansion.
+- **Not comparing to the previous audit** — Without a delta, it is impossible to measure improvement. Always pull the prior audit report.
+- **Skipping robots.txt review** — A single accidental `Disallow: /` on production can deindex the entire site.
+- **Missing subdomain properties** — If subdomains exist (e.g., `blog.securityblogs.com.au`), they require their own crawl and separate GSC property.
 
 ---
 
 ## Time Estimate
 
-| Site Size | Estimated Time |
+| Phase | Estimated Time |
 |---|---|
-| Small (under 200 pages) | 4–6 hours |
-| Medium (200–1,000 pages) | 8–12 hours |
-| Large (1,000–5,000 pages) | 2–3 days |
-| Enterprise (5,000+ pages) | 3–5 days |
-
-*Time includes crawl, analysis, and report writing. Does not include remediation.*
+| Crawl setup and execution | 30–60 minutes |
+| Indexation and CWV check | 30 minutes |
+| Mobile usability | 20 minutes |
+| Duplicate content analysis | 30 minutes |
+| Broken links and redirects | 30 minutes |
+| Canonical and meta data review | 30 minutes |
+| Structured data and schema | 20 minutes |
+| Page speed analysis | 30 minutes |
+| HTTPS, robots.txt and sitemap | 20 minutes |
+| Report compilation | 60–90 minutes |
+| **Total** | **5–6 hours** |
 
 ---
 
 ## Output / Deliverable
 
-1. **SEO Audit Report** (PDF + Google Doc) — structured using the template above
-2. **Audit Data Folder** (Google Drive) containing:
-   - Screaming Frog crawl export (CSV)
-   - Redirect chain report (CSV)
-   - Duplicate content report (CSV)
-   - PageSpeed Insights screenshots per tested URL
-   - GSC Coverage export
-3. **Prioritised Fix Tracker** (Google Sheet) — columns: Issue, Priority, URL, Recommendation, Owner, Status, Due Date
-4. **Executive Summary Slide** (1–2 slides for client presentations)
+- Completed SEO Audit Report (PDF and Google Doc) saved to `/SEO/Audits/[Year]/[Month]-audit-report.pdf`
+- Prioritised action plan (Google Sheet) shared with team
+- Screaming Frog project file archived to shared drive
+- Tasks for P1 and P2 issues created in project management tool (Asana/Notion) and assigned with due dates
