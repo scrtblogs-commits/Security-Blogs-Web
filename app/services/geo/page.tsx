@@ -1,3 +1,4 @@
+import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
@@ -89,6 +90,8 @@ export default function GeoPage() {
           </Reveal>
         </div>
       </HeroBg>
+
+      <HorizontalScrollServices />
 
       <section className="section">
         <div className="container">

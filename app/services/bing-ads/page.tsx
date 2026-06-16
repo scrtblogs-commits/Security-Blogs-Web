@@ -1,3 +1,4 @@
+import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
@@ -253,6 +254,8 @@ export default function BingAdsPage() {
           </div>
         </Reveal>
       </HeroBg>
+
+      <HorizontalScrollServices />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">

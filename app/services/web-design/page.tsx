@@ -1,3 +1,4 @@
+import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
@@ -96,6 +97,8 @@ export default function WebDesignPage() {
           </Reveal>
         </div>
       </section>
+
+      <HorizontalScrollServices />
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
