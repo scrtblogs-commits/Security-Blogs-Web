@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SecurityBlogs — 3D Hero Demo</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --blue:#1e5fe0;--red:#e23744;--green:#16a34a;
+    --bg:#080d1a;--text:#e8edf5;--text-soft:#8898aa;
+    --line:rgba(255,255,255,0.07);
+  }
+  html{cursor:none}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    overflow-x:hidden;
+  }
+
+  /* ── CUSTOM CURSOR ─────────────────────── */
+  #cursor-dot{
+    position:fixed;width:8px;height:8px;
+    background:var(--blue);border-radius:50%;
+    pointer-events:none;z-index:9999;
+    transform:translate(-50%,-50%);
+    transition:transform .1s,background .2s;
+  }
+  #cursor-ring{
+    position:fixed;width:36px;height:36px;
+    border:1.5px solid rgba(30,95,224,.5);
+    border-radius:50%;pointer-events:none;
+    z-index:9998;transform:translate(-50%,-50%);
+    transition:width .2s,height .2s,border-color .2s;
+  }
+  body.hovering #cursor-dot{transform:translate(-50%,-50%) scale(2.5);background:var(--red)}
+  body.hovering #cursor-ring{width:56px;height:56px;border-color:rgba(226,55,68,.6)}
+
+  /* ── NAVBAR ─────────────────────────────── */
+  .navbar{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    height:72px;display:flex;align-items:center;
+    background:rgba(8,13,26,.7);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:0 28px;
+    width:100%;display:flex;align-items:center;
+    justify-content:space-between;
+  }
+  .nav-logo{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px}
+  .nav-logo span{color:var(--blue)}
+  .nav-links{display:flex;gap:4px}
+  .nav-links a{
+    padding:8px 12px;font-size:14px;font-weight:500;
+    color:var(--text-soft);border-radius:8px;
+    text-decoration:none;transition:color .15s;
+  }
+  .nav-links a:hover{color:#fff}
+  .nav-cta{
+    padding:11px 20px;background:var(--blue);color:#fff;
+    border-radius:12px;font-weight:600;font-size:14px;
+    text-decoration:none;border:none;cursor:none;
+    transition:transform .2s,box-shadow .2s;display:inline-block;
+  }
+
+  /* ── CANVAS (full screen) ────────────────── */
+  #hero-canvas{
+    position:fixed;top:0;left:0;
+    width:100%;height:100%;
+    z-index:0;display:block;
+  }
+
+  /* ── HERO CONTENT ────────────────────────── */
+  .hero{
+    position:relative;z-index:10;
+    min-height:100vh;display:flex;
+    align-items:center;padding-top:72px;
+  }
+  .hero-inner{
+    max-width:1180px;margin:0 auto;padding:0 28px;
+    width:100%;display:grid;
+    grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 16px;border-radius:999px;
+    font-size:11.5px;font-weight:700;letter-spacing:.09em;
+    margin-bottom:24px;
+    border:1px solid rgba(30,95,224,.4);
+    background:rgba(30,95,224,.12);color:#7eaaff;
+  }
+  .dot-pulse{
+    width:7px;height:7px;border-radius:50%;
+    background:#22c55e;display:inline-block;
+    animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+  h1{
+    font-size:clamp(40px,5.5vw,70px);font-weight:800;
+    line-height:1.05;letter-spacing:-.035em;margin-bottom:22px;
+  }
+  h1 em{color:var(--blue);font-style:italic}
+  h1 .ai{color:var(--red)}
+  .lead{
+    font-size:18px;color:var(--text-soft);
+    max-width:500px;margin-bottom:32px;line-height:1.7;
+  }
+  .cta-group{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+  .btn-primary{
+    padding:15px 28px;background:var(--blue);color:#fff;
+    border-radius:14px;font-weight:700;font-size:15px;
+    text-decoration:none;cursor:none;display:inline-block;
+    transition:transform .2s cubic-bezier(.34,1.56,.64,1),
+                box-shadow .2s;
+    position:relative;z-index:1;
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 20px 60px rgba(30,95,224,.5);
+  }
+  .btn-outline{
+    padding:15px 28px;background:transparent;color:#fff;
+    border:1.5px solid rgba(255,255,255,.18);
+    border-radius:14px;font-weight:600;font-size:15px;
+    text-decoration:none;cursor:none;display:inline-block;
+    transition:border-color .2s,transform .2s;
+  }
+  .btn-outline:hover{border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
+  .trust-line{
+    font-size:12.5px;color:rgba(255,255,255,.3);
+    font-family:'JetBrains Mono','Courier New',monospace;
+    letter-spacing:.05em;
+  }
+
+  /* ── SCORE WIDGET ────────────────────────── */
+  .score-widget{
+    background:rgba(17,24,39,.7);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:24px;padding:28px;
+    display:flex;flex-direction:column;gap:16px;
+  }
+  .widget-label{
+    font-size:11px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--text-soft);
+  }
+  .score-number{
+    font-size:58px;font-weight:800;
+    color:var(--blue);line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .score-sub{font-size:13px;color:#22c55e;font-weight:600}
+  .pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+  .pill{
+    padding:5px 12px;border-radius:999px;font-size:12px;
+    font-weight:600;display:inline-flex;align-items:center;gap:5px;
+  }
+  .pill.on{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+  .pill.off{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)}
+  .widget-tip{
+    background:rgba(255,255,255,.04);border-radius:12px;
+    padding:13px 15px;font-size:13px;color:var(--text-soft);
+    line-height:1.5;
+  }
+  .widget-tip strong{color:#fff}
+
+  /* ── MARQUEE ─────────────────────────────── */
+  .marquee-section{
+    position:relative;z-index:10;
+    padding:14px 0;
+    background:rgba(8,13,26,.8);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .marquee-track{
+    display:flex;gap:36px;
+    animation:scroll 24s linear infinite;
+    width:max-content;
+  }
+  @keyframes scroll{to{transform:translateX(-50%)}}
+  .marquee-item{
+    font-size:12px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:rgba(255,255,255,.25);
+    white-space:nowrap;
+  }
+  .marquee-item.highlight{color:rgba(30,95,224,.7)}
+
+  /* ── BELOW FOLD SECTIONS (show scroll works) ── */
+  .below{position:relative;z-index:10;background:var(--bg)}
+  .section{padding:100px 0}
+  .container{max-width:1180px;margin:0 auto;padding:0 28px}
+  .section-head{text-align:center;margin-bottom:56px}
+  .eyebrow{
+    font-size:12px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--blue);margin-bottom:12px;
+  }
+  h2{
+    font-size:clamp(30px,4vw,48px);font-weight:800;
+    letter-spacing:-.025em;line-height:1.1;margin-bottom:14px;
+  }
+  .section-sub{font-size:16px;color:var(--text-soft);max-width:580px;margin:0 auto}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+  .card{
+    background:rgba(17,24,39,.6);border:1px solid var(--line);
+    border-radius:20px;padding:26px;
+    opacity:0;transform:translateY(40px);
+    transition:opacity .6s ease,transform .6s ease,box-shadow .2s;
+  }
+  .card.revealed{opacity:1;transform:translateY(0)}
+  .card:hover{box-shadow:0 20px 50px rgba(0,0,0,.4);transform:translateY(-4px)!important}
+  .card-icon{font-size:28px;margin-bottom:14px}
+  .card-title{font-size:18px;font-weight:700;margin-bottom:8px}
+  .card-desc{font-size:14px;color:var(--text-soft);line-height:1.6}
+
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media(max-width:900px){
+    .hero-inner{grid-template-columns:1fr;gap:40px}
+    .nav-links{display:none}
+    .score-widget{display:none}
+  }
+  @media(max-width:600px){
+    h1{font-size:36px}
+    .cta-group{flex-direction:column}
+    .btn-primary,.btn-outline{text-align:center}
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- Three.js canvas -->
+<canvas id="hero-canvas"></canvas>
+
+<!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Security<span>Blogs</span></a>
+    <nav class="nav-links">
+      <a href="#">Services</a>
+      <a href="#">Knowledge Hub</a>
+      <a href="#">Publish With Us</a>
+      <a href="#">Free Tools</a>
+      <a href="#">About</a>
+    </nav>
+    <a href="#" class="nav-cta magnetic">Free AI Audit</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left" data-parallax="0.04">
+      <div class="badge">
+        <span class="dot-pulse"></span>
+        LIVE · AI VISIBILITY ENGINE
+      </div>
+      <h1>
+        Be the <em>answer</em><br>
+        <span class="ai">AI</span> gives.
+      </h1>
+      <p class="lead">
+        When buyers ask ChatGPT, Gemini or Google AI for the best
+        security provider — your brand should be named. We make that happen.
+      </p>
+      <div class="cta-group">
+        <a href="#" class="btn-primary magnetic">Get your free audit →</a>
+        <a href="#" class="btn-outline magnetic">Try the live score</a>
+      </div>
+      <p class="trust-line">Trusted across AU · US · UK · UAE · SG</p>
+    </div>
+    <div class="score-widget" data-parallax="0.02">
+      <div class="widget-label">AI Visibility Score</div>
+      <div>
+        <div class="score-number" id="score-counter">0<span style="font-size:26px;color:var(--text-soft)">%</span></div>
+        <div class="score-sub">↑ +12 this month · Cited on 7 of 8 platforms</div>
+      </div>
+      <div class="pills">
+        <span class="pill on">✓ ChatGPT</span>
+        <span class="pill on">✓ Perplexity</span>
+        <span class="pill on">✓ Gemini</span>
+        <span class="pill on">✓ Google AI</span>
+        <span class="pill on">✓ Bing Copilot</span>
+        <span class="pill on">✓ Claude</span>
+        <span class="pill on">✓ You.com</span>
+        <span class="pill off">✗ Meta AI</span>
+      </div>
+      <div class="widget-tip">
+        <strong>Next action:</strong> Publish 3 authoritative FAQ pages targeting Meta AI citation gaps.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item highlight">ChatGPT</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Perplexity</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Gemini</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Google AI Overviews</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Bing Copilot</span><span class="marquee-item">·</span>
+    <span class="marquee-item highlight">Claude</span><span class="marquee-item">·</span>
+    <span class="marquee-item">SearchGPT</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Meta AI</span><span class="marquee-item">·</span>
+    <span class="marquee-item">You.com</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Brave Leo</span><span class="marquee-item">·</span>
+    <!-- dupe for seamless loop -->
+    <span class="marquee-item highlight">ChatGPT</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Perplexity</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Gemini</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Google AI Overviews</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Bing Copilot</span><span class="marquee-item">·</span>
+    <span class="marquee-item highlight">Claude</span><span class="marquee-item">·</span>
+    <span class="marquee-item">SearchGPT</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Meta AI</span><span class="marquee-item">·</span>
+    <span class="marquee-item">You.com</span><span class="marquee-item">·</span>
+    <span class="marquee-item">Brave Leo</span>
+  </div>
+</div>
+
+<!-- BELOW FOLD — scroll reveals -->
+<div class="below">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we do</p>
+        <h2>One growth engine. Every channel that matters.</h2>
+        <p class="section-sub">From classic search to AI answer engines, we own every surface where security buyers discover, compare and choose vendors.</p>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="card-icon">🔍</div><div class="card-title">Security SEO</div><div class="card-desc">Rank #1 for every high-intent security keyword your buyers search.</div></div>
+        <div class="card"><div class="card-icon">🤖</div><div class="card-title">AIO</div><div class="card-desc">Get cited by ChatGPT, Perplexity & every AI answer engine.</div></div>
+        <div class="card"><div class="card-icon">💬</div><div class="card-title">AEO</div><div class="card-desc">Become the featured answer in AI-generated responses.</div></div>
+        <div class="card"><div class="card-icon">🌐</div><div class="card-title">GEO</div><div class="card-desc">Build entity authority so AI platforms trust your brand.</div></div>
+        <div class="card"><div class="card-icon">📢</div><div class="card-title">Google Ads</div><div class="card-desc">High-converting PPC campaigns built for security buyers.</div></div>
+        <div class="card"><div class="card-icon">🔷</div><div class="card-title">Bing Ads</div><div class="card-desc">Capture 41% of B2B buyers searching on Microsoft Bing.</div></div>
+        <div class="card"><div class="card-icon">🖥️</div><div class="card-title">Web Design</div><div class="card-desc">AI-ready websites that rank, convert and get cited.</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- THREE.JS CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════
+// 1. CUSTOM CURSOR
+// ═══════════════════════════════════════════════
+var dot  = document.getElementById('cursor-dot');
+var ring = document.getElementById('cursor-ring');
+var mouseX = 0, mouseY = 0;
+var ringX  = 0, ringY  = 0;
+
+document.addEventListener('mousemove', function(e) {
+  mouseX = e.clientX; mouseY = e.clientY;
+  dot.style.left  = mouseX + 'px';
+  dot.style.top   = mouseY + 'px';
+});
+
+// Ring lags behind with lerp
+(function lerpRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  ring.style.left = ringX + 'px';
+  ring.style.top  = ringY + 'px';
+  requestAnimationFrame(lerpRing);
+})();
+
+// Hover state on interactive elements
+document.querySelectorAll('a,button,.magnetic').forEach(function(el) {
+  el.addEventListener('mouseenter', function() { document.body.classList.add('hovering'); });
+  el.addEventListener('mouseleave', function() { document.body.classList.remove('hovering'); });
+});
+
+// ═══════════════════════════════════════════════
+// 2. MAGNETIC BUTTONS
+// ═══════════════════════════════════════════════
+document.querySelectorAll('.magnetic').forEach(function(btn) {
+  btn.addEventListener('mousemove', function(e) {
+    var rect = btn.getBoundingClientRect();
+    var cx   = rect.left + rect.width  / 2;
+    var cy   = rect.top  + rect.height / 2;
+    var dx   = (e.clientX - cx) * 0.35;
+    var dy   = (e.clientY - cy) * 0.35;
+    btn.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+  });
+  btn.addEventListener('mouseleave', function() {
+    btn.style.transform = 'translate(0,0)';
+    btn.style.transition = 'transform .5s cubic-bezier(.34,1.56,.64,1)';
+  });
+  btn.addEventListener('mouseenter', function() {
+    btn.style.transition = 'transform .1s';
+  });
+});
+
+// ═══════════════════════════════════════════════
+// 3. THREE.JS — NETWORK PARTICLE FIELD
+// ═══════════════════════════════════════════════
+var scene    = new THREE.Scene();
+var camera   = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true, antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+camera.position.z = 28;
+
+// Node count
+var NODE_COUNT  = 120;
+var positions   = [];
+var velocities  = [];
+var nodeGeo     = new THREE.BufferGeometry();
+var posArray    = new Float32Array(NODE_COUNT * 3);
+
+for (var i = 0; i < NODE_COUNT; i++) {
+  var x = (Math.random() - 0.5) * 60;
+  var y = (Math.random() - 0.5) * 40;
+  var z = (Math.random() - 0.5) * 20;
+  positions.push({ x: x, y: y, z: z });
+  velocities.push({
+    x: (Math.random() - 0.5) * 0.012,
+    y: (Math.random() - 0.5) * 0.012,
+    z: (Math.random() - 0.5) * 0.006
+  });
+  posArray[i * 3]     = x;
+  posArray[i * 3 + 1] = y;
+  posArray[i * 3 + 2] = z;
+}
+nodeGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+var nodeMat = new THREE.PointsMaterial({
+  color: 0x4a80f5,
+  size: 0.22,
+  transparent: true,
+  opacity: 0.75,
+  sizeAttenuation: true
+});
+var nodes = new THREE.Points(nodeGeo, nodeMat);
+scene.add(nodes);
+
+// Connection lines
+var lineGeo  = new THREE.BufferGeometry();
+var lineVerts = [];
+var LINE_DIST = 10;
+
+function rebuildLines() {
+  lineVerts = [];
+  for (var a = 0; a < NODE_COUNT; a++) {
+    for (var b = a + 1; b < NODE_COUNT; b++) {
+      var dx = positions[a].x - positions[b].x;
+      var dy = positions[a].y - positions[b].y;
+      var dz = positions[a].z - positions[b].z;
+      var dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+      if (dist < LINE_DIST) {
+        lineVerts.push(positions[a].x, positions[a].y, positions[a].z);
+        lineVerts.push(positions[b].x, positions[b].y, positions[b].z);
+      }
+    }
+  }
+  lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lineVerts), 3));
+}
+rebuildLines();
+
+var lineMat = new THREE.LineBasicMaterial({
+  color: 0x1e5fe0,
+  transparent: true,
+  opacity: 0.18
+});
+var lineSegs = new THREE.LineSegments(lineGeo, lineMat);
+scene.add(lineSegs);
+
+// Mouse world influence
+var targetMX = 0, targetMY = 0;
+var currentMX = 0, currentMY = 0;
+document.addEventListener('mousemove', function(e) {
+  targetMX = (e.clientX / window.innerWidth  - 0.5) * 2;
+  targetMY = -(e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+// Hero parallax elements
+var parallaxEls = document.querySelectorAll('[data-parallax]');
+
+// Scroll
+var scrollY = 0;
+window.addEventListener('scroll', function() { scrollY = window.scrollY; });
+
+// Resize
+window.addEventListener('resize', function() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ─── ANIMATE ────────────────────────────────
+var clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  var t = clock.getElapsedTime();
+
+  // Smooth mouse follow
+  currentMX += (targetMX - currentMX) * 0.04;
+  currentMY += (targetMY - currentMY) * 0.04;
+
+  // Move nodes
+  for (var i = 0; i < NODE_COUNT; i++) {
+    positions[i].x += velocities[i].x;
+    positions[i].y += velocities[i].y;
+    positions[i].z += velocities[i].z;
+    // Bounce bounds
+    if (Math.abs(positions[i].x) > 30) velocities[i].x *= -1;
+    if (Math.abs(positions[i].y) > 20) velocities[i].y *= -1;
+    if (Math.abs(positions[i].z) > 10) velocities[i].z *= -1;
+    // Write back
+    posArray[i * 3]     = positions[i].x;
+    posArray[i * 3 + 1] = positions[i].y;
+    posArray[i * 3 + 2] = positions[i].z;
+  }
+  nodeGeo.attributes.position.needsUpdate = true;
+
+  // Rebuild lines every few frames (performance)
+  if (Math.round(t * 30) % 3 === 0) rebuildLines();
+
+  // Camera drift with mouse
+  camera.position.x += (currentMX * 4 - camera.position.x) * 0.05;
+  camera.position.y += (currentMY * 2 - camera.position.y) * 0.05;
+
+  // Scroll: fade out + pull back canvas on scroll
+  var scrollFade = Math.max(0, 1 - scrollY / 600);
+  renderer.domElement.style.opacity = scrollFade;
+  camera.position.z = 28 + scrollY * 0.02;
+
+  // DOM parallax
+  parallaxEls.forEach(function(el) {
+    var speed = parseFloat(el.getAttribute('data-parallax'));
+    el.style.transform = 'translateY(' + (-scrollY * speed) + 'px) translateX(' + (currentMX * speed * 80) + 'px)';
+  });
+
+  renderer.render(scene, camera);
+}
+animate();
+
+// ═══════════════════════════════════════════════
+// 4. SCORE COUNTER ANIMATION
+// ═══════════════════════════════════════════════
+var counted = false;
+function countUp() {
+  if (counted) return;
+  counted = true;
+  var target  = 87;
+  var current = 0;
+  var el      = document.getElementById('score-counter');
+  var step    = function() {
+    current += 2;
+    if (current >= target) { current = target; }
+    el.innerHTML = current + '<span style="font-size:26px;color:var(--text-soft)">%</span>';
+    if (current < target) setTimeout(step, 22);
+  };
+  step();
+}
+// Trigger when score widget enters view
+var observer = new IntersectionObserver(function(entries) {
+  if (entries[0].isIntersecting) countUp();
+}, { threshold: 0.3 });
+var scoreEl = document.getElementById('score-counter');
+if (scoreEl) observer.observe(scoreEl.parentElement);
+
+// ═══════════════════════════════════════════════
+// 5. SCROLL REVEAL (cards + sections)
+// ═══════════════════════════════════════════════
+var revealObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.card').forEach(function(el, i) {
+  el.style.transitionDelay = (i * 0.08) + 's';
+  revealObs.observe(el);
+});
+</script>
+
+</body>
+</html>
