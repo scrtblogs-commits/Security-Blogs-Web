@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 define( 'SB_HEADLESS_VERSION', '1.0.0' );
 define( 'SB_HEADLESS_DIR', plugin_dir_path( __FILE__ ) );
-define( 'SB_NEXTJS_URL', 'https://securityblogs.com.au' ); // Update to Vercel URL when deployed
+define( 'SB_NEXTJS_URL', 'https://security-blogs-web.vercel.app' );
 
 // ── Load modules ──────────────────────────────────────────────────────────────
 require_once SB_HEADLESS_DIR . 'includes/post-types.php';
