@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import CustomCursor from '@/components/ui/CustomCursor'
 import SiteBackground from '@/components/ui/SiteBackground'
+import SmoothScrollProvider from '@/components/effects/SmoothScrollProvider'
 import JsonLd from '@/components/JsonLd'
 import { siteSchema } from '@/lib/schema'
 
@@ -64,12 +65,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google Tag Manager (noscript) */}
         <noscript dangerouslySetInnerHTML={{ __html: gtmNoscript }} />
         {/* End Google Tag Manager (noscript) */}
-        <SiteBackground />
-        <ScrollProgress />
-        <CustomCursor />
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <SmoothScrollProvider>
+          <SiteBackground />
+          <ScrollProgress />
+          <CustomCursor />
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </SmoothScrollProvider>
       </body>
     </html>
   )

@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SecurityBlogs</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{cursor:none;scroll-behavior:auto}
+body{
+  background:#ffffff;
+  color:#0f172a;
+  font-family:'Inter',system-ui,sans-serif;
+  overflow-x:hidden;
+}
+
+/* ── OIL CANVAS ────────────────────────────── */
+#oil{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;z-index:9990;
+  mix-blend-mode:multiply;
+}
+
+/* ── CURSOR ─────────────────────────────────── */
+#cd{
+  position:fixed;width:7px;height:7px;
+  background:#0f172a;border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+}
+#cr{
+  position:fixed;width:30px;height:30px;
+  border:1.5px solid rgba(15,23,42,.25);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,border-color .2s;
+}
+body.hov #cr{width:50px;height:50px;border-color:rgba(30,95,224,.5)}
+body.hov #cd{background:#1e5fe0}
+
+/* ── NAVBAR ──────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:66px;display:flex;align-items:center;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.ni{
+  max-width:1180px;margin:0 auto;padding:0 32px;
+  width:100%;display:flex;align-items:center;
+  justify-content:space-between;
+}
+.logo{font-size:20px;font-weight:800;color:#0f172a;text-decoration:none;letter-spacing:-.4px}
+.logo b{color:#1e5fe0}
+.nl{display:flex;gap:2px}
+.nl a{padding:7px 11px;font-size:13.5px;font-weight:500;color:#64748b;text-decoration:none;border-radius:7px;transition:color .15s}
+.nl a:hover{color:#0f172a}
+.nbtn{
+  padding:10px 20px;background:#0f172a;color:#fff;
+  border-radius:10px;font-weight:600;font-size:13.5px;
+  text-decoration:none;cursor:none;
+  transition:background .2s;
+}
+.nbtn:hover{background:#1e5fe0}
+
+/* ══════════════════════════════════════════════
+   SECTION 1 — HERO (scrolls down normally)
+══════════════════════════════════════════════ */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding-top:66px;
+}
+.hi{
+  max-width:1180px;margin:0 auto;padding:0 32px;
+  width:100%;display:grid;
+  grid-template-columns:1fr 1fr;gap:64px;align-items:center;
+}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 14px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.09em;
+  margin-bottom:22px;
+  background:#f0f4ff;color:#1e5fe0;
+  border:1px solid rgba(30,95,224,.2);
+}
+.dp{width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block;animation:dp 2s ease-in-out infinite}
+@keyframes dp{0%,100%{opacity:1}50%{opacity:.25}}
+h1{font-size:clamp(40px,5vw,68px);font-weight:800;line-height:1.05;letter-spacing:-.035em;margin-bottom:20px}
+h1 em{color:#1e5fe0;font-style:italic}
+h1 .r{color:#e23744}
+.lead{font-size:17px;color:#475569;max-width:480px;margin-bottom:30px;line-height:1.75}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.bp{
+  padding:14px 26px;background:#0f172a;color:#fff;
+  border-radius:12px;font-weight:700;font-size:15px;
+  text-decoration:none;cursor:none;display:inline-block;
+}
+.bp:hover{background:#1e5fe0}
+.bo{
+  padding:14px 26px;background:transparent;color:#0f172a;
+  border:1.5px solid rgba(0,0,0,.15);
+  border-radius:12px;font-weight:600;font-size:15px;
+  text-decoration:none;cursor:none;display:inline-block;
+}
+.bo:hover{border-color:#1e5fe0;color:#1e5fe0}
+.trust{font-size:12px;color:#94a3b8;letter-spacing:.04em}
+
+/* Score widget */
+.sw{background:#f8fafc;border:1px solid rgba(0,0,0,.07);border-radius:22px;padding:28px}
+.wl{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px}
+.wn{font-size:52px;font-weight:800;color:#1e5fe0;line-height:1}
+.ws{font-size:13px;color:#16a34a;font-weight:600;margin-top:5px;margin-bottom:14px}
+.pp{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.pill{padding:5px 11px;border-radius:999px;font-size:11.5px;font-weight:600}
+.on{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.off{background:#fff5f5;color:#dc2626;border:1px solid #fecaca}
+.wt{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:11px;padding:12px 14px;font-size:13px;color:#475569;line-height:1.5}
+.wt strong{color:#0f172a}
+
+/* ── MARQUEE ─────────────────────────────────── */
+.mq{overflow:hidden;padding:13px 0;background:#f8fafc;border-top:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06)}
+.mt{display:flex;gap:30px;animation:mq 26s linear infinite;width:max-content}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mi{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#cbd5e1;white-space:nowrap}
+.mi.hi{color:#1e5fe0}
+
+/* ══════════════════════════════════════════════
+   SECTION 2 — HORIZONTAL SCROLL (PAGE HANGS HERE)
+
+   .ht  = trigger wrapper — height:300vh creates
+          the scroll distance for 3 panels
+   .hs  = sticky container — sticks at top:0
+   .htr = track — slides LEFT as scroll increases
+   .hp  = individual panel (width:100vw)
+══════════════════════════════════════════════ */
+.ht{height:300vh;position:relative}
+
+.hs{
+  position:sticky;top:0;
+  height:100vh;overflow:hidden;
+  background:#fff;
+}
+
+/* "HANG" entry animation — subtle scale-up when
+   the section first becomes sticky            */
+.hs.entered .htr{animation:none}
+
+/* Eyebrow label fixed in top-left of sticky area */
+.hlabel{
+  position:absolute;top:0;left:0;right:0;
+  padding:44px 52px 0;z-index:10;
+  pointer-events:none;
+}
+.hlabel .ey{
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:#1e5fe0;margin-bottom:8px;
+}
+.hlabel h2{
+  font-size:clamp(26px,3vw,40px);font-weight:800;
+  letter-spacing:-.03em;color:#0f172a;
+}
+
+/* Scroll progress bar at very bottom */
+.hbar{
+  position:absolute;bottom:0;left:0;
+  height:3px;background:#1e5fe0;
+  z-index:20;width:0%;
+  transition:width .04s linear;
+}
+
+/* Panel dots */
+.hdots{
+  position:absolute;bottom:28px;left:50%;
+  transform:translateX(-50%);
+  display:flex;gap:8px;z-index:20;
+}
+.hdot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(0,0,0,.15);
+  transition:background .3s,transform .3s;
+}
+.hdot.a{background:#1e5fe0;transform:scale(1.35)}
+
+/* Scroll hint (shown before user scrolls into section) */
+.hhint{
+  position:absolute;bottom:52px;right:52px;
+  font-size:12px;color:#94a3b8;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+  opacity:1;transition:opacity .4s;z-index:20;
+}
+.hhint.hide{opacity:0}
+.harrow{
+  width:28px;height:1px;background:#94a3b8;
+  position:relative;display:inline-block;
+}
+.harrow::after{
+  content:'';position:absolute;right:0;top:-3px;
+  width:7px;height:7px;border-top:1.5px solid #94a3b8;
+  border-right:1.5px solid #94a3b8;transform:rotate(45deg);
+}
+
+/* Sliding track */
+.htr{
+  display:flex;
+  width:300vw;/* 3 panels */
+  height:100%;
+  will-change:transform;
+}
+
+/* Each panel */
+.hp{
+  width:100vw;height:100%;flex-shrink:0;
+  display:flex;align-items:center;
+  padding:100px 52px 60px;
+}
+.hpi{
+  max-width:1180px;margin:0 auto;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;
+}
+
+/* Panel big number */
+.pnum{
+  font-size:120px;font-weight:800;
+  color:rgba(0,0,0,.04);line-height:1;
+  letter-spacing:-.05em;margin-bottom:-10px;
+}
+.ptag{
+  font-size:11px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.hp h3{
+  font-size:clamp(28px,3vw,46px);font-weight:800;
+  letter-spacing:-.03em;line-height:1.1;margin-bottom:16px;
+}
+.hp p{font-size:16px;color:#64748b;line-height:1.75;margin-bottom:24px;max-width:440px}
+.hlink{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;font-weight:700;color:#0f172a;
+  text-decoration:none;cursor:none;
+  border-bottom:2px solid #0f172a;padding-bottom:2px;
+  transition:color .2s,border-color .2s;
+}
+.hlink:hover{color:#1e5fe0;border-color:#1e5fe0}
+
+/* Panel right-side stat card */
+.pcard{
+  background:#f8fafc;border:1px solid rgba(0,0,0,.07);
+  border-radius:24px;padding:36px;
+  display:flex;flex-direction:column;gap:20px;
+}
+.pstat{display:flex;flex-direction:column;gap:2px}
+.psn{
+  font-size:48px;font-weight:800;
+  letter-spacing:-.03em;color:#0f172a;line-height:1;
+}
+.psl{font-size:14px;color:#64748b;font-weight:500}
+.pdiv{height:1px;background:rgba(0,0,0,.07)}
+
+/* ══════════════════════════════════════════════
+   SECTION 3 — FOOTER (scrolls up normally)
+══════════════════════════════════════════════ */
+.cta{
+  padding:100px 32px;text-align:center;
+  background:#0f172a;
+}
+.cta h2{
+  font-size:clamp(30px,4vw,52px);font-weight:800;
+  letter-spacing:-.03em;color:#fff;margin-bottom:14px;
+}
+.cta p{font-size:17px;color:rgba(255,255,255,.5);margin-bottom:36px}
+.bw{
+  padding:15px 32px;background:#fff;color:#0f172a;
+  border-radius:12px;font-weight:700;font-size:15px;
+  text-decoration:none;cursor:none;display:inline-block;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;
+}
+.bw:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(255,255,255,.12)}
+
+footer{
+  background:#f8fafc;
+  border-top:1px solid rgba(0,0,0,.07);
+  padding:56px 0 28px;
+}
+.fc{max-width:1180px;margin:0 auto;padding:0 32px}
+.fg{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+.fcol strong{font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:12px}
+.fcol a{display:block;font-size:13px;color:#64748b;margin-bottom:8px;text-decoration:none}
+.fcol a:hover{color:#1e5fe0}
+.fb{
+  border-top:1px solid rgba(0,0,0,.07);padding-top:20px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;
+  gap:12px;font-size:12px;color:#94a3b8;
+}
+.fl{display:flex;gap:14px}
+.fl a{color:#94a3b8;text-decoration:none}
+.fl a:hover{color:#0f172a}
+
+/* ── ACK OF COUNTRY ─────────────────────── */
+.ack{
+  display:grid;grid-template-columns:auto 1fr;
+  gap:18px;align-items:center;
+  margin-bottom:32px;padding-bottom:28px;
+  border-bottom:1px solid rgba(0,0,0,.07);
+}
+.flags{
+  width:76px;height:48px;border-radius:6px;overflow:hidden;
+  display:flex;flex-direction:column;flex-shrink:0;
+}
+.f1{flex:1;background:linear-gradient(to right,#cc0000 50%,#000 50%)}
+.f2{flex:1;background:linear-gradient(135deg,#009a44 33%,#0055a4 33%,#0055a4 67%,#fff 67%)}
+.ack p{font-size:12.5px;color:#64748b;line-height:1.65}
+
+/* ── RESPONSIVE ─────────────────────────── */
+@media(max-width:960px){
+  .hi,.hpi{grid-template-columns:1fr;gap:32px}
+  .nl{display:none}
+  .sw{display:none}
+  .hp{padding:100px 24px 60px}
+  .hlabel{padding:44px 24px 0}
+  .hhint{display:none}
+  .fg{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- OIL CANVAS -->
+<canvas id="oil"></canvas>
+
+<!-- CURSOR -->
+<div id="cd"></div>
+<div id="cr"></div>
+
+<!-- ── NAVBAR ──────────────────────────────────── -->
+<nav id="nav">
+  <div class="ni">
+    <a href="#" class="logo">Security<b>Blogs</b></a>
+    <div class="nl">
+      <a href="#">Services</a>
+      <a href="#">Knowledge Hub</a>
+      <a href="#">Publish With Us</a>
+      <a href="#">Free Tools</a>
+      <a href="#">About</a>
+    </div>
+    <a href="#" class="nbtn magnetic">Free AI Audit</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 1 — HERO
+══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hi">
+    <div>
+      <div class="badge"><span class="dp"></span>&nbsp;LIVE · AI VISIBILITY ENGINE</div>
+      <h1>Be the <em>answer</em><br><span class="r">AI</span> gives.</h1>
+      <p class="lead">When buyers ask ChatGPT, Gemini or Google AI for the best security provider — your brand should be named. We make that happen.</p>
+      <div class="btns">
+        <a href="#" class="bp magnetic">Get your free audit →</a>
+        <a href="#" class="bo magnetic">Try the live score</a>
+      </div>
+      <p class="trust">Trusted across AU · US · UK · UAE · SG</p>
+    </div>
+    <div class="sw">
+      <div class="wl">AI Visibility Score</div>
+      <div class="wn" id="sn">0<span style="font-size:22px;color:#94a3b8">%</span></div>
+      <div class="ws">↑ +12 this month · Cited on 7 of 8 platforms</div>
+      <div class="pp">
+        <span class="pill on">✓ ChatGPT</span>
+        <span class="pill on">✓ Perplexity</span>
+        <span class="pill on">✓ Gemini</span>
+        <span class="pill on">✓ Google AI</span>
+        <span class="pill on">✓ Bing Copilot</span>
+        <span class="pill on">✓ Claude</span>
+        <span class="pill on">✓ You.com</span>
+        <span class="pill off">✗ Meta AI</span>
+      </div>
+      <div class="wt"><strong>Next action:</strong> Publish 3 FAQ pages targeting Meta AI citation gaps.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mt">
+    <span class="mi hi">ChatGPT</span><span class="mi">·</span>
+    <span class="mi">Perplexity</span><span class="mi">·</span>
+    <span class="mi">Gemini</span><span class="mi">·</span>
+    <span class="mi">Google AI Overviews</span><span class="mi">·</span>
+    <span class="mi">Bing Copilot</span><span class="mi">·</span>
+    <span class="mi hi">Claude</span><span class="mi">·</span>
+    <span class="mi">SearchGPT</span><span class="mi">·</span>
+    <span class="mi">Meta AI</span><span class="mi">·</span>
+    <span class="mi">You.com</span><span class="mi">·</span>
+    <span class="mi">Brave Leo</span><span class="mi">·</span>
+    <span class="mi hi">ChatGPT</span><span class="mi">·</span>
+    <span class="mi">Perplexity</span><span class="mi">·</span>
+    <span class="mi">Gemini</span><span class="mi">·</span>
+    <span class="mi">Google AI Overviews</span><span class="mi">·</span>
+    <span class="mi">Bing Copilot</span><span class="mi">·</span>
+    <span class="mi hi">Claude</span><span class="mi">·</span>
+    <span class="mi">SearchGPT</span><span class="mi">·</span>
+    <span class="mi">Meta AI</span><span class="mi">·</span>
+    <span class="mi">You.com</span><span class="mi">·</span>
+    <span class="mi">Brave Leo</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SECTION 2 — PAGE HANGS HERE / HORIZONTAL SCROLL
+     Hero scrolled past → this section PINS
+     User keeps scrolling → panels slide RIGHT→LEFT
+     After 3 panels → unpins → footer comes up
+══════════════════════════════════════════════ -->
+<div class="ht" id="ht">
+  <div class="hs" id="hs">
+
+    <!-- Fixed label -->
+    <div class="hlabel">
+      <p class="ey">What we do</p>
+      <h2>Every channel. One engine.</h2>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="hbar" id="hbar"></div>
+
+    <!-- Panel dots -->
+    <div class="hdots" id="hdots">
+      <div class="hdot a"></div>
+      <div class="hdot"></div>
+      <div class="hdot"></div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="hhint" id="hhint">
+      Scroll to explore &nbsp;<span class="harrow"></span>
+    </div>
+
+    <!-- Sliding track -->
+    <div class="htr" id="htr">
+
+      <!-- PANEL 1 — Security SEO -->
+      <div class="hp">
+        <div class="hpi">
+          <div>
+            <div class="pnum">01</div>
+            <div class="ptag" style="color:#1e9e75">Security SEO</div>
+            <h3>Rank #1 for every keyword your buyers search.</h3>
+            <p>Full-stack SEO built exclusively for physical security companies — CCTV, access control, alarms, guarding and SaaS. We own the search results your buyers see every day.</p>
+            <a href="#" class="hlink magnetic">Explore Security SEO →</a>
+          </div>
+          <div class="pcard">
+            <div class="pstat">
+              <div class="psn" style="color:#1e9e75">+180%</div>
+              <div class="psl">Average organic traffic growth</div>
+            </div>
+            <div class="pdiv"></div>
+            <div class="pstat">
+              <div class="psn">#1</div>
+              <div class="psl">Rankings for 40+ security keywords</div>
+            </div>
+            <div class="pdiv"></div>
+            <div class="pstat">
+              <div class="psn">50+</div>
+              <div class="psl">Security brands ranked globally</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2 — AI Visibility -->
+      <div class="hp">
+        <div class="hpi">
+          <div>
+            <div class="pnum">02</div>
+            <div class="ptag" style="color:#7c3aed">AIO · AEO · GEO</div>
+            <h3>Be the answer ChatGPT and Gemini give.</h3>
+            <p>When a security buyer asks an AI assistant for a recommendation, your brand should appear. We build the authority signals that make that happen across all 10 major AI platforms.</p>
+            <a href="#" class="hlink magnetic">Explore AI Visibility →</a>
+          </div>
+          <div class="pcard">
+            <div class="pstat">
+              <div class="psn" style="color:#7c3aed">87%</div>
+              <div class="psl">AI citation rate achieved</div>
+            </div>
+            <div class="pdiv"></div>
+            <div class="pstat">
+              <div class="psn">10</div>
+              <div class="psl">AI platforms monitored & optimised</div>
+            </div>
+            <div class="pdiv"></div>
+            <div class="pstat">
+              <div class="psn">3×</div>
+              <div class="psl">Increase in branded AI mentions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 3 — Ads + Web Design -->
+      <div class="hp">
+        <div class="hpi">
+          <div>
+            <div class="pnum">03</div>
+            <div class="ptag" style="color:#e23744">Google Ads · Bing Ads · Web Design</div>
+            <h3>Paid growth and websites built to convert.</h3>
+            <p>Industry-specific PPC campaigns targeting security buyers at the exact moment they need you — combined with AI-ready websites that rank, convert and get cited by AI assistants.</p>
+            <a href="#" class="hlink magnetic">Explore Growth →</a>
+          </div>
+          <div class="pcard">
+            <div class="pstat">
+              <div class="psn" style="color:#e23744">3.2×</div>
+              <div class="psl">Average ROAS on Google Ads</div>
+            </div>
+            <div class="pdiv"></div>
+            <div class="pstat">
+              <div class="psn">41%</div>
+              <div class="psl">B2B buyers on Microsoft Bing</div>
+            </div>
+            <div class="pdiv"></div>
+            <div class="pstat">
+              <div class="psn">30d</div>
+              <div class="psl">Average website delivery time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /htr -->
+  </div><!-- /hs -->
+</div><!-- /ht -->
+
+<!-- ══════════════════════════════════════════════
+     SECTION 3 — CTA + FOOTER (scrolls up after hang)
+══════════════════════════════════════════════ -->
+<div class="cta">
+  <div style="max-width:680px;margin:0 auto">
+    <h2>Ready to be the AI's answer?</h2>
+    <p>Book a free 30-minute strategy call. No pitch, no fluff — just a clear plan for your security brand.</p>
+    <a href="#" class="bw magnetic">Get your free audit →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="fc">
+    <!-- Acknowledgement of Country -->
+    <div class="ack">
+      <div class="flags"><div class="f1"></div><div class="f2"></div></div>
+      <p>SecurityBlogs proudly acknowledges the Traditional Custodians of the lands across Australia where our readers, contributors, and industry partners live and work. We pay our respects to Elders past, present, and emerging.</p>
+    </div>
+    <div class="fg">
+      <div class="fcol">
+        <strong>SEO & AI Services</strong>
+        <a href="#">Security SEO</a>
+        <a href="#">AIO</a>
+        <a href="#">AEO</a>
+        <a href="#">GEO</a>
+        <a href="#">Google Ads</a>
+        <a href="#">Bing Ads</a>
+        <a href="#">Web Design</a>
+      </div>
+      <div class="fcol">
+        <strong>Publish With Us</strong>
+        <a href="#">Guest Posting</a>
+        <a href="#">Sponsored Posts</a>
+        <a href="#">Press Release</a>
+        <a href="#">Backlink Packages</a>
+        <a href="#">Advertise</a>
+      </div>
+      <div class="fcol">
+        <strong>Resources</strong>
+        <a href="#">Knowledge Hub</a>
+        <a href="#">Security Guides</a>
+        <a href="#">Industry News</a>
+        <a href="#">Free Tools</a>
+        <a href="#">Security Directory</a>
+      </div>
+      <div class="fcol">
+        <strong>Company</strong>
+        <a href="#">About Us</a>
+        <a href="#">Case Studies</a>
+        <a href="#">Career</a>
+        <a href="#">AI Visibility Center</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+    <div class="fb">
+      <span>© 2026 SecurityBlogs. All rights reserved.</span>
+      <div class="fl">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Content Guidelines</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════
+// OIL / IRIDESCENT CURSOR EFFECT
+// Canvas 2D, mix-blend-mode:multiply on white bg
+// ════════════════════════════════════════════════
+var oilC   = document.getElementById('oil');
+var oilCtx = oilC.getContext('2d');
+var oW, oH;
+function resizeOil(){
+  oW = oilC.width  = window.innerWidth;
+  oH = oilC.height = window.innerHeight;
+}
+resizeOil();
+window.addEventListener('resize', resizeOil);
+
+var trail  = [];
+var mX=-999, mY=-999, pmX=-999, pmY=-999;
+var hue = 0;
+
+document.addEventListener('mousemove', function(e){
+  pmX=mX; pmY=mY; mX=e.clientX; mY=e.clientY;
+  var spd = Math.sqrt((mX-pmX)*(mX-pmX)+(mY-pmY)*(mY-pmY));
+  hue = (hue + spd * 0.9) % 360;
+  trail.push({
+    x: mX, y: mY,
+    hue: hue,
+    r: Math.min(12 + spd * 1.6, 60),
+    a: Math.min(0.55 + spd * 0.008, 0.88)
+  });
+  if(trail.length > 90) trail.shift();
+});
+
+(function paintOil(){
+  requestAnimationFrame(paintOil);
+  // Fade toward white (erases old paint)
+  oilCtx.globalCompositeOperation = 'source-over';
+  oilCtx.fillStyle = 'rgba(255,255,255,0.13)';
+  oilCtx.fillRect(0,0,oW,oH);
+  // Draw iridescent gradients — multiply blends on white = colour
+  oilCtx.globalCompositeOperation = 'multiply';
+  for(var i=0;i<trail.length;i++){
+    var p = trail[i];
+    var f = i/trail.length; // 0=old, 1=new
+    var r = p.r * (0.4 + f*0.6);
+    var a = p.a * f;
+    if(a < 0.02) continue;
+    var g = oilCtx.createRadialGradient(p.x,p.y,0,p.x,p.y,r);
+    g.addColorStop(0,   'hsla('+ p.hue               +',95%,38%,'+a+')');
+    g.addColorStop(0.4, 'hsla('+ ((p.hue+80)%360)    +',90%,42%,'+(a*.6)+')');
+    g.addColorStop(0.75,'hsla('+ ((p.hue+160)%360)   +',85%,35%,'+(a*.28)+')');
+    g.addColorStop(1,   'hsla('+ p.hue               +',80%,30%,0)');
+    oilCtx.beginPath();
+    oilCtx.arc(p.x,p.y,r,0,Math.PI*2);
+    oilCtx.fillStyle = g;
+    oilCtx.fill();
+  }
+})();
+
+// ════════════════════════════════════════════════
+// CUSTOM CURSOR (lagging ring)
+// ════════════════════════════════════════════════
+var cd=document.getElementById('cd');
+var cr=document.getElementById('cr');
+var cx=0,cy=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){
+  cx=e.clientX; cy=e.clientY;
+  cd.style.left=cx+'px'; cd.style.top=cy+'px';
+});
+(function lr(){
+  rx+=(cx-rx)*.1; ry+=(cy-ry)*.1;
+  cr.style.left=rx+'px'; cr.style.top=ry+'px';
+  requestAnimationFrame(lr);
+})();
+document.querySelectorAll('a,button,.magnetic').forEach(function(el){
+  el.addEventListener('mouseenter',function(){document.body.classList.add('hov')});
+  el.addEventListener('mouseleave',function(){document.body.classList.remove('hov')});
+});
+
+// ════════════════════════════════════════════════
+// MAGNETIC BUTTONS
+// ════════════════════════════════════════════════
+document.querySelectorAll('.magnetic').forEach(function(b){
+  b.addEventListener('mousemove',function(e){
+    var r=b.getBoundingClientRect();
+    var dx=(e.clientX-(r.left+r.width/2))*.38;
+    var dy=(e.clientY-(r.top+r.height/2))*.38;
+    b.style.transition='transform .08s';
+    b.style.transform='translate('+dx+'px,'+dy+'px)';
+  });
+  b.addEventListener('mouseleave',function(){
+    b.style.transition='transform .55s cubic-bezier(.34,1.56,.64,1)';
+    b.style.transform='translate(0,0)';
+  });
+});
+
+// ════════════════════════════════════════════════
+// HORIZONTAL SCROLL — PAGE HANG EFFECT
+// When hero is done → section pins (hangs)
+// Scroll drives panels left → when done → unpins
+// Footer then scrolls up normally
+// ════════════════════════════════════════════════
+var ht    = document.getElementById('ht');
+var htr   = document.getElementById('htr');
+var hbar  = document.getElementById('hbar');
+var hdots = document.getElementById('hdots').querySelectorAll('.hdot');
+var hhint = document.getElementById('hhint');
+var PANELS = 3;
+var hintHidden = false;
+
+function updateH(){
+  var rect    = ht.getBoundingClientRect();
+  var trigH   = ht.offsetHeight;       // 300vh
+  var viewH   = window.innerHeight;
+  var scrolled = -rect.top;            // px past trigger start
+  var maxSc   = trigH - viewH;         // total px of scroll available
+  var prog    = Math.max(0, Math.min(1, scrolled / maxSc));
+
+  // Slide track: each panel = 100vw, 3 panels → max 200vw left
+  var txVw = prog * (PANELS - 1) * 100;
+  htr.style.transform = 'translateX(-' + txVw + 'vw)';
+
+  // Progress bar
+  hbar.style.width = (prog * 100) + '%';
+
+  // Active dot
+  var active = Math.round(prog * (PANELS - 1));
+  hdots.forEach(function(d,i){ d.classList.toggle('a', i===active); });
+
+  // Hide scroll hint after first scroll into section
+  if(prog > 0.02 && !hintHidden){
+    hintHidden = true;
+    hhint.classList.add('hide');
+  }
+}
+
+window.addEventListener('scroll', updateH, {passive:true});
+updateH();
+
+// ════════════════════════════════════════════════
+// SCORE COUNTER
+// ════════════════════════════════════════════════
+var sn = document.getElementById('sn');
+var cnt = false;
+new IntersectionObserver(function(e){
+  if(!e[0].isIntersecting||cnt) return;
+  cnt=true;
+  var n=0;
+  (function t(){
+    n+=2; if(n>87) n=87;
+    sn.innerHTML=n+'<span style="font-size:22px;color:#94a3b8">%</span>';
+    if(n<87) setTimeout(t,20);
+  })();
+},{threshold:.4}).observe(sn);
+</script>
+</body>
+</html>
