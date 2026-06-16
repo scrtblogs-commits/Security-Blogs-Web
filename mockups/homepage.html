@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SecurityBlogs — Homepage Mockup</title>
+<style>
+  /* ── TOKENS ─────────────────────────────── */
+  :root {
+    --blue:#1e5fe0; --red:#e23744; --green:#16a34a;
+    --font:'Inter',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono','Fira Mono',monospace;
+  }
+  [data-theme="dark"] {
+    --bg:#0a0f1e; --bg-soft:#0d1220; --bg-card:#111827; --bg-card-2:#1a2235;
+    --text:#e8edf5; --text-soft:#8898aa; --text-dim:#556070;
+    --line:rgba(255,255,255,0.07);
+  }
+  [data-theme="light"] {
+    --bg:#f8fafc; --bg-soft:#f1f5f9; --bg-card:#ffffff; --bg-card-2:#f0f4ff;
+    --text:#0f172a; --text-soft:#475569; --text-dim:#94a3b8;
+    --line:rgba(0,0,0,0.08);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;transition:background .2s,color .2s}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+
+  /* ── LAYOUT ─────────────────────────────── */
+  .container{max-width:1180px;margin:0 auto;padding:0 24px}
+  .section{padding:90px 0}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+  .flex{display:flex}.flex-wrap{flex-wrap:wrap}.gap-3{gap:12px}.items-center{align-items:center}
+  .justify-between{justify-content:space-between}
+
+  /* ── NAVBAR ─────────────────────────────── */
+  .navbar{position:sticky;top:0;z-index:100;height:72px;display:flex;align-items:center;
+    background:color-mix(in srgb,var(--bg) 85%,transparent);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .navbar .container{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .nav-logo{font-size:22px;font-weight:800;color:var(--blue);letter-spacing:-0.5px}
+  .nav-logo span{color:var(--red)}
+  .nav-links{display:flex;gap:4px;align-items:center}
+  .nav-links a{padding:8px 11px;font-size:14px;font-weight:500;color:var(--text-soft);border-radius:8px;transition:color .15s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-right{display:flex;gap:8px;align-items:center}
+
+  /* ── BUTTONS ─────────────────────────────── */
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:11px 18px;border-radius:12px;font-weight:600;font-size:14px;cursor:pointer;transition:all .15s;text-decoration:none;border:none}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-primary:hover{background:#1a52cc}
+  .btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--line)}
+  .btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+  .btn-lg{padding:14px 24px;font-size:15px;border-radius:14px}
+  .btn-sm{padding:8px 14px;font-size:13px}
+  .theme-btn{padding:9px 12px;border-radius:10px;font-size:16px;background:none;border:1px solid var(--line);cursor:pointer;color:var(--text)}
+
+  /* ── HERO ─────────────────────────────── */
+  .hero{padding:100px 0 80px;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(30,95,224,0.18),transparent)}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.08em;margin-bottom:22px;border:1px solid rgba(30,95,224,.35);background:rgba(30,95,224,.12);color:#6fa3ff}
+  .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block}
+  .dot-pulse{animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+  h1{font-size:clamp(38px,5vw,64px);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:20px}
+  .lead{font-size:18px;color:var(--text-soft);max-width:520px;margin-bottom:28px;line-height:1.65}
+  .text-dim{color:var(--text-dim);font-family:var(--font-mono);font-size:13px}
+
+  /* ── AI SCORE WIDGET ─────────────────────── */
+  .score-card{background:var(--bg-card);border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;gap:18px}
+  .score-header{display:flex;justify-content:space-between;align-items:center}
+  .score-title{font-size:13px;font-weight:700;letter-spacing:.05em;color:var(--text-soft);text-transform:uppercase}
+  .score-big{font-size:52px;font-weight:800;color:var(--blue);line-height:1}
+  .score-platforms{display:flex;flex-wrap:wrap;gap:8px}
+  .score-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:600;background:var(--bg-card-2);border:1px solid var(--line)}
+  .score-pill.found{color:#22c55e;border-color:rgba(34,197,94,.3)}
+  .score-pill.miss{color:#f87171;border-color:rgba(248,113,113,.25)}
+
+  /* ── MARQUEE ─────────────────────────────── */
+  .marquee-wrap{overflow:hidden;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-soft)}
+  .marquee-track{display:flex;gap:40px;animation:marquee 28s linear infinite;width:max-content}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .marquee-item{font-size:13px;font-weight:600;color:var(--text-dim);white-space:nowrap;text-transform:uppercase;letter-spacing:.08em}
+
+  /* ── SECTION HEADER ─────────────────────── */
+  .section-head{text-align:center;margin-bottom:52px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+  h2{font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
+  .section-sub{font-size:16px;color:var(--text-soft);max-width:600px;margin:0 auto}
+
+  /* ── SERVICE CARDS ─────────────────────── */
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+  .service-card{background:var(--bg-card);border:1px solid var(--line);border-radius:20px;padding:24px;transition:transform .2s,box-shadow .2s;cursor:pointer}
+  .service-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.25)}
+  .card-icon{font-size:28px;margin-bottom:14px}
+  .card-title{font-size:18px;font-weight:700;margin-bottom:8px}
+  .card-desc{font-size:14px;color:var(--text-soft);line-height:1.6}
+  .card-link{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;margin-top:14px}
+
+  /* ── STATS ─────────────────────────────── */
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .stat-card{background:var(--bg-card);border:1px solid var(--line);border-radius:18px;padding:28px 20px;text-align:center}
+  .stat-num{font-size:42px;font-weight:800;color:var(--blue);letter-spacing:-.03em;line-height:1}
+  .stat-label{font-size:14px;color:var(--text-soft);margin-top:8px}
+
+  /* ── CTA BAND ─────────────────────────── */
+  .cta-band{background:linear-gradient(135deg,#1e5fe0 0%,#0f3a9e 100%);padding:72px 0;text-align:center}
+  .cta-band h2{color:#fff;margin-bottom:14px}
+  .cta-band p{color:rgba(255,255,255,.75);font-size:16px;margin-bottom:32px}
+  .btn-white{background:#fff;color:var(--blue);font-weight:700}
+  .btn-white:hover{background:#f0f4ff}
+
+  /* ── LOCAL CHECK ─────────────────────── */
+  .local-section{padding:80px 0;background:var(--bg-soft)}
+  .search-row{display:flex;gap:10px;max-width:580px;margin:32px auto 0}
+  .search-input{flex:1;padding:14px 18px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg-card);color:var(--text);font-size:15px}
+  .map-placeholder{background:var(--bg-card);border:1px solid var(--line);border-radius:18px;height:260px;margin-top:24px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:14px;gap:8px}
+
+  /* ── FOOTER ─────────────────────────── */
+  footer{background:var(--bg-soft);border-top:1px solid var(--line);margin-top:0;padding:40px 0 24px}
+  .footer-ack{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid var(--line)}
+  .flags-placeholder{width:80px;height:50px;background:linear-gradient(to right,#cc0000 50%,#000 50%);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:600}
+  .footer-ack p{font-size:13px;color:var(--text-soft);line-height:1.65}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 170px;gap:28px;margin-bottom:28px}
+  .footer-col strong{font-size:13.5px;font-weight:700;display:block;margin-bottom:10px}
+  .footer-col a{display:block;font-size:13.5px;color:var(--text-soft);margin-bottom:7px}
+  .footer-col a:hover{color:var(--text)}
+  .footer-brand{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .footer-logo{font-size:15px;font-weight:800;color:var(--blue)}
+  .footer-logo span{color:var(--red)}
+  .footer-tagline{font-size:12px;color:var(--text-dim);text-align:center}
+  .footer-contact{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line);margin-bottom:16px}
+  .footer-contact a{font-size:13.5px;color:var(--text-soft)}
+  .social-icons{display:flex;gap:6px}
+  .social-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--bg-card);display:grid;place-items:center;font-size:12px;color:var(--text-soft)}
+  .footer-bottom{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:12.5px;color:var(--text-dim)}
+  .footer-legal{display:flex;gap:12px}
+  .footer-legal a{color:var(--text-dim)}
+
+  /* ── RESPONSIVE ─────────────────────────── */
+  @media(max-width:900px){
+    .grid-2{grid-template-columns:1fr;gap:40px}
+    .stats-grid{grid-template-columns:repeat(2,1fr)}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
+    .cards-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:600px){
+    .stats-grid{grid-template-columns:1fr 1fr}
+    .nav-links{display:none}
+    .cards-grid{grid-template-columns:1fr}
+    .search-row{flex-direction:column}
+    .footer-grid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ─────────────────────────────────────────────────── -->
+<header class="navbar">
+  <div class="container">
+    <a href="#" class="nav-logo">Security<span>Blogs</span></a>
+    <nav class="nav-links">
+      <a href="#">Services ▾</a>
+      <a href="#">Knowledge Hub ▾</a>
+      <a href="#">Publish With Us ▾</a>
+      <a href="#">Free Tools</a>
+      <a href="#">Directory</a>
+      <a href="#">AI Visibility</a>
+      <a href="#">About</a>
+    </nav>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+      <a href="#" class="btn btn-primary">Free AI Audit</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── HERO ─────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <div class="grid-2">
+
+      <!-- Left col -->
+      <div>
+        <div class="badge">
+          <span class="dot dot-pulse"></span>
+          LIVE · AI VISIBILITY ENGINE
+        </div>
+        <h1>
+          Be the <em style="color:var(--blue)">answer</em>
+          <span style="color:var(--red)"> AI</span> gives.
+        </h1>
+        <p class="lead">
+          When buyers ask ChatGPT, Gemini or Google AI for the best security
+          provider — your brand should be named. We make that happen.
+        </p>
+        <div class="flex flex-wrap gap-3" style="margin-bottom:24px">
+          <a href="#" class="btn btn-primary btn-lg">Get your free audit →</a>
+          <a href="#" class="btn btn-outline btn-lg">Try the live score</a>
+        </div>
+        <p class="text-dim">Trusted across AU · US · UK · UAE · SG</p>
+      </div>
+
+      <!-- Right col — AI Visibility Score widget -->
+      <div class="score-card">
+        <div class="score-header">
+          <span class="score-title">AI Visibility Score</span>
+          <span style="font-size:12px;color:var(--text-dim)">Live check</span>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:14px">
+          <div class="score-big">87<span style="font-size:22px;color:var(--text-soft)">%</span></div>
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#22c55e">↑ +12 this month</div>
+            <div style="font-size:12px;color:var(--text-dim)">Cited on 7 of 8 platforms</div>
+          </div>
+        </div>
+        <div class="score-platforms">
+          <span class="score-pill found">✓ ChatGPT</span>
+          <span class="score-pill found">✓ Perplexity</span>
+          <span class="score-pill found">✓ Gemini</span>
+          <span class="score-pill found">✓ Google AI</span>
+          <span class="score-pill found">✓ Bing Copilot</span>
+          <span class="score-pill found">✓ Claude</span>
+          <span class="score-pill found">✓ You.com</span>
+          <span class="score-pill miss">✗ Meta AI</span>
+        </div>
+        <div style="background:var(--bg-card-2);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text-soft)">
+          <strong style="color:var(--text)">Next action:</strong> Publish 3 authoritative FAQ pages targeting Meta AI citation gaps.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ─────────────────────────────────────────────────── -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">ChatGPT</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Perplexity</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Gemini</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Google AI Overviews</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Bing Copilot</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Claude</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">SearchGPT</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Meta AI</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">You.com</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Brave Leo</span>
+    <span class="marquee-item">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">ChatGPT</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Perplexity</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Gemini</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Google AI Overviews</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Bing Copilot</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Claude</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">SearchGPT</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Meta AI</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">You.com</span>
+    <span class="marquee-item">·</span>
+    <span class="marquee-item">Brave Leo</span>
+  </div>
+</div>
+
+<!-- ── SERVICES ─────────────────────────────────────────────────── -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">What we do</p>
+      <h2>One growth engine. Every channel that matters.</h2>
+      <p class="section-sub">From classic search to AI answer engines, we own every surface where security buyers discover, compare and choose vendors.</p>
+    </div>
+    <div class="cards-grid">
+
+      <div class="service-card" style="border-top:3px solid #1e9e75">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Security SEO</div>
+        <div class="card-desc">Rank #1 for every high-intent security keyword your buyers search.</div>
+        <a href="#" class="card-link" style="color:#1e9e75">Learn more →</a>
+      </div>
+
+      <div class="service-card" style="border-top:3px solid #6f4dff">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">AIO</div>
+        <div class="card-desc">Get cited by ChatGPT, Perplexity & every AI answer engine.</div>
+        <a href="#" class="card-link" style="color:#6f4dff">Learn more →</a>
+      </div>
+
+      <div class="service-card" style="border-top:3px solid #7f77dd">
+        <div class="card-icon">💬</div>
+        <div class="card-title">AEO</div>
+        <div class="card-desc">Become the featured answer in AI-generated responses.</div>
+        <a href="#" class="card-link" style="color:#7f77dd">Learn more →</a>
+      </div>
+
+      <div class="service-card" style="border-top:3px solid #e23744">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">GEO</div>
+        <div class="card-desc">Build entity authority so AI platforms trust your brand.</div>
+        <a href="#" class="card-link" style="color:#e23744">Learn more →</a>
+      </div>
+
+      <div class="service-card" style="border-top:3px solid #f6c715">
+        <div class="card-icon">📢</div>
+        <div class="card-title">Google Ads</div>
+        <div class="card-desc">High-converting PPC campaigns built for security buyers.</div>
+        <a href="#" class="card-link" style="color:#f6c715">Learn more →</a>
+      </div>
+
+      <div class="service-card" style="border-top:3px solid #0078d4">
+        <div class="card-icon">🔷</div>
+        <div class="card-title">Bing Ads</div>
+        <div class="card-desc">Capture 41% of B2B buyers searching on Microsoft Bing.</div>
+        <a href="#" class="card-link" style="color:#0078d4">Learn more →</a>
+      </div>
+
+      <div class="service-card" style="border-top:3px solid #1e5fe0;grid-column:span 1">
+        <div class="card-icon">🖥️</div>
+        <div class="card-title">Web Design</div>
+        <div class="card-desc">AI-ready websites that rank, convert and get cited.</div>
+        <a href="#" class="card-link" style="color:#1e5fe0">Learn more →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ─────────────────────────────────────────────────────── -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">The results</p>
+      <h2>Numbers our clients brag about.</h2>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">+180%</div>
+        <div class="stat-label">Average organic traffic growth</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3.2×</div>
+        <div class="stat-label">Average ROAS on Google Ads</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">87%</div>
+        <div class="stat-label">AI citation rate achieved</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Security brands served</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ─────────────────────────────────────────────────── -->
+<section class="cta-band">
+  <div class="container">
+    <h2 style="color:#fff">Ready to be the AI's answer?</h2>
+    <p>Book a free 30-minute strategy call. No pitch, no fluff — just a clear plan.</p>
+    <a href="#" class="btn btn-white btn-lg">Get your free audit →</a>
+  </div>
+</section>
+
+<!-- ── LOCAL VISIBILITY CHECK ─────────────────────────────────── -->
+<section class="local-section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Local Visibility</p>
+      <h2>See where security companies rank near you.</h2>
+      <p class="section-sub">Enter a business name or service to see the live Google Maps local pack for your area.</p>
+    </div>
+    <div class="search-row">
+      <input class="search-input" type="text" placeholder="e.g. CCTV installation Sydney" />
+      <a href="#" class="btn btn-primary">Search</a>
+    </div>
+    <div class="map-placeholder">
+      🗺️ &nbsp; Live Google Maps results will appear here
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+
+    <!-- Acknowledgement of Country -->
+    <div class="footer-ack">
+      <div class="flags-placeholder">🇦🇺</div>
+      <p>Security Blogs proudly acknowledges the Traditional Custodians of the lands across Australia where our readers, contributors, and industry partners live and work. We honour Aboriginal and Torres Strait Islander peoples, their cultures, histories, and continuing connection to Country. We pay our respects to Elders past, present, and emerging.</p>
+    </div>
+
+    <!-- Nav grid -->
+    <div class="footer-grid">
+      <div class="footer-col">
+        <strong>SEO & AI Services</strong>
+        <a href="#">Security SEO</a>
+        <a href="#">AIO</a>
+        <a href="#">AEO</a>
+        <a href="#">GEO</a>
+        <a href="#">Google Ads</a>
+        <a href="#">Bing Ads</a>
+        <a href="#">Web Design</a>
+      </div>
+      <div class="footer-col">
+        <strong>Publish With Us</strong>
+        <a href="#">Guest Posting</a>
+        <a href="#">Sponsored Posts</a>
+        <a href="#">Product Promotion</a>
+        <a href="#">Press Release</a>
+        <a href="#">Backlink Packages</a>
+        <a href="#">Pricing Guidelines</a>
+        <a href="#">Advertise</a>
+      </div>
+      <div class="footer-col">
+        <strong>Resources</strong>
+        <a href="#">Knowledge Hub</a>
+        <a href="#">Blog</a>
+        <a href="#">Security Guides</a>
+        <a href="#">Industry News</a>
+        <a href="#">Free Tools</a>
+        <a href="#">Directory</a>
+      </div>
+      <div class="footer-col">
+        <strong>Company</strong>
+        <a href="#">About Us</a>
+        <a href="#">Case Studies</a>
+        <a href="#">Career</a>
+        <a href="#">AI Visibility Center</a>
+        <a href="#">Contact</a>
+        <a href="#">Book Strategy Call</a>
+      </div>
+      <div class="footer-brand">
+        <div class="footer-logo">Security<span>Blogs</span></div>
+        <p class="footer-tagline">Australia's AI Visibility Platform for Security Brands.</p>
+      </div>
+    </div>
+
+    <!-- Contact row -->
+    <div class="footer-contact">
+      <a href="mailto:info@securityblogs.com.au">✉️ info@securityblogs.com.au</a>
+      <a href="tel:+61411212418">📞 +61 411 212 418</a>
+      <div class="social-icons">
+        <a href="#" class="social-btn" title="LinkedIn">in</a>
+        <a href="#" class="social-btn" title="Facebook">f</a>
+        <a href="#" class="social-btn" title="Instagram">ig</a>
+        <a href="#" class="social-btn" title="YouTube">yt</a>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <span>© 2026 SecurityBlogs. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Content Guidelines</a>
+        <a href="#">Advertise</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  function toggleTheme() {
+    var html = document.documentElement;
+    var current = html.getAttribute('data-theme');
+    var next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    document.querySelector('.theme-btn').textContent = next === 'dark' ? '🌙' : '☀️';
+  }
+</script>
+
+</body>
+</html>
