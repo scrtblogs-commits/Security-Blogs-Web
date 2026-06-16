@@ -106,7 +106,6 @@ export default function Navbar() {
         </nav>
 
         <div className="sg-desktop-nav flex items-center gap-2">
-          <ThemeToggle />
           <Link href="/contact/" className="btn btn-primary" style={{ padding: '11px 18px' }}>Free AI Audit</Link>
         </div>
 
@@ -137,7 +136,6 @@ export default function Navbar() {
             <Link key={f.href} href={f.href} onClick={() => setOpen(false)} className="acc-item" style={{ display: 'block', padding: '14px 4px', fontWeight: 600 }}>{f.label}</Link>
           ))}
           <div className="flex items-center gap-2" style={{ marginTop: 14 }}>
-            <ThemeToggle />
             <Link href="/contact/" onClick={() => setOpen(false)} className="btn btn-primary" style={{ flex: 1 }}>Free AI Audit</Link>
           </div>
         </div>
