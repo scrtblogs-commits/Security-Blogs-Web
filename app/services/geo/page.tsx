@@ -1,16 +1,13 @@
-import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
-import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
-import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import GeoCapabilities from './GeoCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
-import GeoMapDemo from './GeoMapDemo'
+import GeoScrollMap from './GeoScrollMap'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -23,15 +20,6 @@ export const metadata = {
   alternates: { canonical: '/services/geo/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/geo/' },
 }
-
-const capabilities = [
-  { icon: '🧩', title: 'Entity Building', desc: 'Establish your security brand as a defined, recognised entity AI systems can identify with confidence.' },
-  { icon: '📋', title: 'Knowledge Panel Optimisation', desc: 'Shape the knowledge panels and brand cards that surface across Google and AI platforms.' },
-  { icon: '📡', title: 'Brand Signal Distribution', desc: 'Seed consistent, authoritative signals across the directories and sources AI engines learn from.' },
-  { icon: '🔁', title: 'Cross-Platform Consistency', desc: 'Align how every AI platform describes your brand so the story is identical everywhere.' },
-  { icon: '📍', title: 'NAP Consistency', desc: 'Lock in matching Name, Address and Phone data across the web to reinforce entity trust.' },
-  { icon: '🤝', title: 'AI Platform Confirmation', desc: 'Verify and confirm your entity directly with the AI platforms that matter to your buyers.' },
-]
 
 const steps = [
   { title: 'Entity Creation & Verification', desc: 'Define and verify your brand entity with structured data and authoritative source profiles.' },
@@ -63,36 +51,16 @@ export default function GeoPage() {
         slug: 'geo',
         serviceType: 'Generative Engine Optimisation',
       })} />
-      <HeroBg grid>
-        <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
-          <Reveal>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'GEO' }]} />
-            <span className="badge" style={{ marginBottom: 22, color: ACCENT, borderColor: `${ACCENT}55`, background: `${ACCENT}14` }}>
-              <span className="dot dot-pulse" /> GENERATIVE ENGINE OPTIMISATION
-            </span>
-            <h1 className="h1" style={{ marginBottom: 20 }}>
-              Build Your Security Brand&rsquo;s{' '}
-              <span style={{ color: ACCENT, fontStyle: 'italic' }}>AI Knowledge Graph</span>
-            </h1>
-            <p className="lead" style={{ maxWidth: 560, marginBottom: 28 }}>
-              GEO makes AI platforms recognise, trust and consistently recommend your security brand by building your
-              entity authority across the entire AI ecosystem.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get my GEO audit →</MagneticButton>
-              <MagneticButton href="/book-strategy-call/" className="btn btn-outline btn-lg">Book a strategy call</MagneticButton>
-            </div>
-          </Reveal>
-          <Reveal delay={0.15}>
-            {/* Live AI-Maps demo replaces the orbital diagram — Australia
-                with pulsing capitals + SecurityBlogs at position 1 */}
-            <GeoMapDemo />
-          </Reveal>
-        </div>
-      </HeroBg>
 
-      <HorizontalScrollServices />
+      {/* ── SCROLL-DRIVEN GOOGLE MAPS ZOOM ─────────────────────────────────────
+          Full-screen satellite map. Starts at Australia (zoom 4), zooms into
+          Melbourne CBD street level (zoom 19 + 67° tilt) as user scrolls.
+          Content overlays fade in at each scroll waypoint.               */}
+      <div style={{ marginTop: 'var(--nav-h)' }}>
+        <GeoScrollMap />
+      </div>
 
+      {/* ── REST OF PAGE (normal scroll after map) ──────────────────────────── */}
       <section className="section">
         <div className="container">
           <SectionHead
@@ -114,12 +82,10 @@ export default function GeoPage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="The transformation" title="What GEO changes for your brand." />
-          <Reveal>
-            <BeforeAfter
-              before={["AI doesn't recognise your brand", 'Inconsistent NAP across the web', 'Competitors cited instead of you']}
-              after={['Entity confirmed on 6 AI platforms', 'Consistent signals everywhere', 'AI recommends you by name']}
-            />
-          </Reveal>
+          <BeforeAfter
+            before={["AI doesn't recognise your brand", 'Inconsistent NAP across the web', 'Competitors cited instead of you']}
+            after={['Entity confirmed on 6 AI platforms', 'Consistent signals everywhere', 'AI recommends you by name']}
+          />
         </div>
       </section>
 
@@ -138,8 +104,8 @@ export default function GeoPage() {
       </section>
 
       <CTABand
-        title="Get my GEO audit →"
-        subtitle="See how AI platforms recognise your security brand today — and the entity signals it takes to be recommended by name."
+        title="Ready to own the AI map?"
+        subtitle="Get your free GEO audit and see exactly which entity signals are missing from your security brand."
         ctaLabel="Get my GEO audit →"
         ctaHref="/contact/"
       />
