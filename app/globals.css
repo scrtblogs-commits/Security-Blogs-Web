@@ -203,17 +203,7 @@
   --nav-h: 72px;
 }
 
-html[data-theme='dark'] {
-  --bg: #080f1e;
-  --bg-soft: #0d1627;
-  --bg-card: #111c30;
-  --bg-card-2: #0d1627;
-  --line: rgba(255, 255, 255, 0.1);
-  --text: #f0f4ff;
-  --text-soft: #94a8c8;
-  --text-dim: #6f81a3;
-  --glow: rgba(30, 95, 224, 0.35);
-}
+/* Dark theme removed — white only */
 
 * {
   box-sizing: border-box;
@@ -227,14 +217,21 @@ html {
 }
 
 body {
-  background: transparent;
+  background: #ffffff !important;
   color: var(--text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   line-height: 1.6;
-  transition: background 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+}
+
+/* Force white on all sections and wrappers — no dark backgrounds anywhere */
+section, div, main, header, footer, aside, article, nav {
+  background-color: inherit;
+}
+html {
+  background: #ffffff !important;
 }
 
 h1, h2, h3, h4, h5 {

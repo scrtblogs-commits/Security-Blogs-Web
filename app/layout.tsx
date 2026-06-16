@@ -48,7 +48,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 const gtmNoscript = `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS9SXB2K" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
 
-const themeInit = `(function(){try{var t=localStorage.getItem('sg-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`
+// Force light mode always — dark theme removed
+const themeInit = `(function(){try{localStorage.removeItem('sg-theme');}catch(e){}document.documentElement.removeAttribute('data-theme');})();`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
