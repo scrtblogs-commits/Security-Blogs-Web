@@ -3,241 +3,333 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>SecurityBlogs — 3D Hero Demo</title>
+<title>SecurityBlogs — Interactive Demo</title>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --blue:#1e5fe0;--red:#e23744;--green:#16a34a;
-    --bg:#080d1a;--text:#e8edf5;--text-soft:#8898aa;
-    --line:rgba(255,255,255,0.07);
-  }
-  html{cursor:none}
+  html{cursor:none;scroll-behavior:auto}
   body{
-    background:var(--bg);color:var(--text);
+    background:#ffffff;
+    color:#0f172a;
     font-family:'Inter',system-ui,sans-serif;
     overflow-x:hidden;
   }
 
   /* ── CUSTOM CURSOR ─────────────────────── */
   #cursor-dot{
-    position:fixed;width:8px;height:8px;
-    background:var(--blue);border-radius:50%;
+    position:fixed;width:7px;height:7px;
+    background:#0f172a;border-radius:50%;
     pointer-events:none;z-index:9999;
     transform:translate(-50%,-50%);
-    transition:transform .1s,background .2s;
   }
   #cursor-ring{
-    position:fixed;width:36px;height:36px;
-    border:1.5px solid rgba(30,95,224,.5);
-    border-radius:50%;pointer-events:none;
-    z-index:9998;transform:translate(-50%,-50%);
-    transition:width .2s,height .2s,border-color .2s;
+    position:fixed;width:32px;height:32px;
+    border:1.5px solid rgba(15,23,42,0.3);
+    border-radius:50%;pointer-events:none;z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:width .25s,height .25s,border-color .2s;
   }
-  body.hovering #cursor-dot{transform:translate(-50%,-50%) scale(2.5);background:var(--red)}
-  body.hovering #cursor-ring{width:56px;height:56px;border-color:rgba(226,55,68,.6)}
+  body.hovering #cursor-ring{
+    width:52px;height:52px;
+    border-color:rgba(30,95,224,0.6);
+  }
+  body.hovering #cursor-dot{background:#1e5fe0}
+
+  /* ── OIL CANVAS ─────────────────────────── */
+  #oil-canvas{
+    position:fixed;top:0;left:0;
+    width:100%;height:100%;
+    pointer-events:none;z-index:9990;
+    mix-blend-mode:multiply;
+  }
 
   /* ── NAVBAR ─────────────────────────────── */
   .navbar{
-    position:fixed;top:0;left:0;right:0;z-index:100;
-    height:72px;display:flex;align-items:center;
-    background:rgba(8,13,26,.7);
+    position:fixed;top:0;left:0;right:0;z-index:500;
+    height:68px;display:flex;align-items:center;
+    background:rgba(255,255,255,0.88);
     backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--line);
+    border-bottom:1px solid rgba(0,0,0,0.06);
+    transition:box-shadow .2s;
   }
+  .navbar.scrolled{box-shadow:0 2px 20px rgba(0,0,0,0.06)}
   .nav-inner{
     max-width:1180px;margin:0 auto;padding:0 28px;
     width:100%;display:flex;align-items:center;
     justify-content:space-between;
   }
-  .nav-logo{font-size:22px;font-weight:800;color:#fff;letter-spacing:-.5px}
-  .nav-logo span{color:var(--blue)}
-  .nav-links{display:flex;gap:4px}
+  .nav-logo{
+    font-size:21px;font-weight:800;color:#0f172a;
+    letter-spacing:-.5px;text-decoration:none;
+  }
+  .nav-logo span{color:#1e5fe0}
+  .nav-links{display:flex;gap:2px;align-items:center}
   .nav-links a{
     padding:8px 12px;font-size:14px;font-weight:500;
-    color:var(--text-soft);border-radius:8px;
-    text-decoration:none;transition:color .15s;
+    color:#64748b;border-radius:8px;text-decoration:none;
+    transition:color .15s;
   }
-  .nav-links a:hover{color:#fff}
-  .nav-cta{
-    padding:11px 20px;background:var(--blue);color:#fff;
-    border-radius:12px;font-weight:600;font-size:14px;
-    text-decoration:none;border:none;cursor:none;
-    transition:transform .2s,box-shadow .2s;display:inline-block;
+  .nav-links a:hover{color:#0f172a}
+  .nav-btn{
+    padding:10px 20px;background:#0f172a;color:#fff;
+    border-radius:10px;font-weight:600;font-size:14px;
+    text-decoration:none;cursor:none;display:inline-block;
+    transition:transform .2s,background .2s;
   }
+  .nav-btn:hover{background:#1e5fe0}
 
-  /* ── CANVAS (full screen) ────────────────── */
-  #hero-canvas{
-    position:fixed;top:0;left:0;
-    width:100%;height:100%;
-    z-index:0;display:block;
-  }
-
-  /* ── HERO CONTENT ────────────────────────── */
+  /* ── HERO ─────────────────────────────────── */
   .hero{
-    position:relative;z-index:10;
-    min-height:100vh;display:flex;
-    align-items:center;padding-top:72px;
+    min-height:100vh;display:flex;align-items:center;
+    padding:68px 0 0;
+    position:relative;
   }
   .hero-inner{
     max-width:1180px;margin:0 auto;padding:0 28px;
     width:100%;display:grid;
-    grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+    grid-template-columns:1fr 1fr;
+    gap:60px;align-items:center;
   }
   .badge{
-    display:inline-flex;align-items:center;gap:8px;
-    padding:7px 16px;border-radius:999px;
-    font-size:11.5px;font-weight:700;letter-spacing:.09em;
+    display:inline-flex;align-items:center;gap:7px;
+    padding:6px 14px;border-radius:999px;
+    font-size:11px;font-weight:700;letter-spacing:.09em;
     margin-bottom:24px;
-    border:1px solid rgba(30,95,224,.4);
-    background:rgba(30,95,224,.12);color:#7eaaff;
+    background:#f0f4ff;color:#1e5fe0;
+    border:1px solid rgba(30,95,224,.2);
   }
   .dot-pulse{
     width:7px;height:7px;border-radius:50%;
-    background:#22c55e;display:inline-block;
+    background:#16a34a;display:inline-block;
     animation:pulse 2s ease-in-out infinite;
   }
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
   h1{
-    font-size:clamp(40px,5.5vw,70px);font-weight:800;
-    line-height:1.05;letter-spacing:-.035em;margin-bottom:22px;
+    font-size:clamp(38px,5vw,66px);font-weight:800;
+    line-height:1.05;letter-spacing:-.035em;
+    color:#0f172a;margin-bottom:20px;
   }
-  h1 em{color:var(--blue);font-style:italic}
-  h1 .ai{color:var(--red)}
+  h1 em{color:#1e5fe0;font-style:italic}
+  h1 .ai{color:#e23744}
   .lead{
-    font-size:18px;color:var(--text-soft);
-    max-width:500px;margin-bottom:32px;line-height:1.7;
+    font-size:17px;color:#475569;max-width:480px;
+    margin-bottom:32px;line-height:1.75;
   }
-  .cta-group{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
-  .btn-primary{
-    padding:15px 28px;background:var(--blue);color:#fff;
-    border-radius:14px;font-weight:700;font-size:15px;
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px}
+  .btn-dark{
+    padding:14px 26px;background:#0f172a;color:#fff;
+    border-radius:12px;font-weight:700;font-size:15px;
     text-decoration:none;cursor:none;display:inline-block;
-    transition:transform .2s cubic-bezier(.34,1.56,.64,1),
-                box-shadow .2s;
-    position:relative;z-index:1;
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .2s;
   }
-  .btn-primary:hover{
-    transform:translateY(-2px);
-    box-shadow:0 20px 60px rgba(30,95,224,.5);
-  }
-  .btn-outline{
-    padding:15px 28px;background:transparent;color:#fff;
-    border:1.5px solid rgba(255,255,255,.18);
-    border-radius:14px;font-weight:600;font-size:15px;
+  .btn-dark:hover{background:#1e5fe0}
+  .btn-ghost{
+    padding:14px 26px;background:transparent;color:#0f172a;
+    border:1.5px solid rgba(0,0,0,0.15);
+    border-radius:12px;font-weight:600;font-size:15px;
     text-decoration:none;cursor:none;display:inline-block;
-    transition:border-color .2s,transform .2s;
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1),border-color .2s;
   }
-  .btn-outline:hover{border-color:rgba(255,255,255,.5);transform:translateY(-2px)}
-  .trust-line{
-    font-size:12.5px;color:rgba(255,255,255,.3);
-    font-family:'JetBrains Mono','Courier New',monospace;
-    letter-spacing:.05em;
-  }
+  .btn-ghost:hover{border-color:#1e5fe0;color:#1e5fe0}
+  .trust{font-size:12px;color:#94a3b8;letter-spacing:.04em}
 
   /* ── SCORE WIDGET ────────────────────────── */
-  .score-widget{
-    background:rgba(17,24,39,.7);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;padding:28px;
-    display:flex;flex-direction:column;gap:16px;
+  .widget{
+    background:#f8fafc;border:1px solid rgba(0,0,0,.07);
+    border-radius:22px;padding:28px;
   }
-  .widget-label{
-    font-size:11px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--text-soft);
-  }
-  .score-number{
-    font-size:58px;font-weight:800;
-    color:var(--blue);line-height:1;
-    font-variant-numeric:tabular-nums;
-  }
-  .score-sub{font-size:13px;color:#22c55e;font-weight:600}
-  .pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
-  .pill{
-    padding:5px 12px;border-radius:999px;font-size:12px;
-    font-weight:600;display:inline-flex;align-items:center;gap:5px;
-  }
-  .pill.on{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
-  .pill.off{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.2)}
-  .widget-tip{
-    background:rgba(255,255,255,.04);border-radius:12px;
-    padding:13px 15px;font-size:13px;color:var(--text-soft);
-    line-height:1.5;
-  }
-  .widget-tip strong{color:#fff}
+  .wlabel{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94a3b8;margin-bottom:12px}
+  .wnum{font-size:54px;font-weight:800;color:#1e5fe0;line-height:1}
+  .wsub{font-size:13px;color:#16a34a;font-weight:600;margin-top:6px;margin-bottom:16px}
+  .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+  .pill{padding:5px 11px;border-radius:999px;font-size:12px;font-weight:600}
+  .pill.on{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+  .pill.off{background:#fff5f5;color:#dc2626;border:1px solid #fecaca}
+  .wtip{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:12px;padding:12px 14px;font-size:13px;color:#475569;line-height:1.5}
+  .wtip strong{color:#0f172a}
 
   /* ── MARQUEE ─────────────────────────────── */
-  .marquee-section{
-    position:relative;z-index:10;
-    padding:14px 0;
-    background:rgba(8,13,26,.8);
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    overflow:hidden;
+  .marquee{
+    overflow:hidden;padding:14px 0;
+    background:#f8fafc;
+    border-top:1px solid rgba(0,0,0,.06);
+    border-bottom:1px solid rgba(0,0,0,.06);
   }
-  .marquee-track{
-    display:flex;gap:36px;
-    animation:scroll 24s linear infinite;
-    width:max-content;
-  }
-  @keyframes scroll{to{transform:translateX(-50%)}}
-  .marquee-item{
-    font-size:12px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:rgba(255,255,255,.25);
-    white-space:nowrap;
-  }
-  .marquee-item.highlight{color:rgba(30,95,224,.7)}
+  .marquee-track{display:flex;gap:32px;animation:marquee 26s linear infinite;width:max-content}
+  @keyframes marquee{to{transform:translateX(-50%)}}
+  .m-item{font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#cbd5e1;white-space:nowrap}
+  .m-item.hi{color:#1e5fe0}
 
-  /* ── BELOW FOLD SECTIONS (show scroll works) ── */
-  .below{position:relative;z-index:10;background:var(--bg)}
-  .section{padding:100px 0}
+  /* ══════════════════════════════════════════
+     HORIZONTAL SCROLL SECTION
+     The outer .h-trigger has height: 300vh
+     The inner .h-sticky sticks at top:0 while
+     .h-track slides left via JS as you scroll.
+  ══════════════════════════════════════════ */
+  .h-trigger{
+    height:300vh; /* 3× viewport = 3 panels worth of scroll */
+    position:relative;
+  }
+  .h-sticky{
+    position:sticky;top:0;height:100vh;
+    overflow:hidden;
+    background:#ffffff;
+  }
+  /* Heading that sits above the panels */
+  .h-intro{
+    position:absolute;top:0;left:0;right:0;
+    padding:52px 56px 0;z-index:2;
+    pointer-events:none;
+  }
+  .h-intro .eyebrow{
+    font-size:11px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;color:#1e5fe0;margin-bottom:10px;
+  }
+  .h-intro h2{
+    font-size:clamp(28px,3.5vw,44px);font-weight:800;
+    letter-spacing:-.03em;color:#0f172a;
+  }
+  /* Progress indicator */
+  .h-progress-bar{
+    position:absolute;bottom:0;left:0;height:2px;
+    background:#1e5fe0;z-index:10;
+    transition:width .05s;width:0%;
+  }
+  /* Dot indicators */
+  .h-dots{
+    position:absolute;bottom:32px;left:50%;
+    transform:translateX(-50%);
+    display:flex;gap:8px;z-index:10;
+  }
+  .h-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:rgba(0,0,0,.15);
+    transition:background .3s,transform .3s;
+  }
+  .h-dot.active{background:#1e5fe0;transform:scale(1.3)}
+  /* The sliding track */
+  .h-track{
+    display:flex;
+    width:300vw; /* 3 panels */
+    height:100%;
+    will-change:transform;
+    transition:transform .05s linear;
+  }
+  /* Individual panels */
+  .h-panel{
+    width:100vw;height:100%;flex-shrink:0;
+    display:flex;align-items:center;
+    padding:0 56px;
+  }
+  .h-panel-inner{
+    max-width:1180px;margin:0 auto;width:100%;
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:60px;align-items:center;
+    padding-top:100px;/* clear the h-intro */
+  }
+  .h-panel-num{
+    font-size:100px;font-weight:800;
+    color:rgba(0,0,0,.04);line-height:1;
+    font-variant-numeric:tabular-nums;
+    margin-bottom:0;
+  }
+  .h-panel-tag{
+    font-size:11px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:14px;
+  }
+  .h-panel h3{
+    font-size:clamp(30px,3.5vw,48px);font-weight:800;
+    letter-spacing:-.03em;line-height:1.1;margin-bottom:16px;
+  }
+  .h-panel p{font-size:16px;color:#64748b;line-height:1.75;margin-bottom:24px}
+  .h-link{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:14px;font-weight:700;color:#0f172a;
+    text-decoration:none;cursor:none;
+    border-bottom:2px solid #0f172a;
+    padding-bottom:2px;transition:color .2s,border-color .2s;
+  }
+  .h-link:hover{color:#1e5fe0;border-color:#1e5fe0}
+  /* Panel visual (right col) */
+  .h-visual{
+    background:#f8fafc;border:1px solid rgba(0,0,0,.07);
+    border-radius:24px;padding:40px;
+    display:flex;flex-direction:column;gap:14px;
+    height:340px;justify-content:center;
+  }
+  .h-stat{display:flex;align-items:baseline;gap:10px}
+  .h-stat-num{
+    font-size:46px;font-weight:800;letter-spacing:-.03em;
+    color:#0f172a;line-height:1;
+  }
+  .h-stat-label{font-size:14px;color:#64748b;font-weight:500}
+
+  /* ── SERVICES (vertical scroll) ─────────── */
+  .services-section{padding:100px 0;background:#ffffff}
   .container{max-width:1180px;margin:0 auto;padding:0 28px}
   .section-head{text-align:center;margin-bottom:56px}
-  .eyebrow{
-    font-size:12px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--blue);margin-bottom:12px;
-  }
-  h2{
-    font-size:clamp(30px,4vw,48px);font-weight:800;
-    letter-spacing:-.025em;line-height:1.1;margin-bottom:14px;
-  }
-  .section-sub{font-size:16px;color:var(--text-soft);max-width:580px;margin:0 auto}
-  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#1e5fe0;margin-bottom:10px}
+  h2{font-size:clamp(28px,4vw,46px);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin-bottom:12px;color:#0f172a}
+  .sub{font-size:16px;color:#64748b;max-width:560px;margin:0 auto;line-height:1.65}
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
   .card{
-    background:rgba(17,24,39,.6);border:1px solid var(--line);
-    border-radius:20px;padding:26px;
-    opacity:0;transform:translateY(40px);
-    transition:opacity .6s ease,transform .6s ease,box-shadow .2s;
+    background:#f8fafc;border:1px solid rgba(0,0,0,.07);
+    border-radius:20px;padding:26px;cursor:none;
+    opacity:0;transform:translateY(32px);
+    transition:opacity .55s ease,transform .55s ease,box-shadow .2s,background .2s;
   }
   .card.revealed{opacity:1;transform:translateY(0)}
-  .card:hover{box-shadow:0 20px 50px rgba(0,0,0,.4);transform:translateY(-4px)!important}
-  .card-icon{font-size:28px;margin-bottom:14px}
-  .card-title{font-size:18px;font-weight:700;margin-bottom:8px}
-  .card-desc{font-size:14px;color:var(--text-soft);line-height:1.6}
+  .card:hover{background:#fff;box-shadow:0 12px 40px rgba(0,0,0,.08);transform:translateY(-4px)!important}
+  .card-icon{font-size:26px;margin-bottom:14px}
+  .card-title{font-size:17px;font-weight:700;color:#0f172a;margin-bottom:8px}
+  .card-desc{font-size:14px;color:#64748b;line-height:1.65}
+
+  /* ── CTA BAND ─────────────────────────────── */
+  .cta-band{
+    padding:96px 0;text-align:center;
+    background:#0f172a;
+  }
+  .cta-band h2{color:#fff;margin-bottom:14px}
+  .cta-band p{color:rgba(255,255,255,.55);font-size:16px;margin-bottom:36px}
+  .btn-white{
+    padding:15px 32px;background:#fff;color:#0f172a;
+    border-radius:12px;font-weight:700;font-size:15px;
+    text-decoration:none;cursor:none;display:inline-block;
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;
+  }
+  .btn-white:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(255,255,255,.15)}
+
+  /* ── FOOTER ─────────────────────────────── */
+  footer{background:#f8fafc;border-top:1px solid rgba(0,0,0,.07);padding:56px 0 28px}
+  .footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px}
+  .footer-col strong{font-size:13px;font-weight:700;color:#0f172a;display:block;margin-bottom:12px}
+  .footer-col a{display:block;font-size:13.5px;color:#64748b;margin-bottom:8px;text-decoration:none}
+  .footer-col a:hover{color:#1e5fe0}
+  .footer-bottom{border-top:1px solid rgba(0,0,0,.07);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:#94a3b8}
+  .footer-legal{display:flex;gap:14px}
+  .footer-legal a{color:#94a3b8;text-decoration:none}
 
   /* ── RESPONSIVE ─────────────────────────── */
   @media(max-width:900px){
-    .hero-inner{grid-template-columns:1fr;gap:40px}
+    .hero-inner,.h-panel-inner{grid-template-columns:1fr;gap:32px}
     .nav-links{display:none}
-    .score-widget{display:none}
-  }
-  @media(max-width:600px){
-    h1{font-size:36px}
-    .cta-group{flex-direction:column}
-    .btn-primary,.btn-outline{text-align:center}
+    .widget{display:none}
+    .h-panel{padding:0 24px}
+    .h-intro{padding:52px 24px 0}
+    .footer-grid{grid-template-columns:1fr 1fr}
   }
 </style>
 </head>
 <body>
 
-<!-- Custom cursor -->
+<!-- OIL EFFECT CANVAS -->
+<canvas id="oil-canvas"></canvas>
+
+<!-- CUSTOM CURSOR -->
 <div id="cursor-dot"></div>
 <div id="cursor-ring"></div>
 
-<!-- Three.js canvas -->
-<canvas id="hero-canvas"></canvas>
-
 <!-- NAVBAR -->
-<header class="navbar">
+<header class="navbar" id="navbar">
   <div class="nav-inner">
     <a href="#" class="nav-logo">Security<span>Blogs</span></a>
     <nav class="nav-links">
@@ -247,38 +339,27 @@
       <a href="#">Free Tools</a>
       <a href="#">About</a>
     </nav>
-    <a href="#" class="nav-cta magnetic">Free AI Audit</a>
+    <a href="#" class="nav-btn magnetic">Free AI Audit</a>
   </div>
 </header>
 
-<!-- HERO -->
+<!-- ── HERO ─────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-left" data-parallax="0.04">
-      <div class="badge">
-        <span class="dot-pulse"></span>
-        LIVE · AI VISIBILITY ENGINE
+    <div>
+      <div class="badge"><span class="dot-pulse"></span> LIVE · AI VISIBILITY ENGINE</div>
+      <h1>Be the <em>answer</em><br><span class="ai">AI</span> gives.</h1>
+      <p class="lead">When buyers ask ChatGPT, Gemini or Google AI for the best security provider — your brand should be named. We make that happen.</p>
+      <div class="cta-row">
+        <a href="#" class="btn-dark magnetic">Get your free audit →</a>
+        <a href="#" class="btn-ghost magnetic">Try the live score</a>
       </div>
-      <h1>
-        Be the <em>answer</em><br>
-        <span class="ai">AI</span> gives.
-      </h1>
-      <p class="lead">
-        When buyers ask ChatGPT, Gemini or Google AI for the best
-        security provider — your brand should be named. We make that happen.
-      </p>
-      <div class="cta-group">
-        <a href="#" class="btn-primary magnetic">Get your free audit →</a>
-        <a href="#" class="btn-outline magnetic">Try the live score</a>
-      </div>
-      <p class="trust-line">Trusted across AU · US · UK · UAE · SG</p>
+      <p class="trust">Trusted across AU · US · UK · UAE · SG</p>
     </div>
-    <div class="score-widget" data-parallax="0.02">
-      <div class="widget-label">AI Visibility Score</div>
-      <div>
-        <div class="score-number" id="score-counter">0<span style="font-size:26px;color:var(--text-soft)">%</span></div>
-        <div class="score-sub">↑ +12 this month · Cited on 7 of 8 platforms</div>
-      </div>
+    <div class="widget">
+      <div class="wlabel">AI Visibility Score</div>
+      <div class="wnum" id="score-num">0<span style="font-size:24px;color:#94a3b8">%</span></div>
+      <div class="wsub">↑ +12 this month · Cited on 7 of 8 platforms</div>
       <div class="pills">
         <span class="pill on">✓ ChatGPT</span>
         <span class="pill on">✓ Perplexity</span>
@@ -289,301 +370,387 @@
         <span class="pill on">✓ You.com</span>
         <span class="pill off">✗ Meta AI</span>
       </div>
-      <div class="widget-tip">
-        <strong>Next action:</strong> Publish 3 authoritative FAQ pages targeting Meta AI citation gaps.
-      </div>
+      <div class="wtip"><strong>Next action:</strong> Publish 3 FAQ pages targeting Meta AI citation gaps.</div>
     </div>
   </div>
 </section>
 
 <!-- MARQUEE -->
-<div class="marquee-section">
+<div class="marquee">
   <div class="marquee-track">
-    <span class="marquee-item highlight">ChatGPT</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Perplexity</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Gemini</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Google AI Overviews</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Bing Copilot</span><span class="marquee-item">·</span>
-    <span class="marquee-item highlight">Claude</span><span class="marquee-item">·</span>
-    <span class="marquee-item">SearchGPT</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Meta AI</span><span class="marquee-item">·</span>
-    <span class="marquee-item">You.com</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Brave Leo</span><span class="marquee-item">·</span>
-    <!-- dupe for seamless loop -->
-    <span class="marquee-item highlight">ChatGPT</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Perplexity</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Gemini</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Google AI Overviews</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Bing Copilot</span><span class="marquee-item">·</span>
-    <span class="marquee-item highlight">Claude</span><span class="marquee-item">·</span>
-    <span class="marquee-item">SearchGPT</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Meta AI</span><span class="marquee-item">·</span>
-    <span class="marquee-item">You.com</span><span class="marquee-item">·</span>
-    <span class="marquee-item">Brave Leo</span>
+    <span class="m-item hi">ChatGPT</span><span class="m-item">·</span>
+    <span class="m-item">Perplexity</span><span class="m-item">·</span>
+    <span class="m-item">Gemini</span><span class="m-item">·</span>
+    <span class="m-item">Google AI Overviews</span><span class="m-item">·</span>
+    <span class="m-item">Bing Copilot</span><span class="m-item">·</span>
+    <span class="m-item hi">Claude</span><span class="m-item">·</span>
+    <span class="m-item">SearchGPT</span><span class="m-item">·</span>
+    <span class="m-item">Meta AI</span><span class="m-item">·</span>
+    <span class="m-item">You.com</span><span class="m-item">·</span>
+    <span class="m-item">Brave Leo</span><span class="m-item">·</span>
+    <span class="m-item hi">ChatGPT</span><span class="m-item">·</span>
+    <span class="m-item">Perplexity</span><span class="m-item">·</span>
+    <span class="m-item">Gemini</span><span class="m-item">·</span>
+    <span class="m-item">Google AI Overviews</span><span class="m-item">·</span>
+    <span class="m-item">Bing Copilot</span><span class="m-item">·</span>
+    <span class="m-item hi">Claude</span><span class="m-item">·</span>
+    <span class="m-item">SearchGPT</span><span class="m-item">·</span>
+    <span class="m-item">Meta AI</span><span class="m-item">·</span>
+    <span class="m-item">You.com</span><span class="m-item">·</span>
+    <span class="m-item">Brave Leo</span>
   </div>
 </div>
 
-<!-- BELOW FOLD — scroll reveals -->
-<div class="below">
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow">What we do</p>
-        <h2>One growth engine. Every channel that matters.</h2>
-        <p class="section-sub">From classic search to AI answer engines, we own every surface where security buyers discover, compare and choose vendors.</p>
+<!-- ══════════════════════════════════════════════
+     HORIZONTAL SCROLL SECTION
+     Scroll down → panels slide LEFT (right-to-left)
+══════════════════════════════════════════════ -->
+<div class="h-trigger" id="h-trigger">
+  <div class="h-sticky" id="h-sticky">
+
+    <!-- Fixed heading above panels -->
+    <div class="h-intro">
+      <p class="eyebrow">What we do</p>
+      <h2>Every channel. One engine.</h2>
+    </div>
+
+    <!-- Progress bar at bottom -->
+    <div class="h-progress-bar" id="h-progress-bar"></div>
+
+    <!-- Dot indicators -->
+    <div class="h-dots" id="h-dots">
+      <div class="h-dot active"></div>
+      <div class="h-dot"></div>
+      <div class="h-dot"></div>
+    </div>
+
+    <!-- Sliding track -->
+    <div class="h-track" id="h-track">
+
+      <!-- PANEL 1 — Security SEO -->
+      <div class="h-panel">
+        <div class="h-panel-inner">
+          <div>
+            <div class="h-panel-num">01</div>
+            <div class="h-panel-tag" style="color:#1e9e75">Security SEO</div>
+            <h3>Rank #1 for every security keyword your buyers search.</h3>
+            <p>Full-stack SEO built exclusively for physical security companies — CCTV, access control, alarms, guarding and SaaS. We own the search results your buyers see.</p>
+            <a href="#" class="h-link magnetic">Explore Security SEO →</a>
+          </div>
+          <div class="h-visual">
+            <div class="h-stat"><div class="h-stat-num">+180%</div><div class="h-stat-label">avg. organic traffic growth</div></div>
+            <div style="height:1px;background:rgba(0,0,0,.07)"></div>
+            <div class="h-stat"><div class="h-stat-num">#1</div><div class="h-stat-label">rankings for 40+ security keywords</div></div>
+            <div style="height:1px;background:rgba(0,0,0,.07)"></div>
+            <div class="h-stat"><div class="h-stat-num">50+</div><div class="h-stat-label">security brands ranked</div></div>
+          </div>
+        </div>
       </div>
-      <div class="cards">
-        <div class="card"><div class="card-icon">🔍</div><div class="card-title">Security SEO</div><div class="card-desc">Rank #1 for every high-intent security keyword your buyers search.</div></div>
-        <div class="card"><div class="card-icon">🤖</div><div class="card-title">AIO</div><div class="card-desc">Get cited by ChatGPT, Perplexity & every AI answer engine.</div></div>
-        <div class="card"><div class="card-icon">💬</div><div class="card-title">AEO</div><div class="card-desc">Become the featured answer in AI-generated responses.</div></div>
-        <div class="card"><div class="card-icon">🌐</div><div class="card-title">GEO</div><div class="card-desc">Build entity authority so AI platforms trust your brand.</div></div>
-        <div class="card"><div class="card-icon">📢</div><div class="card-title">Google Ads</div><div class="card-desc">High-converting PPC campaigns built for security buyers.</div></div>
-        <div class="card"><div class="card-icon">🔷</div><div class="card-title">Bing Ads</div><div class="card-desc">Capture 41% of B2B buyers searching on Microsoft Bing.</div></div>
-        <div class="card"><div class="card-icon">🖥️</div><div class="card-title">Web Design</div><div class="card-desc">AI-ready websites that rank, convert and get cited.</div></div>
+
+      <!-- PANEL 2 — AI Visibility -->
+      <div class="h-panel">
+        <div class="h-panel-inner">
+          <div>
+            <div class="h-panel-num">02</div>
+            <div class="h-panel-tag" style="color:#7c3aed">AI Visibility · AIO · AEO · GEO</div>
+            <h3>Be the answer ChatGPT, Perplexity and Gemini give.</h3>
+            <p>When a security buyer asks an AI assistant for a recommendation, your brand name should appear. We build the authority signals that make that happen across all 10 major AI platforms.</p>
+            <a href="#" class="h-link magnetic">Explore AI Visibility →</a>
+          </div>
+          <div class="h-visual">
+            <div class="h-stat"><div class="h-stat-num">87%</div><div class="h-stat-label">AI citation rate achieved</div></div>
+            <div style="height:1px;background:rgba(0,0,0,.07)"></div>
+            <div class="h-stat"><div class="h-stat-num">10</div><div class="h-stat-label">AI platforms monitored</div></div>
+            <div style="height:1px;background:rgba(0,0,0,.07)"></div>
+            <div class="h-stat"><div class="h-stat-num">3×</div><div class="h-stat-label">increase in branded AI mentions</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 3 — Google Ads + Growth -->
+      <div class="h-panel">
+        <div class="h-panel-inner">
+          <div>
+            <div class="h-panel-num">03</div>
+            <div class="h-panel-tag" style="color:#e23744">Google Ads · Bing Ads · Web Design</div>
+            <h3>Paid growth and conversion-ready websites built for security.</h3>
+            <p>Industry-specific PPC campaigns that target buyers at the exact moment they need security. Combined with AI-ready web design that converts and gets cited by AI assistants.</p>
+            <a href="#" class="h-link magnetic">Explore Growth Services →</a>
+          </div>
+          <div class="h-visual">
+            <div class="h-stat"><div class="h-stat-num">3.2×</div><div class="h-stat-label">average ROAS on Google Ads</div></div>
+            <div style="height:1px;background:rgba(0,0,0,.07)"></div>
+            <div class="h-stat"><div class="h-stat-num">41%</div><div class="h-stat-label">B2B buyers on Microsoft Bing</div></div>
+            <div style="height:1px;background:rgba(0,0,0,.07)"></div>
+            <div class="h-stat"><div class="h-stat-num">30d</div><div class="h-stat-label">avg. website delivery</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /h-track -->
+  </div><!-- /h-sticky -->
+</div><!-- /h-trigger -->
+
+<!-- ── SERVICES VERTICAL ──────────────────────── -->
+<section class="services-section">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">All services</p>
+      <h2>Everything security brands need to grow online.</h2>
+      <p class="sub">From classic search rankings to AI citation — we cover every channel where security buyers make decisions.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card"><div class="card-icon">🔍</div><div class="card-title">Security SEO</div><div class="card-desc">Rank #1 for every high-intent security keyword your buyers search.</div></div>
+      <div class="card"><div class="card-icon">🤖</div><div class="card-title">AIO</div><div class="card-desc">Get cited by ChatGPT, Perplexity & every AI answer engine.</div></div>
+      <div class="card"><div class="card-icon">💬</div><div class="card-title">AEO</div><div class="card-desc">Become the featured answer in AI-generated responses.</div></div>
+      <div class="card"><div class="card-icon">🌐</div><div class="card-title">GEO</div><div class="card-desc">Build entity authority so AI platforms trust your brand.</div></div>
+      <div class="card"><div class="card-icon">📢</div><div class="card-title">Google Ads</div><div class="card-desc">High-converting PPC campaigns built for security buyers.</div></div>
+      <div class="card"><div class="card-icon">🔷</div><div class="card-title">Bing Ads</div><div class="card-desc">Capture 41% of B2B buyers searching on Microsoft Bing.</div></div>
+      <div class="card"><div class="card-icon">🖥️</div><div class="card-title">Web Design</div><div class="card-desc">AI-ready websites that rank, convert and get cited.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA BAND ─────────────────────────────────── -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Ready to be the AI's answer?</h2>
+    <p>Book a free 30-minute strategy call. No pitch, no fluff — just a clear plan.</p>
+    <a href="#" class="btn-white magnetic">Get your free audit →</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <strong>SEO & AI Services</strong>
+        <a href="#">Security SEO</a><a href="#">AIO</a><a href="#">AEO</a>
+        <a href="#">GEO</a><a href="#">Google Ads</a>
+        <a href="#">Bing Ads</a><a href="#">Web Design</a>
+      </div>
+      <div class="footer-col">
+        <strong>Publish With Us</strong>
+        <a href="#">Guest Posting</a><a href="#">Sponsored Posts</a>
+        <a href="#">Press Release</a><a href="#">Backlink Packages</a>
+        <a href="#">Advertise</a>
+      </div>
+      <div class="footer-col">
+        <strong>Resources</strong>
+        <a href="#">Knowledge Hub</a><a href="#">Security Guides</a>
+        <a href="#">Industry News</a><a href="#">Free Tools</a>
+        <a href="#">Security Directory</a>
+      </div>
+      <div class="footer-col">
+        <strong>Company</strong>
+        <a href="#">About Us</a><a href="#">Case Studies</a>
+        <a href="#">Career</a><a href="#">AI Visibility Center</a>
+        <a href="#">Contact</a>
       </div>
     </div>
-  </section>
-</div>
-
-<!-- THREE.JS CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <div class="footer-bottom">
+      <span>© 2026 SecurityBlogs. All rights reserved.</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Content Guidelines</a>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <script>
-// ═══════════════════════════════════════════════
-// 1. CUSTOM CURSOR
-// ═══════════════════════════════════════════════
-var dot  = document.getElementById('cursor-dot');
-var ring = document.getElementById('cursor-ring');
-var mouseX = 0, mouseY = 0;
-var ringX  = 0, ringY  = 0;
+// ═══════════════════════════════════════════════════════
+// 1.  OIL / IRIDESCENT CURSOR EFFECT
+//     Canvas 2D, mix-blend-mode:multiply
+//     Dark rainbow gradients multiply against white page
+// ═══════════════════════════════════════════════════════
+var oilCanvas  = document.getElementById('oil-canvas');
+var oilCtx     = oilCanvas.getContext('2d');
+var oilW, oilH;
+
+function resizeOil() {
+  oilW = oilCanvas.width  = window.innerWidth;
+  oilH = oilCanvas.height = window.innerHeight;
+}
+resizeOil();
+window.addEventListener('resize', resizeOil);
+
+// Trail: array of {x, y, hue, radius, alpha}
+var trail = [];
+var mX = -999, mY = -999, pmX = -999, pmY = -999;
+var hueOffset = 0;
 
 document.addEventListener('mousemove', function(e) {
-  mouseX = e.clientX; mouseY = e.clientY;
-  dot.style.left  = mouseX + 'px';
-  dot.style.top   = mouseY + 'px';
+  pmX = mX; pmY = mY;
+  mX = e.clientX; mY = e.clientY;
+  // Speed of mouse determines radius and alpha
+  var speed = Math.sqrt((mX-pmX)*(mX-pmX) + (mY-pmY)*(mY-pmY));
+  hueOffset += speed * 0.8;
+  trail.push({
+    x:      mX,
+    y:      mY,
+    hue:    hueOffset % 360,
+    radius: Math.min(10 + speed * 1.4, 55),
+    alpha:  Math.min(0.55 + speed * 0.01, 0.85)
+  });
+  // Keep trail length manageable
+  if (trail.length > 80) trail.shift();
 });
 
-// Ring lags behind with lerp
+function paintOil() {
+  requestAnimationFrame(paintOil);
+  // Fade existing paint toward white (erase slowly)
+  oilCtx.globalCompositeOperation = 'source-over';
+  oilCtx.fillStyle = 'rgba(255,255,255,0.14)';
+  oilCtx.fillRect(0, 0, oilW, oilH);
+
+  // Draw each trail point as iridescent radial gradient
+  oilCtx.globalCompositeOperation = 'multiply';
+  for (var i = 0; i < trail.length; i++) {
+    var p    = trail[i];
+    var fade = i / trail.length; // 0=oldest, 1=newest
+    var r    = p.radius * (0.4 + fade * 0.6);
+    var a    = p.alpha  * fade;
+    if (a < 0.02) continue;
+
+    var grad = oilCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+    // Inner colour — fully saturated
+    grad.addColorStop(0,   'hsla(' + p.hue         + ',95%,38%,' + a + ')');
+    // Mid ring — complementary hue shift
+    grad.addColorStop(0.4, 'hsla(' + ((p.hue+72)%360) + ',90%,42%,' + (a*0.65) + ')');
+    // Outer ring — further shift
+    grad.addColorStop(0.75,'hsla(' + ((p.hue+144)%360)+ ',85%,35%,' + (a*0.3) + ')');
+    grad.addColorStop(1,   'hsla(' + p.hue         + ',80%,30%,0)');
+
+    oilCtx.beginPath();
+    oilCtx.arc(p.x, p.y, r, 0, Math.PI * 2);
+    oilCtx.fillStyle = grad;
+    oilCtx.fill();
+  }
+}
+paintOil();
+
+
+// ═══════════════════════════════════════════════════════
+// 2.  CUSTOM CURSOR
+// ═══════════════════════════════════════════════════════
+var dot  = document.getElementById('cursor-dot');
+var ring = document.getElementById('cursor-ring');
+var cx = 0, cy = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', function(e) {
+  cx = e.clientX; cy = e.clientY;
+  dot.style.left = cx + 'px';
+  dot.style.top  = cy + 'px';
+});
+
 (function lerpRing() {
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  ring.style.left = ringX + 'px';
-  ring.style.top  = ringY + 'px';
+  rx += (cx - rx) * 0.1;
+  ry += (cy - ry) * 0.1;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
   requestAnimationFrame(lerpRing);
 })();
 
-// Hover state on interactive elements
 document.querySelectorAll('a,button,.magnetic').forEach(function(el) {
   el.addEventListener('mouseenter', function() { document.body.classList.add('hovering'); });
   el.addEventListener('mouseleave', function() { document.body.classList.remove('hovering'); });
 });
 
-// ═══════════════════════════════════════════════
-// 2. MAGNETIC BUTTONS
-// ═══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+// 3.  MAGNETIC BUTTONS
+// ═══════════════════════════════════════════════════════
 document.querySelectorAll('.magnetic').forEach(function(btn) {
   btn.addEventListener('mousemove', function(e) {
-    var rect = btn.getBoundingClientRect();
-    var cx   = rect.left + rect.width  / 2;
-    var cy   = rect.top  + rect.height / 2;
-    var dx   = (e.clientX - cx) * 0.35;
-    var dy   = (e.clientY - cy) * 0.35;
-    btn.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+    var r  = btn.getBoundingClientRect();
+    var dx = (e.clientX - (r.left + r.width  / 2)) * 0.38;
+    var dy = (e.clientY - (r.top  + r.height / 2)) * 0.38;
+    btn.style.transition = 'transform .08s';
+    btn.style.transform  = 'translate(' + dx + 'px,' + dy + 'px)';
   });
   btn.addEventListener('mouseleave', function() {
-    btn.style.transform = 'translate(0,0)';
-    btn.style.transition = 'transform .5s cubic-bezier(.34,1.56,.64,1)';
-  });
-  btn.addEventListener('mouseenter', function() {
-    btn.style.transition = 'transform .1s';
+    btn.style.transition = 'transform .55s cubic-bezier(.34,1.56,.64,1)';
+    btn.style.transform  = 'translate(0,0)';
   });
 });
 
-// ═══════════════════════════════════════════════
-// 3. THREE.JS — NETWORK PARTICLE FIELD
-// ═══════════════════════════════════════════════
-var scene    = new THREE.Scene();
-var camera   = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true, antialias: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.z = 28;
 
-// Node count
-var NODE_COUNT  = 120;
-var positions   = [];
-var velocities  = [];
-var nodeGeo     = new THREE.BufferGeometry();
-var posArray    = new Float32Array(NODE_COUNT * 3);
+// ═══════════════════════════════════════════════════════
+// 4.  HORIZONTAL SCROLL — PIN + SLIDE LEFT
+// ═══════════════════════════════════════════════════════
+var trigger    = document.getElementById('h-trigger');
+var track      = document.getElementById('h-track');
+var progressBar= document.getElementById('h-progress-bar');
+var dotsEls    = document.querySelectorAll('.h-dot');
+var NUM_PANELS = 3;
 
-for (var i = 0; i < NODE_COUNT; i++) {
-  var x = (Math.random() - 0.5) * 60;
-  var y = (Math.random() - 0.5) * 40;
-  var z = (Math.random() - 0.5) * 20;
-  positions.push({ x: x, y: y, z: z });
-  velocities.push({
-    x: (Math.random() - 0.5) * 0.012,
-    y: (Math.random() - 0.5) * 0.012,
-    z: (Math.random() - 0.5) * 0.006
+function updateHScroll() {
+  var rect      = trigger.getBoundingClientRect();
+  var triggerH  = trigger.offsetHeight;
+  var viewH     = window.innerHeight;
+  var scrolled  = -rect.top;          // px scrolled past trigger start
+  var maxScroll = triggerH - viewH;   // total scroll distance available
+  var progress  = Math.max(0, Math.min(1, scrolled / maxScroll));
+
+  // Slide track: 0→100vw per panel
+  var maxTx = (NUM_PANELS - 1) * 100; // vw
+  track.style.transform = 'translateX(-' + (progress * maxTx) + 'vw)';
+
+  // Progress bar width
+  progressBar.style.width = (progress * 100) + '%';
+
+  // Active dot
+  var activeIdx = Math.round(progress * (NUM_PANELS - 1));
+  dotsEls.forEach(function(d, i) {
+    d.classList.toggle('active', i === activeIdx);
   });
-  posArray[i * 3]     = x;
-  posArray[i * 3 + 1] = y;
-  posArray[i * 3 + 2] = z;
 }
-nodeGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
 
-var nodeMat = new THREE.PointsMaterial({
-  color: 0x4a80f5,
-  size: 0.22,
-  transparent: true,
-  opacity: 0.75,
-  sizeAttenuation: true
-});
-var nodes = new THREE.Points(nodeGeo, nodeMat);
-scene.add(nodes);
+window.addEventListener('scroll', updateHScroll, { passive: true });
+updateHScroll();
 
-// Connection lines
-var lineGeo  = new THREE.BufferGeometry();
-var lineVerts = [];
-var LINE_DIST = 10;
 
-function rebuildLines() {
-  lineVerts = [];
-  for (var a = 0; a < NODE_COUNT; a++) {
-    for (var b = a + 1; b < NODE_COUNT; b++) {
-      var dx = positions[a].x - positions[b].x;
-      var dy = positions[a].y - positions[b].y;
-      var dz = positions[a].z - positions[b].z;
-      var dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
-      if (dist < LINE_DIST) {
-        lineVerts.push(positions[a].x, positions[a].y, positions[a].z);
-        lineVerts.push(positions[b].x, positions[b].y, positions[b].z);
-      }
-    }
-  }
-  lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lineVerts), 3));
-}
-rebuildLines();
+// ═══════════════════════════════════════════════════════
+// 5.  NAVBAR SCROLL SHADOW
+// ═══════════════════════════════════════════════════════
+var navbar = document.getElementById('navbar');
+window.addEventListener('scroll', function() {
+  navbar.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
 
-var lineMat = new THREE.LineBasicMaterial({
-  color: 0x1e5fe0,
-  transparent: true,
-  opacity: 0.18
-});
-var lineSegs = new THREE.LineSegments(lineGeo, lineMat);
-scene.add(lineSegs);
 
-// Mouse world influence
-var targetMX = 0, targetMY = 0;
-var currentMX = 0, currentMY = 0;
-document.addEventListener('mousemove', function(e) {
-  targetMX = (e.clientX / window.innerWidth  - 0.5) * 2;
-  targetMY = -(e.clientY / window.innerHeight - 0.5) * 2;
-});
-
-// Hero parallax elements
-var parallaxEls = document.querySelectorAll('[data-parallax]');
-
-// Scroll
-var scrollY = 0;
-window.addEventListener('scroll', function() { scrollY = window.scrollY; });
-
-// Resize
-window.addEventListener('resize', function() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-// ─── ANIMATE ────────────────────────────────
-var clock = new THREE.Clock();
-function animate() {
-  requestAnimationFrame(animate);
-  var t = clock.getElapsedTime();
-
-  // Smooth mouse follow
-  currentMX += (targetMX - currentMX) * 0.04;
-  currentMY += (targetMY - currentMY) * 0.04;
-
-  // Move nodes
-  for (var i = 0; i < NODE_COUNT; i++) {
-    positions[i].x += velocities[i].x;
-    positions[i].y += velocities[i].y;
-    positions[i].z += velocities[i].z;
-    // Bounce bounds
-    if (Math.abs(positions[i].x) > 30) velocities[i].x *= -1;
-    if (Math.abs(positions[i].y) > 20) velocities[i].y *= -1;
-    if (Math.abs(positions[i].z) > 10) velocities[i].z *= -1;
-    // Write back
-    posArray[i * 3]     = positions[i].x;
-    posArray[i * 3 + 1] = positions[i].y;
-    posArray[i * 3 + 2] = positions[i].z;
-  }
-  nodeGeo.attributes.position.needsUpdate = true;
-
-  // Rebuild lines every few frames (performance)
-  if (Math.round(t * 30) % 3 === 0) rebuildLines();
-
-  // Camera drift with mouse
-  camera.position.x += (currentMX * 4 - camera.position.x) * 0.05;
-  camera.position.y += (currentMY * 2 - camera.position.y) * 0.05;
-
-  // Scroll: fade out + pull back canvas on scroll
-  var scrollFade = Math.max(0, 1 - scrollY / 600);
-  renderer.domElement.style.opacity = scrollFade;
-  camera.position.z = 28 + scrollY * 0.02;
-
-  // DOM parallax
-  parallaxEls.forEach(function(el) {
-    var speed = parseFloat(el.getAttribute('data-parallax'));
-    el.style.transform = 'translateY(' + (-scrollY * speed) + 'px) translateX(' + (currentMX * speed * 80) + 'px)';
-  });
-
-  renderer.render(scene, camera);
-}
-animate();
-
-// ═══════════════════════════════════════════════
-// 4. SCORE COUNTER ANIMATION
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// 6.  SCORE COUNTER
+// ═══════════════════════════════════════════════════════
 var counted = false;
-function countUp() {
-  if (counted) return;
+var scoreEl = document.getElementById('score-num');
+new IntersectionObserver(function(entries) {
+  if (!entries[0].isIntersecting || counted) return;
   counted = true;
-  var target  = 87;
-  var current = 0;
-  var el      = document.getElementById('score-counter');
-  var step    = function() {
-    current += 2;
-    if (current >= target) { current = target; }
-    el.innerHTML = current + '<span style="font-size:26px;color:var(--text-soft)">%</span>';
-    if (current < target) setTimeout(step, 22);
+  var n = 0;
+  var step = function() {
+    n += 2; if (n > 87) n = 87;
+    scoreEl.innerHTML = n + '<span style="font-size:24px;color:#94a3b8">%</span>';
+    if (n < 87) setTimeout(step, 20);
   };
   step();
-}
-// Trigger when score widget enters view
-var observer = new IntersectionObserver(function(entries) {
-  if (entries[0].isIntersecting) countUp();
-}, { threshold: 0.3 });
-var scoreEl = document.getElementById('score-counter');
-if (scoreEl) observer.observe(scoreEl.parentElement);
+}, { threshold: 0.4 }).observe(scoreEl);
 
-// ═══════════════════════════════════════════════
-// 5. SCROLL REVEAL (cards + sections)
-// ═══════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+// 7.  SCROLL REVEAL (service cards)
+// ═══════════════════════════════════════════════════════
 var revealObs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry) {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('revealed');
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('revealed'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.card').forEach(function(el, i) {
-  el.style.transitionDelay = (i * 0.08) + 's';
+  el.style.transitionDelay = (i * 0.07) + 's';
   revealObs.observe(el);
 });
 </script>
-
 </body>
 </html>
