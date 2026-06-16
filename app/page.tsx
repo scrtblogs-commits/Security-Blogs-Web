@@ -8,11 +8,13 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import ServicesCardStack from './ServicesCardStack'
 import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
+import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
 import { stats } from '@/lib/site'
 
 export default function HomePage() {
   return (
     <>
+      {/* ── HERO ─────────────────────────────────────── */}
       <HeroBg>
         <div className="grid-2" style={{ alignItems: 'center', gap: 56 }}>
           <Reveal>
@@ -41,13 +43,14 @@ export default function HomePage() {
 
       <MarqueeStrip />
 
-      <section className="section" id="services">
-        <div className="container">
-          <SectionHead eyebrow="What we do" title="One growth engine. Every channel that matters." sub="From classic search to AI answer engines, we own every surface where security buyers discover, compare and choose vendors. Drag, swipe or tap a card to explore." />
-          <ServicesCardStack />
-        </div>
-      </section>
+      {/* ── PINNED HORIZONTAL SCROLL ─────────────────
+          Page hangs here; 3 service panels slide in
+          from the right as the user scrolls.
+          Falls back to normal vertical stack on touch
+          and under prefers-reduced-motion.           */}
+      <HorizontalScrollServices />
 
+      {/* ── STATS ────────────────────────────────────── */}
       <section className="section" id="stats" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="The results" title="Numbers our clients brag about." />
@@ -57,9 +60,6 @@ export default function HomePage() {
 
       <CTABand ctaHref="/contact/" />
 
-      {/* Final section directly above the footer — auto-detects city via IP,
-          lets visitors type a business name or service, and renders the live
-          Google Maps local pack for that exact query. */}
       <LocalVisibilityCheck service="security companies" />
     </>
   )
