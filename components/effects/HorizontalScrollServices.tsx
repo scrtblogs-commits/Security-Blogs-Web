@@ -70,9 +70,6 @@ export default function HorizontalScrollServices() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    // Disable on touch / reduced-motion — CSS handles fallback
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    if (!window.matchMedia('(pointer: fine)').matches) return
 
     const trigger = triggerRef.current
     const track   = trackRef.current
@@ -88,28 +85,31 @@ export default function HorizontalScrollServices() {
       const total  = trigger.offsetHeight - window.innerHeight
       const prog   = Math.max(0, Math.min(1, -rect.top / total))
 
-      // Slide panels left
       track.style.transform = `translateX(-${prog * (PANELS.length - 1) * 100}vw)`
-
-      // Progress bar
       if (bar) bar.style.width = `${prog * 100}%`
 
-      // Dots
       if (dots) {
         const active = Math.round(prog * (PANELS.length - 1))
         dots.forEach((d, i) => d.classList.toggle('active', i === active))
       }
 
-      // Hide hint
       if (hint && prog > 0.02 && !hintHidden) {
         hintHidden = true
         hint.style.opacity = '0'
       }
     }
 
+    // Listen on both scroll and Lenis virtual scroll
     window.addEventListener('scroll', update, { passive: true })
-    update()
-    return () => window.removeEventListener('scroll', update)
+    // Also run on every animation frame so Lenis-driven scroll is caught
+    let rafId: number
+    const loop = () => { update(); rafId = requestAnimationFrame(loop) }
+    rafId = requestAnimationFrame(loop)
+
+    return () => {
+      window.removeEventListener('scroll', update)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   return (
@@ -229,7 +229,7 @@ export default function HorizontalScrollServices() {
 
       {/* Show fallback on touch / reduced-motion; hide pinned version */}
       <style>{`
-        @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+        @media (prefers-reduced-motion: reduce) {
           .hs-trigger { display: none !important; }
           .hs-fallback { display: block !important; }
         }

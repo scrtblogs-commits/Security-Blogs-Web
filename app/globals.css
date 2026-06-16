@@ -249,7 +249,7 @@ html[data-theme='dark'] {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   background: var(--bg);
 }
 
