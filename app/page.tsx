@@ -44,12 +44,7 @@ export default function HomePage() {
 
       {/* ── AI CHAT DEMO ─────────────────────────────── */}
       <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container" style={{ maxWidth: 780 }}>
-          <SectionHead
-            eyebrow="AI Visibility in action"
-            title="Watch AI recommend your security brand."
-            sub="When buyers ask ChatGPT, Perplexity or Gemini for security services, SecurityBlogs clients get named — not their competitors."
-          />
+        <div className="container">
           <AIChatDemo />
         </div>
       </section>
