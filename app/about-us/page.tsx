@@ -8,6 +8,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal, { Stagger, Item } from '@/components/ui/Reveal'
 import JsonLd from '@/components/JsonLd'
 import { aboutPageSchema } from '@/lib/schema'
+import PlanetZoom from '@/components/ui/PlanetZoom'
 
 export const metadata = {
   title: 'About Us',
@@ -68,6 +69,8 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </HeroBg>
+
+      <PlanetZoom />
 
       <section className="section">
         <div className="container">
