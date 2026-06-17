@@ -8,7 +8,7 @@ import WebDesignCapabilities from './WebDesignCapabilities'
 import ProcessSteps from '@/components/ui/ProcessSteps'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import ContactForm from '@/components/ui/ContactForm'
-import SpiralAnimation from '@/components/ui/SpiralAnimation'
+
 import CodeTypingAnimation from '@/components/ui/CodeTypingAnimation'
 import DualSerp from './DualSerp'
 import JsonLd from '@/components/JsonLd'
@@ -75,7 +75,6 @@ export default function WebDesignPage() {
         serviceType: 'Web Design & Development',
       })} />
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
-        <SpiralAnimation tint={ACCENT} />
         <div className="container z1">
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Services', href: '/services/' }, { label: 'Web Design' }]} />

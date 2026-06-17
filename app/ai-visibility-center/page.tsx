@@ -1,4 +1,4 @@
-import SpiralAnimation from '@/components/ui/SpiralAnimation'
+
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
 import StatsStrip from '@/components/ui/StatsStrip'
@@ -42,7 +42,6 @@ export default function AIVisibilityCenterPage() {
   return (
     <>
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
-        <SpiralAnimation tint="#1e5fe0" />
         <div className="container z1">
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'AI Visibility Center' }]} />

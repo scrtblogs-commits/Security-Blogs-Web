@@ -1,7 +1,7 @@
 import Glyph from '@/components/ui/Glyph'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
-import SpiralAnimation from '@/components/ui/SpiralAnimation'
+
 import GlassCard from '@/components/ui/GlassCard'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
 import FAQAccordion from '@/components/ui/FAQAccordion'
@@ -50,7 +50,6 @@ export default function BookStrategyCallPage() {
   return (
     <>
       <section className="hero" style={{ position: 'relative', overflow: 'hidden' }}>
-        <SpiralAnimation tint="#1e5fe0" />
         <div className="container z1">
           <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Book Strategy Call' }]} />
           <div className="grid-2" style={{ alignItems: 'center', gap: 48 }}>
