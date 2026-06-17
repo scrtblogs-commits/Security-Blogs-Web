@@ -1,3 +1,5 @@
+import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
+import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
@@ -7,7 +9,6 @@ import ProcessSteps from '@/components/ui/ProcessSteps'
 import StatsStrip from '@/components/ui/StatsStrip'
 import FAQAccordion from '@/components/ui/FAQAccordion'
 import BeforeAfter from '@/components/ui/BeforeAfter'
-import GeoScrollMap from './GeoScrollMap'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
@@ -52,15 +53,19 @@ export default function GeoPage() {
         serviceType: 'Generative Engine Optimisation',
       })} />
 
-      {/* ── SCROLL-DRIVEN GOOGLE MAPS ZOOM ─────────────────────────────────────
-          Full-screen satellite map. Starts at Australia (zoom 4), zooms into
-          Melbourne CBD street level (zoom 19 + 67° tilt) as user scrolls.
-          Content overlays fade in at each scroll waypoint.               */}
-      <div style={{ marginTop: 'var(--nav-h)' }}>
-        <GeoScrollMap />
-      </div>
+      <HeroBg accent={ACCENT}>
+        <Breadcrumb items={[{ label: 'Services', href: '/services/' }, { label: 'GEO' }]} />
+        <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: ACCENT, marginBottom: 14 }}>GEO — Generative Engine Optimisation</p>
+        <h1 style={{ fontSize: 'clamp(32px, 5vw, 68px)', fontWeight: 900, lineHeight: 1.05, marginBottom: 24 }}>
+          Build your security brand's<br />AI knowledge graph.
+        </h1>
+        <p style={{ fontSize: 18, opacity: 0.7, maxWidth: 540, marginBottom: 36 }}>
+          GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.
+        </p>
+        <MagneticButton href="/contact/" accent={ACCENT}>Get my GEO audit →</MagneticButton>
+      </HeroBg>
 
-      {/* ── REST OF PAGE (normal scroll after map) ──────────────────────────── */}
+      <HorizontalScrollServices />
       <section className="section">
         <div className="container">
           <SectionHead
