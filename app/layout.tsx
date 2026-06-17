@@ -49,6 +49,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 const gtmNoscript = `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KS9SXB2K" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
 
+// GA4 + Google Ads global site tag
+const gtagHead = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-KDXV1ZB8F6');gtag('config','AW-17212338865');`
+
 // Force light mode always — dark theme removed
 const themeInit = `(function(){try{localStorage.removeItem('sg-theme');}catch(e){}document.documentElement.removeAttribute('data-theme');})();`
 
@@ -59,6 +62,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google Tag Manager */}
         <script dangerouslySetInnerHTML={{ __html: gtmHead }} />
         {/* End Google Tag Manager */}
+        {/* Google Analytics 4 + Google Ads */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KDXV1ZB8F6" />
+        <script dangerouslySetInnerHTML={{ __html: gtagHead }} />
+        {/* End Google Analytics 4 + Google Ads */}
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={siteSchema} />
       </head>
