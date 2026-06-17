@@ -1,0 +1,86 @@
+{
+  "name": "Citation Builder — SecurityBlogs",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "weeks", "weeksInterval": 1 }]
+        }
+      },
+      "id": "node1",
+      "name": "Run Weekly",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const directories = [\n  { directory: 'Bing Places', domain: 'https://bingplaces.com', authority: 94, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Apple Maps Connect', domain: 'https://mapsconnect.apple.com', authority: 100, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Yelp Australia', domain: 'https://www.yelp.com.au', authority: 93, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Aussie Web', domain: 'https://www.aussieweb.com.au', authority: 48, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Cylex Australia', domain: 'https://www.cylex.com.au', authority: 44, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Localsearch', domain: 'https://www.localsearch.com.au', authority: 53, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Whitepages Australia', domain: 'https://www.whitepages.com.au', authority: 61, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'hipages', domain: 'https://hipages.com.au', authority: 62, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Oneflare', domain: 'https://www.oneflare.com.au', authority: 58, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Bark.com AU', domain: 'https://www.bark.com/en/au', authority: 68, industry: 'Local/General', country: 'Australia', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'ASIS International', domain: 'https://www.asisonline.org', authority: 72, industry: 'Security', country: 'Global', status: 'Identified', target_service: '/services/security-seo/', nap: 'N/A — New listing' },\n  { directory: 'Security Solutions Magazine AU', domain: 'https://www.securitysolutionsmedia.com', authority: 45, industry: 'Security', country: 'Australia', status: 'Identified', target_service: '/services/security-seo/', nap: 'N/A — New listing' },\n  { directory: 'Crunchbase', domain: 'https://www.crunchbase.com', authority: 91, industry: 'Business/General', country: 'Global', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Manta', domain: 'https://www.manta.com', authority: 71, industry: 'Business/General', country: 'Global', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'G2', domain: 'https://www.g2.com', authority: 86, industry: 'SEO/Digital Marketing', country: 'Global', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Trustpilot', domain: 'https://www.trustpilot.com', authority: 93, industry: 'Business/General', country: 'Global', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'ProductHunt', domain: 'https://www.producthunt.com', authority: 88, industry: 'SEO/Digital Marketing', country: 'Global', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' },\n  { directory: 'Foursquare', domain: 'https://foursquare.com', authority: 92, industry: 'Local/General', country: 'Global', status: 'Identified', target_service: 'All services', nap: 'N/A — New listing' }\n];\nreturn directories.map(d => ({ json: d }));"
+      },
+      "id": "node2",
+      "name": "Security Directory List",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblU46nlB9EOPRJGz", "mode": "id" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Directory": "={{ $json.directory }}",
+            "Domain": "={{ $json.domain }}",
+            "Authority": "={{ $json.authority }}",
+            "Industry": "={{ $json.industry }}",
+            "Country": "={{ $json.country }}",
+            "Status": "={{ $json.status }}",
+            "Target Service": "={{ $json.target_service }}",
+            "NAP Consistent": "={{ $json.nap }}"
+          }
+        }
+      },
+      "id": "node3",
+      "name": "Save to Citation Opportunities",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblWYXebaZhSv9blS", "mode": "id" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Action": "Citation Builder Run",
+            "Details": "={{ 'Added ' + $('Security Directory List').item.json.directory + ' to Citation Opportunities' }}",
+            "Status": "Completed",
+            "Date": "={{ new Date().toISOString() }}"
+          }
+        }
+      },
+      "id": "node4",
+      "name": "Log to Execution Logs",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Run Weekly": {
+      "main": [[{ "node": "Security Directory List", "type": "main", "index": 0 }]]
+    },
+    "Security Directory List": {
+      "main": [[{ "node": "Save to Citation Opportunities", "type": "main", "index": 0 }]]
+    },
+    "Save to Citation Opportunities": {
+      "main": [[{ "node": "Log to Execution Logs", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "SEO" }, { "name": "Citations" }]
+}
