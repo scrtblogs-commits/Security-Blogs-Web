@@ -37,17 +37,10 @@ export default function HomePage() {
             <p className="text-dim" style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}>Trusted across AU · US · UK · UAE · SG</p>
           </Reveal>
           <Reveal delay={0.15}>
-            <AIVisibilityScore />
+            <AIChatDemo />
           </Reveal>
         </div>
       </HeroBg>
-
-      {/* ── AI CHAT DEMO ─────────────────────────────── */}
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <AIChatDemo />
-        </div>
-      </section>
 
       <MarqueeStrip />
 
