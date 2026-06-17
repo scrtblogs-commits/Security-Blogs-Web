@@ -56,23 +56,29 @@ export default function AIChatDemo() {
   }, [shown, typed, phase])
 
   async function run() {
-    for (const step of STEPS) {
-      if (step.role === 'user') {
-        await delay(shown.length === 0 ? 600 : 1400)
-        setShown(p => [...p, step])
-      } else {
-        await delay(700)
-        setPhase('thinking')
-        await delay(1100)
-        setPhase('typing')
-        for (let i = 1; i <= step.text.length; i++) {
-          setTyped(step.text.slice(0, i))
-          await delay(11)
+    while (true) {
+      setShown([])
+      setTyped('')
+      setPhase('idle')
+      for (const step of STEPS) {
+        if (step.role === 'user') {
+          await delay(step === STEPS[0] ? 800 : 1600)
+          setShown(p => [...p, step])
+        } else {
+          await delay(700)
+          setPhase('thinking')
+          await delay(1100)
+          setPhase('typing')
+          for (let i = 1; i <= step.text.length; i++) {
+            setTyped(step.text.slice(0, i))
+            await delay(11)
+          }
+          setPhase('idle')
+          setShown(p => [...p, step])
+          setTyped('')
         }
-        setPhase('idle')
-        setShown(p => [...p, step])
-        setTyped('')
       }
+      await delay(3000)
     }
   }
 
