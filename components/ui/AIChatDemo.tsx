@@ -31,6 +31,7 @@ function delay(ms: number) { return new Promise(r => setTimeout(r, ms)) }
 
 export default function AIChatDemo() {
   const ref = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const [shown, setShown] = useState<{ role: string; text: string }[]>([])
   const [typed, setTyped] = useState('')
@@ -49,7 +50,9 @@ export default function AIChatDemo() {
   }, [started])
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
   }, [shown, typed, phase])
 
   async function run() {
@@ -89,7 +92,7 @@ export default function AIChatDemo() {
       </div>
 
       {/* Messages */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 0' }}>
+      <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '20px 0' }}>
         {shown.length === 0 && phase === 'idle' && (
           <div style={{ textAlign: 'center', padding: '60px 20px 0' }}>
             <p style={{ fontSize: 22, fontWeight: 600, color: '#111', marginBottom: 8 }}>What's on your mind today?</p>
