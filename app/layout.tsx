@@ -26,6 +26,7 @@ export const metadata: Metadata = {
     'Google Ads security',
   ],
   alternates: { canonical: '/' },
+  verification: { google: '_aGSb1due9fnalv6S8xYnOXcislTQ3F95AZl2CXRwNw' },
   openGraph: {
     title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
     description:
