@@ -1,0 +1,123 @@
+{
+  "name": "Citation Builder — SecurityBlogs",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "weeks", "weeksInterval": 1 }]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Run Weekly",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const directories = [\n  { name: 'Google Business Profile', url: 'https://business.google.com', category: 'General', priority: 'High', domain_authority: 100 },\n  { name: 'Bing Places', url: 'https://bingplaces.com', category: 'General', priority: 'High', domain_authority: 94 },\n  { name: 'Apple Maps', url: 'https://mapsconnect.apple.com', category: 'General', priority: 'High', domain_authority: 100 },\n  { name: 'Yelp', url: 'https://biz.yelp.com', category: 'General', priority: 'High', domain_authority: 93 },\n  { name: 'Yellow Pages Australia', url: 'https://www.yellowpages.com.au', category: 'AU General', priority: 'High', domain_authority: 72 },\n  { name: 'True Local', url: 'https://www.truelocal.com.au', category: 'AU General', priority: 'High', domain_authority: 65 },\n  { name: 'Hotfrog Australia', url: 'https://www.hotfrog.com.au', category: 'AU General', priority: 'Medium', domain_authority: 58 },\n  { name: 'StartLocal', url: 'https://www.startlocal.com.au', category: 'AU General', priority: 'Medium', domain_authority: 52 },\n  { name: 'Aussie Web', url: 'https://www.aussieweb.com.au', category: 'AU General', priority: 'Medium', domain_authority: 48 },\n  { name: 'ASIAL', url: 'https://www.asial.com.au', category: 'Security Industry AU', priority: 'High', domain_authority: 55 },\n  { name: 'ASIS International', url: 'https://www.asisonline.org', category: 'Security Industry', priority: 'High', domain_authority: 72 },\n  { name: 'Security Solutions Magazine AU', url: 'https://www.securitysolutionsmedia.com', category: 'Security Media', priority: 'High', domain_authority: 45 },\n  { name: 'Crunchbase', url: 'https://www.crunchbase.com', category: 'Business', priority: 'High', domain_authority: 91 },\n  { name: 'LinkedIn Company', url: 'https://www.linkedin.com/company', category: 'Social', priority: 'High', domain_authority: 99 },\n  { name: 'Clutch.co', url: 'https://clutch.co', category: 'B2B Reviews', priority: 'High', domain_authority: 76 },\n  { name: 'G2', url: 'https://www.g2.com', category: 'B2B Reviews', priority: 'High', domain_authority: 86 },\n  { name: 'Trustpilot', url: 'https://www.trustpilot.com', category: 'Reviews', priority: 'High', domain_authority: 93 },\n  { name: 'Bark.com AU', url: 'https://www.bark.com/en/au', category: 'AU Services', priority: 'Medium', domain_authority: 68 },\n  { name: 'Oneflare', url: 'https://www.oneflare.com.au', category: 'AU Services', priority: 'Medium', domain_authority: 58 },\n  { name: 'hipages', url: 'https://hipages.com.au', category: 'AU Services', priority: 'Medium', domain_authority: 62 },\n  { name: 'Manta', url: 'https://www.manta.com', category: 'Business', priority: 'Medium', domain_authority: 71 },\n  { name: 'Whitepages Australia', url: 'https://www.whitepages.com.au', category: 'AU General', priority: 'Medium', domain_authority: 61 },\n  { name: 'Localsearch', url: 'https://www.localsearch.com.au', category: 'AU General', priority: 'Medium', domain_authority: 53 },\n  { name: 'Cylex Australia', url: 'https://www.cylex.com.au', category: 'AU General', priority: 'Medium', domain_authority: 44 },\n  { name: 'Local Business Guide AU', url: 'https://www.localbusinessguide.com.au', category: 'AU General', priority: 'Medium', domain_authority: 42 }\n];\nreturn directories.map(d => ({ json: d }));"
+      },
+      "id": "directory-list",
+      "name": "Security Directory List",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblU46nlB9EOPRJGz", "mode": "id" },
+        "filterByFormula": "={Directory Name} = '{{ $json.name }}'"
+      },
+      "id": "check-existing",
+      "name": "Check if Already in Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.records ? $json.records.length : 0 }}",
+              "rightValue": 0,
+              "operator": { "type": "number", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "filter-new",
+      "name": "Only New Directories",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblU46nlB9EOPRJGz", "mode": "id" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Directory Name": "={{ $('Security Directory List').item.json.name }}",
+            "URL": "={{ $('Security Directory List').item.json.url }}",
+            "Category": "={{ $('Security Directory List').item.json.category }}",
+            "Priority": "={{ $('Security Directory List').item.json.priority }}",
+            "Domain Authority": "={{ $('Security Directory List').item.json.domain_authority }}",
+            "Status": "Not Started",
+            "Notes": "Auto-added by Citation Builder agent"
+          }
+        }
+      },
+      "id": "save-to-airtable",
+      "name": "Save to Citation Opportunities",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblWYXebaZhSv9blS", "mode": "id" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Action": "Citation Builder Run",
+            "Details": "={{ 'Added ' + $('Security Directory List').item.json.name + ' to Citation Opportunities' }}",
+            "Status": "Completed",
+            "Date": "={{ new Date().toISOString() }}"
+          }
+        }
+      },
+      "id": "log-execution",
+      "name": "Log to Execution Logs",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    }
+  ],
+  "connections": {
+    "Run Weekly": {
+      "main": [[{ "node": "Security Directory List", "type": "main", "index": 0 }]]
+    },
+    "Security Directory List": {
+      "main": [[{ "node": "Check if Already in Airtable", "type": "main", "index": 0 }]]
+    },
+    "Check if Already in Airtable": {
+      "main": [[{ "node": "Only New Directories", "type": "main", "index": 0 }]]
+    },
+    "Only New Directories": {
+      "main": [[{ "node": "Save to Citation Opportunities", "type": "main", "index": 0 }]]
+    },
+    "Save to Citation Opportunities": {
+      "main": [[{ "node": "Log to Execution Logs", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "SEO" }, { "name": "Citations" }]
+}
