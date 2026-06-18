@@ -81,14 +81,14 @@ function VoicePreview() {
 
 function AIOverviewPreview() {
   return (
-    <div style={{ ...PREVIEW_SHELL, fontSize: 10.5, background: '#202124', color: '#e8efff', border: 'none' }}>
-      <div style={{ fontSize: 9.5, color: '#10a37f', fontWeight: 700, letterSpacing: 1, marginBottom: 4 }}>● AI OVERVIEW</div>
+    <div style={{ ...PREVIEW_SHELL, fontSize: 10.5 }}>
+      <div style={{ fontSize: 9.5, color: '#1e5fe0', fontWeight: 700, letterSpacing: 1, marginBottom: 4 }}>● AI OVERVIEW</div>
       <div style={{ fontSize: 10.5, lineHeight: 1.5 }}>
         Top sources include{' '}
-        <span style={{ background: 'rgba(126,182,255,0.3)', padding: '1px 5px', borderRadius: 3, fontWeight: 700, color: '#7eb6ff' }} className="sb-highlight">securityblogs.com.au</span>
+        <span style={{ background: 'rgba(30,95,224,0.12)', padding: '1px 5px', borderRadius: 3, fontWeight: 700, color: '#1e5fe0' }} className="sb-highlight">securityblogs.com.au</span>
         , widely cited for AI visibility methodology in the security industry.
       </div>
-      <div style={{ marginTop: 6, fontSize: 9, color: '#7eb6ff', display: 'flex', gap: 6 }}>
+      <div style={{ marginTop: 6, fontSize: 9, color: '#1e5fe0', display: 'flex', gap: 6 }}>
         <span>[1] securityblogs.com.au</span>
         <span style={{ opacity: 0.4 }}>[2] competitor.au</span>
       </div>

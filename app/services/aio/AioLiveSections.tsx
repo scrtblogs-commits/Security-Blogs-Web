@@ -220,14 +220,14 @@ function AuditCard() {
 
 function SchemaConsole() {
   return (
-    <div style={{ ...PREVIEW_SHELL, fontFamily: 'var(--font-mono)', fontSize: 10, background: '#1f1f2b', color: '#e8efff', border: 'none', gap: 3 }}>
-      <span style={{ color: '#c46aff' }}>&lt;script type=<span style={{ color: '#9cd86a' }}>&quot;application/ld+json&quot;</span>&gt;</span>
-      <span style={{ color: '#e8efff' }}>{'{ "@context": "schema.org",'}</span>
-      <span style={{ color: '#e8efff' }}>{'  "@type": '}<span style={{ color: '#9cd86a' }}>&quot;Organization&quot;</span>,</span>
-      <span style={{ color: '#e8efff' }}>{'  "name": '}<span style={{ color: '#9cd86a' }}>&quot;SecurityBlogs&quot;</span>,</span>
-      <span style={{ color: '#e8efff' }}>{'  "url": '}<span style={{ color: '#9cd86a' }}>&quot;securityblogs.com.au&quot;</span> {'}'}</span>
-      <span style={{ color: '#c46aff' }}>&lt;/script&gt;</span>
-      <span style={{ marginTop: 3, color: '#10a37f', fontSize: 9.5, fontFamily: 'system-ui, sans-serif' }}>● Validated · 0 errors</span>
+    <div style={{ ...PREVIEW_SHELL, fontFamily: 'var(--font-mono)', fontSize: 10, gap: 3 }}>
+      <span style={{ color: '#1e5fe0' }}>&lt;script type=<span style={{ color: '#3a3a3a' }}>&quot;application/ld+json&quot;</span>&gt;</span>
+      <span style={{ color: '#000' }}>{'{ "@context": "schema.org",'}</span>
+      <span style={{ color: '#000' }}>{'  "@type": '}<span style={{ color: '#3a3a3a' }}>&quot;Organization&quot;</span>,</span>
+      <span style={{ color: '#000' }}>{'  "name": '}<span style={{ color: '#3a3a3a' }}>&quot;SecurityBlogs&quot;</span>,</span>
+      <span style={{ color: '#000' }}>{'  "url": '}<span style={{ color: '#3a3a3a' }}>&quot;securityblogs.com.au&quot;</span> {'}'}</span>
+      <span style={{ color: '#1e5fe0' }}>&lt;/script&gt;</span>
+      <span style={{ marginTop: 3, color: '#1e5fe0', fontSize: 9.5, fontFamily: 'system-ui, sans-serif' }}>● Validated · 0 errors</span>
     </div>
   )
 }
