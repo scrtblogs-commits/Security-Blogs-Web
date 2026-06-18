@@ -263,12 +263,23 @@ a {
 }
 
 .section {
-  padding: 96px 0;
+  padding: 44px 0;
   position: relative;
 }
 
+/* Carousel-style panel rhythm — every content section reads as a clean white
+   rounded panel (matches the services carousel look; no scroll-jacking, so
+   content stays crawlable and accessible). */
+.section > .container {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: clamp(32px, 5vw, 60px) clamp(20px, 3vw, 44px);
+}
+
 @media (max-width: 700px) {
-  .section { padding: 64px 0; }
+  .section { padding: 22px 0; }
+  .section > .container { padding: 26px 18px; }
 }
 
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -286,7 +297,7 @@ a {
 
 /* ---------- Typography helpers ---------- */
 .h1 { font-size: clamp(38px, 6vw, 68px); font-weight: 800; }
-.h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 700; }
+.h2 { font-size: clamp(28px, 4vw, 46px); font-weight: 800; letter-spacing: -0.02em; }
 .lead { font-size: clamp(17px, 2vw, 20px); color: var(--text-soft); line-height: 1.6; }
 .eyebrow {
   text-transform: uppercase;
