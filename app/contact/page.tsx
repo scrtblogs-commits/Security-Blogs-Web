@@ -1,4 +1,3 @@
-import Glyph from '@/components/ui/Glyph'
 import SectionHead from '@/components/ui/SectionHead'
 import ContactForm from '@/components/ui/ContactForm'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
@@ -55,12 +54,9 @@ export default function ContactPage() {
             <Reveal>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {details.map((d) => (
-                  <div key={d.title} className="card flex items-center gap-3" style={{ padding: 18 }}>
-                    <span style={{ fontSize: 26 }}><Glyph icon={d.icon} size={22} /></span>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 15.5 }}>{d.title}</div>
-                      <div className="text-soft" style={{ fontSize: 13.5 }}>{d.sub}</div>
-                    </div>
+                  <div key={d.title} className="card" style={{ padding: 18 }}>
+                    <div style={{ fontWeight: 600, fontSize: 15.5 }}>{d.title}</div>
+                    <div className="text-soft" style={{ fontSize: 13.5 }}>{d.sub}</div>
                   </div>
                 ))}
               </div>
