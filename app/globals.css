@@ -282,49 +282,6 @@ a {
   .section > .container { padding: 26px 18px; }
 }
 
-/* ── Contact page: fixed live 3D scene behind every section ──────────────
-   The Spline robot sits fixed below the white header; content scrolls over it
-   with white text. The base background is white, so the scene is layered at
-   z-index:-1 — it shows through transparent sections, while opaque elements
-   (header, footer, glass cards) naturally cover it. */
-.contact-3d { position: relative; color: #fff; }
-.contact-3d__bg {
-  position: fixed;
-  inset: var(--nav-h) 0 0 0;
-  z-index: -1;
-  background: radial-gradient(120% 90% at 70% 35%, #0d1730 0%, #070d1c 62%);
-  pointer-events: none;
-}
-.contact-3d__bg > div { width: 100%; height: 100%; }
-.contact-3d__hero { min-height: calc(100vh - var(--nav-h)); display: flex; align-items: center; }
-/* sections transparent so the 3D shows through */
-.contact-3d .section > .container { background: transparent; border-color: transparent; }
-/* white text over the dark scene */
-.contact-3d h1, .contact-3d h2, .contact-3d h3 { color: #fff; }
-.contact-3d .lead { color: rgba(255, 255, 255, 0.82); }
-.contact-3d .text-soft { color: rgba(255, 255, 255, 0.7); }
-.contact-3d .label { color: #fff; }
-/* glass cards + readable form fields over the scene */
-.contact-3d .card,
-.contact-3d .glass {
-  background: rgba(8, 14, 28, 0.55);
-  border-color: rgba(255, 255, 255, 0.14);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-.contact-3d .field {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.28);
-  color: #fff;
-}
-.contact-3d .field::placeholder { color: rgba(255, 255, 255, 0.5); }
-.contact-3d .pill {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.22);
-  color: #fff;
-}
-.contact-3d .pill.active { background: var(--blue); border-color: var(--blue); color: #fff; }
-
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
