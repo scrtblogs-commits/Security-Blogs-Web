@@ -12,7 +12,7 @@ import BeforeAfter from '@/components/ui/BeforeAfter'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
-const ACCENT = '#e23744'
+const ACCENT = '#1e5fe0'
 
 export const metadata = {
   title: "GEO — Build Your Security Brand's AI Knowledge Graph",

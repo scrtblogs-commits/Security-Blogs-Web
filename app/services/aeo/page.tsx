@@ -13,7 +13,7 @@ import AIChatDemo from '@/components/ui/AIChatDemo'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
-const ACCENT = '#7f77dd'
+const ACCENT = '#1e5fe0'
 
 export const metadata = {
   title: 'AEO — Become the Answer AI Recommends',

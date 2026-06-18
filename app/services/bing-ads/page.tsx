@@ -16,7 +16,7 @@ import AdPreviewCard from '@/components/ui/AdPreviewCard'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
-const ACCENT = '#0078d4'
+const ACCENT = '#1e5fe0'
 
 export const metadata = {
   title: 'Bing Ads for Security Companies',

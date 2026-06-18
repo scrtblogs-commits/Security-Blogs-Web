@@ -14,7 +14,7 @@ import SerpAnimation from '@/components/ui/SerpAnimation'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
-const ACCENT = '#1e9e75'
+const ACCENT = '#1e5fe0'
 
 export const metadata = {
   title: 'Security SEO — Rank #1 for Every Security Keyword',

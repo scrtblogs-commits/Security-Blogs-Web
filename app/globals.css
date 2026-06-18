@@ -179,18 +179,21 @@
   --blue: #1e5fe0;
   --blue-d: #1742a8;
   --yellow: #f6c715;
-  --red: #e23744;
-  --green: #1e9e75;
-  --violet: #6f4dff;
+  /* 4-colour theme: white bg, black text, blue brand/buttons, with yellow +
+     grey as ~5% accents only. Red/green/violet are intentionally collapsed
+     to the single brand blue so no other hues appear site-wide. */
+  --red: #1e5fe0;
+  --green: #1e5fe0;
+  --violet: #1e5fe0;
 
   --bg: #ffffff;
   --bg-soft: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-2: #f8f8f8;
-  --line: rgba(18, 42, 86, 0.12);
-  --text: #11203a;
-  --text-soft: #485874;
-  --text-dim: #7a89a3;
+  --bg-card-2: #f7f7f7;
+  --line: rgba(0, 0, 0, 0.12);
+  --text: #000000;
+  --text-soft: #3a3a3a;
+  --text-dim: #6b6b6b;
   --glow: rgba(30, 95, 224, 0.2);
 
   --radius: 16px;

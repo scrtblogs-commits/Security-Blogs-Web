@@ -16,7 +16,7 @@ import AdPreviewCard from '@/components/ui/AdPreviewCard'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
-const ACCENT = '#f6c715'
+const ACCENT = '#1e5fe0'
 
 export const metadata = {
   title: 'Google Ads for Security Companies',

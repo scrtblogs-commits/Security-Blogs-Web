@@ -11,7 +11,7 @@ import FAQAccordion from '@/components/ui/FAQAccordion'
 import JsonLd from '@/components/JsonLd'
 import { serviceSchema } from '@/lib/schema'
 
-const ACCENT = '#6f4dff'
+const ACCENT = '#1e5fe0'
 
 export const metadata = {
   title: 'AIO — Get Your Security Brand Cited by Every AI Platform',
