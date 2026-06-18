@@ -3,8 +3,12 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const competitors = [
-  'genericsecurity.com.au', 'safeguard-systems.com', 'cctv-deals.com.au',
-  'lockit-access.com', 'alarmworld.com.au', 'budget-cams.net',
+  { domain: 'cctv-suppliers.com.au',    title: 'CCTV Camera Suppliers' },
+  { domain: 'alarmsystems.com.au',      title: 'Alarm System Supplier' },
+  { domain: 'monitoring-services.au',   title: 'Monitoring Services' },
+  { domain: 'guardservices.com.au',     title: 'Security Guard Services' },
+  { domain: 'uniform-supply.com.au',    title: 'Uniform Services' },
+  { domain: 'safeguard-systems.com',    title: 'Security System Installation' },
 ]
 
 export default function SerpAnimation({ brand = 'yoursecuritybrand.com.au' }: { brand?: string }) {
@@ -21,8 +25,9 @@ export default function SerpAnimation({ brand = 'yoursecuritybrand.com.au' }: { 
     return () => io.disconnect()
   }, [])
 
-  const list = [...competitors]
-  list.splice(rank, 0, brand)
+  const brandItem = { domain: brand, title: 'Your Security Brand — #1 CCTV & Access Control', isBrand: true }
+  const list = competitors.map((c) => ({ ...c, isBrand: false }))
+  list.splice(rank, 0, brandItem)
 
   return (
     <div ref={ref} className="card" style={{ padding: 18 }}>
@@ -32,12 +37,12 @@ export default function SerpAnimation({ brand = 'yoursecuritybrand.com.au' }: { 
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {list.slice(0, 7).map((item) => {
-          const isBrand = item === brand
+          const isBrand = item.isBrand
           return (
-            <motion.div key={item} layout transition={{ type: 'spring', stiffness: 220, damping: 26 }}
+            <motion.div key={item.domain} layout transition={{ type: 'spring', stiffness: 220, damping: 26 }}
               style={{ padding: '10px 12px', borderRadius: 10, border: '1px solid', borderColor: isBrand ? 'var(--blue)' : 'var(--line)', background: isBrand ? 'rgba(30,95,224,0.07)' : 'var(--bg-card)', opacity: isBrand ? 1 : 0.55 }}>
-              <div style={{ fontSize: 12, color: isBrand ? 'var(--blue)' : 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>{item}</div>
-              <div style={{ fontSize: 14, fontWeight: 600, color: isBrand ? 'var(--blue)' : 'var(--text-soft)' }}>{isBrand ? 'Your Security Brand — #1 CCTV & Access Control' : 'Security Services & Camera Installation'}</div>
+              <div style={{ fontSize: 12, color: isBrand ? 'var(--blue)' : 'var(--text-dim)', fontFamily: 'var(--font-mono)' }}>{item.domain}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: isBrand ? 'var(--blue)' : 'var(--text-soft)' }}>{item.title}</div>
             </motion.div>
           )
         })}

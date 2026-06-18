@@ -148,20 +148,6 @@ export default function HorizontalScrollServices() {
                   overflow: 'hidden',
                 }}
               >
-                {/* Giant number watermark */}
-                <div style={{
-                  position: 'absolute',
-                  right: '-20px',
-                  bottom: '-40px',
-                  fontSize: 'clamp(200px, 28vw, 380px)',
-                  fontWeight: 900,
-                  color: p.color,
-                  opacity: 0.06,
-                  lineHeight: 1,
-                  userSelect: 'none',
-                  pointerEvents: 'none',
-                }}>{p.num}</div>
-
                 {/* Content */}
                 <div style={{ maxWidth: 1200, width: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center', position: 'relative', zIndex: 1 }}>
 
