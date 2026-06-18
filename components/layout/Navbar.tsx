@@ -78,10 +78,11 @@ export default function Navbar() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, height: 'var(--nav-h)',
         display: 'flex', alignItems: 'center',
-        background: scrolled ? 'color-mix(in srgb, var(--bg) 78%, transparent)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(14px) saturate(160%)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(14px) saturate(160%)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--line)' : '1px solid transparent',
+        background: '#ffffff',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
+        borderBottom: '1px solid var(--line)',
+        boxShadow: scrolled ? '0 6px 24px -16px rgba(0,0,0,0.25)' : 'none',
         transition: 'all 0.25s ease',
       }}
     >

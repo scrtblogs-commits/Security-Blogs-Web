@@ -1,8 +1,7 @@
-import Glyph from '@/components/ui/Glyph'
 import SectionHead from '@/components/ui/SectionHead'
 import ContactForm from '@/components/ui/ContactForm'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
-import Interactive3D from '@/components/ui/Interactive3D'
+import { SplineScene } from '@/components/ui/splite'
 import Reveal from '@/components/ui/Reveal'
 import JsonLd from '@/components/JsonLd'
 import { contactPageSchema } from '@/lib/schema'
@@ -15,11 +14,11 @@ export const metadata = {
 }
 
 const details = [
-  { icon: '📍', title: 'Australia', sub: 'Also serving US · UK · UAE · SG' },
-  { icon: '📞', title: '+61 411 212 418', sub: 'Mon to Fri, 9am–5pm AEST' },
-  { icon: '📧', title: 'info@securityblogs.com.au', sub: 'Email us anytime' },
-  { icon: '⏰', title: 'Response within 24 hours', sub: 'Real humans, fast replies' },
-  { icon: '🔒', title: '100% confidential, no spam', sub: 'Your data stays private' },
+  { title: 'Australia', sub: 'Also serving US · UK · UAE · SG' },
+  { title: '+61 411 212 418', sub: 'Mon to Fri, 9am–5pm AEST' },
+  { title: 'info@securityblogs.com.au', sub: 'Email us anytime' },
+  { title: 'Response within 24 hours', sub: 'Real humans, fast replies' },
+  { title: '100% confidential, no spam', sub: 'Your data stays private' },
 ]
 
 export default function ContactPage() {
@@ -33,44 +32,60 @@ export default function ContactPage() {
         areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
         availableLanguage: ['en-AU'],
       })} />
-      {/* Full-screen interactive 3D hero */}
-      <Interactive3D
-        fullScreen
-        eyebrow="Before you reach out"
-        title={<>Let&apos;s make AI <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>recommend you</span></>}
-        description="Tell us about your security brand and we'll show you exactly where AI cites your competitors instead of you — and the fastest path to becoming the answer. Drag the 3D model while you're here."
-      />
 
-      <section className="section">
-        <div className="container" style={{ maxWidth: 760 }}>
-          <SectionHead eyebrow="Try it now" title="How visible is your brand to AI?" sub="Answer five quick questions and get an instant AI visibility score plus tailored recommendations." />
-          <AIVisibilityChallenge variant="full" />
+      <div className="contact-3d">
+        {/* Fixed live 3D scene — stays behind every section while you scroll */}
+        <div className="contact-3d__bg" aria-hidden>
+          <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode" />
         </div>
-      </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="Or message us" title="Get in touch." />
-          <div className="grid-2" style={{ gap: 40, alignItems: 'start' }}>
+        {/* Hero */}
+        <section className="section contact-3d__hero">
+          <div className="container">
             <Reveal>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {details.map((d) => (
-                  <div key={d.title} className="card flex items-center gap-3" style={{ padding: 18 }}>
-                    <span style={{ fontSize: 26 }}><Glyph icon={d.icon} size={22} /></span>
-                    <div>
+              <span className="eyebrow" style={{ color: '#7fa8ff' }}>Before you reach out</span>
+              <h1 className="h1" style={{ margin: '12px 0 16px' }}>
+                Let&apos;s make AI{' '}
+                <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>recommend you</span>
+              </h1>
+              <p className="lead" style={{ maxWidth: 560 }}>
+                Tell us about your security brand and we&apos;ll show you exactly where AI cites your
+                competitors instead of you — and the fastest path to becoming the answer.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* AI visibility challenge */}
+        <section className="section">
+          <div className="container" style={{ maxWidth: 760 }}>
+            <SectionHead eyebrow="Try it now" title="How visible is your brand to AI?" sub="Answer five quick questions and get an instant AI visibility score plus tailored recommendations." />
+            <AIVisibilityChallenge variant="full" />
+          </div>
+        </section>
+
+        {/* Get in touch */}
+        <section className="section" style={{ paddingTop: 0 }}>
+          <div className="container">
+            <SectionHead eyebrow="Or message us" title="Get in touch." />
+            <div className="grid-2" style={{ gap: 40, alignItems: 'start' }}>
+              <Reveal>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {details.map((d) => (
+                    <div key={d.title} className="card" style={{ padding: 18 }}>
                       <div style={{ fontWeight: 600, fontSize: 15.5 }}>{d.title}</div>
                       <div className="text-soft" style={{ fontSize: 13.5 }}>{d.sub}</div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-            <Reveal delay={0.12}>
-              <ContactForm submitLabel="Send Message →" successMsg="✓ Message received! We'll be in touch within 24 hours." />
-            </Reveal>
+                  ))}
+                </div>
+              </Reveal>
+              <Reveal delay={0.12}>
+                <ContactForm submitLabel="Send Message →" successMsg="✓ Message received! We'll be in touch within 24 hours." />
+              </Reveal>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   )
 }
