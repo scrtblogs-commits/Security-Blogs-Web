@@ -38,10 +38,10 @@ const steps = [
 ]
 
 const stats = [
-  { num: '87%', label: 'Average AI citation rate' },
-  { num: '6', label: 'AI platforms targeted' },
-  { num: '47', label: 'Average AI mentions per month' },
-  { num: '3.2×', label: 'More inbound leads' },
+  { num: 'Schema', label: 'Machine-readable structured data' },
+  { num: '6+', label: 'AI platforms optimised for' },
+  { num: 'Entity', label: 'Consistent brand signals' },
+  { num: 'Tracked', label: 'Ongoing citation monitoring' },
 ]
 
 const faqs = [
@@ -110,7 +110,7 @@ export default function AioPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The results" title="What AIO delivers for security brands." />
+          <SectionHead eyebrow="Our approach" title="How AIO makes your brand citable." />
           <AioResults />
         </div>
       </section>

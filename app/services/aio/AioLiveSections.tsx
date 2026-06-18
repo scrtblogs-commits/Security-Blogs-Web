@@ -275,10 +275,10 @@ function CitationTrendChart() {
 // AioResults — animated metric tiles
 // ────────────────────────────────────────────────────────────
 const RESULTS = [
-  { n: '87%',  label: 'Average AI citation rate',     trend: 'up' as const,   sub: '+62% vs baseline' },
-  { n: '6',    label: 'AI platforms targeted',         trend: 'flat' as const, sub: 'GPT · Perplx · Gem · Claude · Bing · GAI' },
-  { n: '47',   label: 'Average AI mentions per month', trend: 'up' as const,   sub: '+34 vs month 1' },
-  { n: '3.2×', label: 'More inbound leads',            trend: 'up' as const,   sub: 'vs pre-AIO baseline' },
+  { n: 'Schema',  label: 'Structured data that makes you machine-readable', trend: 'flat' as const, sub: 'Organization · FAQ · Article' },
+  { n: '6+',      label: 'AI platforms we optimise for',                     trend: 'flat' as const, sub: 'GPT · Perplx · Gem · Claude · Bing · GAI' },
+  { n: 'Entity',  label: 'Consistent brand signals across the web',         trend: 'flat' as const, sub: 'NAP · profiles · citations' },
+  { n: 'Tracked', label: 'Ongoing AI citation monitoring',                  trend: 'flat' as const, sub: 'reported monthly' },
 ]
 
 export function AioResults() {

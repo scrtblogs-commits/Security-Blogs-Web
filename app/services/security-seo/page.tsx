@@ -41,10 +41,10 @@ const steps = [
 ]
 
 const stats = [
-  { num: '+180%', label: 'Average organic traffic growth' },
-  { num: '28', label: 'Average keywords ranking at #1' },
-  { num: '6 months', label: 'Average time to reach #1' },
-  { num: '95%', label: 'Client retention rate' },
+  { num: '100%', label: 'Focused on the security industry' },
+  { num: 'No', label: 'Lock-in contracts' },
+  { num: 'Monthly', label: 'Reporting on every tracked keyword' },
+  { num: '60–90d', label: 'Typical time to first ranking movement' },
 ]
 
 const faqs = [
@@ -113,7 +113,7 @@ export default function SecuritySeoPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The results" title="Numbers our security clients see." />
+          <SectionHead eyebrow="Why security brands choose us" title="A programme built for the security industry." />
           <StatsStrip items={stats} />
         </div>
       </section>

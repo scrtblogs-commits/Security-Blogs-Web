@@ -30,10 +30,10 @@ const steps = [
 ]
 
 const stats = [
-  { num: '6', label: 'AI platforms confirming your entity' },
-  { num: '90 days', label: 'Average to verified entity' },
-  { num: '100%', label: 'NAP consistency achieved' },
-  { num: '4.5×', label: 'More branded AI recommendations' },
+  { num: '6+', label: 'AI platforms we build entity signals across' },
+  { num: 'Wikidata', label: 'Knowledge-graph sources we target' },
+  { num: 'NAP', label: 'Consistency across every citation' },
+  { num: 'Schema', label: 'Organization & entity markup' },
 ]
 
 const faqs = [
@@ -89,14 +89,14 @@ export default function GeoPage() {
           <SectionHead eyebrow="The transformation" title="What GEO changes for your brand." />
           <BeforeAfter
             before={["AI doesn't recognise your brand", 'Inconsistent NAP across the web', 'Competitors cited instead of you']}
-            after={['Entity confirmed on 6 AI platforms', 'Consistent signals everywhere', 'AI recommends you by name']}
+            after={['Entity recognised across major AI platforms', 'Consistent signals everywhere', 'AI can recommend you by name']}
           />
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The results" title="What GEO delivers for security brands." />
+          <SectionHead eyebrow="Our approach" title="How we build your AI entity." />
           <StatsStrip items={stats} />
         </div>
       </section>

@@ -40,10 +40,10 @@ const steps = [
 ]
 
 const stats = [
-  { num: '+340%', label: 'AI answer appearances' },
-  { num: '91%', label: 'Featured snippet rate' },
-  { num: '78%', label: 'Of buyers trust AI answers' },
-  { num: '4.2s', label: 'Average AI response time' },
+  { num: 'Pos. 0', label: 'Featured-snippet & AI-answer targeting' },
+  { num: 'Schema', label: 'FAQ & answer markup on every page' },
+  { num: '4+', label: 'AI assistants optimised for' },
+  { num: 'Q&A', label: 'Answer-first content structure' },
 ]
 
 const faqs = [
@@ -110,7 +110,7 @@ export default function AeoPage() {
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The results" title="What AEO delivers for security brands." />
+          <SectionHead eyebrow="Our approach" title="How we win the answer." />
           <StatsStrip items={stats} />
         </div>
       </section>
