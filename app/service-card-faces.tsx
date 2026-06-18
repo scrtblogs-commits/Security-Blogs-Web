@@ -91,14 +91,14 @@ function SerpRow({ text }: { text: string }) {
 // =============================================================
 export function AIOFace(p: CardProps) {
   return (
-    <div style={{ ...SHELL, background: 'linear-gradient(180deg, #1a1f3a 0%, #0c1424 100%)' }}>
-      <span style={SERVICE_TAG}>Service</span>
+    <div style={{ ...SHELL, background: '#ffffff' }}>
+      <span style={{ ...SERVICE_TAG, color: '#6b6b6b', textShadow: 'none' }}>Service</span>
 
       {/* AI Mode chrome */}
-      <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#9aa3b8' }}>
-        <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#10a37f', display: 'grid', placeItems: 'center', color: '#fff', fontWeight: 700, fontSize: 10 }}>AI</span>
+      <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#3a3a3a' }}>
+        <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#1e5fe0', display: 'grid', placeItems: 'center', color: '#fff', fontWeight: 700, fontSize: 10 }}>AI</span>
         <span style={{ fontWeight: 600 }}>AI Mode</span>
-        <span style={{ marginLeft: 6, color: '#7eb6ff', fontSize: 9 }}>● DEMO</span>
+        <span style={{ marginLeft: 6, color: '#1e5fe0', fontSize: 9 }}>● DEMO</span>
       </div>
 
       {/* User prompt typed */}
@@ -107,9 +107,9 @@ export function AIOFace(p: CardProps) {
         <div
           className="sb-typewriter"
           style={{
-            fontSize: 13, color: '#fff', lineHeight: 1.4,
-            background: 'rgba(255,255,255,0.06)', padding: '8px 12px', borderRadius: 8,
-            border: '1px solid rgba(255,255,255,0.1)',
+            fontSize: 13, color: '#000', lineHeight: 1.4,
+            background: '#f4f4f4', padding: '8px 12px', borderRadius: 8,
+            border: '1px solid #e5e7eb',
             display: 'inline-block', maxWidth: '100%',
           }}
         >
@@ -119,14 +119,14 @@ export function AIOFace(p: CardProps) {
 
       {/* AI answer */}
       <div style={{ position: 'absolute', top: 128, left: 16, right: 16 }}>
-        <div style={{ fontSize: 10.5, color: '#7eb6ff', marginBottom: 4 }}>AI Mode</div>
-        <div style={{ fontSize: 12.5, color: '#e8efff', lineHeight: 1.5 }}>
+        <div style={{ fontSize: 10.5, color: '#1e5fe0', marginBottom: 4 }}>AI Mode</div>
+        <div style={{ fontSize: 12.5, color: '#000', lineHeight: 1.5 }}>
           A strong AI-visibility example is{' '}
           <span
             className="sb-highlight"
             style={{
-              background: 'linear-gradient(120deg, rgba(126,182,255,0.5), rgba(126,182,255,0.18))',
-              padding: '1px 6px', borderRadius: 4, fontWeight: 700, color: '#7eb6ff',
+              background: 'rgba(30,95,224,0.12)',
+              padding: '1px 6px', borderRadius: 4, fontWeight: 700, color: '#1e5fe0',
             }}
           >
             securityblogs.com.au
@@ -344,8 +344,8 @@ export function BingAdsFace(p: CardProps) {
 // =============================================================
 export function WebDesignFace(p: CardProps) {
   return (
-    <div style={{ ...SHELL, background: 'linear-gradient(180deg, #2a3550 0%, #0f172a 100%)' }}>
-      <span style={SERVICE_TAG}>Service</span>
+    <div style={{ ...SHELL, background: '#ffffff' }}>
+      <span style={{ ...SERVICE_TAG, color: '#6b6b6b', textShadow: 'none' }}>Service</span>
 
       {/* Browser frame */}
       <div style={{ position: 'absolute', top: 18, left: 18, right: 18, bottom: 90, borderRadius: 10, overflow: 'hidden', background: '#fff', boxShadow: '0 10px 30px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.1)' }}>

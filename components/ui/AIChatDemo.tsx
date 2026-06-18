@@ -16,7 +16,7 @@ function formatLine(line: string, key: number) {
     <span key={key} style={{ display: 'block', marginBottom: 2 }}>
       {parts.map((chunk, j) =>
         j % 2 === 1
-          ? <strong key={j} style={chunk === BRAND ? { color: '#e23744', fontWeight: 700 } : { fontWeight: 600, color: '#111' }}>{chunk}</strong>
+          ? <strong key={j} style={chunk === BRAND ? { color: '#1e5fe0', fontWeight: 700 } : { fontWeight: 600, color: '#111' }}>{chunk}</strong>
           : <span key={j}>{chunk}</span>
       )}
     </span>
@@ -94,7 +94,7 @@ export default function AIChatDemo() {
           <span style={{ fontWeight: 600, fontSize: 15, color: '#111' }}>ChatGPT</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#888" strokeWidth="2"><path d="M6 9l6 6 6-6"/></svg>
         </div>
-        <span style={{ fontSize: 12, color: '#10a37f', fontWeight: 600, border: '1px solid #10a37f', borderRadius: 20, padding: '3px 10px' }}>Live demo</span>
+        <span style={{ fontSize: 12, color: '#1e5fe0', fontWeight: 600, border: '1px solid #1e5fe0', borderRadius: 20, padding: '3px 10px' }}>Example</span>
       </div>
 
       {/* Messages */}
