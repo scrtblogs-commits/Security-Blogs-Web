@@ -54,7 +54,7 @@ export default function HomePage() {
       {/* ── STATS ────────────────────────────────────── */}
       <section className="section" id="stats" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The results" title="Numbers our clients brag about." />
+          <SectionHead eyebrow="Why security brands choose us" title="Built for the security industry, end to end." />
           <StatsStrip items={stats} />
         </div>
       </section>

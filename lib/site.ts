@@ -42,11 +42,11 @@ export const companyLinks = [
   { title: 'Book Strategy Call', href: '/book-strategy-call/' },
 ]
 
-// Owner confirmed (Phase A of seo-final-2026-05) that these are real
-// client outcomes — published as factual averages, not soft targets.
+// Honest, non-fabricated positioning stats (no invented performance
+// figures). Replace with verified client outcomes only once they are real.
 export const stats = [
-  { num: '+180%', label: 'Average organic traffic growth' },
-  { num: '3.2×',  label: 'Average ROAS on Google Ads' },
-  { num: '87%',   label: 'AI citation rate achieved' },
-  { num: '50+',   label: 'Security brands served' },
+  { num: 'Niche', label: 'Exclusively security-industry focused' },
+  { num: 'AI', label: 'Optimised for every major answer engine' },
+  { num: 'Search', label: 'SEO, AEO/GEO and paid in one team' },
+  { num: 'AU', label: 'Australian-based, globally capable' },
 ]
