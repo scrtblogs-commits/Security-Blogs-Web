@@ -34,18 +34,23 @@ export default function Interactive3D({
   eyebrow = 'Interactive',
   title,
   description,
-}: { eyebrow?: string; title?: ReactNode; description?: ReactNode }) {
+  fullScreen = false,
+}: { eyebrow?: string; title?: ReactNode; description?: ReactNode; fullScreen?: boolean }) {
+  const minH = fullScreen ? '100vh' : 480
   return (
     <div
       style={{
-        position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius-lg)',
-        background: '#070d1c', border: '1px solid rgba(255,255,255,0.08)', minHeight: 480,
-        boxShadow: '0 40px 90px -45px rgba(8,15,30,0.9)',
+        position: 'relative', overflow: 'hidden',
+        borderRadius: fullScreen ? 0 : 'var(--radius-lg)',
+        background: '#070d1c',
+        border: fullScreen ? 'none' : '1px solid rgba(255,255,255,0.08)',
+        minHeight: minH,
+        boxShadow: fullScreen ? 'none' : '0 40px 90px -45px rgba(8,15,30,0.9)',
       }}
     >
       <Spotlight />
-      <div className="sg-3d-grid" style={{ display: 'flex', height: '100%', minHeight: 480, position: 'relative', zIndex: 2 }}>
-        <div style={{ flex: 1, padding: 40, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+      <div className="sg-3d-grid" style={{ display: 'flex', height: '100%', minHeight: minH, position: 'relative', zIndex: 2 }}>
+        <div style={{ flex: 1, padding: fullScreen ? 'clamp(40px,8vw,110px)' : 40, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <span className="eyebrow" style={{ color: '#7fa8ff' }}>{eyebrow}</span>
           <h2 style={{ fontSize: 'clamp(30px,4vw,46px)', margin: '12px 0 14px', color: '#fff', lineHeight: 1.1 }}>
             {title ?? (

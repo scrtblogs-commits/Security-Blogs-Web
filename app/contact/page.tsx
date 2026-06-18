@@ -1,6 +1,4 @@
 import Glyph from '@/components/ui/Glyph'
-import HeroBg from '@/components/ui/HeroBg'
-import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
 import ContactForm from '@/components/ui/ContactForm'
 import AIVisibilityChallenge from '@/components/ui/AIVisibilityChallenge'
@@ -35,35 +33,13 @@ export default function ContactPage() {
         areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
         availableLanguage: ['en-AU'],
       })} />
-      <HeroBg grid>
-        <div className="center mx-auto" style={{ maxWidth: 760 }}>
-          <Reveal>
-            <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
-            <span className="badge badge-blue" style={{ marginBottom: 22 }}>
-              <span className="dot dot-pulse" /> LET&apos;S TALK
-            </span>
-            <h1 className="h1" style={{ marginBottom: 20 }}>
-              Let&apos;s get your brand{' '}
-              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>cited</span>.
-            </h1>
-            <p className="lead mx-auto" style={{ maxWidth: 560 }}>
-              Take the AI visibility challenge below, or send us a message — we reply within 24 hours.
-            </p>
-          </Reveal>
-        </div>
-      </HeroBg>
-
-      <section className="section" style={{ paddingBottom: 0 }}>
-        <div className="container">
-          <Reveal>
-            <Interactive3D
-              eyebrow="Before you reach out"
-              title={<>Let&apos;s make AI <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>recommend you</span></>}
-              description="Tell us about your security brand and we'll show you exactly where AI cites your competitors instead of you — and the fastest path to becoming the answer. Drag the 3D model while you're here."
-            />
-          </Reveal>
-        </div>
-      </section>
+      {/* Full-screen interactive 3D hero */}
+      <Interactive3D
+        fullScreen
+        eyebrow="Before you reach out"
+        title={<>Let&apos;s make AI <span style={{ background: 'linear-gradient(180deg,#fff,#9fb4d6)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>recommend you</span></>}
+        description="Tell us about your security brand and we'll show you exactly where AI cites your competitors instead of you — and the fastest path to becoming the answer. Drag the 3D model while you're here."
+      />
 
       <section className="section">
         <div className="container" style={{ maxWidth: 760 }}>
