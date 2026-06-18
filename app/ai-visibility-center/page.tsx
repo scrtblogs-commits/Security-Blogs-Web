@@ -1,7 +1,7 @@
 
 import MagneticButton from '@/components/ui/MagneticButton'
 import SectionHead from '@/components/ui/SectionHead'
-import StatsStrip from '@/components/ui/StatsStrip'
+import GscSnapshot from '@/components/ui/GscSnapshot'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
@@ -15,7 +15,7 @@ import OrbitalTimeline from './OrbitalTimeline'
 export const metadata = {
   title: 'AI Visibility Center — How AI Sees Your Security Brand',
   description:
-    '73% of B2B security buyers use AI to find and vet vendors. See how AI discovers, scores and cites your brand — and how to become the answer it gives.',
+    'See how AI discovers, scores and cites your security brand — and how to become the answer it gives. Includes your live Google Search Console performance.',
   alternates: { canonical: '/ai-visibility-center/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/ai-visibility-center/' },
 }
@@ -29,13 +29,6 @@ const timeline = [
   { phase: 'Synthesis', title: 'Response generation', desc: 'The model drafts a confident, conversational recommendation.' },
   { phase: 'Attribution', title: 'Citation attribution', desc: 'Sources and brands are named, linked and credited inside the answer.' },
   { phase: 'Result', title: 'Buyer sees your brand as THE answer', desc: 'You become the recommendation — before a single click ever happens.' },
-]
-
-const stats = [
-  { num: '73%', label: 'B2B buyers use AI for vendor research' },
-  { num: '89%', label: 'of AI answers cite the same 5 brands' },
-  { num: '3.2×', label: 'more leads from AI-cited brands' },
-  { num: '180', label: 'avg days to reach Authority tier' },
 ]
 
 export default function AIVisibilityCenterPage() {
@@ -53,8 +46,8 @@ export default function AIVisibilityCenterPage() {
               <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>Security Brand</span>
             </h1>
             <p className="lead" style={{ maxWidth: 660, marginBottom: 28 }}>
-              73% of B2B security buyers now use AI to find and vet vendors. Here's how to make sure
-              AI recommends you every time.
+              A growing share of B2B security buyers now use AI to find and vet vendors. Here's how to make
+              sure AI recommends you every time.
             </p>
             <div className="flex flex-wrap gap-3">
               <MagneticButton href="#calculator" className="btn btn-primary btn-lg">Get your AI Visibility Score →</MagneticButton>
@@ -115,16 +108,16 @@ export default function AIVisibilityCenterPage() {
             sub="What changes when your brand becomes the answer AI gives."
           />
           <BeforeAfter
-            before={['Not cited by AI', 'Page 4 on Google', '2 leads/month']}
-            after={['Cited by ChatGPT, Perplexity, Gemini', '#1 on Google for 28 keywords', '47 leads/month']}
+            before={['Not cited by AI', 'Buried in search', 'Few inbound enquiries']}
+            after={['Cited by ChatGPT, Perplexity & Gemini', 'Ranking on page one', 'More qualified enquiries']}
           />
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The stakes" title="The numbers behind AI vendor discovery." />
-          <StatsStrip items={stats} />
+          <SectionHead eyebrow="Live data" title="Your real search performance." sub="Measured Google Search Console data, synced daily — no estimates." />
+          <GscSnapshot />
         </div>
       </section>
 
