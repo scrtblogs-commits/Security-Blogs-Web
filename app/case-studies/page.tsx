@@ -2,16 +2,13 @@ import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
 import AnimatedSVGTimeline from '@/components/ui/AnimatedSVGTimeline'
-import StatsStrip from '@/components/ui/StatsStrip'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
-import CaseGrid from './CaseGrid'
-import JsonLd from '@/components/JsonLd'
-import { itemListSchema } from '@/lib/schema'
+import MagneticButton from '@/components/ui/MagneticButton'
 
 export const metadata = {
   title: 'Case Studies',
-  description: 'Real results from security brands we have grown across SEO, Google Ads, AIO/AEO and GEO. Results that speak louder than rankings.',
+  description: 'Case studies are published only once we have real, client-approved results — no invented numbers. See how we work and request a free AI-visibility audit.',
   alternates: { canonical: '/case-studies/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/case-studies/' },
 }
@@ -24,74 +21,59 @@ const journey = [
   { phase: 'Month 5', title: 'Link Authority', desc: 'Earned links from security publications compound trust.' },
   { phase: 'Month 6', title: 'Paid Media', desc: 'Google & Bing campaigns accelerate qualified pipeline.' },
   { phase: 'Month 7', title: 'Scale', desc: 'Winning plays expand into adjacent keyword clusters.' },
-  { phase: 'Month 8', title: 'Market Dominance', desc: 'Brand becomes the default answer across search and AI.' },
-]
-
-const stats = [
-  { num: '50+', label: 'Security clients served' },
-  { num: '+280%', label: 'Average traffic growth' },
-  { num: '3.4×', label: 'Average ROAS' },
-  { num: '12', label: 'Countries reached' },
-]
-
-// Mirror of the case data in ./CaseGrid.tsx — kept in sync for schema use.
-// If you change CaseGrid's `cases` array, update this list too.
-const caseStudyItems = [
-  { name: 'ShieldTech Security — Full Service', description: '+340% organic traffic; ranking #1 for 28 keywords; results within 8 months.' },
-  { name: 'ArmourGuard AU — Google Ads',        description: '3.8× ROAS, $9.40 CPC, +280% qualified leads.' },
-  { name: 'Nexus Security Group — AIO/AEO',     description: '91% AI citation rate; 47 AI mentions per month across 6 platforms.' },
-  { name: 'ClearVault CCTV — Security SEO',     description: '#1 for 28 keywords; +180% organic traffic; 94% client retention.' },
-  { name: 'BioEntry Systems — GEO',             description: 'Entity confirmed on 6 AI platforms; +220% brand searches; knowledge panel won.' },
-  { name: 'AccessPro AU — Full Service',        description: '+410% revenue; 2.1× ROAS; 89% citation rate.' },
+  { phase: 'Month 8', title: 'Market Presence', desc: 'Brand becomes a default answer across search and AI.' },
 ]
 
 export default function CaseStudiesPage() {
   return (
     <>
-      <JsonLd data={itemListSchema({
-        name: 'SecurityBlogs case studies',
-        path: '/case-studies/',
-        items: caseStudyItems.map(c => ({ name: c.name, url: '/case-studies/', description: c.description })),
-      })} />
       <HeroBg grid>
         <div className="center mx-auto" style={{ maxWidth: 760 }}>
           <Reveal>
             <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]} currentPath="/case-studies/" />
             <span className="badge badge-blue" style={{ marginBottom: 22 }}>
-              <span className="dot dot-pulse" /> PROVEN · MEASURABLE OUTCOMES
+              <span className="dot dot-pulse" /> CASE STUDIES · COMING SOON
             </span>
             <h1 className="h1" style={{ marginBottom: 20 }}>
-              Results that speak louder than{' '}
-              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>rankings</span>.
+              Real results,{' '}
+              <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>coming soon</span>.
             </h1>
-            <p className="lead mx-auto" style={{ maxWidth: 560 }}>
-              Filter by channel and see exactly how we move the metrics that matter for security brands.
+            <p className="lead mx-auto" style={{ maxWidth: 600 }}>
+              We publish case studies only once we have real, client-approved outcomes to share — never
+              invented numbers. We&rsquo;re gathering verified results now. In the meantime, see how we work
+              and get a free AI-visibility audit.
             </p>
           </Reveal>
         </div>
       </HeroBg>
 
       <section className="section">
-        <div className="container">
-          <CaseGrid />
+        <div className="container" style={{ maxWidth: 760 }}>
+          <Reveal>
+            <div className="card center" style={{ padding: 'clamp(28px,5vw,48px)' }}>
+              <h2 className="h2" style={{ marginBottom: 12 }}>Verified case studies are on the way</h2>
+              <p className="text-soft" style={{ maxWidth: 560, margin: '0 auto 24px' }}>
+                Every result we publish will be backed by real client data — Search Console, Ahrefs and
+                platform reporting — and shared with the client&rsquo;s permission. We&rsquo;d rather show you
+                nothing than show you numbers we can&rsquo;t stand behind.
+              </p>
+              <div className="flex flex-wrap gap-3" style={{ justifyContent: 'center' }}>
+                <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free AI visibility audit →</MagneticButton>
+                <MagneticButton href="/ai-visibility-center/" className="btn btn-outline btn-lg">Try the AI Visibility Center</MagneticButton>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="The path" title="Client Growth Journey" sub="From first audit to full market dominance — the eight-month arc behind our best results." />
+          <SectionHead eyebrow="How we work" title="Our growth method" sub="The eight-month arc we run with security clients — from first audit to becoming a default answer across search and AI." />
           <AnimatedSVGTimeline steps={journey} gradient="linear-gradient(180deg, var(--blue), var(--green))" />
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SectionHead eyebrow="In aggregate" title="The numbers across our portfolio." />
-          <StatsStrip items={stats} />
-        </div>
-      </section>
-
-      <CTABand title="Want results like these?" subtitle="Get a free AI visibility audit and a 90-day roadmap tailored to your security brand." ctaHref="/book-strategy-call/" />
+      <CTABand title="Want to be our first published result?" subtitle="Get a free AI visibility audit and a 90-day roadmap tailored to your security brand." ctaHref="/book-strategy-call/" />
     </>
   )
 }
