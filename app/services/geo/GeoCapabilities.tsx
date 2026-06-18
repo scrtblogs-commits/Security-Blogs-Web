@@ -110,8 +110,7 @@ function KnowledgePanelPreview() {
       <div style={{ fontSize: 14, fontWeight: 700, color: '#202124' }}>SecurityBlogs</div>
       <div style={{ fontSize: 11, color: '#5f6368' }}>AI Visibility Platform · Security Industry</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 11, color: '#5f6368', marginTop: 2 }}>
-        <span style={{ color: '#fbbc04' }}>★★★★★</span>
-        <span>5.0 · 142 reviews</span>
+        <span>Security Industry · Australia</span>
       </div>
       <div style={{ marginTop: 4, fontSize: 10.5, color: '#1a0dab' }}>securityblogs.com.au</div>
       <div style={{ marginTop: 4, display: 'flex', gap: 4 }}>

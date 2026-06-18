@@ -98,14 +98,14 @@ function AIOverviewPreview() {
 
 function EEATPreview() {
   const items = [
-    { k: 'Experience',  v: '8+ yrs' },
-    { k: 'Expertise',   v: 'Security' },
-    { k: 'Authority',   v: '★★★★★' },
-    { k: 'Trust',       v: '142 reviews' },
+    { k: 'Experience',  v: 'Security' },
+    { k: 'Expertise',   v: 'Specialist' },
+    { k: 'Authority',   v: 'Editorial' },
+    { k: 'Trust',       v: 'Transparent' },
   ]
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 11, gap: 4 }}>
-      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>E-E-A-T · ALL SIGNALS GREEN</div>
+      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>E-E-A-T · SIGNALS WE BUILD</div>
       {items.map((it) => (
         <div key={it.k} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0', borderBottom: '1px solid #f3f4f7' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

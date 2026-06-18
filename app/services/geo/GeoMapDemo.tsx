@@ -144,11 +144,11 @@ export default function GeoMapDemo() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 3 }}>
-            <span style={{ fontSize: 10, fontWeight: 800, color: '#1e5fe0' }}>★ POSITION 1</span>
-            <span style={{ fontSize: 9.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● VERIFIED</span>
+            <span style={{ fontSize: 10, fontWeight: 800, color: '#1e5fe0' }}>LOCAL PACK</span>
+            <span style={{ fontSize: 9.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● LISTING</span>
           </div>
           <div style={{ fontSize: 13, fontWeight: 700, color: '#1a0dab' }}>SecurityBlogs</div>
-          <div style={{ fontSize: 11, color: '#4d5156', marginTop: 1 }}>securityblogs.com.au · ★ 5.0 · 142 reviews</div>
+          <div style={{ fontSize: 11, color: '#4d5156', marginTop: 1 }}>securityblogs.com.au · Security industry · Australia</div>
         </div>
       </div>
     </div>

@@ -48,7 +48,7 @@ export function AioHeroDemo() {
     >
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <div style={{ fontSize: 11, letterSpacing: 1.4, color: '#1e5fe0', fontWeight: 700 }}>● HOW AIO WORKS · LIVE</div>
-        <div style={{ fontSize: 10.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● 4 engines · cited</div>
+        <div style={{ fontSize: 10.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● 4 engines · citable</div>
       </div>
 
       <svg viewBox="0 0 600 320" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 'auto', minHeight: 280 }}>
@@ -119,7 +119,7 @@ export function AioHeroDemo() {
 
       <div style={{ marginTop: 10, padding: '10px 14px', background: 'linear-gradient(180deg, #f1f6ff 0%, #ffffff 100%)', border: '1.5px solid #1e5fe0', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} className="sb-card-rank">
         <span style={{ fontSize: 12.5, color: '#1a0dab', fontWeight: 700 }}>★ securityblogs.com.au</span>
-        <span style={{ fontSize: 10.5, color: '#10a37f', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>4 / 4 engines</span>
+        <span style={{ fontSize: 10.5, color: '#10a37f', fontWeight: 700, fontFamily: 'var(--font-mono)' }}>every engine</span>
       </div>
     </div>
   )
@@ -202,7 +202,7 @@ function AuditCard() {
   ]
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5, gap: 4, padding: 12 }}>
-      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>BASELINE AUDIT · WEEK 0</div>
+      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>EXAMPLE AUDIT · ILLUSTRATIVE</div>
       {rows.map((r) => (
         <div key={r.p}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10 }}>
@@ -241,8 +241,8 @@ function ContentCitedCard() {
         How security brands engineer themselves to be the answer AI gives — methodology + measurement.
       </div>
       <div style={{ display: 'flex', gap: 4, marginTop: 6, flexWrap: 'wrap' }}>
-        <span style={{ background: '#e8f0fe', color: '#1967d2', padding: '2px 6px', borderRadius: 3, fontSize: 9, fontWeight: 700 }}>CITED · ChatGPT</span>
-        <span style={{ background: '#e6f4ea', color: '#188038', padding: '2px 6px', borderRadius: 3, fontSize: 9, fontWeight: 700 }}>CITED · Perplexity</span>
+        <span style={{ background: '#e8f0fe', color: '#1967d2', padding: '2px 6px', borderRadius: 3, fontSize: 9, fontWeight: 700 }}>TARGET · ChatGPT</span>
+        <span style={{ background: '#e6f4ea', color: '#188038', padding: '2px 6px', borderRadius: 3, fontSize: 9, fontWeight: 700 }}>TARGET · Perplexity</span>
       </div>
     </div>
   )
@@ -251,7 +251,7 @@ function ContentCitedCard() {
 function CitationTrendChart() {
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5 }}>
-      <div style={{ fontSize: 9, color: '#5f6368', fontWeight: 700, letterSpacing: 1, marginBottom: 4 }}>AI CITATIONS · 12 WEEKS</div>
+      <div style={{ fontSize: 9, color: '#5f6368', fontWeight: 700, letterSpacing: 1, marginBottom: 4 }}>AI CITATION GROWTH · ILLUSTRATIVE</div>
       <svg viewBox="0 0 100 40" style={{ width: '100%', height: 56 }}>
         <defs>
           <linearGradient id="aio-fade" x1="0" y1="0" x2="0" y2="1">
@@ -264,8 +264,8 @@ function CitationTrendChart() {
         <circle cx="96" cy="5" r="2.2" fill="#1e5fe0" className="sb-card-rank" />
       </svg>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5 }}>
-        <span style={{ color: '#5f6368' }}>Week 1 · 4</span>
-        <span style={{ color: '#10a37f', fontWeight: 700 }}>Week 12 · 126 ↑</span>
+        <span style={{ color: '#5f6368' }}>Start</span>
+        <span style={{ color: '#10a37f', fontWeight: 700 }}>Over time ↑</span>
       </div>
     </div>
   )

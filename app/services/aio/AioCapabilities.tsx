@@ -121,14 +121,14 @@ function FreshnessPreview() {
 
 function CitationsPreview() {
   const items = [
-    { p: 'ChatGPT',    bg: '#10a37f', count: '47' },
-    { p: 'Perplexity', bg: '#1FB8CD', count: '32' },
-    { p: 'Gemini',     bg: '#1a73e8', count: '28' },
-    { p: 'Claude',     bg: '#cc785c', count: '19' },
+    { p: 'ChatGPT',    bg: '#10a37f', count: 'tracked' },
+    { p: 'Perplexity', bg: '#1FB8CD', count: 'tracked' },
+    { p: 'Gemini',     bg: '#1a73e8', count: 'tracked' },
+    { p: 'Claude',     bg: '#cc785c', count: 'tracked' },
   ]
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 11 }}>
-      <div style={{ fontSize: 10, letterSpacing: 1, color: '#5f6368', fontWeight: 700, marginBottom: 5 }}>CITATIONS THIS MONTH · 126</div>
+      <div style={{ fontSize: 10, letterSpacing: 1, color: '#5f6368', fontWeight: 700, marginBottom: 5 }}>CITATION MONITORING · BY PLATFORM</div>
       {items.map((it, i) => (
         <div key={it.p} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 0', borderBottom: i < items.length - 1 ? '1px solid #f3f4f7' : 'none' }}>
           <span style={{ width: 14, height: 14, borderRadius: 4, background: it.bg, color: '#fff', fontSize: 8, fontWeight: 700, display: 'grid', placeItems: 'center' }}>{it.p[0]}</span>

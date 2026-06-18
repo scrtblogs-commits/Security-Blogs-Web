@@ -38,7 +38,7 @@ function TechnicalSEOPreview() {
   ]
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5, gap: 6, padding: 12 }}>
-      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>LIGHTHOUSE · MOBILE</div>
+      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>CORE WEB VITALS · TARGET</div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
         {scores.map((s) => (
           <div key={s.k} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -56,16 +56,15 @@ function LocalSEOPreview() {
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5 }}>
       <div style={{ fontSize: 13, fontWeight: 700, color: '#202124' }}>SecurityBlogs</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-        <span style={{ color: '#fbbc04' }}>★★★★★</span>
-        <span style={{ fontSize: 10, color: '#5f6368' }}>5.0 · 142 reviews</span>
+        <span style={{ fontSize: 10, color: '#5f6368' }}>Security industry · Australia</span>
       </div>
-      <div style={{ fontSize: 10, color: '#5f6368', marginTop: 2 }}>AI Visibility Platform · Open · Closes 5pm</div>
+      <div style={{ fontSize: 10, color: '#5f6368', marginTop: 2 }}>AI Visibility Platform · Google Business Profile</div>
       <div style={{ display: 'flex', gap: 4, marginTop: 6 }}>
         <span style={{ background: '#1a73e8', color: '#fff', padding: '2px 8px', borderRadius: 4, fontSize: 9, fontWeight: 700 }}>CALL</span>
         <span style={{ background: '#fff', border: '1px solid #1a73e8', color: '#1a73e8', padding: '2px 8px', borderRadius: 4, fontSize: 9, fontWeight: 700 }}>DIRECTIONS</span>
         <span style={{ background: '#fff', border: '1px solid #1a73e8', color: '#1a73e8', padding: '2px 8px', borderRadius: 4, fontSize: 9, fontWeight: 700 }}>WEBSITE</span>
       </div>
-      <div style={{ marginTop: 4, fontSize: 9.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● Verified business · Map Pack #1</div>
+      <div style={{ marginTop: 4, fontSize: 9.5, color: '#10a37f', fontFamily: 'var(--font-mono)' }}>● Google Business Profile · Local pack</div>
     </div>
   )
 }
@@ -105,7 +104,7 @@ function BacklinksPreview() {
   ]
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5 }}>
-      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700, marginBottom: 4 }}>REFERRING DOMAINS · LAST 30D</div>
+      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700, marginBottom: 4 }}>AUTHORITY LINK TARGETS</div>
       {items.map((it, i) => (
         <div key={it.dom} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '3px 0', borderBottom: i < items.length - 1 ? '1px solid #f3f4f7' : 'none' }}>
           <span style={{ fontSize: 10, color: '#1a0dab', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>🔗 {it.dom}</span>
@@ -122,7 +121,7 @@ function BacklinksPreview() {
 function RankTrackingPreview() {
   return (
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5 }}>
-      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700, marginBottom: 4 }}>RANK TRENDS · 12 WEEKS</div>
+      <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700, marginBottom: 4 }}>RANK TRACKING · ILLUSTRATIVE</div>
       <svg viewBox="0 0 100 40" style={{ width: '100%', height: 50 }}>
         <defs>
           <linearGradient id="seo-fade" x1="0" y1="0" x2="0" y2="1">
@@ -135,8 +134,8 @@ function RankTrackingPreview() {
         <circle cx="96" cy="3" r="2" fill="#1e5fe0" className="sb-card-rank" />
       </svg>
       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9.5, marginTop: 2 }}>
-        <span style={{ color: '#5f6368' }}>Avg pos. <strong style={{ color: '#1e5fe0' }}>2.4</strong></span>
-        <span style={{ color: '#10a37f', fontWeight: 700 }}>↑ +18 keywords</span>
+        <span style={{ color: '#5f6368' }}>Position tracking</span>
+        <span style={{ color: '#10a37f', fontWeight: 700 }}>Keyword movement</span>
       </div>
     </div>
   )
