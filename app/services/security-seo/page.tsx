@@ -51,9 +51,9 @@ const faqs = [
   { q: 'How long until I see results?', a: 'Most clients see movement in 60-90 days, with significant ranking improvements at 6 months.' },
   { q: 'Do you only work with security companies?', a: 'Yes. We work exclusively with the security industry — CCTV, access control, alarms, monitoring, cyber security and integrated security.' },
   { q: 'What makes security SEO different?', a: 'Security is a high-trust, compliance-driven industry. Buyers research heavily. Content needs E-E-A-T signals, technical authority and local SEO all working together.' },
-  { q: 'Do you guarantee #1 rankings?', a: 'No ethical SEO agency can guarantee specific positions. We guarantee a proven process, transparent reporting and real results — as shown in our case studies.' },
+  { q: 'Do you guarantee #1 rankings?', a: 'No ethical SEO agency can guarantee specific positions. We guarantee a proven process, transparent reporting and real results.' },
   { q: 'What does your SEO service include?', a: 'Full technical audit, keyword mapping, on-page optimisation, content creation, link building, local SEO and monthly reporting.' },
-  { q: 'How much does security SEO cost?', a: 'Packages start from $1,500/month. Book a free strategy call for a custom quote.' },
+  { q: 'How much does security SEO cost?', a: 'Every engagement is scoped to your goals, competition and market. Book a free strategy call for a custom quote.' },
 ]
 
 export default function SecuritySeoPage() {
