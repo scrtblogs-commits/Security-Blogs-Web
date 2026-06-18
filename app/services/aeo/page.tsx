@@ -16,9 +16,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'AEO — Become the Answer AI Recommends',
+  title: 'Answer Engine Optimisation for Security Firms | SecurityBlogs',
   description:
-    'Answer Engine Optimisation positions your security brand as the trusted, quotable answer AI assistants and search engines surface to buyers.',
+    'Help your security business become the AI-cited answer. SecurityBlogs builds AEO strategies so you appear in ChatGPT, Gemini, and AI search results.',
   alternates: { canonical: '/services/aeo/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/aeo/' },
 }
@@ -58,7 +58,7 @@ export default function AeoPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'AEO — Answer Engine Optimisation',
-        description: 'Answer Engine Optimisation positions your security brand as the trusted, quotable answer AI assistants and search engines surface to buyers.',
+        description: 'Help your security business become the AI-cited answer. SecurityBlogs builds AEO strategies so you appear in ChatGPT, Gemini, and AI search results.',
         slug: 'aeo',
         serviceType: 'Answer Engine Optimisation',
       })} />

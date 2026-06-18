@@ -15,9 +15,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: "GEO — Build Your Security Brand's AI Knowledge Graph",
+  title: 'GEO Services for Security Firms | SecurityBlogs AU',
   description:
-    'GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.',
+    'Help AI engines recognise your security business as a trusted authority. SecurityBlogs builds entity signals that get your brand cited in AI-generated answers.',
   alternates: { canonical: '/services/geo/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/geo/' },
 }
@@ -48,7 +48,7 @@ export default function GeoPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'GEO — Generative Engine Optimisation',
-        description: 'GEO makes AI platforms recognise, trust and consistently recommend your security brand by building entity authority across the entire AI ecosystem.',
+        description: 'Help AI engines recognise your security business as a trusted authority. SecurityBlogs builds entity signals that get your brand cited in AI-generated answers.',
         slug: 'geo',
         serviceType: 'Generative Engine Optimisation',
       })} />

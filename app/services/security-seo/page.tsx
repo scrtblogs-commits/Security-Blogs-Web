@@ -17,9 +17,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'Security SEO — Rank #1 for Every Security Keyword',
+  title: 'SEO for Security Companies | SecurityBlogs Australia',
   description:
-    "From 'CCTV installation Melbourne' to 'enterprise access control systems' — we get your security business to the top of Google and keep it there.",
+    'Specialist SEO for CCTV, access control, alarm and monitoring businesses. Improve local search visibility and reach buyers actively searching for security solutions.',
   alternates: { canonical: '/services/security-seo/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/security-seo/' },
 }
@@ -61,7 +61,7 @@ export default function SecuritySeoPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'Security SEO',
-        description: 'From \'CCTV installation Melbourne\' to \'enterprise access control systems\' — we get your security business to the top of Google and keep it there.',
+        description: 'Specialist SEO for CCTV, access control, alarm and monitoring businesses. Improve local search visibility and reach buyers actively searching for security solutions.',
         slug: 'security-seo',
         serviceType: 'SEO',
       })} />

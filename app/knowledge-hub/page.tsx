@@ -11,8 +11,8 @@ import { itemListSchema } from '@/lib/schema'
 import { knowledgeHub } from '@/lib/site'
 
 export const metadata = {
-  title: 'Knowledge Hub',
-  description: 'Guides, research, news and definitions on AI visibility, SEO and growth for the security industry — all in one place.',
+  title: 'Security SEO & AI Visibility Knowledge Hub | SecurityBlogs',
+  description: 'Explore guides and research on SEO and AI visibility built for the security industry. Practical insights to help security businesses get found online.',
   alternates: { canonical: '/knowledge-hub/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/' },
 }

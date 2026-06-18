@@ -17,9 +17,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'AI-Ready Security Website Design',
+  title: 'Web Design for Security Companies | SecurityBlogs',
   description:
-    'We build AI-optimised, schema-rich, conversion-focused security websites that rank on Google and Bing — and get cited by ChatGPT, Perplexity and every AI platform.',
+    'AI-ready websites built for security brands. SecurityBlogs designs fast, credible, conversion-focused sites that help your business get found and chosen.',
   alternates: { canonical: '/services/web-design/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/web-design/' },
 }
@@ -70,7 +70,7 @@ export default function WebDesignPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'AI-Ready Security Website Design',
-        description: 'We build AI-optimised, schema-rich, conversion-focused security websites that rank on Google and Bing — and get cited by ChatGPT, Perplexity and every AI platform.',
+        description: 'AI-ready websites built for security brands. SecurityBlogs designs fast, credible, conversion-focused sites that help your business get found and chosen.',
         slug: 'web-design',
         serviceType: 'Web Design & Development',
       })} />

@@ -14,9 +14,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'AIO — Get Your Security Brand Cited by Every AI Platform',
+  title: 'AI Optimisation for Security Firms | SecurityBlogs',
   description:
-    'AI Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
+    'Help your security business get cited by ChatGPT, Perplexity and Gemini. SecurityBlogs builds AIO strategies designed for the Australian security industry.',
   alternates: { canonical: '/services/aio/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/aio/' },
 }
@@ -56,7 +56,7 @@ export default function AioPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'AIO — AI Optimisation',
-        description: 'AI Optimisation makes your security brand discoverable, trustworthy and citable by ChatGPT, Perplexity, Gemini, Google AI and every answer engine.',
+        description: 'Help your security business get cited by ChatGPT, Perplexity and Gemini. SecurityBlogs builds AIO strategies designed for the Australian security industry.',
         slug: 'aio',
         serviceType: 'AI Optimisation',
       })} />

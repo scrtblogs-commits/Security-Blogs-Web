@@ -19,9 +19,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'Bing Ads for Security Companies',
+  title: 'Bing Ads for Security Companies | SecurityBlogs AU',
   description:
-    'Microsoft Advertising campaigns that capture the B2B security buyers Google misses — lower CPCs, LinkedIn profile targeting and 41% of business decision-makers.',
+    'Reach B2B security buyers on Microsoft Bing with targeted paid search campaigns built specifically for the Australian security industry. Get a free strategy review.',
   alternates: { canonical: '/services/bing-ads/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/bing-ads/' },
 }
@@ -230,7 +230,7 @@ export default function BingAdsPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'Bing Ads for Security',
-        description: 'Microsoft Advertising campaigns that capture the B2B security buyers Google misses — lower CPCs, LinkedIn profile targeting and 41% of business decision-makers.',
+        description: 'Reach B2B security buyers on Microsoft Bing with targeted paid search campaigns built specifically for the Australian security industry. Get a free strategy review.',
         slug: 'bing-ads',
         serviceType: 'Search Engine Marketing',
       })} />

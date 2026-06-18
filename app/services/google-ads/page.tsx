@@ -19,9 +19,9 @@ import { serviceSchema } from '@/lib/schema'
 const ACCENT = '#1e5fe0'
 
 export const metadata = {
-  title: 'Google Ads for Security Companies',
+  title: 'Google Ads for Security Companies | SecurityBlogs',
   description:
-    'High-converting Google Ads campaigns engineered for security buyers. Transparent reporting and conversion tracking built in.',
+    'SecurityBlogs manages Google Ads campaigns built specifically for security businesses in Australia — helping you reach buyers who are actively searching for your services.',
   alternates: { canonical: '/services/google-ads/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/google-ads/' },
 }
@@ -236,7 +236,7 @@ export default function GoogleAdsPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'Google Ads for Security',
-        description: 'High-converting Google Ads campaigns engineered for security buyers. Transparent reporting and conversion tracking built in.',
+        description: 'SecurityBlogs manages Google Ads campaigns built specifically for security businesses in Australia — helping you reach buyers who are actively searching for your services.',
         slug: 'google-ads',
         serviceType: 'Search Engine Marketing',
       })} />
