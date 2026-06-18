@@ -67,7 +67,7 @@ export function SEOFace(p: CardProps) {
       {/* SERP results */}
       <div style={{ position: 'absolute', top: 58, left: 18, right: 18, display: 'flex', flexDirection: 'column', gap: 7 }}>
         <div className="sb-card-rank" style={{ background: 'rgba(30,95,224,0.10)', border: '1.5px solid rgba(30,95,224,0.6)', borderRadius: 8, padding: '7px 10px', boxShadow: '0 4px 14px rgba(30,95,224,0.18)' }}>
-          <div style={{ fontSize: 10.5, color: '#1e5fe0', fontWeight: 700, marginBottom: 2 }}>★ POSITION 1</div>
+          <div style={{ fontSize: 10.5, color: '#1e5fe0', fontWeight: 700, marginBottom: 2 }}>★ EXAMPLE RESULT</div>
           <div style={{ fontSize: 12, fontWeight: 700, color: '#1a0dab' }}>securityblogs.com.au</div>
         </div>
         <SerpRow text="competitor-cctv.com.au" />
@@ -98,7 +98,7 @@ export function AIOFace(p: CardProps) {
       <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: '#9aa3b8' }}>
         <span style={{ width: 18, height: 18, borderRadius: '50%', background: '#10a37f', display: 'grid', placeItems: 'center', color: '#fff', fontWeight: 700, fontSize: 10 }}>AI</span>
         <span style={{ fontWeight: 600 }}>AI Mode</span>
-        <span style={{ marginLeft: 6, color: '#7eb6ff', fontSize: 9 }}>● LIVE</span>
+        <span style={{ marginLeft: 6, color: '#7eb6ff', fontSize: 9 }}>● DEMO</span>
       </div>
 
       {/* User prompt typed */}
@@ -121,7 +121,7 @@ export function AIOFace(p: CardProps) {
       <div style={{ position: 'absolute', top: 128, left: 16, right: 16 }}>
         <div style={{ fontSize: 10.5, color: '#7eb6ff', marginBottom: 4 }}>AI Mode</div>
         <div style={{ fontSize: 12.5, color: '#e8efff', lineHeight: 1.5 }}>
-          The most-cited Australian provider is{' '}
+          A strong AI-visibility example is{' '}
           <span
             className="sb-highlight"
             style={{
@@ -165,10 +165,10 @@ export function AEOFace(p: CardProps) {
           boxShadow: '0 6px 20px rgba(30,95,224,0.18)',
         }}
       >
-        <div style={{ fontSize: 9.5, letterSpacing: 1.2, color: '#1e5fe0', fontWeight: 700, marginBottom: 4 }}>FEATURED ANSWER · POSITION 0</div>
+        <div style={{ fontSize: 9.5, letterSpacing: 1.2, color: '#1e5fe0', fontWeight: 700, marginBottom: 4 }}>FEATURED ANSWER · EXAMPLE</div>
         <div style={{ fontSize: 13, color: '#1a0dab', fontWeight: 700, marginBottom: 4 }}>securityblogs.com.au</div>
         <div style={{ fontSize: 11.5, color: '#4d5156', lineHeight: 1.45 }}>
-          Australia&apos;s AI Visibility platform for security brands — cited by ChatGPT, Gemini, Perplexity and Google AI.
+          Australia&apos;s AI Visibility platform for security brands — built to be cited by ChatGPT, Gemini, Perplexity and Google AI.
         </div>
       </div>
 
@@ -267,7 +267,7 @@ export function GoogleAdsFace(p: CardProps) {
       {/* Dashboard chrome */}
       <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
         <div style={{ width: 18, height: 18, borderRadius: 4, background: 'linear-gradient(135deg, #4285F4 0%, #34A853 50%, #FBBC04 75%, #EA4335 100%)' }} />
-        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#202124' }}>securityblogs.com.au · Live</span>
+        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#202124' }}>Example dashboard</span>
       </div>
 
       {/* Three KPI tiles */}
@@ -313,7 +313,7 @@ export function BingAdsFace(p: CardProps) {
           <span style={{ background: '#f25022' }} /><span style={{ background: '#7fba00' }} />
           <span style={{ background: '#00a4ef' }} /><span style={{ background: '#ffb900' }} />
         </div>
-        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#0d4b78' }}>securityblogs.com.au · Live</span>
+        <span style={{ fontSize: 11.5, fontWeight: 600, color: '#0d4b78' }}>Example dashboard</span>
       </div>
 
       <div style={{ position: 'absolute', top: 42, left: 16, right: 16, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>

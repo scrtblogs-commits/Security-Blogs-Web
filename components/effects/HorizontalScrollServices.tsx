@@ -12,9 +12,9 @@ const PANELS = [
     heading: 'Rank #1 for every keyword your buyers search.',
     body: 'Full-stack SEO built exclusively for physical security companies — CCTV, access control, alarms, guarding and SaaS. We own the search results your buyers see every day.',
     stats: [
-      { num: '+180%', label: 'Average organic traffic growth' },
-      { num: '#1',    label: 'Rankings for 40+ security keywords' },
-      { num: '50+',   label: 'Security brands ranked globally' },
+      { num: 'Niche', label: 'Exclusively security-industry SEO' },
+      { num: 'Local', label: 'Maps & service-area targeting' },
+      { num: 'Schema', label: 'AI- and search-ready markup' },
     ],
   },
   {
@@ -26,9 +26,9 @@ const PANELS = [
     heading: 'Be the answer ChatGPT and Gemini give.',
     body: 'When a security buyer asks an AI assistant for a recommendation, your brand should appear. We build the authority signals that make that happen across all 10 major AI platforms.',
     stats: [
-      { num: '87%', label: 'AI citation rate achieved' },
-      { num: '10',  label: 'AI platforms monitored & optimised' },
-      { num: '3×',  label: 'Increase in branded AI mentions' },
+      { num: 'AI', label: 'Optimised for ChatGPT, Gemini, Perplexity' },
+      { num: '6+',  label: 'AI platforms monitored & optimised' },
+      { num: 'Entity',  label: 'Knowledge-graph & citation signals' },
     ],
   },
   {
@@ -40,9 +40,9 @@ const PANELS = [
     heading: 'Paid growth that converts security buyers.',
     body: 'Industry-specific PPC campaigns targeting security buyers at the exact moment they need you — combined with AI-ready websites that rank, convert and get cited.',
     stats: [
-      { num: '3.2×', label: 'Average ROAS on Google Ads' },
-      { num: '41%',  label: 'B2B buyers on Microsoft Bing' },
-      { num: '30d',  label: 'Average website delivery time' },
+      { num: 'PPC', label: 'Google & Microsoft Ads campaigns' },
+      { num: 'B2B',  label: 'LinkedIn-grade buyer targeting' },
+      { num: 'Tracked',  label: 'Conversion tracking built in' },
     ],
   },
   {
@@ -54,9 +54,9 @@ const PANELS = [
     heading: 'Websites built to rank, convert and get cited by AI.',
     body: 'Every site we build is engineered for SEO from day one — fast, accessible, schema-rich and optimised to appear in AI-generated answers across every major platform.',
     stats: [
-      { num: '30d',  label: 'Average delivery time' },
-      { num: '98',   label: 'Average PageSpeed score' },
-      { num: '100%', label: 'AI-ready architecture' },
+      { num: 'Fast', label: 'Core Web Vitals focused' },
+      { num: 'Schema',   label: 'AI-ready, structured markup' },
+      { num: 'SEO', label: 'Built to rank from day one' },
     ],
   },
 ]

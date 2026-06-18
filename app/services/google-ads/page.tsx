@@ -21,7 +21,7 @@ const ACCENT = '#f6c715'
 export const metadata = {
   title: 'Google Ads for Security Companies',
   description:
-    'High-converting Google Ads campaigns engineered for security buyers. 3.2× average ROAS, transparent reporting and conversion tracking built in.',
+    'High-converting Google Ads campaigns engineered for security buyers. Transparent reporting and conversion tracking built in.',
   alternates: { canonical: '/services/google-ads/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/services/google-ads/' },
 }
@@ -43,9 +43,9 @@ function GoogleAdsDashboard() {
       <div className="flex items-center justify-between" style={{ padding: '14px 18px', borderBottom: '1px solid var(--line)' }}>
         <div className="flex items-center gap-2">
           <span style={{ width: 26, height: 26, borderRadius: 7, display: 'grid', placeItems: 'center', background: `${ACCENT}22`, fontSize: 14 }}>📢</span>
-          <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15 }}>Google Ads · securityblogs.com.au</strong>
+          <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15 }}>Google Ads · Example dashboard</strong>
         </div>
-        <span className="chip" style={{ color: 'var(--green)', borderColor: 'var(--green)' }}>● Live</span>
+        <span className="chip" style={{ color: 'var(--green)', borderColor: 'var(--green)' }}>● Example</span>
       </div>
 
       <div style={{ padding: 18 }}>
@@ -147,7 +147,7 @@ function MapsLocalAd() {
       <div style={{ padding: 18 }}>
         <strong style={{ fontFamily: 'var(--font-display)', fontSize: 17 }}>Security Solutions — Sydney CBD</strong>
         <div className="flex items-center gap-2" style={{ fontSize: 13, margin: '4px 0' }}>
-          <span style={{ color: ACCENT }}>★★★★★</span><span className="text-soft">4.9 (218) · Security system installer</span>
+          <span className="text-soft">Security system installer · Sydney</span>
         </div>
         <p className="text-soft" style={{ fontSize: 13.5 }}>Open 24 hours · In-house AS2201 certified installers · 12 min away</p>
         <div className="flex flex-wrap gap-2" style={{ marginTop: 12 }}>
@@ -172,7 +172,7 @@ function LocalServicesAd() {
         <div>
           <strong style={{ fontFamily: 'var(--font-display)', fontSize: 17 }}>Security Solutions Pty Ltd</strong>
           <div className="flex items-center gap-2" style={{ fontSize: 13 }}>
-            <span style={{ color: ACCENT }}>★★★★★</span><span className="text-soft">4.9 · 218 reviews · Sydney NSW</span>
+            <span className="text-soft">Sydney NSW · Security installer</span>
           </div>
         </div>
       </div>
@@ -190,7 +190,7 @@ const searchAd = {
   url: 'securityblogs.com.au',
   headline: "SecurityBlogs — Australia's AI Visibility Platform for Security Brands",
   headline2: 'Top-Rated CCTV & Access Control | Free Site Survey',
-  desc: 'Protect your business with enterprise-grade security. AS2201 certified installers. 500+ installations. Get your free quote today.',
+  desc: 'Protect your business with enterprise-grade security. AS2201 certified installers. Get your free quote today.',
   desc2: 'CCTV • Access Control • Alarms • 24/7 Monitoring. Local experts, fast installation, ongoing support.',
   sitelinks: ['Get Free Quote', 'View CCTV Systems', 'Access Control', 'Contact Us'],
   callouts: ['24/7 Support', 'AS2201 Certified', 'Free Site Survey', 'No Lock-in Contracts'],
@@ -236,7 +236,7 @@ export default function GoogleAdsPage() {
     <>
       <JsonLd data={serviceSchema({
         name: 'Google Ads for Security',
-        description: 'High-converting Google Ads campaigns engineered for security buyers. 3.2x average ROAS, transparent reporting and conversion tracking built in.',
+        description: 'High-converting Google Ads campaigns engineered for security buyers. Transparent reporting and conversion tracking built in.',
         slug: 'google-ads',
         serviceType: 'Search Engine Marketing',
       })} />
@@ -266,17 +266,17 @@ export default function GoogleAdsPage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <StatsStrip items={[
-            { num: '3.2×', label: 'Average ROAS' },
-            { num: '$12', label: 'Average CPC' },
-            { num: '+210%', label: 'Average CTR lift' },
-            { num: '92%', label: 'Impression share achieved' },
+            { num: 'Search', label: 'High-intent keyword targeting' },
+            { num: 'Geo', label: 'Suburb-level targeting' },
+            { num: 'Tracked', label: 'Call & form conversion tracking' },
+            { num: 'Monthly', label: 'Transparent reporting' },
           ]} />
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <ContainerScroll title={<SectionHead eyebrow="Live performance" title="A Google Ads account built to be measured." sub="Real-time visibility into ROAS, CPC, CTR and impression share — the metrics that actually map to revenue." />}>
+          <ContainerScroll title={<SectionHead eyebrow="Example dashboard" title="A Google Ads account built to be measured." sub="Illustrative view of the metrics we track — ROAS, CPC, CTR and impression share — the numbers that actually map to revenue." />}>
             <GoogleAdsDashboard />
           </ContainerScroll>
         </div>

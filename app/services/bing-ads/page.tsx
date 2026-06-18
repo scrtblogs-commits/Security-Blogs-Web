@@ -43,9 +43,9 @@ function BingAdsDashboard() {
       <div className="flex items-center justify-between" style={{ padding: '14px 18px', borderBottom: '1px solid var(--line)' }}>
         <div className="flex items-center gap-2">
           <span style={{ width: 26, height: 26, borderRadius: 7, display: 'grid', placeItems: 'center', background: `${ACCENT}22`, fontSize: 14 }}>🔷</span>
-          <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15 }}>Microsoft Advertising · B2B Security</strong>
+          <strong style={{ fontFamily: 'var(--font-display)', fontSize: 15 }}>Microsoft Advertising · Example dashboard</strong>
         </div>
-        <span className="chip" style={{ color: ACCENT, borderColor: ACCENT }}>● Live</span>
+        <span className="chip" style={{ color: ACCENT, borderColor: ACCENT }}>● Example</span>
       </div>
 
       <div style={{ padding: 18 }}>
@@ -147,7 +147,7 @@ function BingMapsAd() {
       <div style={{ padding: 18 }}>
         <strong style={{ fontFamily: 'var(--font-display)', fontSize: 17 }}>Security Solutions — Sydney CBD</strong>
         <div className="flex items-center gap-2" style={{ fontSize: 13, margin: '4px 0' }}>
-          <span style={{ color: ACCENT }}>★★★★★</span><span className="text-soft">4.9 (218) · Commercial security · Bing Maps</span>
+          <span className="text-soft">Commercial security · Bing Maps</span>
         </div>
         <p className="text-soft" style={{ fontSize: 13.5 }}>Open 24 hours · AS2201 certified installers · 12 min away</p>
         <div className="flex flex-wrap gap-2" style={{ marginTop: 12 }}>
@@ -184,7 +184,7 @@ const searchAd = {
   url: 'securityblogs.com.au',
   headline: 'Commercial Security Sydney | 24/7 Monitoring From $49/mo',
   headline2: 'B2B CCTV & Access Control | Free Site Survey',
-  desc: 'Trusted by 500+ Australian businesses. AS2201 certified installers, enterprise-grade systems and ongoing support. Request your quote.',
+  desc: 'AS2201 certified installers, enterprise-grade systems and ongoing support. Request your quote.',
   desc2: 'CCTV • Access Control • Alarms • 24/7 Monitoring. Built for facility & operations managers.',
   sitelinks: ['Get Free Quote', 'View CCTV Systems', 'Access Control', 'Contact Us'],
   callouts: ['24/7 Support', 'AS2201 Certified', 'Free Site Survey', 'No Lock-in Contracts'],
@@ -260,17 +260,17 @@ export default function BingAdsPage() {
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <StatsStrip items={[
-            { num: '2.1×', label: 'Lower CPC than Google' },
-            { num: '41%', label: 'Of B2B buyers use Bing/Microsoft' },
-            { num: '+180%', label: 'Average conversion rate' },
-            { num: '$8.40', label: 'Average CPC' },
+            { num: 'Lower', label: 'CPCs than Google in B2B auctions' },
+            { num: 'LinkedIn', label: 'Job-title & industry targeting' },
+            { num: 'B2B', label: 'Decision-maker focus' },
+            { num: 'Tracked', label: 'Conversion tracking & Clarity' },
           ]} />
         </div>
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <ContainerScroll title={<SectionHead eyebrow="Live performance" title="A Microsoft Ads account tuned for B2B." sub="Lower CPCs, higher conversion rates and LinkedIn-grade targeting — measured against your Google baseline." />}>
+          <ContainerScroll title={<SectionHead eyebrow="Example dashboard" title="A Microsoft Ads account tuned for B2B." sub="Illustrative view of lower CPCs, conversion rates and LinkedIn-grade targeting — the metrics we track against your Google baseline." />}>
             <BingAdsDashboard />
           </ContainerScroll>
         </div>
