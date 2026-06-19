@@ -16,9 +16,9 @@ function OnPagePreview() {
     <div style={{ ...PREVIEW_SHELL, fontSize: 10.5, gap: 5 }}>
       <div style={{ fontSize: 9, letterSpacing: 1, color: '#5f6368', fontWeight: 700 }}>META · SECURITYBLOGS.COM.AU</div>
       <div>
-        <div style={{ fontSize: 12.5, color: '#1a0dab', fontWeight: 600, lineHeight: 1.2 }}>Security SEO Australia | AI Visibility for Security Brands</div>
+        <div style={{ fontSize: 12.5, color: '#1a0dab', fontWeight: 600, lineHeight: 1.2 }}>SEO for Security Companies | SecurityBlogs Australia</div>
         <div style={{ fontSize: 10, color: '#188038' }}>securityblogs.com.au &gt; services &gt; security-seo</div>
-        <div style={{ fontSize: 10, color: '#4d5156', marginTop: 2, lineHeight: 1.4 }}>Specialist security-industry SEO. Rank for high-intent buyer keywords and get cited by every AI engine. Free audit.</div>
+        <div style={{ fontSize: 10, color: '#4d5156', marginTop: 2, lineHeight: 1.4 }}>Specialist SEO for CCTV, access control, alarm and monitoring businesses. Improve local search visibility and reach buyers actively searching for security solutions.</div>
       </div>
       <div style={{ display: 'flex', gap: 4, marginTop: 2 }}>
         <span style={{ background: '#e6f4ea', color: '#188038', padding: '1px 5px', borderRadius: 3, fontSize: 9, fontWeight: 700 }}>TITLE ✓</span>
