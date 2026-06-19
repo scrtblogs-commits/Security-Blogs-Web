@@ -37,8 +37,15 @@ export default function ContactForm({
     setError(null)
     const result = await submitForm({ formData: fd, subject })
     setSubmitting(false)
-    if (result.ok) router.push('/thank-you/')
-    else setError(result.error || 'Submission failed.')
+    if (result.ok) {
+      // Google Ads conversion (Contact). The global gtag config lives in app/layout.tsx.
+      if (typeof window !== 'undefined' && typeof (window as { gtag?: (...args: unknown[]) => void }).gtag === 'function') {
+        (window as { gtag: (...args: unknown[]) => void }).gtag('event', 'conversion', {
+          send_to: 'AW-17212338865/--9xCM31vKAcELHlvY9A',
+        })
+      }
+      router.push('/thank-you/')
+    } else setError(result.error || 'Submission failed.')
   }
 
   return (
