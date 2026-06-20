@@ -1,9 +1,11 @@
+import Link from 'next/link'
 import HeroBg from '@/components/ui/HeroBg'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import BlogGrid from './BlogGrid'
+import { posts } from '@/lib/posts'
 
 export const metadata = {
   title: 'Blog · Knowledge Hub',
@@ -11,6 +13,8 @@ export const metadata = {
   alternates: { canonical: '/knowledge-hub/blogs/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/blogs/' },
 }
+
+const trending = posts.slice(0, 3)
 
 export default function BlogsPage() {
   return (
@@ -24,23 +28,19 @@ export default function BlogsPage() {
               Security Marketing &amp; <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>AI Visibility</span> Blog
             </h1>
             <p className="lead" style={{ maxWidth: 520 }}>
-              Field-tested tactics from the team that gets security brands cited by ChatGPT,
-              ranked on Google and converting on paid. New posts every week.
+              Practical, vendor-neutral guidance from a team focused on the security industry — how to get
+              found on Google, cited by AI assistants and converting on paid.
             </p>
           </Reveal>
           <Reveal delay={0.15} style={{ perspective: 1000 }}>
             <div className="glass" style={{ padding: 22, borderRadius: 'var(--radius-lg)', transform: 'rotateY(-8deg) rotateX(4deg)' }}>
-              <div className="eyebrow" style={{ marginBottom: 14 }}>Trending now</div>
+              <div className="eyebrow" style={{ marginBottom: 14 }}>Latest posts</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {[
-                  { tag: 'AIO/AEO', title: 'How ChatGPT decides which security vendor to name' },
-                  { tag: 'SEO', title: 'Local SEO for alarm installers: the 2026 checklist' },
-                  { tag: 'GEO', title: 'Building entity authority so AI trusts your brand' },
-                ].map((p, i) => (
-                  <div key={i} className="card" style={{ padding: 16 }}>
-                    <span className="chip" style={{ marginBottom: 8 }}>{p.tag}</span>
+                {trending.map((p) => (
+                  <Link key={p.slug} href={`/knowledge-hub/blogs/${p.slug}/`} className="card" style={{ padding: 16, textDecoration: 'none', display: 'block' }}>
+                    <span className="chip" style={{ marginBottom: 8, color: 'var(--blue)', borderColor: 'var(--blue)' }}>{p.category}</span>
                     <div style={{ fontWeight: 600, fontFamily: 'var(--font-display)', fontSize: 15 }}>{p.title}</div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -52,6 +52,25 @@ export default function BlogsPage() {
         <div className="container">
           <SectionHead eyebrow="All posts" title="Filter by what you need." sub="From classic search to generative engines and paid demand — pick a channel and dive in." />
           <BlogGrid />
+        </div>
+      </section>
+
+      {/* Reader submission / write-for-us */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="card" style={{ padding: 'clamp(28px,5vw,48px)', textAlign: 'center', maxWidth: 820, margin: '0 auto' }}>
+            <span className="badge badge-blue" style={{ marginBottom: 16 }}>WRITE FOR US</span>
+            <h2 className="h2" style={{ marginBottom: 14 }}>Share your security industry knowledge</h2>
+            <p className="text-soft" style={{ maxWidth: 560, margin: '0 auto 24px' }}>
+              Are you a security professional, installer or marketer with a genuinely useful guide to share?
+              We welcome original, vendor-neutral articles written to help the industry. Submit your idea and,
+              if it&apos;s a good fit, we&apos;ll review it and publish it here with full credit to you.
+            </p>
+            <Link href="/publish-with-us/guest-posting/" className="btn btn-primary btn-lg">Submit your guide →</Link>
+            <div className="text-dim" style={{ fontSize: 13, marginTop: 14 }}>
+              Original content only · no AI-spun or promotional pieces · editorial review before publishing
+            </div>
+          </div>
         </div>
       </section>
 
