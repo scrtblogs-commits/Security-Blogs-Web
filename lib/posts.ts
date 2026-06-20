@@ -415,6 +415,183 @@ export const posts: Post[] = [
       '<h2>Avoid doorway pages</h2><p>Thin, duplicated pages built only to rank can trigger penalties. Quality and genuine local value are what last.</p>' +
       cta,
   },
+  {
+    slug: 'marketing-for-security-guard-companies',
+    title: 'Marketing for Security Guard Companies',
+    category: 'Industry',
+    date: '2026-05-04',
+    read: '7 min',
+    excerpt: 'How security guard and patrol companies win contracts online — local visibility, trust signals, content and targeted outreach to commercial buyers.',
+    metaTitle: 'Marketing for Security Guard Companies | SecurityBlogs',
+    metaDescription: 'How security guard and patrol companies market themselves online — local SEO, trust signals, content and B2B outreach that win commercial contracts.',
+    body:
+      '<p>Guard and patrol companies sell trust and reliability — and most commercial buyers now vet providers online before any meeting. Marketing well means being visible, credible and easy to contact.</p>' +
+      '<h2>Win local and commercial search</h2><p>Optimise for the services and areas you cover, and for the commercial terms buyers use ("event security", "construction site security"). Both local SEO and service pages matter.</p>' +
+      '<h2>Lead with trust</h2><p>Licensing, insurance, training standards and genuine client outcomes reassure buyers in a risk-sensitive purchase. Make these obvious.</p>' +
+      '<h2>Content that answers buyer questions</h2><p>Guides on choosing a provider, compliance and what good service looks like build authority and attract the right enquiries.</p>' +
+      '<h2>Targeted B2B outreach</h2><p>Many guard contracts come from direct relationships. Combine inbound visibility with consultative, personalised outreach to facilities and property managers.</p>' +
+      cta,
+  },
+  {
+    slug: 'seo-aio-aeo-geo-explained',
+    title: 'SEO vs AIO vs AEO vs GEO: The 2026 Glossary',
+    category: 'GEO',
+    date: '2026-05-02',
+    read: '6 min',
+    excerpt: 'Four overlapping disciplines, one goal: getting found. Here is a plain-English explanation of SEO, AIO, AEO and GEO and how they fit together.',
+    metaTitle: 'SEO vs AIO vs AEO vs GEO: The 2026 Glossary | SecurityBlogs',
+    metaDescription: 'A plain-English glossary of SEO, AIO, AEO and GEO for 2026 — what each discipline means, how they differ and how they work together to get you found.',
+    body:
+      '<p>The acronyms are multiplying. Here is what SEO, AIO, AEO and GEO actually mean — and how they fit together rather than compete.</p>' +
+      '<h2>SEO — Search Engine Optimisation</h2><p>The foundation: making your site rank in traditional search results through technical health, content and authority.</p>' +
+      '<h2>AIO — AI Optimisation</h2><p>Making your brand discoverable and citable by AI engines like ChatGPT and Perplexity, through entity signals, structured data and citable content.</p>' +
+      '<h2>AEO — Answer Engine Optimisation</h2><p>Winning the direct answer — featured snippets, voice results and AI overviews — by answering buyer questions clearly and concisely.</p>' +
+      '<h2>GEO — Generative Engine Optimisation</h2><p>Building the underlying entity authority that makes AI engines recognise and trust your brand enough to recommend it.</p>' +
+      '<h2>How they fit together</h2><p>SEO gets you ranked, GEO makes you a recognised entity, AIO makes your content citable, and AEO wins the specific answer. Together they cover how buyers now discover vendors — across search and AI.</p>' +
+      cta,
+  },
+  {
+    slug: 'landing-pages-that-convert-security-leads',
+    title: 'Landing Pages That Convert Security Leads',
+    category: 'Paid Ads',
+    date: '2026-04-30',
+    read: '6 min',
+    excerpt: 'A high-converting landing page can transform your ad results. Here is what a security landing page needs to turn clicks into enquiries.',
+    metaTitle: 'Landing Pages That Convert Security Leads | SecurityBlogs',
+    metaDescription: 'What a high-converting security landing page needs — message match, a single clear offer, trust signals and a frictionless enquiry path.',
+    body:
+      '<p>Sending paid traffic to a generic homepage wastes budget. A focused landing page, built for one offer, is often the single biggest lever on ad performance.</p>' +
+      '<h2>Match the message</h2><p>The headline should reflect the exact search or ad the visitor clicked. Mismatched messaging loses them in seconds.</p>' +
+      '<h2>One clear offer</h2><p>A single, obvious call to action — get a quote, book an assessment — beats a page full of competing options.</p>' +
+      '<h2>Trust at the decision point</h2><p>Licences, accreditations, genuine reviews and clear contact details reassure cautious buyers right where they decide.</p>' +
+      '<h2>Frictionless enquiry</h2><p>A short form or a prominent phone number removes barriers. Every extra field costs conversions.</p>' +
+      '<h2>Fast and focused</h2><p>Quick load times and a distraction-free layout keep visitors moving toward the action.</p>' +
+      cta,
+  },
+  {
+    slug: 'content-ideas-for-security-companies',
+    title: 'Content Ideas for Security Companies That Actually Help',
+    category: 'SEO',
+    date: '2026-04-28',
+    read: '7 min',
+    excerpt: 'Stuck for what to publish? Here are practical, buyer-focused content ideas for security companies that build rankings and trust.',
+    metaTitle: 'Content Ideas for Security Companies That Actually Help | SecurityBlogs',
+    metaDescription: 'Practical content ideas for security companies — buyer guides, cost explainers, comparisons and FAQs that build rankings, trust and AI citations.',
+    body:
+      '<p>The best security content answers a real buyer question. Here are categories of ideas that consistently earn rankings, trust and AI citations.</p>' +
+      '<h2>Buyer guides</h2><p>"How to choose a [system]", "what to look for in a [provider]" — these capture researching buyers and demonstrate expertise.</p>' +
+      '<h2>Cost explainers</h2><p>Honest explanations of what drives pricing (without fabricating numbers) help buyers and pre-qualify enquiries.</p>' +
+      '<h2>Comparisons</h2><p>"X vs Y" content — access control vs key cards, monitored vs self-monitored — matches high-intent comparison searches.</p>' +
+      '<h2>FAQs</h2><p>Answer the questions buyers actually ask. These feed featured snippets and AI answers.</p>' +
+      '<h2>Compliance and standards</h2><p>Clear, accurate explainers on relevant standards build authority in a compliance-driven industry.</p>' +
+      '<h2>Local and seasonal</h2><p>Area-specific guides and timely topics (e.g. holiday security) capture local and seasonal demand.</p>' +
+      cta,
+  },
+  {
+    slug: 'google-ai-overviews-and-your-security-brand',
+    title: 'Google AI Overviews & Your Security Brand',
+    category: 'AIO/AEO',
+    date: '2026-04-26',
+    read: '6 min',
+    excerpt: 'AI Overviews increasingly sit above the classic results. Here is how security brands position themselves to be referenced rather than skipped.',
+    metaTitle: 'Google AI Overviews & Your Security Brand | SecurityBlogs',
+    metaDescription: 'How security brands earn visibility in Google AI Overviews — clear answers, structured data, authority signals and content AI can confidently reference.',
+    body:
+      '<p>Google\'s AI Overviews summarise answers at the top of many results, sometimes reducing clicks to individual sites. For security brands, the goal is to be referenced in those summaries rather than skipped over.</p>' +
+      '<h2>Answer the question directly</h2><p>Overviews pull from content that answers the query clearly. Lead with a concise, accurate answer.</p>' +
+      '<h2>Structure for extraction</h2><p>Clear headings, short paragraphs and lists make it easy for the system to lift the right passage.</p>' +
+      '<h2>Build authority</h2><p>Overviews favour trustworthy sources. Consistent entity signals, expertise and corroboration improve your odds of being referenced.</p>' +
+      '<h2>Use structured data</h2><p>Schema helps Google understand your content and how it relates to a query.</p>' +
+      '<h2>Keep earning the click</h2><p>Where overviews appear, a compelling title and meta description still matter for the buyers who click through for detail.</p>' +
+      cta,
+  },
+  {
+    slug: 'measuring-seo-roi-for-a-security-business',
+    title: 'Measuring SEO ROI for a Security Business',
+    category: 'SEO',
+    date: '2026-04-24',
+    read: '7 min',
+    excerpt: 'How to measure whether your SEO investment is paying off — the metrics that matter, the vanity metrics to ignore and how to attribute leads.',
+    metaTitle: 'Measuring SEO ROI for a Security Business | SecurityBlogs',
+    metaDescription: 'How to measure SEO ROI for a security business — meaningful metrics, lead attribution and avoiding vanity numbers that look good but mean little.',
+    body:
+      '<p>SEO is an investment, so it should be measured like one. The challenge is focusing on metrics that connect to revenue, not vanity numbers.</p>' +
+      '<h2>Start with the right metrics</h2><p>Track impressions and positions for your priority terms, organic traffic to key pages, and — most importantly — enquiries from organic search.</p>' +
+      '<h2>Attribute leads</h2><p>Use call tracking, form-source tagging and analytics to connect enquiries back to organic search. Without attribution, ROI is guesswork.</p>' +
+      '<h2>Ignore vanity metrics</h2><p>Total keyword counts and raw traffic can flatter to deceive. Rankings on terms no one searches, or traffic that never converts, don\'t pay the bills.</p>' +
+      '<h2>Mind the timeline</h2><p>SEO compounds over months. Judge it over quarters, not weeks — especially for newer domains.</p>' +
+      '<h2>Tie it to value</h2><p>Connect organic enquiries to closed jobs and average value to express SEO ROI in terms your business actually cares about.</p>' +
+      cta,
+  },
+  {
+    slug: 'mobile-seo-for-security-websites',
+    title: 'Mobile SEO for Security Websites',
+    category: 'SEO',
+    date: '2026-04-22',
+    read: '6 min',
+    excerpt: 'Most security searches happen on mobile. Here is how to make sure your site performs and converts on the devices buyers actually use.',
+    metaTitle: 'Mobile SEO for Security Websites | SecurityBlogs',
+    metaDescription: 'How to optimise a security website for mobile — responsive design, speed, tap-friendly navigation and click-to-call that win on-the-go buyers.',
+    body:
+      '<p>Many buyers search for security services on their phones, often urgently. Google indexes mobile-first, so mobile performance shapes both rankings and conversions.</p>' +
+      '<h2>Responsive by default</h2><p>Your site should adapt cleanly to every screen size, with readable text and usable layouts on small devices.</p>' +
+      '<h2>Speed matters more on mobile</h2><p>Mobile connections are less forgiving. Compress images, trim scripts and keep pages fast.</p>' +
+      '<h2>Tap-friendly navigation</h2><p>Buttons and links should be easy to tap, menus simple to use, and forms quick to complete on a phone.</p>' +
+      '<h2>Click-to-call</h2><p>Make your phone number a tap-to-call link. For urgent security enquiries, this can be the difference between a lead and a bounce.</p>' +
+      cta,
+  },
+  {
+    slug: 'retargeting-ads-for-security-companies',
+    title: 'Retargeting Ads for Security Companies',
+    category: 'Paid Ads',
+    date: '2026-04-20',
+    read: '6 min',
+    excerpt: 'Most visitors don’t enquire on the first visit. Retargeting keeps your security brand in front of them until they’re ready to act.',
+    metaTitle: 'Retargeting Ads for Security Companies | SecurityBlogs',
+    metaDescription: 'How security companies use retargeting to convert visitors who didn’t enquire first time — audiences, messaging and frequency that respect the buyer.',
+    body:
+      '<p>Buying security is a considered decision, and most visitors leave without enquiring. Retargeting keeps your brand visible to those warm prospects across the web until they\'re ready.</p>' +
+      '<h2>Build sensible audiences</h2><p>Segment by behaviour — visited a service page, started a quote — so your messaging matches where they were in the journey.</p>' +
+      '<h2>Match the message</h2><p>Show relevant follow-up offers, not generic ads. A visitor who viewed CCTV should see CCTV messaging.</p>' +
+      '<h2>Respect frequency</h2><p>Cap how often ads show. Over-serving annoys prospects and wastes budget.</p>' +
+      '<h2>Guide them back to convert</h2><p>Send retargeting clicks to a focused landing page or offer that makes the next step easy.</p>' +
+      cta,
+  },
+  {
+    slug: 'building-online-trust-with-security-buyers',
+    title: 'Building Online Trust with Security Buyers',
+    category: 'Industry',
+    date: '2026-04-18',
+    read: '6 min',
+    excerpt: 'Security is a trust purchase. Here is how to build credibility online so cautious buyers feel confident choosing you.',
+    metaTitle: 'Building Online Trust with Security Buyers | SecurityBlogs',
+    metaDescription: 'How security businesses build online trust — credentials, genuine reviews, transparency and consistent signals that reassure cautious buyers.',
+    body:
+      '<p>Buyers are handing you responsibility for their safety, premises or data — so trust is the deciding factor. Building it online is as important as any ranking.</p>' +
+      '<h2>Show your credentials</h2><p>Licences, accreditations, insurance and memberships signal legitimacy. Display them clearly.</p>' +
+      '<h2>Let customers speak</h2><p>Genuine reviews and real outcomes carry more weight than any marketing claim. Never fabricate them.</p>' +
+      '<h2>Be transparent</h2><p>Clear pricing factors, honest expectations and real contact details reduce the perceived risk of choosing you.</p>' +
+      '<h2>Stay consistent</h2><p>A consistent brand, message and details across your site, profiles and directories reinforce credibility — and help AI engines trust you too.</p>' +
+      cta,
+  },
+  {
+    slug: 'keyword-research-for-security-niches',
+    title: 'Keyword Research for Security Niches',
+    category: 'SEO',
+    date: '2026-04-16',
+    read: '7 min',
+    excerpt: 'Good keyword research uncovers the exact terms your buyers use. Here is a practical approach for security niches and service areas.',
+    metaTitle: 'Keyword Research for Security Niches | SecurityBlogs',
+    metaDescription: 'A practical keyword research approach for security niches — intent, service and location terms, and prioritising what your buyers actually search.',
+    body:
+      '<p>Keyword research is how you discover the exact language your buyers use — and where the realistic opportunities are. For security niches, that means combining service, intent and location.</p>' +
+      '<h2>Map services to searches</h2><p>List every service, then find how buyers phrase it. "Access control" might also be "door entry system" or "key card system".</p>' +
+      '<h2>Layer in intent</h2><p>Separate research, comparison and ready-to-buy terms so you can build the right page for each stage.</p>' +
+      '<h2>Add location</h2><p>For installers, "[service] [suburb]" terms are often the highest-converting. Build for the areas you serve.</p>' +
+      '<h2>Prioritise realistically</h2><p>Balance search demand against competition and relevance. A handful of high-intent, winnable terms beats a long list you\'ll never rank for.</p>' +
+      '<h2>Revisit regularly</h2><p>Buyer language and AI-era queries shift. Refresh your research as the market and search behaviour change.</p>' +
+      cta,
+  },
 ]
 
 export function getPostBySlug(slug: string): Post | undefined {
