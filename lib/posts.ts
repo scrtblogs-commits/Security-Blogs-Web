@@ -592,6 +592,163 @@ export const posts: Post[] = [
       '<h2>Revisit regularly</h2><p>Buyer language and AI-era queries shift. Refresh your research as the market and search behaviour change.</p>' +
       cta,
   },
+  {
+    slug: 'social-media-for-security-companies',
+    title: 'Social Media for Security Companies',
+    category: 'Industry',
+    date: '2026-04-14',
+    read: '6 min',
+    excerpt: 'Social media builds trust and supports discovery for security brands. Here is how to use it well without wasting time on the wrong channels.',
+    metaTitle: 'Social Media for Security Companies | SecurityBlogs',
+    metaDescription: 'How security companies use social media to build trust and visibility — the right channels, content that works and consistency that compounds.',
+    body:
+      '<p>Social media won\'t replace search for a security business, but it builds trust, supports your brand and reinforces the consistent signals that help you get found. The key is focus.</p>' +
+      '<h2>Pick the right channels</h2><p>For most security firms, LinkedIn (B2B) and a well-kept Google Business Profile and Facebook (local trust) matter more than chasing every platform.</p>' +
+      '<h2>Show real work</h2><p>Behind-the-scenes content, completed installs and team expertise build credibility better than generic stock posts.</p>' +
+      '<h2>Stay consistent</h2><p>A steady, modest cadence beats sporadic bursts. Consistency signals an active, trustworthy business.</p>' +
+      '<h2>Reinforce your entity</h2><p>Consistent name, details and links across profiles strengthen the brand signals that both buyers and AI engines rely on.</p>' +
+      cta,
+  },
+  {
+    slug: 'email-marketing-for-security-businesses',
+    title: 'Email Marketing for Security Businesses',
+    category: 'Industry',
+    date: '2026-04-12',
+    read: '6 min',
+    excerpt: 'Done with consent and value, email keeps your security brand top of mind. Here is how to do it properly — and legally.',
+    metaTitle: 'Email Marketing for Security Businesses | SecurityBlogs',
+    metaDescription: 'How security businesses use email marketing the right way — permission-based lists, genuine value and compliance with anti-spam rules.',
+    body:
+      '<p>Email remains one of the most cost-effective ways to nurture security leads and stay top of mind — but only when done with consent and genuine value.</p>' +
+      '<h2>Build a permission-based list</h2><p>Grow your list through opt-ins — enquiry forms, useful downloads, newsletter sign-ups. Never email purchased or scraped lists; that breaches anti-spam law and harms your sender reputation.</p>' +
+      '<h2>Lead with value</h2><p>Useful tips, guides and timely advice keep subscribers engaged. Constant selling gets you unsubscribed.</p>' +
+      '<h2>Segment sensibly</h2><p>Different messages for prospects, past customers and partners land better than one-size-fits-all blasts.</p>' +
+      '<h2>Stay compliant</h2><p>Include clear sender identification and a working unsubscribe link, and honour opt-outs promptly. Compliance protects both your reputation and your deliverability.</p>' +
+      cta,
+  },
+  {
+    slug: 'how-to-rank-for-near-me-searches',
+    title: 'How to Rank for "Near Me" Searches',
+    category: 'SEO',
+    date: '2026-04-10',
+    read: '6 min',
+    excerpt: '"Security installer near me" searches are pure intent. Here is how local security businesses position themselves to win them.',
+    metaTitle: 'How to Rank for "Near Me" Searches | SecurityBlogs',
+    metaDescription: 'How local security businesses rank for "near me" searches — Google Business Profile, proximity signals, reviews and locally relevant content.',
+    body:
+      '<p>"Near me" searches signal a buyer ready to act locally. For installers and service businesses, ranking for them is some of the most valuable visibility you can earn.</p>' +
+      '<h2>Optimise your Google Business Profile</h2><p>"Near me" results lean heavily on GBP. A complete, accurate, active profile is the foundation.</p>' +
+      '<h2>Strengthen proximity and relevance signals</h2><p>Consistent location details, service-area pages and locally relevant content help Google connect you to nearby searches.</p>' +
+      '<h2>Earn local reviews</h2><p>Genuine reviews reinforce local relevance and trust. Ask customers honestly and respond to them.</p>' +
+      '<h2>Be specific about where you work</h2><p>Clearly state the areas you serve so both buyers and search engines understand your coverage.</p>' +
+      cta,
+  },
+  {
+    slug: 'winning-featured-snippets-for-security-content',
+    title: 'Winning Featured Snippets for Security Content',
+    category: 'AIO/AEO',
+    date: '2026-04-08',
+    read: '6 min',
+    excerpt: 'Featured snippets put your answer at the top of Google. Here is how security content earns position zero.',
+    metaTitle: 'Winning Featured Snippets for Security Content | SecurityBlogs',
+    metaDescription: 'How security content wins featured snippets — targeting question queries, formatting answers clearly and structuring content for extraction.',
+    body:
+      '<p>Featured snippets — the boxed answer at the top of Google — put your content above even the first result. For security businesses, they\'re a powerful way to own buyer questions.</p>' +
+      '<h2>Target question queries</h2><p>Identify the questions buyers ask ("how much does CCTV cost", "what is access control") and build content that answers them directly.</p>' +
+      '<h2>Format for the snippet</h2><p>Provide a clear, concise answer near the top — often a short paragraph, list or table — that Google can lift cleanly.</p>' +
+      '<h2>Structure the page</h2><p>Logical headings and well-organised sections help Google identify the best answer to feature.</p>' +
+      '<h2>Earn the trust</h2><p>Accurate, expert content from a credible source is more likely to be chosen. The same work also helps AI assistants quote you.</p>' +
+      cta,
+  },
+  {
+    slug: 'competitor-analysis-for-security-seo',
+    title: 'Competitor Analysis for Security SEO',
+    category: 'SEO',
+    date: '2026-04-06',
+    read: '7 min',
+    excerpt: 'Understanding what works for competitors reveals your fastest path to visibility. Here is how to analyse them constructively.',
+    metaTitle: 'Competitor Analysis for Security SEO | SecurityBlogs',
+    metaDescription: 'How to run competitor analysis for security SEO — keywords, content gaps, local presence and authority signals that reveal your opportunities.',
+    body:
+      '<p>Your competitors\' visibility is a map of what works in your market. Analysing it constructively shows where the opportunities — and gaps — are.</p>' +
+      '<h2>See what they rank for</h2><p>Identify the keywords driving competitors\' visibility, and find the high-intent terms you\'re missing.</p>' +
+      '<h2>Find content gaps</h2><p>Spot the buyer questions they answer well — and the ones nobody covers, where you can lead.</p>' +
+      '<h2>Compare local presence</h2><p>Look at their Google Business Profiles, reviews and service-area coverage to benchmark your own local SEO.</p>' +
+      '<h2>Assess authority</h2><p>Understand where their credible mentions and links come from, then pursue similar, genuine opportunities.</p>' +
+      '<h2>Act on the gaps</h2><p>Turn the analysis into a prioritised plan — the terms, content and signals where you can realistically win.</p>' +
+      cta,
+  },
+  {
+    slug: 'video-marketing-for-security-companies',
+    title: 'Video Marketing for Security Companies',
+    category: 'Industry',
+    date: '2026-04-04',
+    read: '6 min',
+    excerpt: 'Video builds trust fast and supports search visibility. Here is how security companies use it without a big production budget.',
+    metaTitle: 'Video Marketing for Security Companies | SecurityBlogs',
+    metaDescription: 'How security companies use video marketing to build trust and visibility — explainers, demos and testimonials that work without a big budget.',
+    body:
+      '<p>Video is one of the fastest ways to build trust and explain what you do — and it supports search and social visibility. You don\'t need a big production budget to start.</p>' +
+      '<h2>Explainers and demos</h2><p>Short videos that show how a system works, or what an install involves, answer buyer questions and reduce uncertainty.</p>' +
+      '<h2>Genuine testimonials</h2><p>Real customers describing real outcomes are persuasive — far more than scripted claims.</p>' +
+      '<h2>Keep it useful and honest</h2><p>Helpful, accurate content earns trust. Avoid exaggeration; security buyers are cautious.</p>' +
+      '<h2>Support discovery</h2><p>Hosted and embedded well, video can support both search and social presence and keep visitors engaged on your pages.</p>' +
+      cta,
+  },
+  {
+    slug: 'common-seo-mistakes-security-websites-make',
+    title: 'Common SEO Mistakes Security Websites Make',
+    category: 'SEO',
+    date: '2026-04-02',
+    read: '7 min',
+    excerpt: 'Avoid the SEO mistakes that quietly hold security websites back — from thin content to ignored local signals and slow pages.',
+    metaTitle: 'Common SEO Mistakes Security Websites Make | SecurityBlogs',
+    metaDescription: 'The most common SEO mistakes security websites make — thin content, weak local signals, slow pages and ignored technical issues — and how to fix them.',
+    body:
+      '<p>Many security websites underperform not because of one big problem, but a handful of avoidable mistakes. Here are the most common.</p>' +
+      '<h2>Thin or duplicated content</h2><p>One vague services page, or near-identical area pages, gives search engines little to rank. Build genuine, useful pages per service and area.</p>' +
+      '<h2>Ignoring local signals</h2><p>An incomplete Google Business Profile and inconsistent details cap local visibility — where most installer revenue lives.</p>' +
+      '<h2>Slow, heavy pages</h2><p>Unoptimised images and bloated scripts hurt both rankings and conversions.</p>' +
+      '<h2>No conversion path</h2><p>Traffic without clear calls to action wastes the visibility you worked to earn.</p>' +
+      '<h2>Neglected technical health</h2><p>Crawl errors, indexation issues and broken links quietly suppress rankings. Audit regularly.</p>' +
+      cta,
+  },
+  {
+    slug: 'structuring-content-so-ai-cites-you',
+    title: 'Structuring Content So AI Cites You',
+    category: 'AIO/AEO',
+    date: '2026-03-31',
+    read: '6 min',
+    excerpt: 'AI engines lift clear, well-structured passages. Here is how to format security content so it gets quoted, not skipped.',
+    metaTitle: 'Structuring Content So AI Cites You | SecurityBlogs',
+    metaDescription: 'How to structure security content so AI engines cite it — answer-first writing, clear headings, lists and schema that make passages easy to extract.',
+    body:
+      '<p>AI engines quote content they can easily understand and extract. How you structure a page is as important as what it says.</p>' +
+      '<h2>Answer first</h2><p>Lead each section with a direct, concise answer the engine can lift, then expand with detail.</p>' +
+      '<h2>Use clear headings</h2><p>Descriptive H2/H3 headings help engines map your content to specific questions.</p>' +
+      '<h2>Lists and tables</h2><p>Structured formats are easy to extract and often preferred for steps, comparisons and specifications.</p>' +
+      '<h2>Add schema</h2><p>FAQ and Article markup help engines understand and surface the right passages.</p>' +
+      '<h2>Stay accurate</h2><p>Engines favour trustworthy sources. Accurate, consistent content earns more citations than clever formatting alone.</p>' +
+      cta,
+  },
+  {
+    slug: 'how-to-choose-an-seo-agency-for-security-business',
+    title: 'How to Choose an SEO Agency for Your Security Business',
+    category: 'SEO',
+    date: '2026-03-29',
+    read: '7 min',
+    excerpt: 'Not all SEO agencies are equal. Here is what a security business should look for — and the red flags to avoid — when choosing one.',
+    metaTitle: 'How to Choose an SEO Agency for Your Security Business | SecurityBlogs',
+    metaDescription: 'What to look for when choosing an SEO agency for a security business — relevant experience, transparency, honest reporting and ethical methods.',
+    body:
+      '<p>The right SEO partner can transform your visibility; the wrong one can waste budget or even get your site penalised. Here is how to choose well.</p>' +
+      '<h2>Relevant experience</h2><p>Look for genuine understanding of your industry and the way security buyers search and decide.</p>' +
+      '<h2>Transparency</h2><p>A good agency explains what it does and why, and reports honestly on real metrics — not vanity numbers.</p>' +
+      '<h2>Ethical methods</h2><p>Avoid anyone promising guaranteed #1 rankings or relying on bought links and schemes. These put your site at risk.</p>' +
+      '<h2>Clear communication</h2><p>You should understand the strategy, the timeline and what success looks like. SEO takes months; beware anyone implying otherwise.</p>' +
+      '<h2>Aligned incentives</h2><p>The best partners tie their work to your actual business outcomes — enquiries and revenue — not just rankings.</p>' +
+      cta,
+  },
 ]
 
 export function getPostBySlug(slug: string): Post | undefined {
