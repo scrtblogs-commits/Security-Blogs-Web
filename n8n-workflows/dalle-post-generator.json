@@ -1,0 +1,158 @@
+{
+  "name": "DALL-E Post Generator — SecurityBlogs",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 30 }]
+        }
+      },
+      "id": "node-trigger",
+      "name": "Poll Every 30 Min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "list",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tbl2zwUSv1ABXQ7er", "mode": "id" },
+        "filterByFormula": "AND({Status} = 'Brief Ready', LEN({AI Improved Creative}) = 0)"
+      },
+      "id": "node-fetch",
+      "name": "Fetch Brief Ready Records",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-has-records",
+      "name": "Has Records?",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const record = $input.item.json;\nconst topic = record.fields?.Topic || '';\nconst brief = record.fields?.Brief || '';\nconst platform = Array.isArray(record.fields?.Platform) ? record.fields.Platform.join(', ') : (record.fields?.Platform || 'Instagram + LinkedIn');\nconst contentType = record.fields?.['Content Type'] || 'Carousel';\nconst relatedService = record.fields?.['Related Service'] || 'SEO';\n\n// Extract key message from brief\nconst keyMsgMatch = brief.match(/KEY MESSAGE[:\\s]+([^\\n]+)/i);\nconst keyMessage = keyMsgMatch ? keyMsgMatch[1].trim() : topic;\n\nconst ctaMatch = brief.match(/CTA[:\\s]+([^\\n]+)/i);\nconst cta = ctaMatch ? ctaMatch[1].trim() : 'Get your free AI audit';\n\n// Build a precise DALL-E prompt\nconst prompt = `Professional social media ${contentType} graphic for SecurityBlogs.com.au, an AI visibility and SEO agency for the Australian security industry.\n\nTOPIC: ${topic}\nPLATFORM: ${platform}\nSERVICE: ${relatedService}\nKEY MESSAGE: ${keyMessage}\nCTA: ${cta}\n\nDESIGN REQUIREMENTS:\n- Dark navy background (#0a0f1e) with electric blue accents (#1e5fe0) and red highlights (#e23744)\n- Bold, clean sans-serif typography. Large headline text dominating the top third.\n- Professional security industry imagery (abstract tech, shields, data, AI networks)\n- SecurityBlogs.com.au branding subtle in corner\n- Modern, trustworthy, conversion-focused layout\n- Clear visual hierarchy: headline → supporting point → CTA\n- No stock-photo feel. Premium agency aesthetic.\n- Aspect ratio: 1:1 (1080x1080) suitable for ${platform}\n- No faces. No people. Abstract professional visuals only.`;\n\nreturn [{ json: { recordId: record.id, topic, platform, contentType, prompt, cta } }];"
+      },
+      "id": "node-build-prompt",
+      "name": "Build DALL-E Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $vars.OPENAI_API_KEY }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ model: 'dall-e-3', prompt: $json.prompt, n: 1, size: '1024x1024', quality: 'hd', style: 'vivid', response_format: 'url' }) }}"
+      },
+      "id": "node-dalle",
+      "name": "DALL-E 3 — Generate Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const dalleResponse = $input.item.json;\nconst imageUrl = dalleResponse?.data?.[0]?.url || '';\nconst revisedPrompt = dalleResponse?.data?.[0]?.revised_prompt || '';\nconst prev = $('Build DALL-E Prompt').item.json;\nif (!imageUrl) throw new Error('DALL-E returned no image URL');\nreturn [{ json: { ...prev, imageUrl, revisedPrompt } }];"
+      },
+      "id": "node-extract-url",
+      "name": "Extract Image URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tbl2zwUSv1ABXQ7er", "mode": "id" },
+        "id": "={{ $json.recordId }}",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "AI Improved Creative": "={{ $json.imageUrl }}",
+            "Status": "Review",
+            "Notes": "={{ 'DALL-E generated on ' + new Date().toLocaleDateString('en-AU') + '. Revised prompt: ' + $json.revisedPrompt.slice(0, 300) }}"
+          }
+        }
+      },
+      "id": "node-update",
+      "name": "Save URL to Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblWYXebaZhSv9blS", "mode": "id" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Action": "DALL-E Post Generator",
+            "Details": "={{ 'Generated image for: ' + $json.topic + ' | URL: ' + $json.imageUrl }}",
+            "Status": "Completed",
+            "Date": "={{ new Date().toISOString() }}"
+          }
+        }
+      },
+      "id": "node-log",
+      "name": "Log to Execution Logs",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [1780, 300]
+    }
+  ],
+  "connections": {
+    "Poll Every 30 Min": {
+      "main": [[{ "node": "Fetch Brief Ready Records", "type": "main", "index": 0 }]]
+    },
+    "Fetch Brief Ready Records": {
+      "main": [[{ "node": "Has Records?", "type": "main", "index": 0 }]]
+    },
+    "Has Records?": {
+      "main": [[{ "node": "Build DALL-E Prompt", "type": "main", "index": 0 }]]
+    },
+    "Build DALL-E Prompt": {
+      "main": [[{ "node": "DALL-E 3 — Generate Image", "type": "main", "index": 0 }]]
+    },
+    "DALL-E 3 — Generate Image": {
+      "main": [[{ "node": "Extract Image URL", "type": "main", "index": 0 }]]
+    },
+    "Extract Image URL": {
+      "main": [[{ "node": "Save URL to Airtable", "type": "main", "index": 0 }]]
+    },
+    "Save URL to Airtable": {
+      "main": [[{ "node": "Log to Execution Logs", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "Social Media" }, { "name": "DALL-E" }, { "name": "BOT" }]
+}
