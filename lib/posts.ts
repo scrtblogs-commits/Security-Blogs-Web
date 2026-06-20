@@ -240,6 +240,181 @@ export const posts: Post[] = [
       '<h2>Security and hygiene</h2><p>HTTPS everywhere, no mixed content, working redirects and no broken links. These basics protect both rankings and buyer trust.</p>' +
       cta,
   },
+  {
+    slug: 'access-control-systems-buyers-guide',
+    title: "Access Control Systems: A Buyer's Guide",
+    category: 'Industry',
+    date: '2026-05-24',
+    read: '8 min',
+    excerpt: 'What businesses should weigh when choosing an access control system — credentials, cloud vs on-prem, integration and total cost of ownership.',
+    metaTitle: "Access Control Systems: A Buyer's Guide | SecurityBlogs",
+    metaDescription: 'A practical buyer’s guide to access control systems — credential types, cloud vs on-prem, integration, scalability and total cost of ownership.',
+    body:
+      '<p>Access control decides who gets in, when and where — and the right system depends on your building, headcount and risk profile. This guide covers the factors buyers weigh before choosing.</p>' +
+      '<h2>Credential types</h2><p>From key cards and fobs to mobile credentials and biometrics, each option trades convenience, cost and security differently. Mobile and biometric options are growing, but the best choice depends on your users and environment.</p>' +
+      '<h2>Cloud vs on-premise</h2><p>Cloud-managed access offers remote administration and automatic updates; on-premise gives local control and can suit sites with strict data or connectivity requirements. Many organisations now choose hybrid models.</p>' +
+      '<h2>Integration</h2><p>Consider how access control will work with CCTV, alarms and visitor management. Integrated systems give a clearer security picture and simpler administration.</p>' +
+      '<h2>Scalability</h2><p>Choose a platform that grows with you — adding doors, sites and users without a forklift upgrade.</p>' +
+      '<h2>Total cost of ownership</h2><p>Look beyond hardware to licensing, maintenance, support and future expansion. The cheapest install is rarely the cheapest system over five years.</p>' +
+      cta,
+  },
+  {
+    slug: 'cctv-installation-what-businesses-should-know',
+    title: 'CCTV Installation: What Businesses Should Know',
+    category: 'Industry',
+    date: '2026-05-22',
+    read: '7 min',
+    excerpt: 'Camera types, coverage planning, storage, privacy obligations and maintenance — the essentials businesses should understand before installing CCTV.',
+    metaTitle: 'CCTV Installation: What Businesses Should Know | SecurityBlogs',
+    metaDescription: 'The essentials of CCTV installation for businesses — camera types, coverage planning, storage, privacy obligations and ongoing maintenance.',
+    body:
+      '<p>A CCTV system is only as good as its planning. Before installing, businesses should understand the choices that affect coverage, image quality, storage and compliance.</p>' +
+      '<h2>Camera types and placement</h2><p>Different cameras suit different jobs — wide-area, entry points, low light, weatherproof. Plan coverage around your actual risks and blind spots, not just camera count.</p>' +
+      '<h2>Resolution and image quality</h2><p>Higher resolution helps identification but increases storage needs. Match quality to purpose — deterrence, monitoring or evidence.</p>' +
+      '<h2>Storage and retention</h2><p>Decide how long footage is kept and where it’s stored. Balance retention needs against storage cost and any legal requirements.</p>' +
+      '<h2>Privacy obligations</h2><p>Surveillance carries privacy responsibilities. Understand your obligations around signage, coverage of public or neighbouring areas, and handling of recordings — and seek advice where unsure.</p>' +
+      '<h2>Maintenance</h2><p>Cameras drift, lenses dirty and storage fills. A maintenance plan keeps the system reliable when you actually need the footage.</p>' +
+      cta,
+  },
+  {
+    slug: 'choosing-a-monitored-alarm-system',
+    title: 'Choosing a Monitored Alarm System',
+    category: 'Industry',
+    date: '2026-05-20',
+    read: '6 min',
+    excerpt: 'Monitored vs self-monitored, response options, false-alarm management and what to ask a provider before signing a monitoring contract.',
+    metaTitle: 'Choosing a Monitored Alarm System | SecurityBlogs',
+    metaDescription: 'How to choose a monitored alarm system — monitored vs self-monitored, response options, false-alarm management and key questions for providers.',
+    body:
+      '<p>An alarm that no one responds to offers limited protection. Monitoring connects your alarm to a centre that can act when it triggers. Here is what to weigh.</p>' +
+      '<h2>Monitored vs self-monitored</h2><p>Professionally monitored systems alert a monitoring centre; self-monitored systems notify you directly. Monitoring adds cost but ensures a response even when you can’t act.</p>' +
+      '<h2>Response options</h2><p>Understand what happens on a trigger — verification, keyholder contact, guard or emergency-service escalation — and the response times involved.</p>' +
+      '<h2>False-alarm management</h2><p>Frequent false alarms waste money and erode response. Good systems and providers use verification to reduce them.</p>' +
+      '<h2>Questions to ask a provider</h2><p>Ask about contract terms, monitoring-centre accreditation, response procedures, equipment ownership and what happens if you switch providers.</p>' +
+      cta,
+  },
+  {
+    slug: 'google-business-profile-for-security-firms',
+    title: 'Google Business Profile Optimisation for Security Firms',
+    category: 'SEO',
+    date: '2026-05-18',
+    read: '7 min',
+    excerpt: 'Your Google Business Profile is often the first thing local buyers see. Here is how security firms optimise it to win the map pack and enquiries.',
+    metaTitle: 'Google Business Profile Optimisation for Security Firms | SecurityBlogs',
+    metaDescription: 'How security firms optimise their Google Business Profile to win the local map pack — categories, services, photos, reviews and posts that convert.',
+    body:
+      '<p>For local security businesses, the Google Business Profile (GBP) is prime real estate — often the first thing a buyer sees and the deciding factor in who they call. Optimising it is some of the highest-return local SEO work you can do.</p>' +
+      '<h2>Categories and services</h2><p>Choose the most accurate primary category and add relevant secondary ones. List your services clearly so Google can match you to the right searches.</p>' +
+      '<h2>Complete every field</h2><p>Hours, service areas, attributes, description and contact details — a complete profile outperforms a sparse one and signals an active business.</p>' +
+      '<h2>Real photos</h2><p>Genuine photos of your team and work build trust and engagement. Update them regularly.</p>' +
+      '<h2>Reviews</h2><p>Ask satisfied customers for honest reviews and respond to them professionally. Never fabricate reviews — it breaches policy and the law.</p>' +
+      '<h2>Posts and updates</h2><p>Use GBP posts to share updates and offers. Activity signals a live, engaged business to both Google and buyers.</p>' +
+      cta,
+  },
+  {
+    slug: 'link-building-for-security-companies',
+    title: 'Link Building for Security Companies (the Safe Way)',
+    category: 'SEO',
+    date: '2026-05-16',
+    read: '8 min',
+    excerpt: 'How security companies earn authoritative links without risking penalties — guest articles, digital PR, partnerships and genuinely useful assets.',
+    metaTitle: 'Link Building for Security Companies (the Safe Way) | SecurityBlogs',
+    metaDescription: 'How security companies build authoritative backlinks safely — guest articles, digital PR, partnerships and link-worthy assets, with no risky schemes.',
+    body:
+      '<p>Links remain a core trust signal, but the wrong approach can get a site penalised. For security companies, the goal is genuine authority — earned, not bought.</p>' +
+      '<h2>Guest articles</h2><p>Contributing genuinely useful articles to industry publications and relevant blogs earns links and exposure. Lead with value, not self-promotion.</p>' +
+      '<h2>Digital PR</h2><p>Original insights, commentary or data can earn coverage and links from media. Be a useful source for journalists covering security topics.</p>' +
+      '<h2>Partnerships and associations</h2><p>Industry bodies, suppliers and local partners often provide relevant, trustworthy links — and the relationships matter beyond SEO.</p>' +
+      '<h2>Link-worthy assets</h2><p>Useful tools, guides and checklists attract links naturally because people want to reference them.</p>' +
+      '<h2>What to avoid</h2><p>Bought links, link farms and automated schemes are against Google’s guidelines and can trigger manual penalties. Slow, genuine authority beats fast, risky shortcuts.</p>' +
+      cta,
+  },
+  {
+    slug: 'reviews-and-reputation-for-security-businesses',
+    title: 'Reviews & Reputation Management for Security Businesses',
+    category: 'SEO',
+    date: '2026-05-14',
+    read: '6 min',
+    excerpt: 'Reviews influence both buyers and rankings. Here is how security businesses earn and manage them honestly — and respond to negative feedback well.',
+    metaTitle: 'Reviews & Reputation Management for Security Businesses | SecurityBlogs',
+    metaDescription: 'How security businesses earn and manage online reviews honestly — review velocity, responding to feedback and protecting reputation without faking it.',
+    body:
+      '<p>In a high-trust industry, reviews carry real weight — with buyers deciding who to call and with local search rankings. Managing them well, and honestly, is essential.</p>' +
+      '<h2>Earn reviews the right way</h2><p>Ask satisfied customers at the right moment and make it easy. Steady, genuine review velocity matters more than a one-off burst.</p>' +
+      '<h2>Never fake it</h2><p>Fabricated or incentivised reviews breach platform rules and consumer law, and buyers often spot them. The reputational risk far outweighs any short-term gain.</p>' +
+      '<h2>Respond to everything</h2><p>Thank positive reviewers and respond calmly and constructively to negative ones. A good response to a complaint can build more trust than a five-star rating.</p>' +
+      '<h2>Monitor across platforms</h2><p>Track reviews on Google, industry directories and social channels so nothing is missed.</p>' +
+      cta,
+  },
+  {
+    slug: 'conversion-optimisation-for-security-websites',
+    title: 'Conversion Optimisation for Security Websites',
+    category: 'SEO',
+    date: '2026-05-12',
+    read: '7 min',
+    excerpt: 'Traffic only matters if it converts. Here is how security websites turn more visitors into enquiries — clarity, trust, speed and friction removal.',
+    metaTitle: 'Conversion Optimisation for Security Websites | SecurityBlogs',
+    metaDescription: 'How to turn more visitors into enquiries on a security website — clear calls to action, trust signals, fast pages and removing friction from forms.',
+    body:
+      '<p>Ranking and ads bring visitors; conversion optimisation turns them into enquiries. Small improvements here often beat chasing more traffic.</p>' +
+      '<h2>Make the next step obvious</h2><p>Every page should have a clear, single primary call to action — get a quote, call, book an assessment. Don’t make visitors hunt for it.</p>' +
+      '<h2>Build trust on the page</h2><p>Licences, accreditations, genuine reviews and clear contact details reassure cautious buyers at the moment of decision.</p>' +
+      '<h2>Reduce form friction</h2><p>Ask only for what you need. Long, intrusive forms lose enquiries; short, clear ones convert.</p>' +
+      '<h2>Speed and clarity</h2><p>Fast pages and simple layouts keep visitors engaged. Confusion and slowness cost conversions.</p>' +
+      '<h2>Test and learn</h2><p>Use analytics and session tools to see where visitors drop off, then fix the friction points one at a time.</p>' +
+      cta,
+  },
+  {
+    slug: 'voice-search-for-local-security-services',
+    title: 'Voice Search Optimisation for Local Security Services',
+    category: 'AIO/AEO',
+    date: '2026-05-10',
+    read: '6 min',
+    excerpt: 'Voice assistants read back a single answer. Here is how local security services position themselves to be that answer when buyers ask out loud.',
+    metaTitle: 'Voice Search Optimisation for Local Security Services | SecurityBlogs',
+    metaDescription: 'How local security services optimise for voice search — conversational queries, concise answers, local signals and structured data that win the spoken result.',
+    body:
+      '<p>When someone asks a voice assistant for a "security installer near me", it usually reads back one answer. Voice search optimisation is about being that answer.</p>' +
+      '<h2>Write for conversational queries</h2><p>Voice searches are longer and more natural than typed ones. Target the full questions people actually ask out loud.</p>' +
+      '<h2>Answer concisely</h2><p>Voice results favour short, direct answers. Lead with a clear, speakable response, then expand for readers.</p>' +
+      '<h2>Strengthen local signals</h2><p>Most voice searches for services are local. A complete Google Business Profile, consistent NAP and strong local SEO underpin voice visibility.</p>' +
+      '<h2>Use structured data</h2><p>FAQ and LocalBusiness schema help assistants understand and surface your information.</p>' +
+      cta,
+  },
+  {
+    slug: 'ppc-vs-seo-for-security-companies',
+    title: 'PPC vs SEO for Security Companies: Where to Invest',
+    category: 'Paid Ads',
+    date: '2026-05-08',
+    read: '7 min',
+    excerpt: 'Paid ads buy instant visibility; SEO builds lasting presence. Here is how security companies balance the two for the best return.',
+    metaTitle: 'PPC vs SEO for Security Companies: Where to Invest | SecurityBlogs',
+    metaDescription: 'PPC vs SEO for security companies — the trade-offs of paid ads and organic search, and how to balance both for short-term leads and long-term growth.',
+    body:
+      '<p>Should a security company invest in paid ads or SEO? The honest answer is usually both — but the balance depends on your timeline, budget and market.</p>' +
+      '<h2>What PPC gives you</h2><p>Paid search buys instant visibility for high-intent terms and is easy to measure. But the moment you stop paying, the leads stop.</p>' +
+      '<h2>What SEO gives you</h2><p>Organic visibility compounds over time and keeps working without per-click cost — but it takes months to build, especially for newer domains.</p>' +
+      '<h2>How to balance them</h2><p>Many security firms use PPC for immediate leads while SEO matures, then rebalance as organic visibility grows. Ads also reveal which keywords convert, informing SEO priorities.</p>' +
+      '<h2>The honest take</h2><p>If you need leads now, start with disciplined PPC. If you want durable, lower-cost visibility, invest in SEO in parallel. The two reinforce each other.</p>' +
+      cta,
+  },
+  {
+    slug: 'service-area-pages-that-rank',
+    title: 'How to Write Service-Area Pages That Rank',
+    category: 'SEO',
+    date: '2026-05-06',
+    read: '7 min',
+    excerpt: 'Service-area pages help installers rank for "[service] in [area]" — but only if they’re genuinely useful. Here is how to build them the right way.',
+    metaTitle: 'How to Write Service-Area Pages That Rank | SecurityBlogs',
+    metaDescription: 'How security installers build service-area pages that rank — genuine local content, structure and internal linking, without thin doorway pages.',
+    body:
+      '<p>Service-area pages let installers rank for location-specific searches like "CCTV installation [suburb]". Done well they win local leads; done badly they look like spam.</p>' +
+      '<h2>Make each page genuinely useful</h2><p>Don’t spin near-identical pages for every suburb. Describe the actual work, considerations and outcomes for that area, with real local relevance.</p>' +
+      '<h2>Structure clearly</h2><p>A clear heading, the service explained, local context, trust signals and a call to action. Make it easy for buyers and search engines alike.</p>' +
+      '<h2>Internal linking</h2><p>Link service-area pages to their parent service page and to relevant guides so authority flows and navigation makes sense.</p>' +
+      '<h2>Avoid doorway pages</h2><p>Thin, duplicated pages built only to rank can trigger penalties. Quality and genuine local value are what last.</p>' +
+      cta,
+  },
 ]
 
 export function getPostBySlug(slug: string): Post | undefined {
