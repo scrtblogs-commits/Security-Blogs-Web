@@ -1,0 +1,232 @@
+{
+  "name": "Creative Reviewer — SecurityBlogs",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 15 }]
+        }
+      },
+      "id": "node-trigger",
+      "name": "Poll Every 15 Min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "list",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tbl2zwUSv1ABXQ7er", "mode": "id" },
+        "filterByFormula": "AND({Status} = 'Design In Progress', LEN({Attachment}) > 0, LEN({Comments}) = 0)"
+      },
+      "id": "node-fetch-records",
+      "name": "Fetch Records With Attachment",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-has-records",
+      "name": "Has Records?",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const record = $input.item.json;\nconst attachments = record.fields?.Attachment || record.fields?.['Creative Upload'] || [];\nlet imageUrl = '';\nif (Array.isArray(attachments) && attachments.length > 0) {\n  imageUrl = attachments[0].url || attachments[0].thumbnails?.large?.url || '';\n}\nconst topic = record.fields?.Topic || '';\nconst brief = record.fields?.Brief || '';\nconst platform = record.fields?.Platform || '';\nconst contentType = record.fields?.['Content Type'] || '';\nreturn [{ json: { recordId: record.id, imageUrl, topic, brief, platform, contentType } }];"
+      },
+      "id": "node-extract",
+      "name": "Extract Image URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.imageUrl }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEquals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-has-image",
+      "name": "Has Image URL?",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [1120, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $credentials.openAiApi.apiKey }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "body",
+              "value": "={{ JSON.stringify({ model: 'gpt-4o', max_tokens: 1500, messages: [{ role: 'system', content: 'You are a senior social media creative strategist and brand consultant for SecurityBlogs.com.au — an AI visibility and SEO agency for the security industry in Australia. You review social media creatives and provide sharp, actionable feedback. Be direct, specific and practical. Think like a CMO.' }, { role: 'user', content: [{ type: 'text', text: 'Review this social media creative for SecurityBlogs.com.au.\\n\\nTOPIC: ' + $json.topic + '\\nPLATFORM: ' + $json.platform + '\\nCONTENT TYPE: ' + $json.contentType + '\\nORIGINAL BRIEF:\\n' + $json.brief + '\\n\\nAnalyse the creative and provide feedback in this EXACT format:\\n\\nHOOK STRENGTH: [1-10] — [specific feedback]\\nCTA EFFECTIVENESS: [1-10] — [specific feedback]\\nAUTHORITY SIGNALS: [1-10] — [specific feedback]\\nMESSAGING CLARITY: [1-10] — [specific feedback]\\nDESIGN QUALITY: [1-10] — [specific feedback]\\nAI CITATION READINESS: [1-10] — [specific feedback]\\nSAVE/SHARE POTENTIAL: [1-10] — [specific feedback]\\n\\nKEY WEAKNESSES:\\n- [weakness 1]\\n- [weakness 2]\\n- [weakness 3]\\n\\nMISSED OPPORTUNITIES:\\n- [opportunity 1]\\n- [opportunity 2]\\n\\nIMMEDIATE FIXES (priority order):\\n1. [fix 1]\\n2. [fix 2]\\n3. [fix 3]\\n\\nOVERALL SCORE: [X/10]' }, { type: 'image_url', image_url: { url: $json.imageUrl } }] }] }) }}"
+            }
+          ]
+        }
+      },
+      "id": "node-vision",
+      "name": "GPT-4o Vision — Analyse Creative",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const response = $input.item.json;\nconst feedback = response?.choices?.[0]?.message?.content || 'No feedback generated.';\nconst prev = $('Extract Image URL').item.json;\nreturn [{ json: { ...prev, feedback } }];"
+      },
+      "id": "node-parse-feedback",
+      "name": "Parse Feedback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/images/generations",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "=Bearer {{ $credentials.openAiApi.apiKey }}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "body",
+              "value": "={{ JSON.stringify({ model: 'dall-e-3', n: 1, size: '1024x1024', quality: 'hd', style: 'natural', prompt: 'Professional social media creative for SecurityBlogs.com.au, an AI visibility and SEO agency for the security industry in Australia. Topic: ' + $json.topic + '. Platform: ' + $json.platform + '. Content type: ' + $json.contentType + '. Style: clean, modern, dark navy and electric blue colour palette, bold typography, professional security industry aesthetic. Brand colours: navy #0a0f1e, electric blue #1e5fe0, red accent #e23744, white text. Must include a strong hook headline, clear CTA, and SecurityBlogs branding. High authority, trustworthy, conversion-focused design. No text that says AI-generated. Photo-realistic professional style.' }) }}"
+            }
+          ]
+        }
+      },
+      "id": "node-dalle",
+      "name": "DALL-E 3 — Generate Improved Creative",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1780, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const dalleResponse = $input.item.json;\nconst generatedUrl = dalleResponse?.data?.[0]?.url || '';\nconst prev = $('Parse Feedback').item.json;\nreturn [{ json: { ...prev, generatedUrl } }];"
+      },
+      "id": "node-parse-image",
+      "name": "Extract Generated URL",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2000, 300]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tbl2zwUSv1ABXQ7er", "mode": "id" },
+        "id": "={{ $json.recordId }}",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Comments": "={{ $json.feedback }}",
+            "AI Improved Creative": "={{ $json.generatedUrl }}",
+            "Status": "BOT Review"
+          }
+        }
+      },
+      "id": "node-update-airtable",
+      "name": "Update Airtable Record",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [2220, 300]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": { "__rl": true, "value": "app4m6OOzymaqPKHX", "mode": "id" },
+        "table": { "__rl": true, "value": "tblWYXebaZhSv9blS", "mode": "id" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Action": "Creative Reviewer Run",
+            "Details": "={{ 'Reviewed + generated improved creative for: ' + $json.topic }}",
+            "Status": "Completed",
+            "Date": "={{ new Date().toISOString() }}"
+          }
+        }
+      },
+      "id": "node-log",
+      "name": "Log to Execution Logs",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2,
+      "position": [2440, 300]
+    }
+  ],
+  "connections": {
+    "Poll Every 15 Min": {
+      "main": [[{ "node": "Fetch Records With Attachment", "type": "main", "index": 0 }]]
+    },
+    "Fetch Records With Attachment": {
+      "main": [[{ "node": "Has Records?", "type": "main", "index": 0 }]]
+    },
+    "Has Records?": {
+      "main": [[{ "node": "Extract Image URL", "type": "main", "index": 0 }]]
+    },
+    "Extract Image URL": {
+      "main": [[{ "node": "Has Image URL?", "type": "main", "index": 0 }]]
+    },
+    "Has Image URL?": {
+      "main": [[{ "node": "GPT-4o Vision — Analyse Creative", "type": "main", "index": 0 }]]
+    },
+    "GPT-4o Vision — Analyse Creative": {
+      "main": [[{ "node": "Parse Feedback", "type": "main", "index": 0 }]]
+    },
+    "Parse Feedback": {
+      "main": [[{ "node": "DALL-E 3 — Generate Improved Creative", "type": "main", "index": 0 }]]
+    },
+    "DALL-E 3 — Generate Improved Creative": {
+      "main": [[{ "node": "Extract Generated URL", "type": "main", "index": 0 }]]
+    },
+    "Extract Generated URL": {
+      "main": [[{ "node": "Update Airtable Record", "type": "main", "index": 0 }]]
+    },
+    "Update Airtable Record": {
+      "main": [[{ "node": "Log to Execution Logs", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "tags": [{ "name": "Social Media" }, { "name": "AI Creative" }, { "name": "Airtable" }]
+}
