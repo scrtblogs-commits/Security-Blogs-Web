@@ -749,6 +749,181 @@ export const posts: Post[] = [
       '<h2>Aligned incentives</h2><p>The best partners tie their work to your actual business outcomes — enquiries and revenue — not just rankings.</p>' +
       cta,
   },
+  {
+    slug: 'lead-generation-for-security-installers',
+    title: 'Lead Generation for Security Installers',
+    category: 'Industry',
+    date: '2026-03-27',
+    read: '7 min',
+    excerpt: 'A practical look at the channels that actually generate enquiries for security installers — and how to balance them for steady, qualified leads.',
+    metaTitle: 'Lead Generation for Security Installers | SecurityBlogs',
+    metaDescription: 'The lead-generation channels that work for security installers — local SEO, paid search, referrals and content — and how to balance them for steady enquiries.',
+    body:
+      '<p>Steady, qualified leads come from a mix of channels working together, not one silver bullet. Here is how security installers build a reliable enquiry pipeline.</p>' +
+      '<h2>Local SEO and Google Business Profile</h2><p>For most installers this is the foundation — visible where buyers search locally, at no per-lead cost once established.</p>' +
+      '<h2>Paid search</h2><p>Google and Microsoft Ads buy immediate, high-intent leads while organic visibility builds. Disciplined targeting keeps cost-per-lead sensible.</p>' +
+      '<h2>Content and trust</h2><p>Useful guides and clear service pages capture researching buyers and build the credibility that converts them.</p>' +
+      '<h2>Referrals and partnerships</h2><p>Past customers, builders and property managers are valuable, low-cost sources. Make it easy for them to refer you.</p>' +
+      '<h2>Balance the mix</h2><p>Combine immediate (paid) and compounding (SEO, referrals) channels so leads keep flowing while long-term assets grow.</p>' +
+      cta,
+  },
+  {
+    slug: 'understanding-ga4-for-your-security-website',
+    title: 'Understanding GA4 for Your Security Website',
+    category: 'SEO',
+    date: '2026-03-25',
+    read: '6 min',
+    excerpt: 'Google Analytics 4 shows what visitors actually do on your site. Here are the reports security businesses should watch — and act on.',
+    metaTitle: 'Understanding GA4 for Your Security Website | SecurityBlogs',
+    metaDescription: 'A simple guide to Google Analytics 4 for security websites — the reports that matter, tracking enquiries as conversions and acting on what you learn.',
+    body:
+      '<p>Google Analytics 4 (GA4) tells you how visitors find and use your site — essential for knowing what\'s working. You don\'t need to master every report, just the ones that drive decisions.</p>' +
+      '<h2>Track conversions</h2><p>Set up enquiries, calls and quote requests as key events so you can see which pages and channels actually generate business.</p>' +
+      '<h2>Watch acquisition</h2><p>See where visitors come from — organic search, paid, direct, referral — and which sources bring the best engagement.</p>' +
+      '<h2>Find your best pages</h2><p>Identify which pages attract and convert visitors, then do more of what works.</p>' +
+      '<h2>Spot friction</h2><p>High exit rates on key pages can flag confusion or slow performance worth fixing.</p>' +
+      '<h2>Act, don\'t just report</h2><p>The value of analytics is the decisions it informs. Review regularly and adjust your content and spend accordingly.</p>' +
+      cta,
+  },
+  {
+    slug: 'understanding-search-intent-for-security-keywords',
+    title: 'Understanding Search Intent for Security Keywords',
+    category: 'SEO',
+    date: '2026-03-23',
+    read: '6 min',
+    excerpt: 'Matching content to what the searcher actually wants is the heart of SEO. Here is how to read intent behind security keywords.',
+    metaTitle: 'Understanding Search Intent for Security Keywords | SecurityBlogs',
+    metaDescription: 'How to read search intent behind security keywords — informational, comparison and transactional — and match each with the right page.',
+    body:
+      '<p>The same keyword can mean different things. Understanding the intent behind a search — and matching it with the right page — is what makes content rank and convert.</p>' +
+      '<h2>Informational intent</h2><p>Buyers learning the basics ("how does access control work"). Answer with clear, educational content.</p>' +
+      '<h2>Comparison intent</h2><p>Buyers weighing options ("best monitored alarm"). Serve comparisons and guides that help them decide.</p>' +
+      '<h2>Transactional intent</h2><p>Ready-to-act searches ("CCTV installer quote"). Serve conversion-focused service and contact pages.</p>' +
+      '<h2>Match content to intent</h2><p>A how-to article won\'t convert a ready buyer, and a sales page won\'t satisfy a researcher. Build the right page for each stage — and link them together.</p>' +
+      cta,
+  },
+  {
+    slug: 'internal-linking-for-security-websites',
+    title: 'Internal Linking for Security Websites',
+    category: 'SEO',
+    date: '2026-03-21',
+    read: '6 min',
+    excerpt: 'Internal links guide visitors and spread ranking power across your site. Here is how security websites use them well.',
+    metaTitle: 'Internal Linking for Security Websites | SecurityBlogs',
+    metaDescription: 'How internal linking helps security websites rank and convert — connecting services, guides and location pages with clear, relevant links.',
+    body:
+      '<p>Internal links — the links between your own pages — help visitors navigate and help search engines understand and rank your site. They\'re an easy, underused win.</p>' +
+      '<h2>Connect related pages</h2><p>Link service pages to relevant guides and location pages so visitors (and search engines) can move logically through your content.</p>' +
+      '<h2>Spread authority</h2><p>Links from strong pages pass ranking power to others. Point some toward the pages you most want to rank.</p>' +
+      '<h2>Use descriptive anchor text</h2><p>Clear, relevant link text helps both users and search engines understand the destination.</p>' +
+      '<h2>Avoid orphans</h2><p>Every important page should be linked from somewhere. Orphaned pages are hard to find and rank.</p>' +
+      cta,
+  },
+  {
+    slug: 'using-proof-in-security-marketing',
+    title: 'Using Proof and Results in Security Marketing (Honestly)',
+    category: 'Industry',
+    date: '2026-03-19',
+    read: '6 min',
+    excerpt: 'Proof persuades cautious buyers — but only when it\'s real. Here is how to use genuine results and credibility without crossing the line.',
+    metaTitle: 'Using Proof and Results in Security Marketing (Honestly) | SecurityBlogs',
+    metaDescription: 'How to use genuine proof in security marketing — real outcomes, credentials and reviews that build trust without fabricated or misleading claims.',
+    body:
+      '<p>Proof is powerful in a trust-driven industry — but fabricated or exaggerated claims breach consumer law and destroy credibility when exposed. The goal is genuine, verifiable proof.</p>' +
+      '<h2>Real outcomes</h2><p>Describe actual results you\'ve delivered, with the customer\'s permission. Specific, true stories beat vague superlatives.</p>' +
+      '<h2>Credentials and accreditations</h2><p>Licences, certifications and memberships are concrete, verifiable trust signals.</p>' +
+      '<h2>Genuine reviews</h2><p>Real customer feedback is persuasive precisely because it\'s authentic. Never fabricate or incentivise it.</p>' +
+      '<h2>Avoid invented numbers</h2><p>Made-up statistics may look impressive but are a legal and reputational risk. If you can\'t verify a figure, don\'t publish it.</p>' +
+      '<h2>Let proof do the work</h2><p>Honest, specific evidence reassures cautious buyers more than any marketing claim could.</p>' +
+      cta,
+  },
+  {
+    slug: 'responding-to-negative-reviews-security-businesses',
+    title: 'Responding to Negative Reviews (Security Businesses)',
+    category: 'Industry',
+    date: '2026-03-17',
+    read: '6 min',
+    excerpt: 'A negative review handled well can build more trust than a perfect rating. Here is how security businesses respond constructively.',
+    metaTitle: 'Responding to Negative Reviews (Security Businesses) | SecurityBlogs',
+    metaDescription: 'How security businesses respond to negative reviews constructively — staying calm, taking it offline and turning criticism into trust.',
+    body:
+      '<p>Every business gets the occasional negative review. How you respond is visible to every future buyer — and a calm, constructive reply can build more trust than the complaint cost you.</p>' +
+      '<h2>Stay calm and professional</h2><p>Never argue or get defensive in public. A measured, respectful reply reflects well on you.</p>' +
+      '<h2>Acknowledge and take it offline</h2><p>Acknowledge the concern, apologise where appropriate, and offer to resolve it directly. This shows you care without litigating details publicly.</p>' +
+      '<h2>Be honest</h2><p>If a mistake was made, own it. Buyers respect accountability.</p>' +
+      '<h2>Learn from it</h2><p>Patterns in feedback reveal real issues worth fixing — improving the service and future reviews.</p>' +
+      cta,
+  },
+  {
+    slug: 'multi-location-seo-for-security-firms',
+    title: 'Multi-Location SEO for Security Firms',
+    category: 'SEO',
+    date: '2026-03-15',
+    read: '7 min',
+    excerpt: 'Operating across multiple areas or branches? Here is how security firms structure their site and profiles to rank in every location.',
+    metaTitle: 'Multi-Location SEO for Security Firms | SecurityBlogs',
+    metaDescription: 'How multi-location security firms rank in every area — location pages, separate Google Business Profiles and consistent signals that scale.',
+    body:
+      '<p>Security firms serving multiple areas or running several branches face a specific challenge: ranking in each location without diluting the site. Structure is everything.</p>' +
+      '<h2>Dedicated location pages</h2><p>Build a genuine, useful page for each area or branch — real local content, not duplicated templates.</p>' +
+      '<h2>A profile per location</h2><p>Each physical branch should have its own properly managed Google Business Profile with accurate details.</p>' +
+      '<h2>Consistent NAP everywhere</h2><p>Keep each location\'s name, address and phone consistent across your site and directories.</p>' +
+      '<h2>Clear site structure</h2><p>Organise locations logically and link them sensibly so both users and search engines navigate easily.</p>' +
+      '<h2>Avoid thin duplication</h2><p>Near-identical location pages can be flagged as low-value. Genuine local relevance is what ranks.</p>' +
+      cta,
+  },
+  {
+    slug: 'should-your-security-website-use-an-ai-chatbot',
+    title: 'Should Your Security Website Use an AI Chatbot?',
+    category: 'Industry',
+    date: '2026-03-13',
+    read: '6 min',
+    excerpt: 'AI chatbots can capture enquiries around the clock — but they can also frustrate buyers. Here is how to decide and deploy one well.',
+    metaTitle: 'Should Your Security Website Use an AI Chatbot? | SecurityBlogs',
+    metaDescription: 'Whether a security website should use an AI chatbot — the benefits, the risks and how to deploy one that helps buyers rather than frustrating them.',
+    body:
+      '<p>An AI chatbot can answer common questions and capture leads at any hour. But a poorly set up bot can frustrate cautious security buyers. The decision comes down to execution.</p>' +
+      '<h2>The upside</h2><p>Round-the-clock responses to common questions, instant lead capture, and freeing your team from repetitive enquiries.</p>' +
+      '<h2>The risks</h2><p>Generic or inaccurate answers erode trust. For high-stakes security questions, a bad bot can cost you the lead.</p>' +
+      '<h2>Deploy it well</h2><p>Scope it to what it can answer reliably, make a human handover easy, and be transparent that it\'s automated.</p>' +
+      '<h2>Capture, don\'t replace</h2><p>Use the bot to qualify and capture enquiries, then route serious buyers to a person quickly.</p>' +
+      cta,
+  },
+  {
+    slug: 'seo-for-cybersecurity-companies',
+    title: 'SEO for Cybersecurity Companies',
+    category: 'SEO',
+    date: '2026-03-11',
+    read: '7 min',
+    excerpt: 'Cybersecurity buyers research deeply and value expertise. Here is how cyber firms build the visibility and authority that wins them.',
+    metaTitle: 'SEO for Cybersecurity Companies | SecurityBlogs',
+    metaDescription: 'How cybersecurity companies build SEO and AI visibility — expert content, technical authority and entity signals that win deeply researched buyers.',
+    body:
+      '<p>Cybersecurity buyers are sophisticated, research extensively and value demonstrated expertise. Winning them takes more than rankings — it takes authority.</p>' +
+      '<h2>Lead with expertise</h2><p>In-depth, accurate content on real threats, standards and solutions builds the credibility cyber buyers demand and earns AI citations.</p>' +
+      '<h2>Target the buyer\'s questions</h2><p>Map the technical and business questions buyers ask, and build authoritative content around them.</p>' +
+      '<h2>Build technical and entity authority</h2><p>Consistent brand signals, credible mentions and structured data help both search engines and AI engines trust and recommend you.</p>' +
+      '<h2>Don\'t neglect conversion</h2><p>Even expert traffic needs a clear path to enquire. Pair authority content with strong calls to action.</p>' +
+      '<h2>Play the long game</h2><p>Authority in cybersecurity compounds. Consistent, expert content is what builds lasting visibility.</p>' +
+      cta,
+  },
+  {
+    slug: 'seasonal-marketing-for-security-companies',
+    title: 'Seasonal Marketing for Security Companies',
+    category: 'Industry',
+    date: '2026-03-09',
+    read: '6 min',
+    excerpt: 'Demand for security shifts with the seasons. Here is how to plan content and campaigns around when buyers are most active.',
+    metaTitle: 'Seasonal Marketing for Security Companies | SecurityBlogs',
+    metaDescription: 'How security companies plan seasonal marketing — anticipating demand peaks, timely content and campaigns that meet buyers when they\'re ready.',
+    body:
+      '<p>Security demand isn\'t flat year-round. Holidays, weather, local events and business cycles all shift when buyers think about security. Planning around those moments pays off.</p>' +
+      '<h2>Anticipate demand peaks</h2><p>Identify when your buyers are most active — holiday periods, end of financial year, local events — and prepare ahead.</p>' +
+      '<h2>Publish timely content</h2><p>Seasonal guides ("securing your business over the holidays") capture timely searches and demonstrate relevance.</p>' +
+      '<h2>Time your campaigns</h2><p>Align paid and outreach activity with demand peaks so your spend meets buyers when they\'re ready.</p>' +
+      '<h2>Keep evergreen running</h2><p>Seasonal pushes complement — not replace — the steady content and local SEO that work all year.</p>' +
+      cta,
+  },
 ]
 
 export function getPostBySlug(slug: string): Post | undefined {
