@@ -9,6 +9,19 @@ import HorizontalScrollServices from '@/components/effects/HorizontalScrollServi
 import HeroDashboard from '@/components/ui/HeroDashboard'
 import { stats } from '@/lib/site'
 
+export const metadata = {
+  title: 'AI Visibility & SEO for Security Companies | SecurityBlogs',
+  description: 'SecurityBlogs helps Australian security companies get named by ChatGPT, Gemini and Google AI. Expert SEO, AIO, AEO and GEO services built exclusively for the security industry.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'AI Visibility & SEO for Security Companies | SecurityBlogs',
+    description: 'Be the answer AI gives. We help security companies rank on Google and get cited by ChatGPT, Gemini and Perplexity.',
+    url: '/',
+    siteName: 'SecurityBlogs',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'SecurityBlogs' }],
+  },
+}
+
 export default function HomePage() {
   return (
     <>

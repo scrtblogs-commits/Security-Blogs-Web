@@ -1,6 +1,9 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getService, getServices } from '@/lib/cms'
+import JsonLd from '@/components/JsonLd'
+import Breadcrumb from '@/components/ui/Breadcrumb'
+import { serviceSchema, breadcrumbSchema } from '@/lib/schema'
 
 // ─────────────────────────────────────────────────────────────────────
 // /services/[slug] — CMS-driven service page.
@@ -51,11 +54,24 @@ export default async function ServicePage({ params }: Props) {
   const svc = await getService(slug)
   if (!svc) notFound()
 
+  const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Services', href: '/services/' },
+    { label: svc.title },
+  ]
+
   return (
     <main>
+      <JsonLd data={serviceSchema({
+        name: svc.title,
+        description: svc.seo?.description ?? svc.tagline,
+        slug: svc.slug,
+      })} />
+      <JsonLd data={breadcrumbSchema(breadcrumbItems, `/services/${svc.slug}/`)} />
       {/* Hero */}
       <section className="section section-hero">
         <div className="container">
+          <Breadcrumb items={breadcrumbItems} currentPath={`/services/${svc.slug}/`} />
           <h1 className="h1">{svc.title}</h1>
           <p className="lede" style={{ marginTop: 16, maxWidth: 720 }}>{svc.tagline}</p>
           <p style={{ marginTop: 16, maxWidth: 760 }}>{svc.heroDescription}</p>

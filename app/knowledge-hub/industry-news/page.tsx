@@ -5,6 +5,8 @@ import ContainerScroll from '@/components/ui/ContainerScroll'
 import AnimatedSVGTimeline from '@/components/ui/AnimatedSVGTimeline'
 import CTABand from '@/components/ui/CTABand'
 import NewsTabs from './NewsTabs'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Industry News · Knowledge Hub',
@@ -25,6 +27,15 @@ const monthSteps = [
 export default function IndustryNewsPage() {
   return (
     <>
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs — Security Industry News',
+        path: '/knowledge-hub/industry-news/',
+        items: monthSteps.map((s) => ({
+          name: s.title,
+          url: `/knowledge-hub/industry-news/`,
+          description: s.desc,
+        })),
+      })} />
       <HeroBg>
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Knowledge Hub', href: '/knowledge-hub/' }, { label: 'Industry News' }]} />
         <ContainerScroll

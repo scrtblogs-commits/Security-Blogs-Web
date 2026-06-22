@@ -4,6 +4,8 @@ import SectionHead from '@/components/ui/SectionHead'
 import ContainerScroll from '@/components/ui/ContainerScroll'
 import CTABand from '@/components/ui/CTABand'
 import { Stagger, Item } from '@/components/ui/Reveal'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
 
 export const metadata = {
   title: 'Security Guides · Knowledge Hub',
@@ -28,6 +30,15 @@ const diffColor: Record<string, string> = { Beginner: 'var(--green)', Intermedia
 export default function SecurityGuidesPage() {
   return (
     <>
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs — Security Marketing Guides',
+        path: '/knowledge-hub/security-guides/',
+        items: guides.map((g, i) => ({
+          name: g.title,
+          url: `/knowledge-hub/security-guides/`,
+          description: g.excerpt,
+        })),
+      })} />
       <HeroBg>
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Knowledge Hub', href: '/knowledge-hub/' }, { label: 'Security Guides' }]} />
         <ContainerScroll

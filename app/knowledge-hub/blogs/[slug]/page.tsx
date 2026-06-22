@@ -45,7 +45,9 @@ export default async function BlogPostPage({ params }: Props) {
     headline: post.title,
     description: post.metaDescription,
     datePublished: post.date,
-    author: { '@type': 'Organization', name: 'SecurityBlogs' },
+    dateModified: (post as Record<string, unknown>).updatedAt ?? post.date ?? new Date().toISOString(),
+    image: (post as Record<string, unknown>).image ?? 'https://securityblogs.com.au/og-image.png',
+    author: { '@type': 'Person', name: 'SecurityBlogs Team', url: 'https://securityblogs.com.au/about-us/' },
     publisher: { '@type': 'Organization', name: 'SecurityBlogs' },
     mainEntityOfPage: `https://securityblogs.com.au/knowledge-hub/blogs/${post.slug}/`,
   }

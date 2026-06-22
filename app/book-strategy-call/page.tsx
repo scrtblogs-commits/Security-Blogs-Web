@@ -13,6 +13,7 @@ export const metadata = {
   description: 'Book your free 30-minute AI visibility strategy call. Get an audit, competitor gaps and a 90-day growth roadmap — no obligation.',
   alternates: { canonical: '/book-strategy-call/' },
   openGraph: { siteName: 'SecurityBlogs', url: '/book-strategy-call/' },
+  robots: { index: false, follow: true },
 }
 
 const heroBullets = [

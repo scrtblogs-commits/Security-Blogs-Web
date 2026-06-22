@@ -21,6 +21,19 @@ const details = [
   { icon: '🔒', title: '100% confidential, no spam', sub: 'Your data stays private' },
 ]
 
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'SecurityBlogs',
+  url: 'https://securityblogs.com.au',
+  telephone: '',
+  email: 'hello@securityblogs.com.au',
+  address: { '@type': 'PostalAddress', addressCountry: 'AU', addressRegion: 'NSW', addressLocality: 'Sydney' },
+  areaServed: ['AU', 'US', 'UK', 'UAE', 'SG'],
+  priceRange: '$$',
+  description: 'AI visibility and SEO agency for the Australian security industry.',
+}
+
 export default function ContactPage() {
   return (
     <>
@@ -32,6 +45,7 @@ export default function ContactPage() {
         areaServed: ['AU', 'US', 'GB', 'AE', 'SG'],
         availableLanguage: ['en-AU'],
       })} />
+      <JsonLd data={localBusinessSchema} />
       {/* Full-screen interactive 3D hero */}
       <Interactive3D
         fullScreen
