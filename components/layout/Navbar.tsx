@@ -10,9 +10,25 @@ type Drop = { label: string; href: string; items: { title: string; href: string 
 // the section index, so the dropdown only needs to list the children.
 const dropdowns: Drop[] = [
   {
+    label: 'About',
+    href: '/about-us/',
+    items: [
+      { title: 'About Us', href: '/about-us/' },
+    ],
+  },
+  {
     label: 'Services',
     href: '/services/',
     items: services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
+  },
+  {
+    label: 'Free Tools',
+    href: '/free-tools/',
+    items: [
+      { title: 'Directory', href: '/security-directory/' },
+      { title: 'AI Visibility', href: '/ai-visibility-center/' },
+      { title: 'All Free Tools', href: '/free-tools/' },
+    ],
   },
   {
     label: 'Knowledge Hub',
@@ -26,12 +42,7 @@ const dropdowns: Drop[] = [
   },
 ]
 
-const flat = [
-  { label: 'Free Tools', href: '/free-tools/' },
-  { label: 'Directory', href: '/security-directory/' },
-  { label: 'AI Visibility', href: '/ai-visibility-center/' },
-  { label: 'About', href: '/about-us/' },
-]
+const flat: { label: string; href: string }[] = []
 
 function ThemeToggle() {
   const [dark, setDark] = useState(false)
@@ -115,7 +126,7 @@ export default function Navbar() {
         </nav>
 
         <div className="sg-desktop-nav flex items-center gap-2">
-          <Link href="/contact/" className="btn btn-primary" style={{ padding: '11px 18px' }}>Free AI Audit</Link>
+          <Link href="/contact/" className="btn btn-primary" style={{ padding: '11px 18px' }}>Contact Us</Link>
         </div>
 
         {/* Mobile toggle */}
@@ -145,7 +156,7 @@ export default function Navbar() {
             <Link key={f.href} href={f.href} onClick={() => setOpen(false)} className="acc-item" style={{ display: 'block', padding: '14px 4px', fontWeight: 600 }}>{f.label}</Link>
           ))}
           <div className="flex items-center gap-2" style={{ marginTop: 14 }}>
-            <Link href="/contact/" onClick={() => setOpen(false)} className="btn btn-primary" style={{ flex: 1 }}>Free AI Audit</Link>
+            <Link href="/contact/" onClick={() => setOpen(false)} className="btn btn-primary" style={{ flex: 1 }}>Contact Us</Link>
           </div>
         </div>
       )}
