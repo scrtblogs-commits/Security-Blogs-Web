@@ -1,46 +1,83 @@
-import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
-import AIVisibilityScore from '@/components/ui/AIVisibilityScore'
 import MarqueeStrip from '@/components/ui/MarqueeStrip'
 import SectionHead from '@/components/ui/SectionHead'
 import StatsStrip from '@/components/ui/StatsStrip'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
-import ServicesCardStack from './ServicesCardStack'
 import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
+import HeroDashboard from '@/components/ui/HeroDashboard'
 import { stats } from '@/lib/site'
-import AIChatDemo from '@/components/ui/AIChatDemo'
 
 export default function HomePage() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────── */}
-      <HeroBg>
-        <div className="grid-2" style={{ alignItems: 'center', gap: 56 }}>
+      <section style={{
+        background: 'linear-gradient(180deg, #f0f4ff 0%, #f8f9fc 60%, #ffffff 100%)',
+        paddingTop: 'calc(var(--nav-h) + 56px)',
+        paddingBottom: 72,
+        overflow: 'hidden',
+      }}>
+        <div className="container" style={{ maxWidth: 900 }}>
           <Reveal>
-            <span className="badge badge-blue" style={{ marginBottom: 22 }}>
-              <span className="dot dot-pulse" /> LIVE · AI VISIBILITY ENGINE
-            </span>
-            <h1 className="h1" style={{ marginBottom: 20 }}>
-              Be the <span style={{ color: 'var(--blue)', fontStyle: 'italic' }}>answer</span>{' '}
-              <span style={{ color: 'var(--red)' }}>AI</span> gives.
+            {/* Badge */}
+            <div style={{ textAlign: 'center', marginBottom: 18 }}>
+              <span className="badge badge-blue">
+                <span className="dot dot-pulse" /> LIVE · AI VISIBILITY ENGINE
+              </span>
+            </div>
+
+            {/* Headline */}
+            <h1 style={{
+              textAlign: 'center',
+              fontSize: 'clamp(36px, 6vw, 72px)',
+              fontWeight: 900,
+              lineHeight: 1.05,
+              letterSpacing: '-0.03em',
+              color: '#0f172a',
+              marginBottom: 20,
+            }}>
+              Be the{' '}
+              <span style={{
+                background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                fontStyle: 'italic',
+              }}>answer</span>{' '}
+              <span style={{ color: '#e23744' }}>AI</span> gives.
             </h1>
-            <p className="lead" style={{ maxWidth: 520, marginBottom: 28 }}>
-              When buyers ask ChatGPT, Gemini or Google AI for the best security provider — your
-              brand should be named. We make that happen.
+
+            {/* Sub text */}
+            <p style={{
+              textAlign: 'center',
+              fontSize: 'clamp(16px, 2vw, 20px)',
+              color: '#475569',
+              maxWidth: 580,
+              margin: '0 auto 32px',
+              lineHeight: 1.6,
+            }}>
+              When buyers ask ChatGPT, Gemini or Google AI for the best security provider —
+              your brand should be named. We make that happen.
             </p>
-            <div className="flex flex-wrap gap-3" style={{ marginBottom: 24 }}>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3" style={{ justifyContent: 'center', marginBottom: 48 }}>
               <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
               <MagneticButton href="/free-tools/" className="btn btn-outline btn-lg">Try the live score</MagneticButton>
             </div>
-            <p className="text-dim" style={{ fontFamily: 'var(--font-mono)', fontSize: 13 }}>Trusted across AU · US · UK · UAE · SG</p>
           </Reveal>
+
+          {/* Dashboard */}
           <Reveal delay={0.15}>
-            <AIChatDemo />
+            <HeroDashboard />
           </Reveal>
+
+          <p style={{ textAlign: 'center', marginTop: 24, fontSize: 13, color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+            Trusted across AU · US · UK · UAE · SG
+          </p>
         </div>
-      </HeroBg>
+      </section>
 
       <MarqueeStrip />
 
