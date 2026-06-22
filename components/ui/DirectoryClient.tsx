@@ -242,16 +242,8 @@ function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; is
           {company.logo}
         </div>
         <div>
-          {isSubscriber ? (
-            <h3 style={{ fontSize: 16, fontWeight: 800, color: '#0f172a', margin: '0 0 2px' }}>{company.name}</h3>
-          ) : (
-            <h3 style={{ fontSize: 16, fontWeight: 800, color: '#0f172a', margin: '0 0 2px', filter: 'blur(6px)', userSelect: 'none' }}>{company.name}</h3>
-          )}
-          {isSubscriber ? (
-            <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>📍 {company.city}, {company.state}</p>
-          ) : (
-            <p style={{ fontSize: 13, color: '#94a3b8', margin: 0, filter: 'blur(5px)', userSelect: 'none' }}>📍 {company.city}, {company.state}</p>
-          )}
+          <h3 style={{ fontSize: 16, fontWeight: 800, color: '#0f172a', margin: '0 0 2px' }}>{company.name}</h3>
+          <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>📍 {company.city}, {company.state}</p>
         </div>
       </div>
 
