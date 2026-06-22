@@ -10,13 +10,6 @@ type Drop = { label: string; href: string; items: { title: string; href: string 
 // the section index, so the dropdown only needs to list the children.
 const dropdowns: Drop[] = [
   {
-    label: 'About',
-    href: '/about-us/',
-    items: [
-      { title: 'About Us', href: '/about-us/' },
-    ],
-  },
-  {
     label: 'Services',
     href: '/services/',
     items: services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
@@ -27,7 +20,6 @@ const dropdowns: Drop[] = [
     items: [
       { title: 'Directory', href: '/security-directory/' },
       { title: 'AI Visibility', href: '/ai-visibility-center/' },
-      { title: 'All Free Tools', href: '/free-tools/' },
     ],
   },
   {
@@ -42,7 +34,9 @@ const dropdowns: Drop[] = [
   },
 ]
 
-const flat: { label: string; href: string }[] = []
+const flat = [
+  { label: 'About', href: '/about-us/' },
+]
 
 function ThemeToggle() {
   const [dark, setDark] = useState(false)
