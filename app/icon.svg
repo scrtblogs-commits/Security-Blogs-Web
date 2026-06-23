@@ -1,5 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#e23744"/>
-  <path d="M16 5 L25 9 L25 18 C25 22.5 20.5 26.5 16 28.5 C11.5 26.5 7 22.5 7 18 L7 9 Z" fill="white" opacity="0.2"/>
-  <text x="16" y="22" font-family="Arial Black, Arial" font-weight="900" font-size="15" fill="white" text-anchor="middle">S</text>
+  <!-- Outer metallic ring -->
+  <circle cx="16" cy="16" r="15.5" fill="url(#ring)"/>
+  <!-- Globe background -->
+  <circle cx="16" cy="16" r="13" fill="url(#globe)"/>
+  <!-- Grid lines (longitude) -->
+  <ellipse cx="16" cy="16" rx="5" ry="13" fill="none" stroke="rgba(100,160,220,0.3)" stroke-width="0.6"/>
+  <ellipse cx="16" cy="16" rx="9" ry="13" fill="none" stroke="rgba(100,160,220,0.3)" stroke-width="0.6"/>
+  <!-- Grid lines (latitude) -->
+  <line x1="3" y1="16" x2="29" y2="16" stroke="rgba(100,160,220,0.3)" stroke-width="0.6"/>
+  <line x1="4.5" y1="11" x2="27.5" y2="11" stroke="rgba(100,160,220,0.25)" stroke-width="0.5"/>
+  <line x1="4.5" y1="21" x2="27.5" y2="21" stroke="rgba(100,160,220,0.25)" stroke-width="0.5"/>
+  <!-- Australia shape (simplified) -->
+  <path d="M14,13.5 L17,13 L19,14 L20,16 L19.5,18.5 L18,20 L16,20.5 L14,19.5 L12.5,18 L12,16 L12.5,14.5 Z" fill="rgba(100,180,255,0.7)" stroke="rgba(150,210,255,0.5)" stroke-width="0.4"/>
+  <!-- SB letters -->
+  <text x="16" y="17.5" font-family="Georgia, serif" font-weight="900" font-size="7" fill="white" text-anchor="middle" opacity="0.95" letter-spacing="-0.5">SB</text>
+  <!-- Inner glow rim -->
+  <circle cx="16" cy="16" r="13" fill="none" stroke="rgba(180,220,255,0.4)" stroke-width="0.8"/>
+  <defs>
+    <radialGradient id="ring" cx="40%" cy="35%">
+      <stop offset="0%" stop-color="#8ab0cc"/>
+      <stop offset="40%" stop-color="#4a7a9b"/>
+      <stop offset="100%" stop-color="#1a3a52"/>
+    </radialGradient>
+    <radialGradient id="globe" cx="35%" cy="30%">
+      <stop offset="0%" stop-color="#1a4a7a"/>
+      <stop offset="50%" stop-color="#0d2d50"/>
+      <stop offset="100%" stop-color="#061520"/>
+    </radialGradient>
+  </defs>
 </svg>
