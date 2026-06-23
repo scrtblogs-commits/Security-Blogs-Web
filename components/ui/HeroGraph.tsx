@@ -155,19 +155,19 @@ export default function HeroGraph() {
       userSelect: 'none',
     }}>
 
-      {/* KPI cards — Bing Webmaster Tools style */}
-      <div style={{ display: 'flex', gap: 12, padding: '14px 14px 10px' }}>
+      {/* KPI cards — compact, left-aligned, NOT full-width (matching reference) */}
+      <div style={{ display: 'flex', gap: 10, padding: '12px 12px 6px', alignItems: 'stretch' }}>
         <KpiCard
           label="Total Clicks"
           value={clicksVal.toLocaleString('en-AU')}
-          bg="#6b3fa0"
+          bg="linear-gradient(120deg,#6b2fa0 0%,#8b52c0 100%)"
           active={phase !== 'idle'}
           font={F}
         />
         <KpiCard
           label="Total impressions"
           value={impsVal.toLocaleString('en-AU')}
-          bg="#1a7dc4"
+          bg="linear-gradient(120deg,#1568b0 0%,#2a9fd4 100%)"
           active={phase !== 'idle'}
           font={F}
         />
@@ -264,56 +264,68 @@ function KpiCard({ label, value, bg, active, font }: {
   label: string; value: string; bg: string; active: boolean; font: string
 }) {
   return (
+    /*
+     * Reference measurements (from image, ~840px wide widget):
+     *   card width  ≈ 190px   (each card ≈22% of widget)
+     *   card height ≈ 78px
+     *   border-radius ≈ 13px  (moderate — NOT pill-shaped)
+     *   h-padding ≈ 14px, v-padding ≈ 10px top / 12px bottom
+     *   checkbox: 14×14px square, 3px radius
+     *   label: ~12px, semi-bold, white 90% opacity
+     *   info icon: ~12px, circle, after label
+     *   number: ~26px, bold, white, mt 4px
+     */
     <div style={{
-      flex: 1,
+      width: 190,               /* fixed — not stretching full width */
       background: bg,
-      borderRadius: 22,          /* large pill-like radius — Bing style */
-      padding: '18px 24px 20px',
-      minWidth: 0,
+      borderRadius: 13,         /* moderate radius matching reference */
+      padding: '10px 14px 12px',
+      flexShrink: 0,
       opacity: active ? 1 : 0,
-      transition: 'opacity 0.45s ease',
+      transition: 'opacity 0.4s ease',
     }}>
-      {/* Row: checkbox + metric name + info icon */}
+      {/* Top row: checkbox · label · info */}
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 9, marginBottom: 10,
+        display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5,
       }}>
-        {/* Checked checkbox — white square with tick, matching Bing */}
+        {/* 14×14 checkbox */}
         <span style={{
-          width: 18, height: 18, borderRadius: 4,
-          background: 'rgba(255,255,255,0.28)',
-          border: '2px solid rgba(255,255,255,0.85)',
+          width: 14, height: 14, borderRadius: 3,
+          background: 'rgba(255,255,255,0.22)',
+          border: '1.5px solid rgba(255,255,255,0.80)',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
         }}>
-          <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
-            <path d="M1.5 4.5L4.5 7.5L9.5 1.5"
-              stroke="white" strokeWidth="2"
+          <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+            <path d="M1 3.5L3.5 6L8 1"
+              stroke="white" strokeWidth="1.6"
               strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
+        {/* Label */}
         <span style={{
-          fontSize: 14, fontWeight: 600,
-          color: 'rgba(255,255,255,0.95)',
-          fontFamily: font, letterSpacing: '0.01em',
+          fontSize: 12, fontWeight: 600,
+          color: 'rgba(255,255,255,0.90)',
+          fontFamily: font, whiteSpace: 'nowrap',
         }}>
           {label}
         </span>
-        {/* Info icon — subtle, Bing style */}
+        {/* Info circle */}
         <span style={{
-          width: 16, height: 16, borderRadius: '50%',
-          border: '1.5px solid rgba(255,255,255,0.45)',
+          width: 13, height: 13, borderRadius: '50%',
+          border: '1.5px solid rgba(255,255,255,0.50)',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 10, color: 'rgba(255,255,255,0.55)',
-          fontFamily: font, flexShrink: 0, marginLeft: 2,
-          lineHeight: 1,
+          fontSize: 9, color: 'rgba(255,255,255,0.60)',
+          fontFamily: font, flexShrink: 0, lineHeight: 1,
+          fontStyle: 'italic',
         }}>
           i
         </span>
       </div>
-      {/* Big number */}
+      {/* Number */}
       <div style={{
-        fontSize: 34, fontWeight: 700, color: '#ffffff',
-        fontFamily: font, letterSpacing: '-0.5px', lineHeight: 1.1,
+        fontSize: 26, fontWeight: 700, color: '#ffffff',
+        fontFamily: font, letterSpacing: '-0.3px', lineHeight: 1.15,
       }}>
         {value}
       </div>
