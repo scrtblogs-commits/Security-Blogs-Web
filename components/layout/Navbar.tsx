@@ -5,14 +5,14 @@ import { services, knowledgeHub, publishWithUs } from '@/lib/site'
 
 type Drop = { label: string; href: string; items: { title: string; href: string }[] }
 
-// Duplicate "All Services" / "Overview" entries removed — the parent label
-// itself ("Services", "Knowledge Hub", "Publish With Us") already links to
-// the section index, so the dropdown only needs to list the children.
 const dropdowns: Drop[] = [
   {
     label: 'Services',
     href: '/services/',
-    items: services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
+    items: [
+      ...services.map((s) => ({ title: s.title, href: `/services/${s.slug}/` })),
+      { title: 'Security Guides', href: '/knowledge-hub/security-guides/' },
+    ],
   },
   {
     label: 'Knowledge Hub',
@@ -24,32 +24,21 @@ const dropdowns: Drop[] = [
     href: '/publish-with-us/',
     items: publishWithUs,
   },
+  {
+    label: 'Free AI Audit',
+    href: '/contact/',
+    items: [
+      { title: 'Free Tools', href: '/free-tools/' },
+      { title: 'AI Visibility', href: '/ai-visibility-center/' },
+      { title: 'Directory', href: '/security-directory/' },
+    ],
+  },
 ]
 
+// About Us is first — flat link, no dropdown
 const flat = [
-  { label: 'Free Tools', href: '/free-tools/' },
-  { label: 'Directory', href: '/security-directory/' },
-  { label: 'AI Visibility', href: '/ai-visibility-center/' },
-  { label: 'About', href: '/about-us/' },
+  { label: 'About Us', href: '/about-us/' },
 ]
-
-function ThemeToggle() {
-  const [dark, setDark] = useState(false)
-  useEffect(() => {
-    setDark(document.documentElement.getAttribute('data-theme') === 'dark')
-  }, [])
-  const toggle = () => {
-    const next = !dark
-    setDark(next)
-    document.documentElement.setAttribute('data-theme', next ? 'dark' : 'light')
-    try { localStorage.setItem('sg-theme', next ? 'dark' : 'light') } catch {}
-  }
-  return (
-    <button onClick={toggle} aria-label="Toggle theme" className="btn btn-outline" style={{ padding: '9px 12px', borderRadius: 10 }}>
-      {dark ? '☀️' : '🌙'}
-    </button>
-  )
-}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -91,8 +80,14 @@ export default function Navbar() {
           <img src="/logo-header.webp" alt="SecurityBlogs" style={{ height: 52, width: 'auto', display: 'block' }} />
         </Link>
 
-        {/* Desktop nav — whiteSpace:nowrap so labels never wrap to a 2nd line */}
+        {/* Desktop nav */}
         <nav className="sg-desktop-nav flex items-center" style={{ gap: 2 }}>
+          {/* About Us — flat, no dropdown, no arrow */}
+          {flat.map((f) => (
+            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>{f.label}</Link>
+          ))}
+
+          {/* Dropdowns: Services, Knowledge Hub, Publish With Us, Free AI Audit */}
           {dropdowns.map((d) => (
             <div key={d.label} style={{ position: 'relative' }} onMouseEnter={() => openDrop(d.label)} onMouseLeave={closeDrop}>
               <Link href={d.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', display: 'inline-flex', gap: 5, alignItems: 'center', whiteSpace: 'nowrap' }}>
@@ -109,13 +104,10 @@ export default function Navbar() {
               )}
             </div>
           ))}
-          {flat.map((f) => (
-            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>{f.label}</Link>
-          ))}
         </nav>
 
         <div className="sg-desktop-nav flex items-center gap-2">
-          <Link href="/contact/" className="btn btn-primary" style={{ padding: '11px 18px' }}>Free AI Audit</Link>
+          <Link href="/contact/" className="btn btn-primary" style={{ padding: '11px 18px' }}>Contact Us</Link>
         </div>
 
         {/* Mobile toggle */}
@@ -127,6 +119,11 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div className="glass" style={{ position: 'absolute', top: 'var(--nav-h)', left: 8, right: 8, padding: 14, borderRadius: 16, maxHeight: '80vh', overflowY: 'auto' }}>
+          {/* About Us flat first */}
+          {flat.map((f) => (
+            <Link key={f.href} href={f.href} onClick={() => setOpen(false)} className="acc-item" style={{ display: 'block', padding: '14px 4px', fontWeight: 600 }}>{f.label}</Link>
+          ))}
+          {/* Dropdowns */}
           {dropdowns.map((d) => (
             <div key={d.label} className="acc-item">
               <div className="acc-q" onClick={() => setAcc(acc === d.label ? null : d.label)} style={{ padding: '14px 4px' }}>
@@ -141,11 +138,8 @@ export default function Navbar() {
               )}
             </div>
           ))}
-          {flat.map((f) => (
-            <Link key={f.href} href={f.href} onClick={() => setOpen(false)} className="acc-item" style={{ display: 'block', padding: '14px 4px', fontWeight: 600 }}>{f.label}</Link>
-          ))}
           <div className="flex items-center gap-2" style={{ marginTop: 14 }}>
-            <Link href="/contact/" onClick={() => setOpen(false)} className="btn btn-primary" style={{ flex: 1 }}>Free AI Audit</Link>
+            <Link href="/contact/" onClick={() => setOpen(false)} className="btn btn-primary" style={{ flex: 1 }}>Contact Us</Link>
           </div>
         </div>
       )}
