@@ -217,64 +217,56 @@ function NewsletterModal({ onSubscribe, onClose }: { onSubscribe: (email: string
   )
 }
 
-// ── Company Card ─────────────────────────────────────────────────────
+// ── Company Row (list view) ───────────────────────────────────────────
 function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; isSubscriber: boolean; onUnlock: () => void }) {
   return (
     <div style={{
-      background: '#fff', borderRadius: 16, border: '1px solid #e8edf3',
-      boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
-      padding: '22px 22px 18px',
-      transition: 'box-shadow 0.2s',
-    }}>
-      {/* Top row: category + AI Verified */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <span style={{ fontSize: 13, fontWeight: 600, color: '#1e5fe0', background: '#eff6ff', padding: '5px 12px', borderRadius: 20, border: '1px solid #bfdbfe' }}>
+      background: '#fff', borderRadius: 12, border: '1px solid #e8edf3',
+      padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16,
+      transition: 'box-shadow 0.15s',
+    }}
+      onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.07)')}
+      onMouseLeave={e => (e.currentTarget.style.boxShadow = 'none')}
+    >
+      {/* Logo */}
+      <div style={{ width: 40, height: 40, borderRadius: 10, background: 'linear-gradient(135deg, #3b82f6, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 900, color: '#fff', flexShrink: 0 }}>
+        {company.logo}
+      </div>
+
+      {/* Name + location */}
+      <div style={{ flex: '0 0 220px', minWidth: 0 }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{company.name}</div>
+        <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 1 }}>{company.city}, {company.state}</div>
+      </div>
+
+      {/* Category */}
+      <div style={{ flex: '0 0 160px' }}>
+        <span style={{ fontSize: 12, fontWeight: 600, color: '#1e5fe0', background: '#eff6ff', padding: '3px 10px', borderRadius: 20, border: '1px solid #bfdbfe', whiteSpace: 'nowrap' }}>
           {company.category}
         </span>
-        <span style={{ fontSize: 12, fontWeight: 600, color: '#475569', background: '#f8f9fc', padding: '5px 12px', borderRadius: 20, border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', gap: 5 }}>
-          🤖 AI Verified
-        </span>
       </div>
 
-      {/* Logo + Name + Location */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-        <div style={{ width: 48, height: 48, borderRadius: 12, background: 'linear-gradient(135deg, #3b82f6, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 900, color: '#fff', flexShrink: 0 }}>
-          {company.logo}
+      {/* AI Score */}
+      <div style={{ flex: '0 0 120px', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ flex: 1, height: 5, background: '#e2e8f0', borderRadius: 3, overflow: 'hidden' }}>
+          <div style={{ height: '100%', width: `${company.aiScore}%`, background: 'linear-gradient(90deg, #1e5fe0, #6366f1)', borderRadius: 3 }} />
         </div>
-        <div>
-          <h3 style={{ fontSize: 16, fontWeight: 800, color: '#0f172a', margin: '0 0 2px' }}>{company.name}</h3>
-          <p style={{ fontSize: 13, color: '#64748b', margin: 0 }}>📍 {company.city}, {company.state}</p>
-        </div>
+        <span style={{ fontSize: 12, fontWeight: 700, color: '#1e5fe0', flexShrink: 0 }}>{company.aiScore}</span>
       </div>
 
-      {/* Description — always blurred for non-subscribers */}
-      {isSubscriber ? (
-        <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, marginBottom: 16 }}>{company.description}</p>
-      ) : (
-        <p style={{ fontSize: 13, color: '#64748b', lineHeight: 1.6, marginBottom: 16, filter: 'blur(5px)', userSelect: 'none' }}>{company.description}</p>
-      )}
-
-      {/* AI Visibility Score */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13, marginBottom: 6 }}>
-        <span style={{ color: '#64748b' }}>AI Visibility Score</span>
-        <span style={{ fontWeight: 700, color: '#1e5fe0' }}>{company.aiScore}/100</span>
+      {/* Contact / lock — push to right */}
+      <div style={{ marginLeft: 'auto', flexShrink: 0 }}>
+        {isSubscriber ? (
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <a href={`https://${company.website}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#3b82f6', textDecoration: 'none', fontWeight: 600 }}>🌐 Website</a>
+            <span style={{ fontSize: 12, color: '#475569' }}>📞 {company.phone}</span>
+          </div>
+        ) : (
+          <button onClick={onUnlock} style={{ fontSize: 12, color: '#3b82f6', fontWeight: 700, background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '6px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+            🔒 Unlock
+          </button>
+        )}
       </div>
-      <div style={{ height: 6, background: '#e2e8f0', borderRadius: 4, marginBottom: 14, overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${company.aiScore}%`, background: 'linear-gradient(90deg, #1e5fe0, #6366f1)', borderRadius: 4 }} />
-      </div>
-
-      {/* Unlock prompt / full details */}
-      {isSubscriber ? (
-        <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          <a href={`https://${company.website}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: '#3b82f6', textDecoration: 'none' }}>🌐 {company.website}</a>
-          <span style={{ fontSize: 13, color: '#475569' }}>📞 {company.phone}</span>
-          <span style={{ fontSize: 13, color: '#475569' }}>📧 {company.email}</span>
-        </div>
-      ) : (
-        <p style={{ fontSize: 12, color: '#94a3b8', textAlign: 'center', margin: 0, cursor: 'pointer' }} onClick={onUnlock}>
-          🔒 Unlock to view full profile
-        </p>
-      )}
     </div>
   )
 }
@@ -464,11 +456,21 @@ export default function DirectoryClient() {
             )}
           </div>
 
-          {/* Company grid */}
+          {/* Company list */}
           {filtered.length > 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 20 }}>
-              {filtered.map(company => (
-                <CompanyCard key={company.id} company={company} isSubscriber={isSubscriber} onUnlock={() => setShowModal(true)} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0, border: '1px solid #e8edf3', borderRadius: 14, overflow: 'hidden' }}>
+              {/* Header row */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '10px 20px', background: '#f8f9fc', borderBottom: '1px solid #e8edf3' }}>
+                <div style={{ width: 40, flexShrink: 0 }} />
+                <div style={{ flex: '0 0 220px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Company</div>
+                <div style={{ flex: '0 0 160px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Category</div>
+                <div style={{ flex: '0 0 120px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>AI Score</div>
+                <div style={{ marginLeft: 'auto', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Contact</div>
+              </div>
+              {filtered.map((company, i) => (
+                <div key={company.id} style={{ borderBottom: i < filtered.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
+                  <CompanyCard company={company} isSubscriber={isSubscriber} onUnlock={() => setShowModal(true)} />
+                </div>
               ))}
             </div>
           ) : (
