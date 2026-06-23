@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { posts } from '@/lib/posts'
+import { publicPosts as posts } from '@/lib/posts'
 
 const categories = ['All', 'SEO', 'AIO/AEO', 'GEO', 'Paid Ads', 'Industry']
 

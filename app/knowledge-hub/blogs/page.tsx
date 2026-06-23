@@ -7,7 +7,7 @@ import Reveal from '@/components/ui/Reveal'
 import BlogGrid from './BlogGrid'
 import JsonLd from '@/components/JsonLd'
 import { itemListSchema } from '@/lib/schema'
-import { posts } from '@/lib/posts'
+import { publicPosts as posts } from '@/lib/posts'
 
 export const metadata = {
   title: 'Blog · Knowledge Hub',
