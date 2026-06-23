@@ -390,18 +390,20 @@ function BingHeader() {
         </svg>
       </span>
 
-      {/* Globe favicon (SecurityBlogs logo placeholder) */}
-      <span style={{
-        ...ICO, marginLeft: 10,
-        width: 26, height: 26, borderRadius: '50%',
-        background: 'rgba(255,255,255,0.18)',
-        border: '1.5px solid rgba(255,255,255,0.40)',
-        fontSize: 11, color: 'rgba(255,255,255,0.80)',
-        fontFamily: '"Segoe UI",Arial,sans-serif',
-        fontWeight: 700, flexShrink: 0,
-      }}>
-        SB
-      </span>
+      {/* Security Blogs logo */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/logo.png"
+        alt="Security Blogs"
+        style={{
+          height: 28,
+          width: 'auto',
+          display: 'block',
+          marginLeft: 10,
+          flexShrink: 0,
+          borderRadius: 4,
+        }}
+      />
     </div>
   )
 }
