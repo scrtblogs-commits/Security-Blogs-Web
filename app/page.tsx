@@ -6,7 +6,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
-import HeroDashboard from '@/components/ui/HeroDashboard'
+import HeroGraph from '@/components/ui/HeroGraph'
 import { stats } from '@/lib/site'
 
 export const metadata = {
@@ -27,7 +27,7 @@ export default function HomePage() {
     <>
       {/* ── HERO ─────────────────────────────────────── */}
       <section style={{
-        background: 'linear-gradient(180deg, #eef2ff 0%, #f8f9fc 55%, #ffffff 100%)',
+        background: '#f6f8fb',
         paddingTop: 'calc(var(--nav-h) + 64px)',
         paddingBottom: 80,
         overflow: 'hidden',
@@ -78,7 +78,7 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <HeroDashboard />
+            <HeroGraph />
           </Reveal>
 
           <p style={{ textAlign: 'center', marginTop: 28, fontSize: 13, color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
