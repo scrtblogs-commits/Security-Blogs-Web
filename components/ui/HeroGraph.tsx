@@ -155,6 +155,9 @@ export default function HeroGraph() {
       userSelect: 'none',
     }}>
 
+      {/* ── Bing Webmaster Tools header bar ── */}
+      <BingHeader />
+
       {/* KPI cards — compact, left-aligned, NOT full-width (matching reference) */}
       <div style={{ display: 'flex', gap: 10, padding: '12px 12px 6px', alignItems: 'stretch' }}>
         <KpiCard
@@ -256,6 +259,149 @@ export default function HeroGraph() {
         <LegendItem stroke="#4a2f8a" label="Clicks" />
         <LegendItem stroke="#5ba3d9" label="Impresssions" />
       </div>
+    </div>
+  )
+}
+
+// ── Bing Webmaster Tools header bar ──────────────────────────────────────────
+// Matches reference: #1267d5 blue, hamburger · Win logo · divider · title | right icons
+function BingHeader() {
+  const BLUE = '#1267d5'
+  const ICO  = { color: 'rgba(255,255,255,0.92)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' } as const
+
+  return (
+    <div style={{
+      background: BLUE,
+      height: 44,
+      display: 'flex', alignItems: 'center',
+      padding: '0 14px',
+      gap: 0,
+    }}>
+      {/* ── Left side ── */}
+      {/* Hamburger */}
+      <span style={{ ...ICO, marginRight: 12, cursor: 'default' }}>
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+          <rect y="0"  width="18" height="2" rx="1" fill="white"/>
+          <rect y="6"  width="18" height="2" rx="1" fill="white"/>
+          <rect y="12" width="18" height="2" rx="1" fill="white"/>
+        </svg>
+      </span>
+
+      {/* Windows logo (4-square grid) */}
+      <span style={{ ...ICO, marginRight: 8 }}>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="0"  y="0"  width="7.2" height="7.2" fill="white"/>
+          <rect x="8.8"y="0"  width="7.2" height="7.2" fill="white"/>
+          <rect x="0"  y="8.8"width="7.2" height="7.2" fill="white"/>
+          <rect x="8.8"y="8.8"width="7.2" height="7.2" fill="white"/>
+        </svg>
+      </span>
+
+      {/* "Microsoft Bing" bold text */}
+      <span style={{
+        fontSize: 14, fontWeight: 700, color: '#fff',
+        fontFamily: '"Segoe UI",Arial,sans-serif', letterSpacing: '0.01em',
+        marginRight: 10,
+      }}>
+        Microsoft Bing
+      </span>
+
+      {/* Vertical divider */}
+      <span style={{
+        width: 1, height: 18,
+        background: 'rgba(255,255,255,0.45)',
+        display: 'inline-block',
+        marginRight: 10,
+        flexShrink: 0,
+      }}/>
+
+      {/* "Webmaster Tools" regular text */}
+      <span style={{
+        fontSize: 14, fontWeight: 400, color: 'rgba(255,255,255,0.92)',
+        fontFamily: '"Segoe UI",Arial,sans-serif',
+        flex: 1,
+      }}>
+        Webmaster Tools
+      </span>
+
+      {/* ── Right side icons ── */}
+      {/* Apps / waffle grid */}
+      <span style={{ ...ICO, marginLeft: 6 }}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="1"  y="1"  width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="6.75" y="1"  width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="12.5"  y="1"  width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="1"  y="6.75" width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="6.75" y="6.75" width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="12.5"  y="6.75" width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="1"  y="12.5"  width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="6.75" y="12.5"  width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+          <rect x="12.5"  y="12.5"  width="4.5" height="4.5" rx="0.8" fill="rgba(255,255,255,0.75)"/>
+        </svg>
+      </span>
+
+      {/* Microsoft Fluent / colourful squares icon */}
+      <span style={{ ...ICO, marginLeft: 10 }}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="0"   y="0"   width="8.2" height="8.2" rx="1.5" fill="#f35325"/>
+          <rect x="9.8" y="0"   width="8.2" height="8.2" rx="1.5" fill="#81bc06"/>
+          <rect x="0"   y="9.8" width="8.2" height="8.2" rx="1.5" fill="#05a6f0"/>
+          <rect x="9.8" y="9.8" width="8.2" height="8.2" rx="1.5" fill="#ffba08"/>
+        </svg>
+      </span>
+
+      {/* Bell / notification */}
+      <span style={{ ...ICO, marginLeft: 10 }}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 2a5 5 0 0 1 5 5v3l1.5 2.5H2.5L4 10V7a5 5 0 0 1 5-5Z"
+            fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5"/>
+          <path d="M7.5 14.5a1.5 1.5 0 0 0 3 0" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="1.5"/>
+        </svg>
+      </span>
+
+      {/* Question mark / help */}
+      <span style={{
+        ...ICO, marginLeft: 10,
+        fontSize: 15, fontWeight: 600,
+        color: 'rgba(255,255,255,0.85)',
+        fontFamily: '"Segoe UI",Arial,sans-serif',
+        width: 20, height: 20,
+      }}>
+        ?
+      </span>
+
+      {/* Smiley / feedback */}
+      <span style={{ ...ICO, marginLeft: 6 }}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="7.5" stroke="rgba(255,255,255,0.85)" strokeWidth="1.4"/>
+          <circle cx="6.5" cy="7.5" r="1" fill="rgba(255,255,255,0.85)"/>
+          <circle cx="11.5" cy="7.5" r="1" fill="rgba(255,255,255,0.85)"/>
+          <path d="M6 11.5c.8 1.2 2 1.8 3 1.8s2.2-.6 3-1.8"
+            stroke="rgba(255,255,255,0.85)" strokeWidth="1.3" strokeLinecap="round"/>
+        </svg>
+      </span>
+
+      {/* Gear / settings */}
+      <span style={{ ...ICO, marginLeft: 6 }}>
+        <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
+          <circle cx="8.5" cy="8.5" r="2.5" stroke="rgba(255,255,255,0.85)" strokeWidth="1.4"/>
+          <path d="M8.5 1v2M8.5 14v2M1 8.5h2M14 8.5h2M3.05 3.05l1.41 1.41M12.54 12.54l1.41 1.41M3.05 13.95l1.41-1.41M12.54 4.46l1.41-1.41"
+            stroke="rgba(255,255,255,0.85)" strokeWidth="1.4" strokeLinecap="round"/>
+        </svg>
+      </span>
+
+      {/* Globe favicon (SecurityBlogs logo placeholder) */}
+      <span style={{
+        ...ICO, marginLeft: 10,
+        width: 26, height: 26, borderRadius: '50%',
+        background: 'rgba(255,255,255,0.18)',
+        border: '1.5px solid rgba(255,255,255,0.40)',
+        fontSize: 11, color: 'rgba(255,255,255,0.80)',
+        fontFamily: '"Segoe UI",Arial,sans-serif',
+        fontWeight: 700, flexShrink: 0,
+      }}>
+        SB
+      </span>
     </div>
   )
 }
