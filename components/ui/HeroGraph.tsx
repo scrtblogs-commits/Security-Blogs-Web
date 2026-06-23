@@ -155,19 +155,19 @@ export default function HeroGraph() {
       userSelect: 'none',
     }}>
 
-      {/* KPI cards */}
-      <div style={{ display: 'flex', padding: '10px 10px 4px', gap: 10 }}>
+      {/* KPI cards — Bing Webmaster Tools style */}
+      <div style={{ display: 'flex', gap: 12, padding: '14px 14px 10px' }}>
         <KpiCard
           label="Total Clicks"
           value={clicksVal.toLocaleString('en-AU')}
-          g1="#5b2d8e" g2="#8457c8"
+          bg="#6b3fa0"
           active={phase !== 'idle'}
           font={F}
         />
         <KpiCard
           label="Total impressions"
           value={impsVal.toLocaleString('en-AU')}
-          g1="#0d6eaa" g2="#27a9c8"
+          bg="#1a7dc4"
           active={phase !== 'idle'}
           font={F}
         />
@@ -260,39 +260,60 @@ export default function HeroGraph() {
   )
 }
 
-function KpiCard({ label, value, g1, g2, active, font }: {
-  label: string; value: string; g1: string; g2: string; active: boolean; font: string
+function KpiCard({ label, value, bg, active, font }: {
+  label: string; value: string; bg: string; active: boolean; font: string
 }) {
   return (
     <div style={{
       flex: 1,
-      background: `linear-gradient(135deg, ${g1} 0%, ${g2} 100%)`,
-      borderRadius: 12,
-      padding: '14px 20px 16px',
+      background: bg,
+      borderRadius: 22,          /* large pill-like radius — Bing style */
+      padding: '18px 24px 20px',
+      minWidth: 0,
       opacity: active ? 1 : 0,
-      transition: 'opacity 0.4s ease',
+      transition: 'opacity 0.45s ease',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5 }}>
+      {/* Row: checkbox + metric name + info icon */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 9, marginBottom: 10,
+      }}>
+        {/* Checked checkbox — white square with tick, matching Bing */}
         <span style={{
-          width: 16, height: 16, borderRadius: 3,
-          border: '2px solid rgba(255,255,255,0.7)',
-          background: 'rgba(255,255,255,0.15)',
+          width: 18, height: 18, borderRadius: 4,
+          background: 'rgba(255,255,255,0.28)',
+          border: '2px solid rgba(255,255,255,0.85)',
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           flexShrink: 0,
         }}>
-          <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-            <path d="M1 4L4 7L9 1" stroke="white" strokeWidth="1.8"
+          <svg width="11" height="9" viewBox="0 0 11 9" fill="none">
+            <path d="M1.5 4.5L4.5 7.5L9.5 1.5"
+              stroke="white" strokeWidth="2"
               strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
-        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.92)', fontFamily: font, fontWeight: 600 }}>
+        <span style={{
+          fontSize: 14, fontWeight: 600,
+          color: 'rgba(255,255,255,0.95)',
+          fontFamily: font, letterSpacing: '0.01em',
+        }}>
           {label}
         </span>
-        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', marginLeft: 1 }}>ⓘ</span>
+        {/* Info icon — subtle, Bing style */}
+        <span style={{
+          width: 16, height: 16, borderRadius: '50%',
+          border: '1.5px solid rgba(255,255,255,0.45)',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 10, color: 'rgba(255,255,255,0.55)',
+          fontFamily: font, flexShrink: 0, marginLeft: 2,
+          lineHeight: 1,
+        }}>
+          i
+        </span>
       </div>
+      {/* Big number */}
       <div style={{
-        fontSize: 30, fontWeight: 700, color: '#fff',
-        fontFamily: font, letterSpacing: '-0.3px', lineHeight: 1.2,
+        fontSize: 34, fontWeight: 700, color: '#ffffff',
+        fontFamily: font, letterSpacing: '-0.5px', lineHeight: 1.1,
       }}>
         {value}
       </div>
