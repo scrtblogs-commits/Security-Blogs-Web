@@ -30,7 +30,7 @@ export const posts: Post[] = [
     excerpt: 'A step-by-step guide to installing the "SEO META in 1 CLICK" Chrome extension and reading your SEO data like a pro — meta tags, headings, image alt text and SERP previews.',
     metaTitle: 'How to Check Your Website\'s SEO in 60 Seconds | SecurityBlogs',
     metaDescription: 'Install the free SEO META in 1 CLICK Chrome extension and learn to read meta tags, heading structure, image alt text and SERP previews for your security business website.',
-    visible: false,
+    visible: true,
     body:
       '<p>Most security business owners have no idea what Google actually sees when it visits their website. A free Chrome extension called <strong>SEO META in 1 CLICK</strong> shows you everything in under a minute — no agency, no technical background required. Here\'s how to use it.</p>' +
 
