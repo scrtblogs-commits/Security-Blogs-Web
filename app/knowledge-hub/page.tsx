@@ -20,20 +20,11 @@ export const metadata = {
 const hubIcons: Record<string, { icon: string; color: string; desc: string }> = {
   '/knowledge-hub/blogs/': { icon: '✍️', color: 'var(--blue)', desc: 'Tactical reads on SEO, AIO, GEO and paid growth for security brands.' },
   '/knowledge-hub/security-industry-seo/': { icon: '🔍', color: 'var(--green)', desc: 'The complete pillar on ranking security installers, integrators and SaaS.' },
-  '/knowledge-hub/security-guides/': { icon: '📘', color: 'var(--violet)', desc: 'Step-by-step playbooks you can action this quarter.' },
-  '/knowledge-hub/industry-news/': { icon: '📰', color: 'var(--red)', desc: 'Acquisitions, launches and regulation moving the security market.' },
-  '/knowledge-hub/security-trends-2026/': { icon: '📈', color: 'var(--yellow)', desc: 'Where AI visibility, physical and cyber security are heading next year.' },
-  '/knowledge-hub/definitions-glossary/': { icon: '📖', color: 'var(--blue)', desc: 'Plain-English definitions for AIO, AEO, GEO, schema and more.' },
-  '/knowledge-hub/research-reports/': { icon: '📊', color: 'var(--violet)', desc: 'Downloadable data on how AI engines cite security vendors.' },
 }
 
 const latest = [
   { title: 'How ChatGPT decides which security vendor to name', cat: 'AIO/AEO', date: 'May 18, 2026', excerpt: 'Inside the retrieval signals answer engines weigh when a buyer asks for the best monitoring provider.', href: '/knowledge-hub/blogs/' },
   { title: 'Local SEO for alarm installers: the 2026 checklist', cat: 'SEO', date: 'May 12, 2026', excerpt: 'NAP consistency, service-area pages and review velocity that move the local pack.', href: '/knowledge-hub/security-industry-seo/' },
-  { title: 'Schema patterns that get security sites cited', cat: 'Technical', date: 'May 6, 2026', excerpt: 'Organization, Service and FAQ markup that AI crawlers actually parse and reuse.', href: '/knowledge-hub/security-guides/' },
-  { title: 'Q2 2026: three major access-control acquisitions', cat: 'Industry', date: 'Apr 29, 2026', excerpt: 'Consolidation continues as platform vendors absorb cloud-native access startups.', href: '/knowledge-hub/industry-news/' },
-  { title: 'GEO explained: building entity authority for AI', cat: 'GEO', date: 'Apr 22, 2026', excerpt: 'Why knowledge-graph presence now outweighs raw backlinks for AI trust.', href: '/knowledge-hub/definitions-glossary/' },
-  { title: 'The 2026 AI Visibility Benchmark for security', cat: 'Report', date: 'Apr 15, 2026', excerpt: 'We tracked 4,000 buyer queries across five engines. Here is who got named.', href: '/knowledge-hub/research-reports/' },
 ]
 
 export default function KnowledgeHubPage() {
@@ -78,7 +69,7 @@ export default function KnowledgeHubPage() {
 
       <section className="section">
         <div className="container">
-          <SectionHead eyebrow="Browse the hub" title="Pick your path to AI visibility." sub="Seven curated collections, each built for a different stage of the security growth journey." />
+          <SectionHead eyebrow="Browse the hub" title="Pick your path to AI visibility." sub="Two curated collections built for security brands at every stage of growth." />
           <Stagger style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
             {knowledgeHub.map((h) => {
               const meta = hubIcons[h.href]
