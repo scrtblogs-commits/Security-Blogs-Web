@@ -14,6 +14,7 @@ export type Post = {
   metaTitle: string
   metaDescription: string
   body: string // HTML
+  visible?: boolean
 }
 
 const cta =
@@ -38,6 +39,7 @@ export const posts: Post[] = [
       '<h2>5. Earn authority, don\'t buy it</h2><p>Relevant mentions and links from industry publications, associations and local press build trust. Guest articles, original research and genuinely useful tools attract these naturally. Avoid bought-link schemes — they put the whole domain at risk.</p>' +
       '<h2>6. Measure what matters</h2><p>Track impressions and positions in Search Console, not vanity metrics. Movement usually appears first as impressions, then improving positions, then clicks as you break onto page one. For a newer domain in a competitive niche, expect a 4–9 month climb.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'get-cited-by-chatgpt-gemini-perplexity',
@@ -57,6 +59,7 @@ export const posts: Post[] = [
       '<h2>Build corroboration</h2><p>The more places a consistent version of your brand appears — industry media, association listings, genuine reviews — the more confidently an AI will name you. This is slow, compounding work, not a switch you flip.</p>' +
       '<h2>Track your mentions</h2><p>Periodically ask the major engines the questions your buyers ask ("best access-control provider in Melbourne") and note when and how you\'re named. That mention share is the real AIO metric.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'answer-engine-optimisation-aeo-security-firms',
@@ -75,6 +78,7 @@ export const posts: Post[] = [
       '<h2>Structure for scanability</h2><p>Clear H2/H3 headings, short paragraphs, ordered steps and tables make it easy for engines to extract the right passage. Good structure is good AEO.</p>' +
       '<h2>Be the trusted source</h2><p>Engines prefer answers from sources that demonstrate expertise. Accurate, compliance-aware content backed by a credible author and consistent brand signals is far more likely to be surfaced than thin copy.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'generative-engine-optimisation-geo-entity-authority',
@@ -93,6 +97,7 @@ export const posts: Post[] = [
       '<h2>Step 3: Earn citations</h2><p>Genuine references — industry media, guest articles, original research — strengthen the entity. Each credible mention adds confidence to the engine\'s model of who you are.</p>' +
       '<h2>Step 4: Confirm and monitor</h2><p>Periodically check how each engine describes your brand. Correct inaccuracies at the source (your site, your profiles) and watch recognition and recommendation share grow — typically over a few months, not days.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'local-seo-cctv-alarm-installers',
@@ -112,6 +117,7 @@ export const posts: Post[] = [
       '<h2>Generate reviews — the honest way</h2><p>Ask satisfied customers for genuine reviews and respond to them. Never buy or fabricate reviews; it breaches platform rules and consumer law, and buyers can usually tell.</p>' +
       '<h2>Track the local pack</h2><p>Monitor your map-pack visibility for priority terms in each area you serve, and double down where you\'re close to breaking into the top three.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'google-ads-for-security-companies',
@@ -130,6 +136,7 @@ export const posts: Post[] = [
       '<h2>Match the landing page to the ad</h2><p>Send each ad to a page that answers the searcher\'s exact need with a clear call to action. Generic homepages convert poorly.</p>' +
       '<h2>Control budget and bids</h2><p>Use sensible daily budgets, day-parting and device adjustments. Review search terms weekly and prune waste. Small, disciplined accounts often beat large, neglected ones.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'microsoft-bing-ads-b2b-security-buyers',
@@ -148,6 +155,7 @@ export const posts: Post[] = [
       '<h2>Use Microsoft Clarity</h2><p>Clarity\'s free session recordings and heatmaps show exactly how buyers interact with your landing pages, so you can fix friction and lift conversions.</p>' +
       '<h2>Measure and expand</h2><p>Track conversions the same way you do on Google, then scale into the Audience Network as cost-per-lead and quality justify it.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'website-design-for-security-companies',
@@ -166,6 +174,7 @@ export const posts: Post[] = [
       '<h2>Conversion-focused layout</h2><p>Make the next step obvious on every page — a clear call to action, an easy quote form, a visible phone number. Reduce friction at every point.</p>' +
       '<h2>AI-ready architecture</h2><p>Schema markup, clean semantic HTML and well-structured content help AI engines understand and cite your brand — increasingly important as buyers discover vendors through assistants.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'schema-markup-for-security-websites',
@@ -184,6 +193,7 @@ export const posts: Post[] = [
       '<h2>BreadcrumbList</h2><p>Helps engines understand your site structure and can improve how your pages appear in results.</p>' +
       '<h2>Golden rules</h2><p>Only mark up content that actually appears on the page, keep details accurate and consistent with the rest of your site, and validate your markup. Misleading schema can do more harm than good.</p>' +
       cta,
+    visible: true,
   },
   {
     slug: 'content-strategy-for-security-brands',
@@ -202,6 +212,7 @@ export const posts: Post[] = [
       '<h2>Write to be cited</h2><p>Clear definitions, frameworks and checklists are the passages AI engines and featured snippets pull. Structure content so the key answer is easy to extract.</p>' +
       '<h2>Keep it honest</h2><p>Never invent statistics, results or reviews. Accurate, verifiable content builds the trust that both buyers and algorithms reward — and avoids consumer-law risk.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'how-security-buyers-search-in-2026',
@@ -220,6 +231,7 @@ export const posts: Post[] = [
       '<h2>The AI overlay</h2><p>At every stage, AI assistants increasingly mediate discovery. If your brand isn\'t a recognised, citable entity, you\'re invisible in those answers — which is why AIO, AEO and GEO now sit alongside classic SEO.</p>' +
       '<h2>What to do about it</h2><p>Map your own buyers\' journey, then make sure you appear at each step: educational content, strong local presence, conversion-ready pages and clear entity signals for AI.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'technical-seo-audit-for-security-websites',
@@ -239,6 +251,7 @@ export const posts: Post[] = [
       '<h2>Structured data</h2><p>Validate your schema. Errors or markup that doesn\'t match on-page content can suppress rich results.</p>' +
       '<h2>Security and hygiene</h2><p>HTTPS everywhere, no mixed content, working redirects and no broken links. These basics protect both rankings and buyer trust.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'access-control-systems-buyers-guide',
@@ -257,6 +270,7 @@ export const posts: Post[] = [
       '<h2>Scalability</h2><p>Choose a platform that grows with you — adding doors, sites and users without a forklift upgrade.</p>' +
       '<h2>Total cost of ownership</h2><p>Look beyond hardware to licensing, maintenance, support and future expansion. The cheapest install is rarely the cheapest system over five years.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'cctv-installation-what-businesses-should-know',
@@ -275,6 +289,7 @@ export const posts: Post[] = [
       '<h2>Privacy obligations</h2><p>Surveillance carries privacy responsibilities. Understand your obligations around signage, coverage of public or neighbouring areas, and handling of recordings — and seek advice where unsure.</p>' +
       '<h2>Maintenance</h2><p>Cameras drift, lenses dirty and storage fills. A maintenance plan keeps the system reliable when you actually need the footage.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'choosing-a-monitored-alarm-system',
@@ -292,6 +307,7 @@ export const posts: Post[] = [
       '<h2>False-alarm management</h2><p>Frequent false alarms waste money and erode response. Good systems and providers use verification to reduce them.</p>' +
       '<h2>Questions to ask a provider</h2><p>Ask about contract terms, monitoring-centre accreditation, response procedures, equipment ownership and what happens if you switch providers.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'google-business-profile-for-security-firms',
@@ -310,6 +326,7 @@ export const posts: Post[] = [
       '<h2>Reviews</h2><p>Ask satisfied customers for honest reviews and respond to them professionally. Never fabricate reviews — it breaches policy and the law.</p>' +
       '<h2>Posts and updates</h2><p>Use GBP posts to share updates and offers. Activity signals a live, engaged business to both Google and buyers.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'link-building-for-security-companies',
@@ -328,6 +345,7 @@ export const posts: Post[] = [
       '<h2>Link-worthy assets</h2><p>Useful tools, guides and checklists attract links naturally because people want to reference them.</p>' +
       '<h2>What to avoid</h2><p>Bought links, link farms and automated schemes are against Google’s guidelines and can trigger manual penalties. Slow, genuine authority beats fast, risky shortcuts.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'reviews-and-reputation-for-security-businesses',
@@ -345,6 +363,7 @@ export const posts: Post[] = [
       '<h2>Respond to everything</h2><p>Thank positive reviewers and respond calmly and constructively to negative ones. A good response to a complaint can build more trust than a five-star rating.</p>' +
       '<h2>Monitor across platforms</h2><p>Track reviews on Google, industry directories and social channels so nothing is missed.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'conversion-optimisation-for-security-websites',
@@ -363,6 +382,7 @@ export const posts: Post[] = [
       '<h2>Speed and clarity</h2><p>Fast pages and simple layouts keep visitors engaged. Confusion and slowness cost conversions.</p>' +
       '<h2>Test and learn</h2><p>Use analytics and session tools to see where visitors drop off, then fix the friction points one at a time.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'voice-search-for-local-security-services',
@@ -380,6 +400,7 @@ export const posts: Post[] = [
       '<h2>Strengthen local signals</h2><p>Most voice searches for services are local. A complete Google Business Profile, consistent NAP and strong local SEO underpin voice visibility.</p>' +
       '<h2>Use structured data</h2><p>FAQ and LocalBusiness schema help assistants understand and surface your information.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'ppc-vs-seo-for-security-companies',
@@ -397,6 +418,7 @@ export const posts: Post[] = [
       '<h2>How to balance them</h2><p>Many security firms use PPC for immediate leads while SEO matures, then rebalance as organic visibility grows. Ads also reveal which keywords convert, informing SEO priorities.</p>' +
       '<h2>The honest take</h2><p>If you need leads now, start with disciplined PPC. If you want durable, lower-cost visibility, invest in SEO in parallel. The two reinforce each other.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'service-area-pages-that-rank',
@@ -414,6 +436,7 @@ export const posts: Post[] = [
       '<h2>Internal linking</h2><p>Link service-area pages to their parent service page and to relevant guides so authority flows and navigation makes sense.</p>' +
       '<h2>Avoid doorway pages</h2><p>Thin, duplicated pages built only to rank can trigger penalties. Quality and genuine local value are what last.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'marketing-for-security-guard-companies',
@@ -431,6 +454,7 @@ export const posts: Post[] = [
       '<h2>Content that answers buyer questions</h2><p>Guides on choosing a provider, compliance and what good service looks like build authority and attract the right enquiries.</p>' +
       '<h2>Targeted B2B outreach</h2><p>Many guard contracts come from direct relationships. Combine inbound visibility with consultative, personalised outreach to facilities and property managers.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'seo-aio-aeo-geo-explained',
@@ -449,6 +473,7 @@ export const posts: Post[] = [
       '<h2>GEO — Generative Engine Optimisation</h2><p>Building the underlying entity authority that makes AI engines recognise and trust your brand enough to recommend it.</p>' +
       '<h2>How they fit together</h2><p>SEO gets you ranked, GEO makes you a recognised entity, AIO makes your content citable, and AEO wins the specific answer. Together they cover how buyers now discover vendors — across search and AI.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'landing-pages-that-convert-security-leads',
@@ -467,6 +492,7 @@ export const posts: Post[] = [
       '<h2>Frictionless enquiry</h2><p>A short form or a prominent phone number removes barriers. Every extra field costs conversions.</p>' +
       '<h2>Fast and focused</h2><p>Quick load times and a distraction-free layout keep visitors moving toward the action.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'content-ideas-for-security-companies',
@@ -486,6 +512,7 @@ export const posts: Post[] = [
       '<h2>Compliance and standards</h2><p>Clear, accurate explainers on relevant standards build authority in a compliance-driven industry.</p>' +
       '<h2>Local and seasonal</h2><p>Area-specific guides and timely topics (e.g. holiday security) capture local and seasonal demand.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'google-ai-overviews-and-your-security-brand',
@@ -504,6 +531,7 @@ export const posts: Post[] = [
       '<h2>Use structured data</h2><p>Schema helps Google understand your content and how it relates to a query.</p>' +
       '<h2>Keep earning the click</h2><p>Where overviews appear, a compelling title and meta description still matter for the buyers who click through for detail.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'measuring-seo-roi-for-a-security-business',
@@ -522,6 +550,7 @@ export const posts: Post[] = [
       '<h2>Mind the timeline</h2><p>SEO compounds over months. Judge it over quarters, not weeks — especially for newer domains.</p>' +
       '<h2>Tie it to value</h2><p>Connect organic enquiries to closed jobs and average value to express SEO ROI in terms your business actually cares about.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'mobile-seo-for-security-websites',
@@ -539,6 +568,7 @@ export const posts: Post[] = [
       '<h2>Tap-friendly navigation</h2><p>Buttons and links should be easy to tap, menus simple to use, and forms quick to complete on a phone.</p>' +
       '<h2>Click-to-call</h2><p>Make your phone number a tap-to-call link. For urgent security enquiries, this can be the difference between a lead and a bounce.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'retargeting-ads-for-security-companies',
@@ -556,6 +586,7 @@ export const posts: Post[] = [
       '<h2>Respect frequency</h2><p>Cap how often ads show. Over-serving annoys prospects and wastes budget.</p>' +
       '<h2>Guide them back to convert</h2><p>Send retargeting clicks to a focused landing page or offer that makes the next step easy.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'building-online-trust-with-security-buyers',
@@ -573,6 +604,7 @@ export const posts: Post[] = [
       '<h2>Be transparent</h2><p>Clear pricing factors, honest expectations and real contact details reduce the perceived risk of choosing you.</p>' +
       '<h2>Stay consistent</h2><p>A consistent brand, message and details across your site, profiles and directories reinforce credibility — and help AI engines trust you too.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'keyword-research-for-security-niches',
@@ -591,6 +623,7 @@ export const posts: Post[] = [
       '<h2>Prioritise realistically</h2><p>Balance search demand against competition and relevance. A handful of high-intent, winnable terms beats a long list you\'ll never rank for.</p>' +
       '<h2>Revisit regularly</h2><p>Buyer language and AI-era queries shift. Refresh your research as the market and search behaviour change.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'social-media-for-security-companies',
@@ -608,6 +641,7 @@ export const posts: Post[] = [
       '<h2>Stay consistent</h2><p>A steady, modest cadence beats sporadic bursts. Consistency signals an active, trustworthy business.</p>' +
       '<h2>Reinforce your entity</h2><p>Consistent name, details and links across profiles strengthen the brand signals that both buyers and AI engines rely on.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'email-marketing-for-security-businesses',
@@ -625,6 +659,7 @@ export const posts: Post[] = [
       '<h2>Segment sensibly</h2><p>Different messages for prospects, past customers and partners land better than one-size-fits-all blasts.</p>' +
       '<h2>Stay compliant</h2><p>Include clear sender identification and a working unsubscribe link, and honour opt-outs promptly. Compliance protects both your reputation and your deliverability.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'how-to-rank-for-near-me-searches',
@@ -642,6 +677,7 @@ export const posts: Post[] = [
       '<h2>Earn local reviews</h2><p>Genuine reviews reinforce local relevance and trust. Ask customers honestly and respond to them.</p>' +
       '<h2>Be specific about where you work</h2><p>Clearly state the areas you serve so both buyers and search engines understand your coverage.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'winning-featured-snippets-for-security-content',
@@ -659,6 +695,7 @@ export const posts: Post[] = [
       '<h2>Structure the page</h2><p>Logical headings and well-organised sections help Google identify the best answer to feature.</p>' +
       '<h2>Earn the trust</h2><p>Accurate, expert content from a credible source is more likely to be chosen. The same work also helps AI assistants quote you.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'competitor-analysis-for-security-seo',
@@ -677,6 +714,7 @@ export const posts: Post[] = [
       '<h2>Assess authority</h2><p>Understand where their credible mentions and links come from, then pursue similar, genuine opportunities.</p>' +
       '<h2>Act on the gaps</h2><p>Turn the analysis into a prioritised plan — the terms, content and signals where you can realistically win.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'video-marketing-for-security-companies',
@@ -694,6 +732,7 @@ export const posts: Post[] = [
       '<h2>Keep it useful and honest</h2><p>Helpful, accurate content earns trust. Avoid exaggeration; security buyers are cautious.</p>' +
       '<h2>Support discovery</h2><p>Hosted and embedded well, video can support both search and social presence and keep visitors engaged on your pages.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'common-seo-mistakes-security-websites-make',
@@ -712,6 +751,7 @@ export const posts: Post[] = [
       '<h2>No conversion path</h2><p>Traffic without clear calls to action wastes the visibility you worked to earn.</p>' +
       '<h2>Neglected technical health</h2><p>Crawl errors, indexation issues and broken links quietly suppress rankings. Audit regularly.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'structuring-content-so-ai-cites-you',
@@ -730,6 +770,7 @@ export const posts: Post[] = [
       '<h2>Add schema</h2><p>FAQ and Article markup help engines understand and surface the right passages.</p>' +
       '<h2>Stay accurate</h2><p>Engines favour trustworthy sources. Accurate, consistent content earns more citations than clever formatting alone.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'how-to-choose-an-seo-agency-for-security-business',
@@ -748,6 +789,7 @@ export const posts: Post[] = [
       '<h2>Clear communication</h2><p>You should understand the strategy, the timeline and what success looks like. SEO takes months; beware anyone implying otherwise.</p>' +
       '<h2>Aligned incentives</h2><p>The best partners tie their work to your actual business outcomes — enquiries and revenue — not just rankings.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'lead-generation-for-security-installers',
@@ -766,6 +808,7 @@ export const posts: Post[] = [
       '<h2>Referrals and partnerships</h2><p>Past customers, builders and property managers are valuable, low-cost sources. Make it easy for them to refer you.</p>' +
       '<h2>Balance the mix</h2><p>Combine immediate (paid) and compounding (SEO, referrals) channels so leads keep flowing while long-term assets grow.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'understanding-ga4-for-your-security-website',
@@ -784,6 +827,7 @@ export const posts: Post[] = [
       '<h2>Spot friction</h2><p>High exit rates on key pages can flag confusion or slow performance worth fixing.</p>' +
       '<h2>Act, don\'t just report</h2><p>The value of analytics is the decisions it informs. Review regularly and adjust your content and spend accordingly.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'understanding-search-intent-for-security-keywords',
@@ -801,6 +845,7 @@ export const posts: Post[] = [
       '<h2>Transactional intent</h2><p>Ready-to-act searches ("CCTV installer quote"). Serve conversion-focused service and contact pages.</p>' +
       '<h2>Match content to intent</h2><p>A how-to article won\'t convert a ready buyer, and a sales page won\'t satisfy a researcher. Build the right page for each stage — and link them together.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'internal-linking-for-security-websites',
@@ -818,6 +863,7 @@ export const posts: Post[] = [
       '<h2>Use descriptive anchor text</h2><p>Clear, relevant link text helps both users and search engines understand the destination.</p>' +
       '<h2>Avoid orphans</h2><p>Every important page should be linked from somewhere. Orphaned pages are hard to find and rank.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'using-proof-in-security-marketing',
@@ -836,6 +882,7 @@ export const posts: Post[] = [
       '<h2>Avoid invented numbers</h2><p>Made-up statistics may look impressive but are a legal and reputational risk. If you can\'t verify a figure, don\'t publish it.</p>' +
       '<h2>Let proof do the work</h2><p>Honest, specific evidence reassures cautious buyers more than any marketing claim could.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'responding-to-negative-reviews-security-businesses',
@@ -853,6 +900,7 @@ export const posts: Post[] = [
       '<h2>Be honest</h2><p>If a mistake was made, own it. Buyers respect accountability.</p>' +
       '<h2>Learn from it</h2><p>Patterns in feedback reveal real issues worth fixing — improving the service and future reviews.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'multi-location-seo-for-security-firms',
@@ -871,6 +919,7 @@ export const posts: Post[] = [
       '<h2>Clear site structure</h2><p>Organise locations logically and link them sensibly so both users and search engines navigate easily.</p>' +
       '<h2>Avoid thin duplication</h2><p>Near-identical location pages can be flagged as low-value. Genuine local relevance is what ranks.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'should-your-security-website-use-an-ai-chatbot',
@@ -888,6 +937,7 @@ export const posts: Post[] = [
       '<h2>Deploy it well</h2><p>Scope it to what it can answer reliably, make a human handover easy, and be transparent that it\'s automated.</p>' +
       '<h2>Capture, don\'t replace</h2><p>Use the bot to qualify and capture enquiries, then route serious buyers to a person quickly.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'seo-for-cybersecurity-companies',
@@ -906,6 +956,7 @@ export const posts: Post[] = [
       '<h2>Don\'t neglect conversion</h2><p>Even expert traffic needs a clear path to enquire. Pair authority content with strong calls to action.</p>' +
       '<h2>Play the long game</h2><p>Authority in cybersecurity compounds. Consistent, expert content is what builds lasting visibility.</p>' +
       cta,
+    visible: false,
   },
   {
     slug: 'seasonal-marketing-for-security-companies',
@@ -923,6 +974,7 @@ export const posts: Post[] = [
       '<h2>Time your campaigns</h2><p>Align paid and outreach activity with demand peaks so your spend meets buyers when they\'re ready.</p>' +
       '<h2>Keep evergreen running</h2><p>Seasonal pushes complement — not replace — the steady content and local SEO that work all year.</p>' +
       cta,
+    visible: false,
   },
 ]
 
@@ -933,3 +985,5 @@ export function getPostBySlug(slug: string): Post | undefined {
 export function allPostSlugs(): string[] {
   return posts.map((p) => p.slug)
 }
+
+export const publicPosts = posts.filter(p => p.visible === true)

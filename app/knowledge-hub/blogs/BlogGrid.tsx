@@ -1,13 +1,13 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { posts } from '@/lib/posts'
+import { publicPosts } from '@/lib/posts'
 
 const categories = ['All', 'SEO', 'AIO/AEO', 'GEO', 'Paid Ads', 'Industry']
 
 export default function BlogGrid() {
   const [filter, setFilter] = useState('All')
-  const shown = filter === 'All' ? posts : posts.filter((p) => p.category === filter)
+  const shown = filter === 'All' ? publicPosts : publicPosts.filter((p) => p.category === filter)
 
   return (
     <div>

@@ -5,7 +5,9 @@ import SectionHead from '@/components/ui/SectionHead'
 import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import BlogGrid from './BlogGrid'
-import { posts } from '@/lib/posts'
+import JsonLd from '@/components/JsonLd'
+import { itemListSchema } from '@/lib/schema'
+import { publicPosts } from '@/lib/posts'
 
 export const metadata = {
   title: 'Blog · Knowledge Hub',
@@ -14,11 +16,20 @@ export const metadata = {
   openGraph: { siteName: 'SecurityBlogs', url: '/knowledge-hub/blogs/' },
 }
 
-const trending = posts.slice(0, 3)
+const trending = publicPosts.slice(0, 3)
 
 export default function BlogsPage() {
   return (
     <>
+      <JsonLd data={itemListSchema({
+        name: 'SecurityBlogs — Blog Articles',
+        path: '/knowledge-hub/blogs/',
+        items: publicPosts.map((p) => ({
+          name: p.title,
+          url: `/knowledge-hub/blogs/${p.slug}/`,
+          description: p.excerpt,
+        })),
+      })} />
       <HeroBg>
         <Breadcrumb items={[{ label: 'Home', href: '/' }, { label: 'Knowledge Hub', href: '/knowledge-hub/' }, { label: 'Blog' }]} />
         <div className="grid-2" style={{ alignItems: 'center', gap: 56 }}>
