@@ -1,37 +1,41 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-// ── Data ──────────────────────────────────────────────────────────────────────
-// 90 daily data points spanning Apr 1 → Jun 29 (realistic GSC-style variance)
+// ── Data: realistic daily GSC figures Apr 1 → Jun 29 ─────────────────────────
+// Moderate natural variance — no exaggerated spikes. Trending upward into June.
 const RAW_CLICKS = [
-  62,120,188,95,210,340,155,88,260,410,195,310,540,280,165,390,620,
-  245,180,430,700,310,220,480,800,355,260,590,380,195,440,760,290,210,
-  520,840,370,255,610,410,225,480,780,330,245,570,390,210,460,730,295,
-  230,540,860,395,275,630,420,235,490,800,345,255,580,395,220,470,750,
-  310,245,555,870,400,280,645,435,250,505,820,355,260,595,405,228,485,
-  810,360,268,620,
+  45,78,52,110,88,130,95,62,140,105,85,155,120,98,170,135,110,185,145,115,
+  195,160,125,210,170,140,220,180,148,235,190,155,245,200,162,258,210,172,
+  270,218,178,282,228,185,295,238,192,308,248,200,320,258,210,335,268,218,
+  348,278,225,362,290,232,375,300,242,388,312,250,402,325,260,415,335,268,
+  428,348,276,442,360,285,455,372,292,468,385,300,480,395,308,
 ]
-const RAW_IMPS = RAW_CLICKS.map((c, i) =>
-  Math.round(c * (18 + Math.sin(i * 0.4) * 4 + Math.random() * 3))
-)
+const RAW_IMPS = [
+  1800,3100,2200,4400,3500,5200,3800,2500,5600,4200,3400,6200,4800,3900,
+  6800,5400,4400,7400,5800,4600,7800,6400,5000,8400,6800,5600,8800,7200,
+  5900,9400,7600,6200,9800,8000,6500,10400,8400,6800,10800,8700,7100,
+  11300,9100,7400,11800,9500,7700,12300,9900,8000,12800,10300,8400,13300,
+  10700,8700,13800,11100,9000,14400,11600,9300,15000,12000,9700,15500,
+  12500,10000,16100,13000,10400,16600,13400,10800,17100,13900,11100,17700,
+  14400,11400,18200,14900,11700,18700,15400,12000,19200,15800,12300,
+]
 
-// Month boundary indices (0-based)
 const MONTHS = [
-  { label: 'April', start: 0, end: 29 },
-  { label: 'May',   start: 30, end: 60 },
-  { label: 'June',  start: 61, end: 89 },
+  { label: 'April', startIdx: 0,  endIdx: 29 },
+  { label: 'May',   startIdx: 30, endIdx: 60 },
+  { label: 'June',  startIdx: 61, endIdx: 89 },
 ]
 
 const TOTAL_CLICKS = 24800
-const TOTAL_IMPS   = 1750000
+const TOTAL_IMPS   = 1_750_000
+const N = RAW_CLICKS.length
 
-function fmt(n: number) {
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M'
-  if (n >= 1_000)     return (n / 1_000).toFixed(1).replace(/\.0$/, '') + 'k'
-  return String(n)
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function fmtCount(n: number) {
+  return n.toLocaleString('en-AU')
 }
 
-function useCountUp(target: number, active: boolean, duration = 1600) {
+function useCountUp(target: number, active: boolean, duration = 1500) {
   const [val, setVal] = useState(0)
   useEffect(() => {
     if (!active) return
@@ -40,7 +44,7 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
     const step = (ts: number) => {
       if (!start) start = ts
       const p = Math.min((ts - start) / duration, 1)
-      const ease = 1 - Math.pow(1 - p, 3)
+      const ease = p < 1 ? 1 - Math.pow(1 - p, 3) : 1
       setVal(Math.round(target * ease))
       if (p < 1) raf = requestAnimationFrame(step)
     }
@@ -50,39 +54,40 @@ function useCountUp(target: number, active: boolean, duration = 1600) {
   return val
 }
 
-// ── SVG helpers ───────────────────────────────────────────────────────────────
-function buildPath(points: [number, number][]) {
-  return points
-    .map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`)
-    .join(' ')
+function polyline(pts: [number, number][]) {
+  return pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ')
 }
 
+// ── Tooltip state ─────────────────────────────────────────────────────────────
+type Tooltip = { x: number; y: number; clicks: number; imps: number; label: string } | null
+
+// ── Component ─────────────────────────────────────────────────────────────────
 export default function HeroGraph() {
-  const [phase, setPhase] = useState<'idle' | 'kpi' | 'draw' | 'live'>('idle')
-  const [drawPct, setDrawPct] = useState(0)      // 0→1 line draw progress
-  const [visibleMonths, setVisibleMonths] = useState<number[]>([])
-  const [pulseIdx, setPulseIdx] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const drawRaf = useRef<number>(0)
   const drawStart = useRef<number | null>(null)
-  const DRAW_DURATION = 2200
+  const [phase, setPhase] = useState<'idle' | 'kpi' | 'draw' | 'live'>('idle')
+  const [drawPct, setDrawPct] = useState(0)
+  const [visibleMonths, setVisibleMonths] = useState<Set<number>>(new Set())
+  const [tooltip, setTooltip] = useState<Tooltip>(null)
+  const DRAW_DURATION = 2400
 
-  // IntersectionObserver triggers the sequence
+  // Trigger on scroll into view
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setPhase('kpi'); obs.disconnect() } },
-      { threshold: 0.3 },
+      ([e]) => { if (e.isIntersecting) { setPhase('kpi'); obs.disconnect() } },
+      { threshold: 0.25 },
     )
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
 
-  // Phase transitions
+  // Phase sequence
   useEffect(() => {
     if (phase === 'kpi') {
-      const t = setTimeout(() => setPhase('draw'), 1800)
+      const t = setTimeout(() => setPhase('draw'), 1600)
       return () => clearTimeout(t)
     }
     if (phase === 'draw') {
@@ -91,252 +96,315 @@ export default function HeroGraph() {
         if (!drawStart.current) drawStart.current = ts
         const p = Math.min((ts - drawStart.current) / DRAW_DURATION, 1)
         setDrawPct(p)
-
-        // Reveal month labels as lines cross their midpoint
-        const midpoints = [0.17, 0.5, 0.83]
-        setVisibleMonths(midpoints.map((m, i) => (p >= m ? i : -1)).filter((i) => i >= 0))
-
+        // Month labels appear when line reaches their midpoint
+        const thresholds = [0.16, 0.5, 0.83]
+        setVisibleMonths(prev => {
+          const next = new Set(prev)
+          thresholds.forEach((t, i) => { if (p >= t) next.add(i) })
+          return next
+        })
         if (p < 1) drawRaf.current = requestAnimationFrame(step)
         else setPhase('live')
       }
       drawRaf.current = requestAnimationFrame(step)
       return () => cancelAnimationFrame(drawRaf.current)
     }
-    if (phase === 'live') {
-      // Cycle pulsing dots
-      let idx = RAW_CLICKS.length - 1
-      const id = setInterval(() => {
-        idx = Math.max(0, idx - Math.floor(Math.random() * 3 + 1))
-        if (idx <= 0) idx = RAW_CLICKS.length - 1
-        setPulseIdx(idx)
-      }, 900)
-      return () => clearInterval(id)
-    }
   }, [phase])
 
-  // ── Chart geometry ────────────────────────────────────────────────────────
-  const W = 700, H = 220
-  const PAD = { top: 18, right: 28, bottom: 32, left: 50 }
-  const innerW = W - PAD.left - PAD.right
-  const innerH = H - PAD.top - PAD.bottom
+  // ── Geometry ─────────────────────────────────────────────────────────────
+  const W = 720, H = 230
+  const PAD = { top: 16, right: 52, bottom: 36, left: 48 }
+  const iW = W - PAD.left - PAD.right
+  const iH = H - PAD.top - PAD.bottom
 
-  const N = RAW_CLICKS.length
-  const maxC = Math.max(...RAW_CLICKS)
-  const maxI = Math.max(...RAW_IMPS)
+  const xOf = (i: number) => PAD.left + (i / (N - 1)) * iW
+  const yClick = (v: number) => PAD.top + iH - (v / 1000) * iH
+  const yImp   = (v: number) => PAD.top + iH - (v / 35000) * iH
 
-  const cx = (i: number) => PAD.left + (i / (N - 1)) * innerW
-  const cy = (v: number, max: number) => PAD.top + innerH - (v / max) * innerH
+  const clickPts: [number, number][] = RAW_CLICKS.map((v, i) => [xOf(i), yClick(v)])
+  const impPts:   [number, number][] = RAW_IMPS.map((v, i)   => [xOf(i), yImp(v)])
 
-  const clickPts: [number, number][] = RAW_CLICKS.map((v, i) => [cx(i), cy(v, maxC)])
-  const impPts:   [number, number][] = RAW_IMPS.map((v, i)   => [cx(i), cy(v, maxI)])
+  const visN = Math.max(2, Math.round(drawPct * (N - 1)) + 1)
 
-  // Clip visible portion by drawPct
-  const visibleN = Math.max(2, Math.round(drawPct * (N - 1)) + 1)
-  const clickPath = buildPath(clickPts.slice(0, visibleN))
-  const impPath   = buildPath(impPts.slice(0, visibleN))
+  // KPI count-up
+  const clicksVal = useCountUp(TOTAL_CLICKS, phase !== 'idle', 1500)
+  const impsVal   = useCountUp(TOTAL_IMPS,   phase !== 'idle', 1700)
 
-  // Y-axis ticks
+  // Y-axis ticks — exact match to screenshot
   const clickTicks = [0, 200, 400, 600, 800, 1000]
   const impTicks   = [0, 7000, 14000, 21000, 28000, 35000]
 
-  // KPI count-up values
-  const clicksVal = useCountUp(TOTAL_CLICKS, phase !== 'idle')
-  const impsVal   = useCountUp(TOTAL_IMPS,   phase !== 'idle', 1900)
+  // Hover: find nearest data index from mouse X
+  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    if (phase === 'idle' || phase === 'kpi') return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const svgX = ((e.clientX - rect.left) / rect.width) * W
+    const rawI = Math.round(((svgX - PAD.left) / iW) * (N - 1))
+    const i = Math.max(0, Math.min(visN - 1, rawI))
+    const x = xOf(i)
+    setTooltip({
+      x,
+      y: clickPts[i][1],
+      clicks: RAW_CLICKS[i],
+      imps: RAW_IMPS[i],
+      label: getDateLabel(i),
+    })
+  }
 
   return (
     <div ref={containerRef} style={{
-      background: '#f8f9fc',
-      borderRadius: 16,
-      border: '1px solid #e2e8f0',
-      boxShadow: '0 4px 32px rgba(0,0,0,0.07)',
-      padding: '20px 24px 16px',
+      background: '#fff',
+      border: '1px solid #e8eaed',
+      borderRadius: 8,
+      boxShadow: '0 1px 6px rgba(60,64,67,0.12)',
+      overflow: 'hidden',
+      fontFamily: '"Google Sans",Roboto,Arial,sans-serif',
       userSelect: 'none',
     }}>
-      {/* KPI Cards */}
-      <div style={{ display: 'flex', gap: 12, marginBottom: 18, flexWrap: 'wrap' }}>
+
+      {/* ── KPI row ── */}
+      <div style={{ display: 'flex', gap: 0, borderBottom: '1px solid #e8eaed' }}>
         <KpiCard
           label="Total Clicks"
-          value={fmt(clicksVal)}
-          color1="#6b21a8"
-          color2="#4f46e5"
+          value={fmtCount(clicksVal)}
+          color="#7b2d8b"
+          bg="#f3e8f9"
           active={phase !== 'idle'}
         />
         <KpiCard
           label="Total Impressions"
-          value={fmt(impsVal)}
-          color1="#0369a1"
-          color2="#0ea5e9"
+          value={fmtCount(impsVal)}
+          color="#1a73e8"
+          bg="#e8f0fe"
           active={phase !== 'idle'}
+          border
         />
       </div>
 
-      {/* Chart */}
-      <div style={{ position: 'relative', width: '100%', overflowX: 'hidden' }}>
+      {/* ── Chart ── */}
+      <div style={{ padding: '8px 0 0' }}>
         <svg
           viewBox={`0 0 ${W} ${H}`}
-          style={{ width: '100%', height: 'auto', display: 'block' }}
+          style={{ width: '100%', height: 'auto', display: 'block', cursor: phase === 'live' ? 'crosshair' : 'default' }}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => setTooltip(null)}
           aria-hidden="true"
         >
           {/* Horizontal grid lines */}
-          {clickTicks.map((t, i) => (
-            <line
-              key={i}
-              x1={PAD.left} y1={cy(t, maxC)}
-              x2={W - PAD.right} y2={cy(t, maxC)}
-              stroke="#e2e8f0" strokeWidth={0.8}
+          {clickTicks.map((t) => (
+            <line key={t}
+              x1={PAD.left} y1={yClick(t)}
+              x2={W - PAD.right} y2={yClick(t)}
+              stroke="#f1f3f4" strokeWidth={1}
             />
           ))}
 
-          {/* Left Y-axis — Clicks */}
-          {clickTicks.map((t, i) => (
-            <text key={i} x={PAD.left - 6} y={cy(t, maxC) + 4}
-              textAnchor="end" fontSize={9} fill="#94a3b8" fontFamily="system-ui,sans-serif">
-              {t === 0 ? '0' : t >= 1000 ? t / 1000 + 'k' : t}
+          {/* Left axis: Clicks */}
+          {clickTicks.map((t) => (
+            <text key={t}
+              x={PAD.left - 8} y={yClick(t) + 4}
+              textAnchor="end" fontSize={10} fill="#80868b"
+              fontFamily='"Google Sans",Roboto,Arial,sans-serif'>
+              {t === 0 ? '0' : t.toLocaleString()}
             </text>
           ))}
-          <text x={PAD.left - 34} y={PAD.top + innerH / 2} textAnchor="middle"
-            fontSize={9} fill="#94a3b8" fontFamily="system-ui,sans-serif"
-            transform={`rotate(-90,${PAD.left - 34},${PAD.top + innerH / 2})`}>
+          <text
+            x={13} y={PAD.top + iH / 2}
+            textAnchor="middle" fontSize={10} fill="#80868b"
+            fontFamily='"Google Sans",Roboto,Arial,sans-serif'
+            transform={`rotate(-90,13,${PAD.top + iH / 2})`}>
             Clicks
           </text>
 
-          {/* Right Y-axis — Impressions */}
-          {impTicks.map((t, i) => (
-            <text key={i} x={W - PAD.right + 6} y={cy(t, maxI) + 4}
-              textAnchor="start" fontSize={9} fill="#94a3b8" fontFamily="system-ui,sans-serif">
-              {t === 0 ? '0' : t >= 1000 ? t / 1000 + 'k' : t}
+          {/* Right axis: Impressions */}
+          {impTicks.map((t) => (
+            <text key={t}
+              x={W - PAD.right + 8} y={yImp(t) + 4}
+              textAnchor="start" fontSize={10} fill="#80868b"
+              fontFamily='"Google Sans",Roboto,Arial,sans-serif'>
+              {t === 0 ? '0' : t >= 1000 ? (t / 1000) + 'k' : t}
             </text>
           ))}
-          <text x={W - PAD.right + 38} y={PAD.top + innerH / 2} textAnchor="middle"
-            fontSize={9} fill="#94a3b8" fontFamily="system-ui,sans-serif"
-            transform={`rotate(90,${W - PAD.right + 38},${PAD.top + innerH / 2})`}>
+          <text
+            x={W - 10} y={PAD.top + iH / 2}
+            textAnchor="middle" fontSize={10} fill="#80868b"
+            fontFamily='"Google Sans",Roboto,Arial,sans-serif'
+            transform={`rotate(90,${W - 10},${PAD.top + iH / 2})`}>
             Impressions
           </text>
 
-          {/* Month labels — appear progressively */}
+          {/* Month labels — progressive */}
           {MONTHS.map((m, i) => {
-            const midX = cx((m.start + m.end) / 2)
-            const visible = visibleMonths.includes(i)
+            const midX = xOf((m.startIdx + m.endIdx) / 2)
             return (
-              <text key={i} x={midX} y={H - 4} textAnchor="middle"
-                fontSize={10} fill="#64748b" fontFamily="system-ui,sans-serif"
-                style={{
-                  opacity: visible ? 1 : 0,
-                  transition: 'opacity 0.5s ease',
-                }}>
+              <text key={i}
+                x={midX} y={H - 8}
+                textAnchor="middle" fontSize={11} fill="#80868b"
+                fontFamily='"Google Sans",Roboto,Arial,sans-serif'
+                style={{ opacity: visibleMonths.has(i) ? 1 : 0, transition: 'opacity 0.4s ease' }}>
                 {m.label}
               </text>
             )
           })}
 
-          {/* Area fills (subtle) */}
+          {/* Month separator ticks */}
+          {MONTHS.slice(1).map((m, i) => (
+            <line key={i}
+              x1={xOf(m.startIdx)} y1={PAD.top + iH}
+              x2={xOf(m.startIdx)} y2={PAD.top + iH + 4}
+              stroke="#dadce0" strokeWidth={1}
+            />
+          ))}
+
+          {/* Impressions line (behind clicks) */}
           {drawPct > 0 && (
+            <path
+              d={polyline(impPts.slice(0, visN))}
+              fill="none"
+              stroke="#1a73e8"
+              strokeWidth={1.5}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          )}
+
+          {/* Clicks line (in front) */}
+          {drawPct > 0 && (
+            <path
+              d={polyline(clickPts.slice(0, visN))}
+              fill="none"
+              stroke="#7b2d8b"
+              strokeWidth={1.5}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          )}
+
+          {/* Small data points every ~7 steps */}
+          {drawPct > 0 && clickPts.slice(0, visN).map(([x, y], i) => {
+            if (i % 7 !== 0) return null
+            return <circle key={i} cx={x} cy={y} r={2} fill="#7b2d8b" stroke="#fff" strokeWidth={1} />
+          })}
+          {drawPct > 0 && impPts.slice(0, visN).map(([x, y], i) => {
+            if (i % 7 !== 0) return null
+            return <circle key={i} cx={x} cy={y} r={2} fill="#1a73e8" stroke="#fff" strokeWidth={1} />
+          })}
+
+          {/* Hover crosshair + tooltip */}
+          {tooltip && phase === 'live' && (
             <>
-              <path
-                d={`${impPath} L${cx(visibleN - 1)},${PAD.top + innerH} L${PAD.left},${PAD.top + innerH} Z`}
-                fill="url(#fillImp)" opacity={0.18}
+              <line
+                x1={tooltip.x} y1={PAD.top}
+                x2={tooltip.x} y2={PAD.top + iH}
+                stroke="#dadce0" strokeWidth={1} strokeDasharray="3 2"
               />
-              <path
-                d={`${clickPath} L${cx(visibleN - 1)},${PAD.top + innerH} L${PAD.left},${PAD.top + innerH} Z`}
-                fill="url(#fillClick)" opacity={0.22}
+              <circle cx={tooltip.x} cy={tooltip.y} r={4}
+                fill="#7b2d8b" stroke="#fff" strokeWidth={1.5} />
+              <TooltipBox
+                x={tooltip.x} y={tooltip.y}
+                clicks={tooltip.clicks} imps={tooltip.imps}
+                label={tooltip.label} W={W} PAD={PAD}
               />
             </>
           )}
-
-          {/* Lines */}
-          {drawPct > 0 && (
-            <>
-              <path d={impPath}   fill="none" stroke="#60a5fa" strokeWidth={1.8} strokeLinejoin="round" strokeLinecap="round" />
-              <path d={clickPath} fill="none" stroke="#7c3aed" strokeWidth={2}   strokeLinejoin="round" strokeLinecap="round" />
-            </>
-          )}
-
-          {/* Data points — appear as line reaches them */}
-          {clickPts.slice(0, visibleN).filter((_, i) => i % 6 === 0).map(([x, y], i) => {
-            const dataIdx = i * 6
-            const isPulse = pulseIdx !== null && Math.abs(dataIdx - pulseIdx) <= 3
-            return (
-              <circle key={i} cx={x} cy={y} r={isPulse ? 4 : 2.5}
-                fill={isPulse ? '#7c3aed' : '#fff'}
-                stroke="#7c3aed" strokeWidth={isPulse ? 2 : 1.5}
-                style={{ transition: 'r 0.3s ease' }}
-              />
-            )
-          })}
-          {impPts.slice(0, visibleN).filter((_, i) => i % 6 === 0).map(([x, y], i) => {
-            const dataIdx = i * 6
-            const isPulse = pulseIdx !== null && Math.abs(dataIdx - pulseIdx) <= 3
-            return (
-              <circle key={i} cx={x} cy={y} r={isPulse ? 3.5 : 2}
-                fill={isPulse ? '#60a5fa' : '#fff'}
-                stroke="#60a5fa" strokeWidth={isPulse ? 2 : 1.5}
-                style={{ transition: 'r 0.3s ease' }}
-              />
-            )
-          })}
-
-          <defs>
-            <linearGradient id="fillClick" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#7c3aed" />
-              <stop offset="100%" stopColor="#7c3aed" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="fillImp" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="100%" stopColor="#60a5fa" stopOpacity="0" />
-            </linearGradient>
-          </defs>
         </svg>
       </div>
 
-      {/* Legend */}
-      <div style={{ display: 'flex', gap: 24, justifyContent: 'center', marginTop: 8 }}>
-        <LegendItem color="#7c3aed" label="Clicks" />
-        <LegendItem color="#60a5fa" label="Impressions" />
+      {/* ── Legend ── */}
+      <div style={{
+        display: 'flex', gap: 20, justifyContent: 'center',
+        padding: '6px 0 12px',
+        borderTop: '1px solid #f1f3f4',
+      }}>
+        <LegendRow color="#7b2d8b" label="Clicks" />
+        <LegendRow color="#1a73e8" label="Impressions" />
       </div>
     </div>
   )
 }
 
-function KpiCard({ label, value, color1, color2, active }: {
-  label: string; value: string; color1: string; color2: string; active: boolean
+// ── Sub-components ────────────────────────────────────────────────────────────
+
+function KpiCard({ label, value, color, bg, active, border }: {
+  label: string; value: string; color: string; bg: string; active: boolean; border?: boolean
 }) {
   return (
     <div style={{
-      background: `linear-gradient(135deg, ${color1}, ${color2})`,
-      borderRadius: 12,
-      padding: '12px 20px',
-      minWidth: 180,
       flex: 1,
+      padding: '14px 20px',
+      background: bg,
+      borderRight: border ? undefined : '1px solid #e8eaed',
       opacity: active ? 1 : 0,
-      transform: active ? 'translateY(0)' : 'translateY(8px)',
-      transition: 'opacity 0.5s ease, transform 0.5s ease',
+      transition: 'opacity 0.45s ease',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 4 }}>
+        {/* Checkbox — matches GSC style */}
         <span style={{
-          width: 14, height: 14, borderRadius: 3, border: '2px solid rgba(255,255,255,0.7)',
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: 14, height: 14, borderRadius: 2,
+          background: color, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
         }}>
-          <span style={{ width: 7, height: 7, background: 'white', borderRadius: 1 }} />
+          <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+            <path d="M1 3.5L3.5 6L8 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </span>
-        <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', fontFamily: 'system-ui,sans-serif', fontWeight: 500 }}>{label}</span>
+        <span style={{ fontSize: 12, color: '#3c4043', fontWeight: 400, fontFamily: '"Google Sans",Roboto,Arial,sans-serif' }}>
+          {label}
+        </span>
+        <span style={{ fontSize: 11, color: '#80868b', marginLeft: 2 }}>ⓘ</span>
       </div>
-      <div style={{ fontSize: 28, fontWeight: 800, color: 'white', letterSpacing: '-0.02em', fontFamily: 'system-ui,sans-serif', lineHeight: 1.1 }}>
+      <div style={{
+        fontSize: 26, fontWeight: 400, color,
+        fontFamily: '"Google Sans",Roboto,Arial,sans-serif',
+        letterSpacing: '-0.5px', lineHeight: 1.2,
+      }}>
         {value}
       </div>
     </div>
   )
 }
 
-function LegendItem({ color, label }: { color: string; label: string }) {
+function LegendRow({ color, label }: { color: string; label: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: 11, color: '#64748b', fontFamily: 'system-ui,sans-serif' }}>
-      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-        <svg width="28" height="10" viewBox="0 0 28 10">
-          <line x1="0" y1="5" x2="28" y2="5" stroke={color} strokeWidth="2" />
-          <circle cx="14" cy="5" r="3" fill="white" stroke={color} strokeWidth="1.5" />
-        </svg>
-      </span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#3c4043', fontFamily: '"Google Sans",Roboto,Arial,sans-serif' }}>
+      <svg width="32" height="12" viewBox="0 0 32 12">
+        <line x1="0" y1="6" x2="32" y2="6" stroke={color} strokeWidth="1.5"/>
+        <circle cx="16" cy="6" r="3" fill={color} stroke="white" strokeWidth="1.5"/>
+      </svg>
       {label}
     </div>
   )
+}
+
+function TooltipBox({ x, y, clicks, imps, label, W, PAD }: {
+  x: number; y: number; clicks: number; imps: number; label: string;
+  W: number; PAD: { top: number; right: number; bottom: number; left: number }
+}) {
+  const TW = 140, TH = 64
+  const tx = x + 8 + TW > W - PAD.right ? x - TW - 8 : x + 8
+  const ty = Math.max(PAD.top, y - TH / 2)
+  return (
+    <g>
+      <rect x={tx} y={ty} width={TW} height={TH} rx={4}
+        fill="white" stroke="#dadce0" strokeWidth={1}
+        style={{ filter: 'drop-shadow(0 1px 4px rgba(60,64,67,0.15))' }}
+      />
+      <text x={tx + 8} y={ty + 14} fontSize={10} fill="#80868b" fontFamily='"Google Sans",Roboto,Arial,sans-serif'>{label}</text>
+      <circle cx={tx + 10} cy={ty + 28} r={3} fill="#7b2d8b" />
+      <text x={tx + 18} y={ty + 32} fontSize={10} fill="#3c4043" fontFamily='"Google Sans",Roboto,Arial,sans-serif'>
+        Clicks: {clicks.toLocaleString()}
+      </text>
+      <circle cx={tx + 10} cy={ty + 46} r={3} fill="#1a73e8" />
+      <text x={tx + 18} y={ty + 50} fontSize={10} fill="#3c4043" fontFamily='"Google Sans",Roboto,Arial,sans-serif'>
+        Impr: {imps.toLocaleString()}
+      </text>
+    </g>
+  )
+}
+
+// Returns "Apr 12" style label for a data index
+function getDateLabel(i: number): string {
+  const d = new Date(2026, 3, 1) // Apr 1 2026
+  d.setDate(d.getDate() + i)
+  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })
 }
