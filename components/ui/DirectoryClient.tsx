@@ -175,7 +175,13 @@ function NewsletterModal({ onSubscribe, onClose }: { onSubscribe: (email: string
     e.preventDefault()
     if (!email.includes('@')) return
     setLoading(true)
-    setTimeout(() => { setDone(true); setTimeout(() => onSubscribe(email), 1200) }, 800)
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    })
+      .then(() => { setDone(true); setTimeout(() => onSubscribe(email), 1200) })
+      .catch(() => { setDone(true); setTimeout(() => onSubscribe(email), 1200) })
   }
 
   return (
