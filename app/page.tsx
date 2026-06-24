@@ -25,7 +25,6 @@ export const metadata = {
 export default function HomePage() {
   return (
     <>
-      {/* ── HERO ─────────────────────────────────────── */}
       <section style={{
         background: '#f6f8fb',
         paddingTop: 'calc(var(--nav-h) + 64px)',
@@ -91,7 +90,6 @@ export default function HomePage() {
 
       <HorizontalScrollServices />
 
-      {/* ── STATS ────────────────────────────────────── */}
       <section className="section" id="stats" style={{ paddingTop: 0 }}>
         <div className="container">
           <SectionHead eyebrow="Why security brands choose us" title="Built for the security industry, end to end." />

@@ -3,12 +3,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import HeroGraph from './HeroGraph'
 
-// ─── Floating element data ────────────────────────────────────────────────────
-// Each element is placed OUTSIDE the dashboard via absolute positioning.
-// parallaxY: scroll shift multiplier (negative = moves up as page scrolls down)
-// parallaxX: horizontal drift on scroll
 const FLOATERS = [
-  // ── Left column ──────────────────────────────────────────────────────────
   {
     id: 'rank1',
     side: 'left' as const,
@@ -93,8 +88,6 @@ const FLOATERS = [
     ),
     style: { padding: '10px 14px', borderRadius: 12 },
   },
-
-  // ── Right column ─────────────────────────────────────────────────────────
   {
     id: 'ai-gpt',
     side: 'right' as const,
@@ -200,7 +193,6 @@ const FLOATERS = [
   },
 ]
 
-// ─── Floating card component ──────────────────────────────────────────────────
 function FloatCard({
   floater,
   scrollY,
@@ -249,7 +241,6 @@ function FloatCard({
   )
 }
 
-// ─── Main wrapper ─────────────────────────────────────────────────────────────
 export default function HeroGraphWithOrbit() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
@@ -258,7 +249,6 @@ export default function HeroGraphWithOrbit() {
   const { scrollY } = useScroll()
   const smoothScroll = useSpring(scrollY, { stiffness: 80, damping: 20 })
 
-  // Tilt springs for mouse tracking
   const tiltX = useSpring(0, { stiffness: 120, damping: 25 })
   const tiltY = useSpring(0, { stiffness: 120, damping: 25 })
 
@@ -275,10 +265,10 @@ export default function HeroGraphWithOrbit() {
     const rect = wrapperRef.current.getBoundingClientRect()
     const cx = rect.left + rect.width / 2
     const cy = rect.top + rect.height / 2
-    const nx = (e.clientX - cx) / (rect.width / 2)  // -1 to 1
-    const ny = (e.clientY - cy) / (rect.height / 2) // -1 to 1
-    tiltY.set(nx * 4)   // max ±4deg horizontal
-    tiltX.set(-ny * 3)  // max ±3deg vertical
+    const nx = (e.clientX - cx) / (rect.width / 2)
+    const ny = (e.clientY - cy) / (rect.height / 2)
+    tiltY.set(nx * 4)
+    tiltX.set(-ny * 3)
   }, [isMobile, tiltX, tiltY])
 
   const handleMouseLeave = useCallback(() => {
@@ -293,12 +283,9 @@ export default function HeroGraphWithOrbit() {
       onMouseLeave={handleMouseLeave}
       style={{
         position: 'relative',
-        // Horizontal padding gives space for floating elements on each side
-        // on smaller screens we collapse to just the dashboard
         padding: isMobile ? '0' : '0 220px',
       }}
     >
-      {/* 3D tilt container */}
       <motion.div
         style={{
           rotateX: isMobile ? 0 : tiltX,
@@ -308,10 +295,7 @@ export default function HeroGraphWithOrbit() {
           position: 'relative',
         }}
       >
-        {/* Dashboard */}
         <HeroGraph />
-
-        {/* Floating elements — only render on desktop */}
         {!isMobile && FLOATERS.map((f) => (
           <FloatCard key={f.id} floater={f} scrollY={smoothScroll} />
         ))}
