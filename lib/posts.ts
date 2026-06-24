@@ -22,64 +22,6 @@ const cta =
 
 export const posts: Post[] = [
   {
-    slug: 'how-to-check-your-website-seo-in-60-seconds',
-    title: 'How to Check Your Website\'s SEO in 60 Seconds',
-    category: 'SEO',
-    date: '2026-06-23',
-    read: '7 min',
-    excerpt: 'A step-by-step guide to installing the "SEO META in 1 CLICK" Chrome extension and reading your SEO data like a pro — meta tags, headings, image alt text and SERP previews.',
-    metaTitle: 'How to Check Your Website\'s SEO in 60 Seconds | SecurityBlogs',
-    metaDescription: 'Install the free SEO META in 1 CLICK Chrome extension and learn to read meta tags, heading structure, image alt text and SERP previews for your security business website.',
-    visible: true,
-    body:
-      '<p>Most security business owners have no idea what Google actually sees when it visits their website. A free Chrome extension called <strong>SEO META in 1 CLICK</strong> shows you everything in under a minute — no agency, no technical background required. Here\'s how to use it.</p>' +
-
-      '<h2>Step 1: Install the Extension</h2>' +
-      '<p>Open <strong>Google Chrome</strong> on your computer (the extension also works in Edge and Brave). Go to the Chrome Web Store and search for <strong>"SEO META in 1 CLICK"</strong>. It has over 200,000 users and a 4.6-star rating — it\'s free. Click <em>Add to Chrome</em>, then <em>Add extension</em> in the popup. Chrome installs it in under 5 seconds.</p>' +
-      '<p><strong>You\'ll know it worked</strong> when a confirmation message appears and a small puzzle-piece icon shows in your Chrome toolbar.</p>' +
-
-      '<h2>Step 2: Open It on Any Website</h2>' +
-      '<p>Navigate to the website you want to check — start with your own homepage. Click the puzzle-piece icon in Chrome\'s toolbar, find <em>SEO META in 1 CLICK</em>, and click the pin icon so it stays visible. Then click the <strong>S icon</strong> while on any page — a panel opens instantly showing every SEO signal for that page.</p>' +
-      '<p><strong>Pro tip:</strong> Start with your homepage, then repeat on each of your main service pages and location pages.</p>' +
-
-      '<h2>Step 3: Read Your Meta Tags</h2>' +
-      '<p>The extension shows two critical fields Google reads about every page:</p>' +
-      '<ul>' +
-      '<li><strong>Meta Title</strong> — the headline shown in search results. Ideal length: <strong>50–60 characters</strong>. Too long and Google cuts it off. Too short and you\'re wasting ranking real estate.</li>' +
-      '<li><strong>Meta Description</strong> — the summary under your title in search results. Ideal length: <strong>140–160 characters</strong>. Write it like an ad: include a benefit and a call to action.</li>' +
-      '</ul>' +
-      '<p>The extension colour-codes each field: <em>green = good</em>, <em>yellow = needs attention</em>, <em>red = missing or broken</em>. Any red field is costing you clicks right now.</p>' +
-      '<p>It also shows your <strong>robots</strong> directive (whether the page is indexable) and your <strong>canonical URL</strong> (which version of the page Google should treat as the original). Both should be set correctly on every page.</p>' +
-
-      '<h2>Step 4: Check Your Heading Structure</h2>' +
-      '<p>Headings tell Google how your page is organised. The extension shows every H1, H2 and H3 tag in a tree. A healthy structure looks like this:</p>' +
-      '<ul>' +
-      '<li>Exactly <strong>one H1</strong> — your main keyword + location (e.g. "Security Guard Services Melbourne")</li>' +
-      '<li>Multiple <strong>H2s</strong> for each section</li>' +
-      '<li><strong>H3s</strong> only inside H2 sections — never jumping straight from H1 to H4</li>' +
-      '</ul>' +
-      '<p><strong>Common problems on security websites:</strong> No H1 at all, two or more H1s, or an H1 that says "Welcome to Our Company" with no keywords. Any of these is a quick, high-impact fix in your CMS.</p>' +
-
-      '<h2>Step 5: Check Image Alt Text</h2>' +
-      '<p>Google can\'t see images — it reads the alt text instead. The extension lists every image on the page and shows whether alt text is set. Missing alt text on your hero banner is one of the most common SEO mistakes on Australian security company websites.</p>' +
-      '<p><strong>Good alt text example:</strong> <code>alt="Licensed security guard at retail centre entrance, Melbourne"</code><br>' +
-      '<strong>Bad:</strong> <code>alt="image1"</code> or no alt at all.</p>' +
-      '<p>Also check filenames. Camera-generated names like <code>IMG_20240312.jpg</code> tell Google nothing. Rename images before uploading — e.g. <code>stateguard-security-guard-sydney.jpg</code>.</p>' +
-
-      '<h2>Step 6: Use the SERP Preview</h2>' +
-      '<p>The extension\'s most useful feature: a live preview of exactly how your page appears in Google search results — title, URL and description. Compare it with a competitor\'s page side by side. If their description ends with "..." (Google rewrote it), that\'s an opportunity — better-written meta tags can lift your click-through rate before you change anything else on the site.</p>' +
-
-      '<h2>Your Quick-Fix Priority List</h2>' +
-      '<ol>' +
-      '<li><strong>Fix missing or duplicate H1 tags</strong> — highest impact, fastest fix, 5 minutes in your CMS.</li>' +
-      '<li><strong>Rewrite meta title and description</strong> — include service + city in the title; add a benefit and call to action in the description.</li>' +
-      '<li><strong>Add alt text to every image</strong> — start with the hero image, work down.</li>' +
-      '<li><strong>Repeat on every key page</strong> — homepage, each service page, each location page. The extension takes 10 seconds per page.</li>' +
-      '</ol>' +
-      '<p>These fixes address the surface layer. Rankings in competitive markets like security in Melbourne, Sydney or Brisbane also require consistent content strategy, backlink building, schema markup and AI search visibility.</p>' +
-      cta,
-  },
-  {
     slug: 'seo-for-security-companies-2026-playbook',
     title: 'SEO for Security Companies: The 2026 Playbook',
     category: 'SEO',
