@@ -6,7 +6,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
-import HeroGraph from '@/components/ui/HeroGraph'
+import HeroGraphWithOrbit from '@/components/ui/HeroGraphWithOrbit'
 import { stats } from '@/lib/site'
 
 export const metadata = {
@@ -78,7 +78,7 @@ export default function HomePage() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <HeroGraph />
+            <HeroGraphWithOrbit />
           </Reveal>
 
           <p style={{ textAlign: 'center', marginTop: 28, fontSize: 13, color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
