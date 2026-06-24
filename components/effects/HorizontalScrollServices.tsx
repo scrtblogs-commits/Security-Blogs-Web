@@ -1,7 +1,101 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import HeroGraph from '@/components/ui/HeroGraph'
+
+// ── GSC Real Screenshot Card ──────────────────────────────────────────
+
+function GscScreenshotCard() {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [spotlight, setSpotlight] = useState({ x: 50, y: 50, show: false })
+
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.15 })
+    if (cardRef.current) io.observe(cardRef.current)
+    return () => io.disconnect()
+  }, [])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const nx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
+    const ny = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
+    setTilt({ x: ny * -6, y: nx * 6 })
+    const px = ((e.clientX - rect.left) / rect.width) * 100
+    const py = ((e.clientY - rect.top) / rect.height) * 100
+    setSpotlight({ x: px, y: py, show: true })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    setTilt({ x: 0, y: 0 })
+    setSpotlight(s => ({ ...s, show: false }))
+  }, [])
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        height: '100%',
+        borderRadius: 16,
+        overflow: 'hidden',
+        boxShadow: tilt.x !== 0
+          ? '0 32px 80px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.10)'
+          : '0 12px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06)',
+        transform: `
+          perspective(1200px)
+          rotateX(${tilt.x}deg)
+          rotateY(${tilt.y}deg)
+          scale(${visible ? (tilt.x !== 0 ? 1.015 : 1) : 0.97})
+        `,
+        transformStyle: 'preserve-3d',
+        transition: tilt.x !== 0
+          ? 'transform 0.08s ease-out, box-shadow 0.08s ease-out'
+          : 'transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease',
+        opacity: visible ? 1 : 0,
+        position: 'relative',
+        cursor: 'default',
+        animation: visible ? 'gsc-float 5s ease-in-out infinite' : 'none',
+      }}
+    >
+      {/* Spotlight overlay */}
+      {spotlight.show && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(255,255,255,0.12) 0%, transparent 60%)`,
+          pointerEvents: 'none',
+          zIndex: 2,
+          borderRadius: 16,
+        }} />
+      )}
+
+      {/* The real screenshot — untouched */}
+      <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: 380 }}>
+        <Image
+          src="/gsc-performance.png"
+          alt="SecurityBlogs Google Search Console — Real Performance Data"
+          fill
+          style={{ objectFit: 'cover', objectPosition: 'top left', borderRadius: 16 }}
+          priority
+          unoptimized
+        />
+      </div>
+
+      <style>{`
+        @keyframes gsc-float {
+          0%, 100% { transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px); }
+          50% { transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1) translateY(-6px); }
+        }
+      `}</style>
+    </div>
+  )
+}
 
 // ── Right-side Dashboard Visuals ─────────────────────────────────────
 
@@ -313,7 +407,7 @@ const PANELS = [
     href: '/services/security-seo/',
     heading: 'Rank #1 for every keyword your buyers search.',
     body: 'Full-stack SEO built exclusively for physical security companies. We own the search results your buyers see every day — CCTV, access control, alarms, guarding and SaaS.',
-    visual: <SeoDashboard />,
+    visual: <GscScreenshotCard />,
   },
   {
     num: '02', tag: 'AIO · AI Optimisation', color: '#6366f1',
