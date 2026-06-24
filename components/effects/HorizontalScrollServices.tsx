@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import HeroGraph from '@/components/ui/HeroGraph'
 
 // ── Right-side Dashboard Visuals ─────────────────────────────────────
 
@@ -215,6 +216,14 @@ function BingAdsDashboard() {
   )
 }
 
+function BingWebmasterDashboard() {
+  return (
+    <div style={{ background: '#fff', borderRadius: 18, height: '100%', overflow: 'hidden', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+      <HeroGraph />
+    </div>
+  )
+}
+
 function WebDesignDashboard() {
   return (
     <div style={{ background: '#1e293b', borderRadius: 18, padding: 20, height: '100%', display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -342,14 +351,21 @@ const PANELS = [
     visual: <BingAdsDashboard />,
   },
   {
-    num: '07', tag: 'Web Design', color: '#1e5fe0',
+    num: '07', tag: 'Bing SEO · Webmaster', color: '#0078d4',
+    href: '/services/bing-ads/',
+    heading: 'Dominate Bing search with real webmaster data.',
+    body: 'We use Bing Webmaster Tools data to track your security brand\'s impressions, clicks and keyword rankings — then optimise every page to climb the rankings that B2B buyers actually use.',
+    visual: <BingWebmasterDashboard />,
+  },
+  {
+    num: '08', tag: 'Web Design', color: '#1e5fe0',
     href: '/services/web-design/',
     heading: 'Websites built to rank, convert and get cited by AI.',
     body: 'Every site we build is engineered for SEO from day one — fast, accessible, schema-rich and optimised to appear in AI-generated answers across every major platform.',
     visual: <WebDesignDashboard />,
   },
   {
-    num: '08', tag: 'GMB Profile', color: '#e23744',
+    num: '09', tag: 'GMB Profile', color: '#e23744',
     href: '/contact/',
     heading: 'Optimise your Google Business Profile for local dominance.',
     body: 'A fully optimised GMB profile drives calls, direction requests and trust signals that feed directly into AI answer engines and local pack rankings across every Australian city.',

@@ -6,7 +6,7 @@ import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import LocalVisibilityCheck from '@/components/immersive/LocalVisibilityCheck'
 import HorizontalScrollServices from '@/components/effects/HorizontalScrollServices'
-import HeroGraphWithOrbit from '@/components/ui/HeroGraphWithOrbit'
+import AIChatDemo from '@/components/ui/AIChatDemo'
 import { stats } from '@/lib/site'
 
 export const metadata = {
@@ -31,59 +31,76 @@ export default function HomePage() {
         paddingBottom: 80,
         overflow: 'hidden',
       }}>
-        <div className="container" style={{ maxWidth: 1100 }}>
-          <Reveal>
-            <div style={{ textAlign: 'center', marginBottom: 20 }}>
-              <span className="badge badge-blue">
-                <span className="dot dot-pulse" /> LIVE · AI VISIBILITY ENGINE
-              </span>
-            </div>
+        <div className="container" style={{ maxWidth: 1200 }}>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 64,
+            alignItems: 'center',
+          }}
+          className="hero-grid"
+          >
+            {/* Left: text + CTAs */}
+            <Reveal>
+              <div>
+                <div style={{ marginBottom: 20 }}>
+                  <span className="badge badge-blue">
+                    <span className="dot dot-pulse" /> LIVE · AI VISIBILITY ENGINE
+                  </span>
+                </div>
 
-            <h1 style={{
-              textAlign: 'center',
-              fontSize: 'clamp(40px, 6.5vw, 80px)',
-              fontWeight: 900,
-              lineHeight: 1.04,
-              letterSpacing: '-0.035em',
-              color: '#0f172a',
-              marginBottom: 22,
-            }}>
-              Be the{' '}
-              <span style={{
-                background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontStyle: 'italic',
-              }}>answer</span>{' '}
-              <span style={{ color: '#e23744' }}>AI</span> gives.
-            </h1>
+                <h1 style={{
+                  fontSize: 'clamp(36px, 5vw, 68px)',
+                  fontWeight: 900,
+                  lineHeight: 1.04,
+                  letterSpacing: '-0.035em',
+                  color: '#0f172a',
+                  marginBottom: 22,
+                }}>
+                  Be the{' '}
+                  <span style={{
+                    background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    fontStyle: 'italic',
+                  }}>answer</span>{' '}
+                  <span style={{ color: '#e23744' }}>AI</span> gives.
+                </h1>
 
-            <p style={{
-              textAlign: 'center',
-              fontSize: 'clamp(17px, 2vw, 21px)',
-              color: '#475569',
-              maxWidth: 600,
-              margin: '0 auto 36px',
-              lineHeight: 1.65,
-            }}>
-              When buyers ask ChatGPT, Gemini or Google AI for the best security provider —
-              your brand should be named. We make that happen.
-            </p>
+                <p style={{
+                  fontSize: 'clamp(16px, 1.6vw, 20px)',
+                  color: '#475569',
+                  maxWidth: 520,
+                  marginBottom: 36,
+                  lineHeight: 1.65,
+                }}>
+                  When buyers ask ChatGPT, Gemini or Google AI for the best security provider —
+                  your brand should be named. We make that happen.
+                </p>
 
-            <div className="flex flex-wrap gap-3" style={{ justifyContent: 'center', marginBottom: 56 }}>
-              <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
-              <MagneticButton href="/free-tools/" className="btn btn-outline btn-lg">Try the live score</MagneticButton>
-            </div>
-          </Reveal>
+                <div className="flex flex-wrap gap-3" style={{ marginBottom: 32 }}>
+                  <MagneticButton href="/contact/" className="btn btn-primary btn-lg">Get your free audit →</MagneticButton>
+                  <MagneticButton href="/free-tools/" className="btn btn-outline btn-lg">Try the live score</MagneticButton>
+                </div>
 
-          <Reveal delay={0.12}>
-            <HeroGraphWithOrbit />
-          </Reveal>
+                <p style={{ fontSize: 13, color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
+                  Trusted across AU · US · UK · UAE · SG
+                </p>
+              </div>
+            </Reveal>
 
-          <p style={{ textAlign: 'center', marginTop: 28, fontSize: 13, color: '#94a3b8', fontFamily: 'var(--font-mono)' }}>
-            Trusted across AU · US · UK · UAE · SG
-          </p>
+            {/* Right: animated ChatGPT demo */}
+            <Reveal delay={0.12}>
+              <AIChatDemo />
+            </Reveal>
+          </div>
         </div>
+
+        <style>{`
+          @media (max-width: 768px) {
+            .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          }
+        `}</style>
       </section>
 
       <MarqueeStrip />
