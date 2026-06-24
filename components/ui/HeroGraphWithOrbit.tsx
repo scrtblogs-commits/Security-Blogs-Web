@@ -1,11 +1,16 @@
 'use client'
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { motion, useSpring } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import HeroGraph from './HeroGraph'
 
 export default function HeroGraphWithOrbit() {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(true)
+
+  const { scrollY } = useScroll()
+  // Subtle upward drift as page scrolls — creates depth/parallax feel
+  const rawY = useTransform(scrollY, [0, 800], [0, -18])
+  const y = useSpring(rawY, { stiffness: 60, damping: 20 })
 
   const tiltX = useSpring(0, { stiffness: 120, damping: 25 })
   const tiltY = useSpring(0, { stiffness: 120, damping: 25 })
@@ -41,6 +46,7 @@ export default function HeroGraphWithOrbit() {
     >
       <motion.div
         style={{
+          y: isMobile ? 0 : y,
           rotateX: isMobile ? 0 : tiltX,
           rotateY: isMobile ? 0 : tiltY,
           perspective: 1200,
@@ -49,8 +55,10 @@ export default function HeroGraphWithOrbit() {
           boxShadow: '0 8px 48px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)',
         }}
         whileHover={isMobile ? {} : {
-          boxShadow: '0 20px 64px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.08)',
+          boxShadow: '0 24px 72px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.07)',
+          scale: 1.005,
         }}
+        transition={{ type: 'spring', stiffness: 200, damping: 30 }}
       >
         <HeroGraph />
       </motion.div>
