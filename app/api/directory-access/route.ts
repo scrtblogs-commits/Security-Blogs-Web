@@ -11,8 +11,13 @@ async function redisCommand(args: (string | number)[]) {
   const url   = process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) return null
-  const res = await fetch(`${url}/${args.map(encodeURIComponent).join('/')}`, {
-    headers: { Authorization: `Bearer ${token}` },
+  const res = await fetch(`${url}`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(args),
   })
   return res.json()
 }
