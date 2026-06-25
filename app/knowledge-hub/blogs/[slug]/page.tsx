@@ -75,7 +75,7 @@ export default async function BlogPostPage({ params }: Props) {
       <article>
         {/* ── Hero ──────────────────────────────────────── */}
         <div className="sg-post-hero">
-          <div className="container" style={{ maxWidth: 900, paddingTop: 0, paddingBottom: 40 }}>
+          <div className="container" style={{ maxWidth: 1200, paddingTop: 0, paddingBottom: 40 }}>
             {/* Breadcrumb */}
             <nav style={{ marginBottom: 20, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-dim)' }}>
               <Link href="/" style={{ color: 'var(--text-dim)' }}>Home</Link>
@@ -146,7 +146,7 @@ export default async function BlogPostPage({ params }: Props) {
             gridTemplateColumns: '1fr 280px',
             gap: 48,
             alignItems: 'start',
-            maxWidth: 1100,
+            maxWidth: 1440,
           }}>
             {/* Main content */}
             <div>
@@ -235,7 +235,7 @@ export default async function BlogPostPage({ params }: Props) {
         {/* ── Related posts (mobile / bottom) ──────────── */}
         {related.length > 0 && (
           <section className="section" style={{ paddingTop: 0 }}>
-            <div className="container" style={{ maxWidth: 1100 }}>
+            <div className="container" style={{ maxWidth: 1440 }}>
               <div style={{ marginBottom: 24 }}>
                 <span className="eyebrow">More from {post.category}</span>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 700, marginTop: 8 }}>
