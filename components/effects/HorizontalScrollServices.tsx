@@ -5,14 +5,25 @@ import HeroGraph from '@/components/ui/HeroGraph'
 
 // ── GSC Real Screenshot Card ──────────────────────────────────────────
 
+// Approximate path of the blue clicks trend line mapped to the 1024×687 image coordinate space.
+// Chart area: x 85→960, y 470 (value=0) → y 190 (value=200+)
+const GSC_LINE_PATH =
+  'M85,372 L137,393 L210,411 L252,365 L335,389 L377,379 L460,393 L522,344 L584,323 L647,302 L709,253 L772,344 L834,190 L886,316 L927,218 L960,253'
+
 function GscScreenshotCard() {
   const cardRef = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const [visible, setVisible]   = useState(false)
+  const [lineAnim, setLineAnim] = useState(false)
+  const [tilt, setTilt]         = useState({ x: 0, y: 0 })
   const [spotlight, setSpotlight] = useState({ x: 50, y: 50, show: false })
 
   useEffect(() => {
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.15 })
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setVisible(true)
+        setTimeout(() => setLineAnim(true), 750)
+      }
+    }, { threshold: 0.15 })
     if (cardRef.current) io.observe(cardRef.current)
     return () => io.disconnect()
   }, [])
@@ -23,10 +34,12 @@ function GscScreenshotCard() {
     const rect = el.getBoundingClientRect()
     const nx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
     const ny = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
-    setTilt({ x: ny * -6, y: nx * 6 })
-    const px = ((e.clientX - rect.left) / rect.width) * 100
-    const py = ((e.clientY - rect.top) / rect.height) * 100
-    setSpotlight({ x: px, y: py, show: true })
+    setTilt({ x: ny * -5, y: nx * 5 })
+    setSpotlight({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top)  / rect.height) * 100,
+      show: true,
+    })
   }, [])
 
   const handleMouseLeave = useCallback(() => {
@@ -40,60 +53,104 @@ function GscScreenshotCard() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        height: '100%',
         borderRadius: 16,
-        overflow: 'hidden',
         boxShadow: tilt.x !== 0
-          ? '0 32px 80px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.10)'
-          : '0 12px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06)',
-        transform: `
-          perspective(1200px)
-          rotateX(${tilt.x}deg)
-          rotateY(${tilt.y}deg)
-          scale(${visible ? (tilt.x !== 0 ? 1.015 : 1) : 0.97})
-        `,
+          ? '0 28px 72px rgba(0,0,0,0.16), 0 6px 20px rgba(0,0,0,0.09)'
+          : '0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)',
+        transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${visible ? (tilt.x !== 0 ? 1.012 : 1) : 0.96})`,
         transformStyle: 'preserve-3d',
         transition: tilt.x !== 0
           ? 'transform 0.08s ease-out, box-shadow 0.08s ease-out'
-          : 'transform 0.6s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease',
+          : 'transform 0.7s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease, opacity 0.7s ease',
         opacity: visible ? 1 : 0,
         position: 'relative',
         cursor: 'default',
-        animation: visible ? 'gsc-float 5s ease-in-out infinite' : 'none',
       }}
     >
-      {/* Spotlight overlay */}
-      {spotlight.show && (
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(255,255,255,0.12) 0%, transparent 60%)`,
-          pointerEvents: 'none',
-          zIndex: 2,
-          borderRadius: 16,
-        }} />
-      )}
+      {/* Screenshot container — full image, preserves aspect ratio, no crop */}
+      <div style={{ position: 'relative', lineHeight: 0, borderRadius: 16, overflow: 'hidden' }}>
 
-      {/* The real screenshot — untouched */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/gsc-performance.png"
-        alt="SecurityBlogs Google Search Console — Real Performance Data"
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'top left',
-          display: 'block',
-          borderRadius: 16,
-          minHeight: 380,
-        }}
-      />
+        {/* The real screenshot — completely untouched */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/gsc-performance.png"
+          alt="SecurityBlogs Google Search Console — Real Performance Data"
+          style={{ width: '100%', height: 'auto', display: 'block' }}
+        />
+
+        {/* SVG animation overlay — sits precisely on the screenshot, pointer-events:none */}
+        {lineAnim && (
+          <svg
+            viewBox="0 0 1024 687"
+            style={{
+              position: 'absolute', top: 0, left: 0,
+              width: '100%', height: '100%',
+              pointerEvents: 'none', zIndex: 2,
+            }}
+          >
+            <defs>
+              {/* Glow for the travelling highlight line */}
+              <filter id="gsc-line-glow" x="-20%" y="-100%" width="140%" height="300%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              {/* Glow for the leading dot */}
+              <filter id="gsc-dot-glow" x="-300%" y="-300%" width="700%" height="700%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Highlight line drawn left → right, then fades out */}
+            <path
+              d={GSC_LINE_PATH}
+              stroke="#4285f4"
+              strokeWidth="4"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              filter="url(#gsc-line-glow)"
+              style={{ animation: 'gsc-draw 3s ease-out forwards' }}
+            />
+
+            {/* Outer glow dot at the leading edge */}
+            <circle r="12" fill="#4285f4" filter="url(#gsc-dot-glow)">
+              <animateMotion dur="3s" fill="freeze" path={GSC_LINE_PATH} />
+              <animate attributeName="opacity" values="0;0.85;0.85;0" keyTimes="0;0.04;0.88;1" dur="3s" fill="freeze" />
+            </circle>
+
+            {/* Bright white core of the dot */}
+            <circle r="4" fill="white">
+              <animateMotion dur="3s" fill="freeze" path={GSC_LINE_PATH} />
+              <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.04;0.88;1" dur="3s" fill="freeze" />
+            </circle>
+          </svg>
+        )}
+
+        {/* Spotlight on hover */}
+        {spotlight.show && (
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(255,255,255,0.10) 0%, transparent 55%)`,
+            pointerEvents: 'none', zIndex: 3,
+          }} />
+        )}
+      </div>
 
       <style>{`
-        @keyframes gsc-float {
-          0%, 100% { transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px); }
-          50% { transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1) translateY(-6px); }
+        @keyframes gsc-draw {
+          0%   { stroke-dasharray: 2000; stroke-dashoffset: 2000; opacity: 0; }
+          4%   { opacity: 0.65; }
+          88%  { stroke-dashoffset: 0; opacity: 0.65; }
+          100% { stroke-dashoffset: 0; opacity: 0; }
         }
       `}</style>
     </div>
