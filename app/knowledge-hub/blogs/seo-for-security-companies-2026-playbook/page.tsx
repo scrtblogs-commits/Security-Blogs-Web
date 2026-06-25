@@ -208,50 +208,31 @@ export default function SeoPlaybookPage() {
                 </div>
               </div>
 
-              {/* Right: Rank Tracker Mockup */}
+              {/* Right: Hero image */}
               <div className="proto-hero-rank" style={{
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: 20,
-                padding: 24,
-                backdropFilter: 'blur(16px)',
+                overflow: 'hidden',
+                boxShadow: '0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)',
+                position: 'relative',
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-                  <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>Google · Security Companies · AU</div>
-                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 8px rgba(34,197,94,0.6)' }} />
-                </div>
-
-                {/* Position #1 — highlighted */}
-                <div style={{ background: 'rgba(30,95,224,0.18)', border: '1px solid rgba(30,95,224,0.38)', borderRadius: 12, padding: '14px 16px', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div style={{ width: 34, height: 34, borderRadius: 9, background: 'var(--blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-display)', fontWeight: 800, color: '#fff', fontSize: 14, flexShrink: 0 }}>1</div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: '#7eb3ff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>securitypro.com.au</div>
-                    <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.38)', marginTop: 2 }}>CCTV & alarm installation · Sydney</div>
-                  </div>
-                  <div style={{ fontSize: 12, fontFamily: 'var(--font-mono)', color: '#4ade80', fontWeight: 700, flexShrink: 0 }}>↑ 12</div>
-                </div>
-
-                {/* Positions 2-4 */}
-                {[
-                  { pos: 2, w1: 72, w2: 52, change: '+4' },
-                  { pos: 3, w1: 58, w2: 40, change: '+1' },
-                  { pos: 4, w1: 44, w2: 30, change: '—' },
-                ].map(({ pos, w1, w2, change }) => (
-                  <div key={pos} style={{ border: '1px solid rgba(255,255,255,0.07)', borderRadius: 10, padding: '11px 14px', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{ width: 28, height: 28, borderRadius: 7, background: 'rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'rgba(255,255,255,0.35)', fontSize: 12, flexShrink: 0 }}>{pos}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ height: 8, background: 'rgba(255,255,255,0.1)', borderRadius: 4, width: `${w1}%`, marginBottom: 5 }} />
-                      <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, width: `${w2}%` }} />
-                    </div>
-                    <div style={{ fontSize: 11.5, fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.3)', flexShrink: 0 }}>{change}</div>
-                  </div>
-                ))}
-
-                {/* Timeline note */}
-                <div style={{ marginTop: 14, padding: '10px 14px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 16 }}></span>
-                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.55)', lineHeight: 1.4 }}>Page 1 typically takes 4–9 months in competitive security niches</span>
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/blog1.png"
+                  alt="Security operations centre with CCTV monitoring screens"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    minHeight: 320,
+                    objectFit: 'cover',
+                    display: 'block',
+                  }}
+                />
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(135deg, rgba(6,15,31,0.18) 0%, rgba(6,15,31,0.04) 100%)',
+                  borderRadius: 20,
+                }} />
               </div>
             </div>
           </div>

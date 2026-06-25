@@ -100,9 +100,9 @@ export default function Footer() {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/logo-footer.webp"
+                src="/whitelogo.gif"
                 alt="SecurityBlogs"
-                style={{ width: 'min(150px, 100%)', height: 'auto', display: 'block' }}
+                style={{ width: 'min(48px, 100%)', height: 'auto', display: 'block' }}
               />
             </Link>
             <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'center', lineHeight: 1.35 }}>
