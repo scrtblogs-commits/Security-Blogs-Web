@@ -1,6 +1,7 @@
-// GET /api/directory-access/verify?token=xxx
-// Validates a one-time access token issued on admin approval.
-// Sets sg:dir:approved:{email} = '1' permanently (already set at approval time).
+// POST /api/directory-access/verify
+// Checks whether an email has been approved.
+// One-time use: on success, deletes the approved key so access cannot be reused
+// on another device — user must re-request from scratch next time.
 
 import { NextResponse } from 'next/server'
 
@@ -17,25 +18,48 @@ async function redisCommand(args: (string | number)[]) {
   return res.json()
 }
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
-  const token = searchParams.get('token')
-
-  if (!token) {
-    return NextResponse.json({ ok: false, error: 'Token required' }, { status: 400 })
+export async function POST(req: Request) {
+  let body: Record<string, unknown>
+  try { body = await req.json() } catch {
+    return NextResponse.json({ ok: false, error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const result = await redisCommand(['GET', `sg:dir:access:${token}`])
-  if (!result?.result) {
-    return NextResponse.json({ ok: false, error: 'Invalid or expired access link' }, { status: 400 })
+  const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : ''
+  if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    return NextResponse.json({ ok: false, error: 'Valid email required' }, { status: 400 })
   }
 
-  const email = result.result as string
+  // Check approved key
+  const approved = await redisCommand(['GET', `sg:dir:approved:${email}`])
+  if (approved?.result === '1') {
+    // One-time use: delete approved key so they must re-request for any future device
+    await redisCommand(['DEL', `sg:dir:approved:${email}`])
+    // Also clear the email index so they can submit a new request next time
+    await redisCommand(['DEL', `sg:dir:email:${email}`])
+    return NextResponse.json({ ok: true, status: 'approved' })
+  }
 
-  // Confirm approved state (should already be set but ensure consistency)
-  await redisCommand(['SET', `sg:dir:approved:${email}`, '1'])
+  // Check if request exists at all
+  const requestId = await redisCommand(['GET', `sg:dir:email:${email}`])
+  if (!requestId?.result) {
+    return NextResponse.json({ ok: true, status: 'not_found' })
+  }
 
-  // Keep the token alive (don't delete — allow re-use within 30-day window)
+  // Get request to check its status
+  const requestData = await redisCommand(['GET', `sg:dir:req:${requestId.result}`])
+  if (!requestData?.result) {
+    return NextResponse.json({ ok: true, status: 'not_found' })
+  }
 
-  return NextResponse.json({ ok: true, email })
+  let request: { status: string }
+  try { request = JSON.parse(requestData.result) } catch {
+    return NextResponse.json({ ok: true, status: 'not_found' })
+  }
+
+  if (request.status === 'rejected') {
+    return NextResponse.json({ ok: true, status: 'rejected' })
+  }
+
+  // pending or anything else
+  return NextResponse.json({ ok: true, status: 'pending' })
 }

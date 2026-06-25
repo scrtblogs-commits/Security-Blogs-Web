@@ -62,12 +62,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'Invalid purpose selection' }, { status: 400 })
   }
 
-  // Check if already approved
-  const alreadyApproved = await redisCommand(['GET', `sg:dir:approved:${email}`])
-  if (alreadyApproved?.result === '1') {
-    return NextResponse.json({ ok: true, alreadyApproved: true })
-  }
-
   // Check for existing pending request
   const existingId = await redisCommand(['GET', `sg:dir:email:${email}`])
   if (existingId?.result) {

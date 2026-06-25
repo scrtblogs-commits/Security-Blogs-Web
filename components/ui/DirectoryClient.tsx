@@ -179,15 +179,21 @@ function Locked({ children }: { children: React.ReactNode }) {
   )
 }
 
-// ── 4-Field Access Modal ─────────────────────────────────────────────
-function AccessModal({ onClose }: { onClose: () => void }) {
-  const [form, setForm] = useState({ name: '', email: '', company: '', purpose: '' })
-  const [loading, setLoading] = useState(false)
-  const [sent, setSent] = useState(false)
-  const [error, setError] = useState('')
+// ── Access Modal (Request + Check Access tabs) ────────────────────────
+function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked: () => void }) {
+  const [tab, setTab] = useState<'request' | 'check'>('request')
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm(f => ({ ...f, [k]: e.target.value }))
+  // ── Request tab state ──
+  const [form, setForm] = useState({ name: '', email: '', company: '', purpose: '' })
+  const [reqLoading, setReqLoading] = useState(false)
+  const [reqSent, setReqSent] = useState(false)
+  const [reqError, setReqError] = useState('')
+
+  // ── Check Access tab state ──
+  const [checkEmail, setCheckEmail] = useState('')
+  const [checkLoading, setCheckLoading] = useState(false)
+  const [checkResult, setCheckResult] = useState<'approved' | 'pending' | 'rejected' | 'not_found' | null>(null)
+  const [checkError, setCheckError] = useState('')
 
   const inputStyle: React.CSSProperties = {
     width: '100%', padding: '12px 16px', border: '1.5px solid #e2e8f0',
@@ -195,18 +201,21 @@ function AccessModal({ onClose }: { onClose: () => void }) {
     color: '#0f172a', background: '#fff',
   }
 
-  const submit = async (e: React.FormEvent) => {
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setForm(f => ({ ...f, [k]: e.target.value }))
+
+  const submitRequest = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.name || !form.email || !form.company || !form.purpose) {
-      setError('Please fill in all fields.')
+      setReqError('Please fill in all fields.')
       return
     }
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) {
-      setError('Please enter a valid business email address.')
+      setReqError('Please enter a valid business email address.')
       return
     }
-    setError('')
-    setLoading(true)
+    setReqError('')
+    setReqLoading(true)
     try {
       const res = await fetch('/api/directory-access', {
         method: 'POST',
@@ -215,21 +224,71 @@ function AccessModal({ onClose }: { onClose: () => void }) {
       })
       const data = await res.json()
       if (data.ok) {
-        if (data.alreadyApproved) {
-          localStorage.setItem('sg-dir-verified', 'true')
-          localStorage.setItem('sg-dir-email', form.email)
-          window.location.reload()
-        } else {
-          setSent(true)
-        }
+        setReqSent(true)
       } else {
-        setError(data.error || 'Something went wrong. Please try again.')
+        setReqError(data.error || 'Something went wrong. Please try again.')
       }
     } catch {
-      setError('Network error. Please try again.')
+      setReqError('Network error. Please try again.')
     } finally {
-      setLoading(false)
+      setReqLoading(false)
     }
+  }
+
+  const submitCheck = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(checkEmail)) {
+      setCheckError('Please enter a valid email address.')
+      return
+    }
+    setCheckError('')
+    setCheckLoading(true)
+    setCheckResult(null)
+    try {
+      const res = await fetch('/api/directory-access/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: checkEmail }),
+      })
+      const data = await res.json()
+      if (data.ok) {
+        setCheckResult(data.status)
+        if (data.status === 'approved') {
+          localStorage.setItem('sg-dir-verified', 'true')
+          localStorage.setItem('sg-dir-email', checkEmail)
+          setTimeout(() => { onUnlocked() }, 1400)
+        }
+      } else {
+        setCheckError(data.error || 'Something went wrong.')
+      }
+    } catch {
+      setCheckError('Network error. Please try again.')
+    } finally {
+      setCheckLoading(false)
+    }
+  }
+
+  const CHECK_MESSAGES: Record<string, { icon: string; title: string; body: string; color: string; bg: string }> = {
+    approved: {
+      icon: '✓', title: 'Access approved!',
+      body: 'Your request was approved. Unlocking full directory access now...',
+      color: '#166534', bg: '#f0fdf4',
+    },
+    pending: {
+      icon: '⏳', title: 'Still pending',
+      body: 'Your access request is still pending approval. Check back soon.',
+      color: '#854d0e', bg: '#fefce8',
+    },
+    rejected: {
+      icon: '✕', title: 'Request not approved',
+      body: 'Your access request was not approved. You may submit a new request.',
+      color: '#991b1b', bg: '#fef2f2',
+    },
+    not_found: {
+      icon: '?', title: 'No request found',
+      body: 'No access request was found for this email. Please submit a request first.',
+      color: '#1e40af', bg: '#eff6ff',
+    },
   }
 
   return (
@@ -238,119 +297,170 @@ function AccessModal({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        style={{ background: '#fff', borderRadius: 24, padding: '44px 40px', maxWidth: 500, width: '100%', boxShadow: '0 32px 80px rgba(0,0,0,0.22)', position: 'relative' }}
+        style={{ background: '#fff', borderRadius: 24, padding: '40px 40px 36px', maxWidth: 500, width: '100%', boxShadow: '0 32px 80px rgba(0,0,0,0.22)', position: 'relative' }}
         onClick={e => e.stopPropagation()}
       >
         <button onClick={onClose} style={{ position: 'absolute', top: 16, right: 20, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#94a3b8', lineHeight: 1 }}>
           ✕
         </button>
 
-        {sent ? (
-          <div style={{ textAlign: 'center' }}>
-            <div style={{
-              width: 72, height: 72, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #10b981, #3b82f6)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              margin: '0 auto 20px', fontSize: 32, color: '#fff',
-            }}>
-              ✓
-            </div>
-            <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', marginBottom: 10 }}>Request submitted!</h3>
-            <p style={{ color: '#475569', lineHeight: 1.65, marginBottom: 20 }}>
-              Your request has been received. Our team will review it and send an approval
-              email to <strong>{form.email}</strong> within 1 business day.
-            </p>
-            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 12, padding: '14px 18px', fontSize: 13, color: '#166534', fontWeight: 600 }}>
-              Once approved, you will receive an email with a link to unlock full access.
-            </div>
-          </div>
-        ) : (
-          <>
-            <div style={{ marginBottom: 28 }}>
-              <span style={{
-                display: 'inline-block', fontSize: 11, fontWeight: 800,
-                letterSpacing: '0.12em', textTransform: 'uppercase',
-                color: '#3b82f6', marginBottom: 10,
+        {/* Tabs */}
+        <div style={{ display: 'flex', gap: 4, background: '#f1f5f9', borderRadius: 12, padding: 4, marginBottom: 28 }}>
+          {(['request', 'check'] as const).map(t => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              style={{
+                flex: 1, padding: '9px 0', borderRadius: 9, border: 'none',
+                fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                background: tab === t ? '#fff' : 'transparent',
+                color: tab === t ? '#0f172a' : '#64748b',
+                boxShadow: tab === t ? '0 1px 4px rgba(0,0,0,0.1)' : 'none',
+                transition: 'all 0.15s',
+              }}
+            >
+              {t === 'request' ? '🔓 Request Access' : '✉ Check My Status'}
+            </button>
+          ))}
+        </div>
+
+        {/* ── Request tab ── */}
+        {tab === 'request' && (
+          reqSent ? (
+            <div style={{ textAlign: 'center' }}>
+              <div style={{
+                width: 64, height: 64, borderRadius: '50%',
+                background: 'linear-gradient(135deg, #10b981, #3b82f6)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                margin: '0 auto 20px', fontSize: 28, color: '#fff', fontWeight: 900,
               }}>
-                Free access
-              </span>
-              <h3 style={{ fontSize: 24, fontWeight: 900, color: '#0f172a', marginBottom: 8, lineHeight: 1.2 }}>
-                Unlock the full directory
+                ✓
+              </div>
+              <h3 style={{ fontSize: 21, fontWeight: 900, color: '#0f172a', marginBottom: 10 }}>Request submitted!</h3>
+              <p style={{ color: '#475569', lineHeight: 1.65, marginBottom: 20, fontSize: 14 }}>
+                Your request has been received and is pending admin review. Once approved, come back and use the <strong>Check My Status</strong> tab to unlock access.
+              </p>
+              <button
+                onClick={() => setTab('check')}
+                style={{ padding: '11px 24px', background: '#eff6ff', color: '#1e40af', border: '1px solid #bfdbfe', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer' }}
+              >
+                ✉ Check My Status →
+              </button>
+            </div>
+          ) : (
+            <>
+              <div style={{ marginBottom: 22 }}>
+                <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', marginBottom: 6, lineHeight: 1.2 }}>
+                  Request directory access
+                </h3>
+                <p style={{ color: '#64748b', fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+                  Fill in your details. Our team reviews every request manually and responds within 1 business day.
+                </p>
+              </div>
+
+              <form onSubmit={submitRequest} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 5 }}>Full Name</label>
+                  <input type="text" required placeholder="Jane Smith" value={form.name} onChange={set('name')} style={inputStyle}
+                    onFocus={e => e.target.style.borderColor = '#3b82f6'} onBlur={e => e.target.style.borderColor = '#e2e8f0'} />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 5 }}>Business Email</label>
+                  <input type="email" required placeholder="jane@company.com" value={form.email} onChange={set('email')} style={inputStyle}
+                    onFocus={e => e.target.style.borderColor = '#3b82f6'} onBlur={e => e.target.style.borderColor = '#e2e8f0'} />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 5 }}>Company Name</label>
+                  <input type="text" required placeholder="Acme Corp" value={form.company} onChange={set('company')} style={inputStyle}
+                    onFocus={e => e.target.style.borderColor = '#3b82f6'} onBlur={e => e.target.style.borderColor = '#e2e8f0'} />
+                </div>
+                <div>
+                  <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 5 }}>Purpose of Inquiry</label>
+                  <select required value={form.purpose} onChange={set('purpose')}
+                    style={{ ...inputStyle, cursor: 'pointer', appearance: 'auto' }}
+                    onFocus={e => (e.target as HTMLSelectElement).style.borderColor = '#3b82f6'}
+                    onBlur={e => (e.target as HTMLSelectElement).style.borderColor = '#e2e8f0'}>
+                    <option value="">Select a reason...</option>
+                    {PURPOSE_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
+                  </select>
+                </div>
+
+                {reqError && (
+                  <div style={{ fontSize: 13, color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, padding: '10px 14px' }}>
+                    {reqError}
+                  </div>
+                )}
+
+                <button type="submit" disabled={reqLoading} style={{
+                  width: '100%', padding: '13px', marginTop: 2,
+                  background: reqLoading ? '#94a3b8' : 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                  color: '#fff', border: 'none', borderRadius: 12,
+                  fontSize: 14, fontWeight: 700, cursor: reqLoading ? 'not-allowed' : 'pointer',
+                }}>
+                  {reqLoading ? 'Submitting...' : 'Submit request →'}
+                </button>
+              </form>
+            </>
+          )
+        )}
+
+        {/* ── Check Access tab ── */}
+        {tab === 'check' && (
+          <>
+            <div style={{ marginBottom: 22 }}>
+              <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', marginBottom: 6 }}>
+                Check your access status
               </h3>
-              <p style={{ color: '#64748b', fontSize: 14, lineHeight: 1.6, margin: 0 }}>
-                Request access to direct contact details, phone numbers, websites and AI visibility scores
-                for all 200+ verified Australian security companies. Reviewed and approved within 1 business day.
+              <p style={{ color: '#64748b', fontSize: 13, lineHeight: 1.6, margin: 0 }}>
+                Enter the email you used to request access. If approved, your directory will unlock immediately.
               </p>
             </div>
 
-            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <form onSubmit={submitCheck} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div>
-                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Full Name</label>
-                <input
-                  type="text" required placeholder="Jane Smith" value={form.name}
-                  onChange={set('name')} style={inputStyle}
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 5 }}>Email Address</label>
+                <input type="email" required placeholder="jane@company.com" value={checkEmail}
+                  onChange={e => { setCheckEmail(e.target.value); setCheckResult(null); setCheckError('') }}
+                  style={inputStyle}
                   onFocus={e => e.target.style.borderColor = '#3b82f6'}
-                  onBlur={e => e.target.style.borderColor = '#e2e8f0'}
-                />
-              </div>
-              <div>
-                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Business Email Address</label>
-                <input
-                  type="email" required placeholder="jane@company.com" value={form.email}
-                  onChange={set('email')} style={inputStyle}
-                  onFocus={e => e.target.style.borderColor = '#3b82f6'}
-                  onBlur={e => e.target.style.borderColor = '#e2e8f0'}
-                />
-              </div>
-              <div>
-                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Company Name</label>
-                <input
-                  type="text" required placeholder="Acme Corp" value={form.company}
-                  onChange={set('company')} style={inputStyle}
-                  onFocus={e => e.target.style.borderColor = '#3b82f6'}
-                  onBlur={e => e.target.style.borderColor = '#e2e8f0'}
-                />
-              </div>
-              <div>
-                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Purpose of Inquiry</label>
-                <select
-                  required value={form.purpose} onChange={set('purpose')}
-                  style={{ ...inputStyle, cursor: 'pointer', appearance: 'auto' }}
-                  onFocus={e => (e.target as HTMLSelectElement).style.borderColor = '#3b82f6'}
-                  onBlur={e => (e.target as HTMLSelectElement).style.borderColor = '#e2e8f0'}
-                >
-                  <option value="">Select a reason...</option>
-                  {PURPOSE_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
-                </select>
+                  onBlur={e => e.target.style.borderColor = '#e2e8f0'} />
               </div>
 
-              {error && (
+              {checkError && (
                 <div style={{ fontSize: 13, color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, padding: '10px 14px' }}>
-                  {error}
+                  {checkError}
                 </div>
               )}
 
-              <button
-                type="submit" disabled={loading}
-                style={{
-                  width: '100%', padding: '14px', marginTop: 4,
-                  background: loading ? '#94a3b8' : 'linear-gradient(135deg, #3b82f6, #6366f1)',
-                  color: '#fff', border: 'none', borderRadius: 12,
-                  fontSize: 15, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
-                  transition: 'opacity 0.15s',
-                }}
-              >
-                {loading ? 'Submitting request...' : 'Request access →'}
+              {checkResult && (() => {
+                const m = CHECK_MESSAGES[checkResult]
+                return (
+                  <div style={{ background: m.bg, borderRadius: 12, padding: '16px 18px', display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: 20, lineHeight: 1 }}>{m.icon}</span>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: m.color, marginBottom: 3 }}>{m.title}</div>
+                      <div style={{ fontSize: 13, color: m.color, opacity: 0.85, lineHeight: 1.5 }}>{m.body}</div>
+                    </div>
+                  </div>
+                )
+              })()}
+
+              <button type="submit" disabled={checkLoading} style={{
+                width: '100%', padding: '13px',
+                background: checkLoading ? '#94a3b8' : '#0f172a',
+                color: '#fff', border: 'none', borderRadius: 12,
+                fontSize: 14, fontWeight: 700, cursor: checkLoading ? 'not-allowed' : 'pointer',
+              }}>
+                {checkLoading ? 'Checking...' : 'Check my status →'}
               </button>
             </form>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 16, flexWrap: 'wrap' }}>
-              {['No spam', 'Secure', 'Free forever'].map(t => (
-                <span key={t} style={{ fontSize: 12, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <span style={{ color: '#10b981' }}>✓</span> {t}
-                </span>
-              ))}
-            </div>
+            <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 14, textAlign: 'center' }}>
+              No request yet?{' '}
+              <button onClick={() => setTab('request')} style={{ background: 'none', border: 'none', color: '#3b82f6', fontSize: 12, fontWeight: 600, cursor: 'pointer', padding: 0 }}>
+                Submit one here
+              </button>
+            </p>
           </>
         )}
       </div>
@@ -452,6 +562,11 @@ export default function DirectoryClient() {
     setIsVerified(localStorage.getItem('sg-dir-verified') === 'true')
   }, [])
 
+  const handleUnlocked = () => {
+    setIsVerified(true)
+    setShowModal(false)
+  }
+
   // Autocomplete suggestions
   useEffect(() => {
     if (!search.trim()) { setSuggestions([]); return }
@@ -482,7 +597,7 @@ export default function DirectoryClient() {
 
   return (
     <>
-      {showModal && <AccessModal onClose={() => setShowModal(false)} />}
+      {showModal && <AccessModal onClose={() => setShowModal(false)} onUnlocked={handleUnlocked} />}
 
       <div style={{ background: '#f8f9fc', minHeight: '60vh' }}>
         <div className="container" style={{ paddingTop: 48, paddingBottom: 80 }}>
