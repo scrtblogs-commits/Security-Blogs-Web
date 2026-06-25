@@ -128,9 +128,9 @@ export default function SeoPlaybookPage() {
 
       <article>
 
-        {/* ═══════════════════════════════════════════════════
+        {/* 
             HERO — dark navy, dot-grid, rank-tracker mockup
-        ════════════════════════════════════════════════════ */}
+         */}
         <div style={{
           background: 'linear-gradient(135deg, #060f1f 0%, #0d1e3d 55%, #071428 100%)',
           padding: 'calc(var(--nav-h) + 60px) 0 0',
@@ -249,7 +249,7 @@ export default function SeoPlaybookPage() {
 
                 {/* Timeline note */}
                 <div style={{ marginTop: 14, padding: '10px 14px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 16 }}>📈</span>
+                  <span style={{ fontSize: 16 }}></span>
                   <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.55)', lineHeight: 1.4 }}>Page 1 typically takes 4–9 months in competitive security niches</span>
                 </div>
               </div>
@@ -261,18 +261,18 @@ export default function SeoPlaybookPage() {
         </div>
 
 
-        {/* ═══════════════════════════════════════════════════
+        {/* 
             MAIN BODY — Article + Sticky Sidebar
-        ════════════════════════════════════════════════════ */}
+         */}
         <div style={{ maxWidth: 1440, margin: '0 auto', padding: '48px 32px 0' }} id="article-body">
           <div className="proto-article-grid">
 
-            {/* ────────────────────────────────────────────────
+            {/* 
                 ARTICLE COLUMN
-            ──────────────────────────────────────────────── */}
+             */}
             <div>
 
-              {/* TL;DR ─────────────────────────────────────── */}
+              {/* TL;DR  */}
               <div id="tldr" style={{ border: '1px solid rgba(30,95,224,0.22)', borderLeft: '4px solid var(--blue)', background: 'rgba(30,95,224,0.045)', borderRadius: '0 16px 16px 0', padding: '22px 26px', marginBottom: 52 }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--blue)', marginBottom: 14 }}>
                   TL;DR — What you will take away
@@ -285,23 +285,23 @@ export default function SeoPlaybookPage() {
                     'E-E-A-T content and genuine authority signals compound over 4–9 months — there is no shortcut.',
                   ].map((item, i) => (
                     <li key={i} style={{ display: 'flex', gap: 12, fontSize: 15.5, color: 'var(--text-soft)', alignItems: 'flex-start', lineHeight: 1.6 }}>
-                      <span style={{ color: 'var(--blue)', fontWeight: 800, fontSize: 15, flexShrink: 0, marginTop: 2 }}>✓</span>
+                      <span style={{ color: 'var(--blue)', fontWeight: 800, fontSize: 15, flexShrink: 0, marginTop: 2 }}></span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Intro ─────────────────────────────────────── */}
+              {/* Intro  */}
               <p style={{ fontSize: 18.5, lineHeight: 1.78, color: 'var(--text)', marginBottom: 48, fontFamily: 'var(--font-body)', maxWidth: 860 }}>
                 Security buyers research carefully before they call. Whether someone is comparing CCTV installers, access-control integrators or monitoring providers, most of that journey now happens in search — and increasingly inside AI assistants. This playbook walks through the SEO foundations that move a security business up the results, in the order we tackle them with clients.
               </p>
 
 
-              {/* ─── SECTION 1: Technical Foundations ──────── */}
+              {/*  SECTION 1: Technical Foundations  */}
               <section aria-labelledby="technical-foundations">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(30,95,224,0.1)', border: '1px solid rgba(30,95,224,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>⚙️</div>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(30,95,224,0.1)', border: '1px solid rgba(30,95,224,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
                   <h2 id="technical-foundations" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0 }}>
                     1. Fix the technical foundations first
                   </h2>
@@ -313,12 +313,12 @@ export default function SeoPlaybookPage() {
                 {/* Technical checklist grid */}
                 <div className="proto-2col-tech" style={{ marginBottom: 48 }}>
                   {[
-                    { icon: '🔒', title: 'HTTPS everywhere', desc: 'All pages on secure connection — no mixed-content warnings or HTTP redirects.' },
-                    { icon: '🗺️', title: 'XML sitemap', desc: 'Clean, auto-updating sitemap submitted to Google Search Console.' },
-                    { icon: '🤖', title: 'robots.txt', desc: 'Crawlable service pages, blocked duplicates, correct directives.' },
-                    { icon: '⚡', title: 'Core Web Vitals', desc: 'LCP under 2.5s, FID under 100ms, CLS under 0.1 — tested on mobile.' },
-                    { icon: '📱', title: 'Mobile-first layout', desc: 'Fully responsive — Google indexes the mobile version of your site.' },
-                    { icon: '🔍', title: 'GSC indexation', desc: 'All priority pages confirmed indexed; coverage errors resolved.' },
+                    { title: 'HTTPS everywhere', desc: 'All pages on secure connection — no mixed-content warnings or HTTP redirects.' },
+                    { title: 'XML sitemap', desc: 'Clean, auto-updating sitemap submitted to Google Search Console.' },
+                    { title: 'robots.txt', desc: 'Crawlable service pages, blocked duplicates, correct directives.' },
+                    { title: 'Core Web Vitals', desc: 'LCP under 2.5s, FID under 100ms, CLS under 0.1 — tested on mobile.' },
+                    { title: 'Mobile-first layout', desc: 'Fully responsive — Google indexes the mobile version of your site.' },
+                    { title: 'GSC indexation', desc: 'All priority pages confirmed indexed; coverage errors resolved.' },
                   ].map((item) => (
                     <div key={item.title} style={{
                       border: '1px solid var(--line)',
@@ -330,7 +330,7 @@ export default function SeoPlaybookPage() {
                       alignItems: 'flex-start',
                       transition: 'border-color 0.15s ease',
                     }}>
-                      <span style={{ fontSize: 22, lineHeight: 1.1, flexShrink: 0, marginTop: 2 }}>{item.icon}</span>
+                      <span style={{ flexShrink: 0, marginTop: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 22, height: 22, borderRadius: 6, background: 'rgba(30,95,224,0.1)' }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
                       <div>
                         <div style={{ fontWeight: 700, fontSize: 14.5, fontFamily: 'var(--font-display)', marginBottom: 5, color: 'var(--text)' }}>{item.title}</div>
                         <div style={{ fontSize: 13.5, color: 'var(--text-dim)', lineHeight: 1.5 }}>{item.desc}</div>
@@ -343,10 +343,10 @@ export default function SeoPlaybookPage() {
               {/* Section divider */}
               <div style={{ height: 1, background: 'var(--line)', margin: '0 0 48px' }} />
 
-              {/* ─── SECTION 2: Keyword Intent ──────────────── */}
+              {/*  SECTION 2: Keyword Intent  */}
               <section aria-labelledby="keyword-intent">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(217,119,6,0.1)', border: '1px solid rgba(217,119,6,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🎯</div>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(217,119,6,0.1)', border: '1px solid rgba(217,119,6,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
                   <h2 id="keyword-intent" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0 }}>
                     2. Map keywords to buyer intent
                   </h2>
@@ -361,7 +361,6 @@ export default function SeoPlaybookPage() {
                     {
                       stage: '01 — Research',
                       badge: 'Awareness',
-                      icon: '🔎',
                       iconBg: 'rgba(107,114,128,0.12)',
                       borderColor: 'rgba(107,114,128,0.25)',
                       bg: 'rgba(107,114,128,0.04)',
@@ -373,7 +372,6 @@ export default function SeoPlaybookPage() {
                     {
                       stage: '02 — Comparison',
                       badge: 'Consideration',
-                      icon: '⚖️',
                       iconBg: 'rgba(217,119,6,0.12)',
                       borderColor: 'rgba(217,119,6,0.28)',
                       bg: 'rgba(217,119,6,0.04)',
@@ -385,7 +383,6 @@ export default function SeoPlaybookPage() {
                     {
                       stage: '03 — Decision',
                       badge: 'Ready to buy',
-                      icon: '✅',
                       iconBg: 'rgba(30,95,224,0.12)',
                       borderColor: 'rgba(30,95,224,0.28)',
                       bg: 'rgba(30,95,224,0.04)',
@@ -398,7 +395,7 @@ export default function SeoPlaybookPage() {
                     <div key={card.stage} style={{ border: `1px solid ${card.borderColor}`, borderRadius: 16, padding: 20, background: card.bg, display: 'flex', flexDirection: 'column', gap: 0 }}>
                       {/* Header */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-                        <span style={{ background: card.iconBg, borderRadius: 10, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>{card.icon}</span>
+                        <span style={{ background: card.iconBg, borderRadius: 10, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 15, color: card.accent }}>{card.stage.split(' — ')[0]}</span>
                         <div>
                           <div style={{ fontFamily: 'var(--font-display)', fontSize: 12.5, fontWeight: 700, color: card.accent }}>{card.stage}</div>
                           <div style={{ background: card.accentBg, color: card.accent, borderRadius: 999, padding: '2px 8px', fontSize: 11, fontWeight: 600, display: 'inline-block', marginTop: 3 }}>{card.badge}</div>
@@ -421,10 +418,10 @@ export default function SeoPlaybookPage() {
 
               <div style={{ height: 1, background: 'var(--line)', margin: '0 0 48px' }} />
 
-              {/* ─── SECTION 3: Local SEO ───────────────────── */}
+              {/*  SECTION 3: Local SEO  */}
               <section aria-labelledby="local-search">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(22,163,74,0.1)', border: '1px solid rgba(22,163,74,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>📍</div>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(22,163,74,0.1)', border: '1px solid rgba(22,163,74,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
                   <h2 id="local-search" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0 }}>
                     3. Win local search
                   </h2>
@@ -436,17 +433,17 @@ export default function SeoPlaybookPage() {
                 {/* 4-step process */}
                 <div className="proto-4col" style={{ marginBottom: 22 }}>
                   {[
-                    { step: '01', icon: '📍', title: 'Google Business Profile', desc: 'Claim, complete every field, add real photos and keep hours current.' },
-                    { step: '02', icon: '📋', title: 'NAP Consistency', desc: 'Identical name, address and phone across your site, GBP and all directories.' },
-                    { step: '03', icon: '📄', title: 'Location Pages', desc: 'Real content for each service area — not thin doorway pages.' },
-                    { step: '04', icon: '⭐', title: 'Genuine Reviews', desc: 'Ask satisfied customers for honest reviews. Never fabricate.' },
+                    { step: '01', title: 'Google Business Profile', desc: 'Claim, complete every field, add real photos and keep hours current.' },
+                    { step: '02', title: 'NAP Consistency', desc: 'Identical name, address and phone across your site, GBP and all directories.' },
+                    { step: '03', title: 'Location Pages', desc: 'Real content for each service area — not thin doorway pages.' },
+                    { step: '04', title: 'Genuine Reviews', desc: 'Ask satisfied customers for honest reviews. Never fabricate.' },
                   ].map((item, i) => (
                     <div key={item.step} style={{ border: '1px solid var(--line)', borderRadius: 14, padding: '18px 16px', background: 'var(--bg-card)', textAlign: 'center', position: 'relative' }}>
                       {i < 3 && (
                         <div style={{ display: 'none', position: 'absolute', right: -9, top: '50%', transform: 'translateY(-50%)', zIndex: 2, fontSize: 18, color: 'var(--text-dim)', background: '#fff', padding: '0 2px' }} className="proto-step-arrow">›</div>
                       )}
                       <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--blue)', letterSpacing: '0.12em', marginBottom: 10 }}>{item.step}</div>
-                      <div style={{ fontSize: 26, marginBottom: 10 }}>{item.icon}</div>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(30,95,224,0.08)', border: '1px solid rgba(30,95,224,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px', fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 14, color: 'var(--blue)' }}>{item.step}</div>
                       <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 13.5, marginBottom: 7, color: 'var(--text)' }}>{item.title}</div>
                       <div style={{ fontSize: 12.5, color: 'var(--text-dim)', lineHeight: 1.5 }}>{item.desc}</div>
                     </div>
@@ -455,7 +452,7 @@ export default function SeoPlaybookPage() {
 
                 {/* Pro tip callout */}
                 <div style={{ border: '1px solid rgba(22,163,74,0.25)', borderLeft: '4px solid #16a34a', background: 'rgba(22,163,74,0.05)', borderRadius: '0 12px 12px 0', padding: '16px 20px', marginBottom: 48 }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5, color: '#16a34a', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 7 }}>✦ Pro Tip</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5, color: '#16a34a', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 7 }}> Pro Tip</div>
                   <p style={{ fontSize: 15, color: 'var(--text-soft)', margin: 0, lineHeight: 1.65 }}>
                     For multi-location businesses, create a separate GBP listing <em>and</em> a unique location page for each area you serve. Consolidated profiles rarely beat dedicated location entries in local pack results.
                   </p>
@@ -464,10 +461,10 @@ export default function SeoPlaybookPage() {
 
               <div style={{ height: 1, background: 'var(--line)', margin: '0 0 48px' }} />
 
-              {/* ─── SECTION 4: Content & E-E-A-T ──────────── */}
+              {/*  SECTION 4: Content & E-E-A-T  */}
               <section aria-labelledby="content-expertise">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(30,95,224,0.1)', border: '1px solid rgba(30,95,224,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>✍️</div>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(30,95,224,0.1)', border: '1px solid rgba(30,95,224,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
                   <h2 id="content-expertise" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0 }}>
                     4. Publish content that demonstrates expertise
                   </h2>
@@ -498,7 +495,7 @@ export default function SeoPlaybookPage() {
                       'Written by — or attributed to — an industry expert',
                     ].map((item) => (
                       <div key={item} style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '9px 0', borderBottom: '1px solid var(--line)', fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.45 }}>
-                        <span style={{ color: '#16a34a', fontWeight: 800, fontSize: 16, flexShrink: 0, lineHeight: 1.4 }}>✓</span>
+                        <span style={{ color: '#16a34a', fontWeight: 800, fontSize: 16, flexShrink: 0, lineHeight: 1.4 }}></span>
                         {item}
                       </div>
                     ))}
@@ -508,10 +505,10 @@ export default function SeoPlaybookPage() {
 
               <div style={{ height: 1, background: 'var(--line)', margin: '0 0 48px' }} />
 
-              {/* ─── SECTION 5: Authority ───────────────────── */}
+              {/*  SECTION 5: Authority  */}
               <section aria-labelledby="authority">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(220,38,38,0.08)', border: '1px solid rgba(220,38,38,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>🏆</div>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(220,38,38,0.08)', border: '1px solid rgba(220,38,38,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                   <h2 id="authority" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0 }}>
                     5. Earn authority — don&apos;t buy it
                   </h2>
@@ -522,7 +519,7 @@ export default function SeoPlaybookPage() {
 
                 {/* Warning callout */}
                 <div style={{ border: '1px solid rgba(220,38,38,0.22)', borderLeft: '4px solid #dc2626', background: 'rgba(220,38,38,0.04)', borderRadius: '0 12px 12px 0', padding: '16px 20px', marginBottom: 26 }}>
-                  <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5, color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 7 }}>⚠ Avoid: Paid link networks</div>
+                  <div style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5, color: '#dc2626', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 7 }}> Avoid: Paid link networks</div>
                   <p style={{ fontSize: 15, color: 'var(--text-soft)', margin: 0, lineHeight: 1.65 }}>
                     Bought links violate Google's spam policies. A manual penalty can wipe months of ranking progress across the <em>entire domain</em> — not just the page the links pointed to. The risk is never worth it.
                   </p>
@@ -531,12 +528,12 @@ export default function SeoPlaybookPage() {
                 {/* 3 legitimate methods */}
                 <div className="proto-3col" style={{ marginBottom: 48 }}>
                   {[
-                    { icon: '✍️', title: 'Guest articles', desc: 'Original, vendor-neutral pieces published in security industry media and trade publications. Each article earns a contextual link and brand exposure.' },
-                    { icon: '📊', title: 'Original research', desc: 'Industry surveys, benchmark data or case studies that give other sites something genuinely worth citing — and that you own exclusively.' },
-                    { icon: '🛠️', title: 'Useful tools', desc: 'Calculators, compliance checklists, or specification guides that practitioners bookmark and share organically over time.' },
+                    { title: 'Guest articles', desc: 'Original, vendor-neutral pieces published in security industry media and trade publications. Each article earns a contextual link and brand exposure.' },
+                    { title: 'Original research', desc: 'Industry surveys, benchmark data or case studies that give other sites something genuinely worth citing — and that you own exclusively.' },
+                    { title: 'Useful tools', desc: 'Calculators, compliance checklists, or specification guides that practitioners bookmark and share organically over time.' },
                   ].map((item) => (
                     <div key={item.title} style={{ border: '1px solid var(--line)', borderRadius: 14, padding: '20px 18px', background: 'var(--bg-card)' }}>
-                      <span style={{ fontSize: 28, display: 'block', marginBottom: 12 }}>{item.icon}</span>
+                      <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(30,95,224,0.08)', border: '1px solid rgba(30,95,224,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
                       <div style={{ fontWeight: 700, fontFamily: 'var(--font-display)', fontSize: 15.5, marginBottom: 8, color: 'var(--text)' }}>{item.title}</div>
                       <div style={{ fontSize: 13.5, color: 'var(--text-dim)', lineHeight: 1.58 }}>{item.desc}</div>
                     </div>
@@ -546,10 +543,10 @@ export default function SeoPlaybookPage() {
 
               <div style={{ height: 1, background: 'var(--line)', margin: '0 0 48px' }} />
 
-              {/* ─── SECTION 6: Measurement ─────────────────── */}
+              {/*  SECTION 6: Measurement  */}
               <section aria-labelledby="measurement">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(22,163,74,0.1)', border: '1px solid rgba(22,163,74,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>📊</div>
+                  <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(22,163,74,0.1)', border: '1px solid rgba(22,163,74,0.22)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
                   <h2 id="measurement" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0 }}>
                     6. Measure what matters
                   </h2>
@@ -601,7 +598,7 @@ export default function SeoPlaybookPage() {
                     ))}
                   </div>
                   <div style={{ padding: '14px 22px', background: 'rgba(30,95,224,0.04)', borderTop: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 16 }}>💡</span>
+                    <span style={{ fontSize: 16 }}></span>
                     <span style={{ fontSize: 13.5, color: 'var(--text-soft)' }}>
                       <strong style={{ color: 'var(--text)' }}>Metric to own:</strong> Impressions are the leading indicator — they tell you Google is crawling and considering your pages before clicks confirm it.
                     </span>
@@ -610,7 +607,7 @@ export default function SeoPlaybookPage() {
               </section>
 
 
-              {/* ─── CTA Section (original content preserved) ── */}
+              {/*  CTA Section (original content preserved)  */}
               <div style={{ border: '1px solid rgba(30,95,224,0.22)', borderRadius: 18, padding: 'clamp(24px, 4vw, 40px)', background: 'linear-gradient(135deg, rgba(30,95,224,0.06) 0%, rgba(30,95,224,0.02) 100%)', marginBottom: 56 }}>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(20px, 2.5vw, 26px)', color: 'var(--text)', marginBottom: 12, letterSpacing: '-0.01em' }}>
                   Want help applying this to your security brand?
@@ -633,7 +630,7 @@ export default function SeoPlaybookPage() {
               </div>
 
 
-              {/* ─── FAQ ─────────────────────────────────────── */}
+              {/*  FAQ  */}
               <section aria-labelledby="faq">
                 <h2 id="faq" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 28px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', marginBottom: 28 }}>
                   Frequently asked questions
@@ -687,7 +684,7 @@ export default function SeoPlaybookPage() {
               </section>
 
 
-              {/* ─── Author Card ─────────────────────────────── */}
+              {/*  Author Card  */}
               <div style={{
                 marginTop: 52,
                 padding: '24px 28px',
@@ -724,9 +721,9 @@ export default function SeoPlaybookPage() {
             </div>
 
 
-            {/* ────────────────────────────────────────────────
+            {/* 
                 SIDEBAR
-            ──────────────────────────────────────────────── */}
+             */}
             <aside className="proto-sidebar">
 
               {/* Table of Contents */}
@@ -795,9 +792,9 @@ export default function SeoPlaybookPage() {
         </div>
 
 
-        {/* ═══════════════════════════════════════════════════
+        {/* 
             RELATED POSTS — bottom grid (visible on mobile too)
-        ════════════════════════════════════════════════════ */}
+         */}
         <section aria-label="More articles" style={{ maxWidth: 1440, margin: '0 auto', padding: '56px 24px 0' }}>
           <div style={{ marginBottom: 28, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <div>
