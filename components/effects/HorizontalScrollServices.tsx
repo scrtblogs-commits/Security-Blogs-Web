@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import HeroGraph from '@/components/ui/HeroGraph'
 
 // ── GSC Real Screenshot Card ──────────────────────────────────────────
@@ -76,16 +75,20 @@ function GscScreenshotCard() {
       )}
 
       {/* The real screenshot — untouched */}
-      <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: 380 }}>
-        <Image
-          src="/gsc-performance.png"
-          alt="SecurityBlogs Google Search Console — Real Performance Data"
-          fill
-          style={{ objectFit: 'cover', objectPosition: 'top left', borderRadius: 16 }}
-          priority
-          unoptimized
-        />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/gsc-performance.png"
+        alt="SecurityBlogs Google Search Console — Real Performance Data"
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'top left',
+          display: 'block',
+          borderRadius: 16,
+          minHeight: 380,
+        }}
+      />
 
       <style>{`
         @keyframes gsc-float {
