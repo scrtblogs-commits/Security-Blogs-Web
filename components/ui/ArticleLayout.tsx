@@ -1,37 +1,117 @@
+import Link from 'next/link'
 import Breadcrumb from './Breadcrumb'
-import HeroBg from './HeroBg'
 
 export default function ArticleLayout({
-  breadcrumb, title, subtitle, toc, children,
-}: { breadcrumb: { label: string; href?: string }[]; title: string; subtitle?: string; toc?: { id: string; label: string }[]; children: React.ReactNode }) {
+  breadcrumb,
+  title,
+  subtitle,
+  category,
+  date,
+  readTime,
+  toc,
+  children,
+}: {
+  breadcrumb: { label: string; href?: string }[]
+  title: string
+  subtitle?: string
+  category?: string
+  date?: string
+  readTime?: string
+  toc?: { id: string; label: string }[]
+  children: React.ReactNode
+}) {
+  const formattedDate = date
+    ? new Date(date).toLocaleDateString('en-AU', { year: 'numeric', month: 'long', day: 'numeric' })
+    : null
+
   return (
     <>
-      <HeroBg grid blobs>
-        <Breadcrumb items={breadcrumb} />
-        <h1 className="h1" style={{ maxWidth: 820 }}>{title}</h1>
-        {subtitle && <p className="lead" style={{ maxWidth: 680, marginTop: 14 }}>{subtitle}</p>}
-      </HeroBg>
-      <section className="section" style={{ paddingTop: 0 }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: toc ? '240px 1fr' : '1fr', gap: 48, alignItems: 'start' }}>
-          {toc && (
-            <aside style={{ position: 'sticky', top: 100 }} className="sg-toc">
-              <div className="eyebrow" style={{ marginBottom: 12 }}>On this page</div>
-              <nav style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {toc.map((t) => <a key={t.id} href={`#${t.id}`} className="text-soft" style={{ fontSize: 14 }}>{t.label}</a>)}
-              </nav>
+      {/* Hero */}
+      <div className="sg-post-hero">
+        <div className="container" style={{ maxWidth: 900, paddingTop: 0, paddingBottom: 40 }}>
+          <Breadcrumb items={breadcrumb} />
+
+          {(category || formattedDate || readTime) && (
+            <div className="sg-post-meta" style={{ marginTop: 16 }}>
+              {category && (
+                <span className="chip" style={{ color: 'var(--blue)', borderColor: 'rgba(30,95,224,0.3)', background: 'rgba(30,95,224,0.07)' }}>
+                  {category}
+                </span>
+              )}
+              {formattedDate && <><span className="sep">·</span><span>{formattedDate}</span></>}
+              {readTime && <><span className="sep">·</span><span>{readTime} read</span></>}
+            </div>
+          )}
+
+          <h1 style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(28px, 5vw, 48px)',
+            fontWeight: 800,
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em',
+            color: 'var(--text)',
+            marginBottom: 20,
+            marginTop: 12,
+            maxWidth: 820,
+          }}>
+            {title}
+          </h1>
+
+          {subtitle && (
+            <p style={{
+              fontSize: 'clamp(16px, 2vw, 19px)',
+              color: 'var(--text-soft)',
+              lineHeight: 1.65,
+              maxWidth: 720,
+            }}>
+              {subtitle}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Content */}
+      <section className="section" style={{ paddingTop: 40 }}>
+        <div
+          className="container sg-article-layout"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: toc ? '1fr 280px' : '1fr',
+            gap: 48,
+            alignItems: 'start',
+            maxWidth: 1100,
+          }}
+        >
+          <div className="sg-article">{children}</div>
+
+          {toc && toc.length > 1 && (
+            <aside className="sg-sidebar" style={{ position: 'sticky', top: 96 }}>
+              <div className="sg-sidebar-widget">
+                <div className="sg-sidebar-widget-title">On this page</div>
+                <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {toc.map((t) => (
+                    <a key={t.id} href={`#${t.id}`} className="sg-toc-link" style={{ paddingLeft: 10 }}>
+                      {t.label}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="sg-sidebar-widget" style={{ background: 'linear-gradient(135deg, rgba(30,95,224,0.08) 0%, rgba(30,95,224,0.02) 100%)', borderColor: 'rgba(30,95,224,0.2)' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-display)', marginBottom: 10 }}>
+                  Free Visibility Audit
+                </div>
+                <p style={{ fontSize: 13.5, color: 'var(--text-soft)', marginBottom: 14, lineHeight: 1.55 }}>
+                  See exactly where your security brand is missing from Google and AI assistants.
+                </p>
+                <Link href="/contact/" className="btn btn-primary" style={{ fontSize: 13.5, padding: '10px 16px', width: '100%', justifyContent: 'center', display: 'flex' }}>
+                  Book free audit →
+                </Link>
+              </div>
             </aside>
           )}
-          <div className="sg-article" style={{ maxWidth: 760, lineHeight: 1.75 }}>{children}</div>
         </div>
       </section>
-      <style>{`
-        .sg-article h2 { font-size: 26px; margin: 36px 0 12px; }
-        .sg-article h3 { font-size: 19px; margin: 26px 0 10px; }
-        .sg-article p { color: var(--text-soft); margin-bottom: 16px; }
-        .sg-article ul { color: var(--text-soft); margin: 0 0 16px 22px; display: flex; flex-direction: column; gap: 8px; }
-        .sg-article a { color: var(--blue); }
-        @media (max-width: 860px){ .sg-toc { display: none; } .container:has(.sg-article) { grid-template-columns: 1fr !important; } }
-      `}</style>
     </>
   )
 }
