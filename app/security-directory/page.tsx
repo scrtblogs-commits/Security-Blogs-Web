@@ -8,6 +8,7 @@ import ProcessSteps from '@/components/ui/ProcessSteps'
 import JsonLd from '@/components/JsonLd'
 import PricingCards from '@/components/ui/PricingCards'
 import DirectoryClient from '@/components/ui/DirectoryClient'
+import DirectoryHowItWorks from '@/components/ui/DirectoryHowItWorks'
 import { serviceSchema } from '@/lib/schema'
 
 export const metadata = {
@@ -105,10 +106,13 @@ export default function SecurityDirectoryPage() {
         </div>
       </section>
 
-      {/* ── How it works ── */}
+      {/* ── How it works — visitor journey ── */}
+      <DirectoryHowItWorks />
+
+      {/* ── How to get listed — for businesses ── */}
       <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SectionHead eyebrow="How it works" title="From application to live listing in four steps." />
+          <SectionHead eyebrow="Get your business listed" title="From application to live listing in four steps." />
           <ProcessSteps steps={steps} />
         </div>
       </section>
