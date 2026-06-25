@@ -81,7 +81,7 @@ const COMPANIES: Company[] = [
     website: 'eventshield.com.au', email: 'events@eventshield.com.au', phone: '02 9000 4567',
     specialisations: ['Concerts & Festivals', 'Corporate Events', 'Sporting Events'],
     serviceAreas: ['Sydney', 'Newcastle', 'Wollongong', 'Central Coast'],
-    description: 'Australia\'s event security specialists — from intimate corporate functions to major festivals.',
+    description: "Australia's event security specialists — from intimate corporate functions to major festivals.",
   },
   {
     id: 7, name: 'BuildSafe Security', logo: 'BS', category: 'Construction Security',
@@ -136,7 +136,11 @@ const COMPANIES: Company[] = [
     website: 'pacificcoastsecurity.com.au', email: 'info@pacificcoastsecurity.com.au', phone: '07 4000 7890',
     specialisations: ['Tourism Security', 'Hotel Security', 'Resort Security'],
     serviceAreas: ['Cairns', 'Port Douglas', 'Townsville', 'Mackay'],
+<<<<<<< HEAD
     description: 'Tropical North Queensland\'s trusted security provider for tourism and hospitality.',
+=======
+    description: "Tropical North Queensland's trusted security provider for tourism and hospitality.",
+>>>>>>> claude/trusting-fermat-2pf5z2
   },
 ]
 
@@ -149,6 +153,23 @@ const SERVICE_TYPES = [
 const STATES = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT']
 const SIZES = ['Small', 'Medium', 'Large', 'Enterprise']
 
+<<<<<<< HEAD
+=======
+const PURPOSE_OPTIONS = [
+  'Looking for a security provider',
+  'Comparing security companies',
+  'Research / Market analysis',
+  'Partnership opportunity',
+  'Other',
+]
+
+// Mask company name: show first 3 chars + dashes
+function maskName(name: string): string {
+  if (name.length <= 3) return name + '***'
+  return name.slice(0, 3) + '**************'
+}
+
+>>>>>>> claude/trusting-fermat-2pf5z2
 // ── Star Rating ──────────────────────────────────────────────────────
 function Stars({ rating }: { rating: number }) {
   return (
@@ -165,6 +186,7 @@ function Locked({ children }: { children: React.ReactNode }) {
   )
 }
 
+<<<<<<< HEAD
 // ── Newsletter Gate Modal ────────────────────────────────────────────
 function NewsletterModal({ onSubscribe, onClose }: { onSubscribe: (email: string) => void; onClose: () => void }) {
   const [email, setEmail] = useState('')
@@ -216,6 +238,180 @@ function NewsletterModal({ onSubscribe, onClose }: { onSubscribe: (email: string
               </button>
             </form>
             <p style={{ textAlign: 'center', fontSize: 12, color: '#94a3b8', marginTop: 14 }}>No spam. Unsubscribe anytime.</p>
+=======
+// ── 4-Field Access Modal ─────────────────────────────────────────────
+function AccessModal({ onClose }: { onClose: () => void }) {
+  const [form, setForm] = useState({ name: '', email: '', company: '', purpose: '' })
+  const [loading, setLoading] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [error, setError] = useState('')
+
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setForm(f => ({ ...f, [k]: e.target.value }))
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', padding: '12px 16px', border: '1.5px solid #e2e8f0',
+    borderRadius: 10, fontSize: 14, outline: 'none', boxSizing: 'border-box',
+    color: '#0f172a', background: '#fff',
+  }
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!form.name || !form.email || !form.company || !form.purpose) {
+      setError('Please fill in all fields.')
+      return
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) {
+      setError('Please enter a valid business email address.')
+      return
+    }
+    setError('')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/directory-access', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (data.ok) {
+        if (data.alreadyApproved) {
+          localStorage.setItem('sg-dir-verified', 'true')
+          localStorage.setItem('sg-dir-email', form.email)
+          window.location.reload()
+        } else {
+          setSent(true)
+        }
+      } else {
+        setError(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setError('Network error. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div
+      style={{ position: 'fixed', inset: 0, zIndex: 999, background: 'rgba(15,23,42,0.72)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}
+      onClick={onClose}
+    >
+      <div
+        style={{ background: '#fff', borderRadius: 24, padding: '44px 40px', maxWidth: 500, width: '100%', boxShadow: '0 32px 80px rgba(0,0,0,0.22)', position: 'relative' }}
+        onClick={e => e.stopPropagation()}
+      >
+        <button onClick={onClose} style={{ position: 'absolute', top: 16, right: 20, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#94a3b8', lineHeight: 1 }}>
+          ✕
+        </button>
+
+        {sent ? (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{
+              width: 72, height: 72, borderRadius: '50%',
+              background: 'linear-gradient(135deg, #10b981, #3b82f6)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 20px', fontSize: 32, color: '#fff',
+            }}>
+              ✓
+            </div>
+            <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', marginBottom: 10 }}>Request submitted!</h3>
+            <p style={{ color: '#475569', lineHeight: 1.65, marginBottom: 20 }}>
+              Your request has been received. Our team will review it and send an approval
+              email to <strong>{form.email}</strong> within 1 business day.
+            </p>
+            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 12, padding: '14px 18px', fontSize: 13, color: '#166534', fontWeight: 600 }}>
+              Once approved, you will receive an email with a link to unlock full access.
+            </div>
+          </div>
+        ) : (
+          <>
+            <div style={{ marginBottom: 28 }}>
+              <span style={{
+                display: 'inline-block', fontSize: 11, fontWeight: 800,
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                color: '#3b82f6', marginBottom: 10,
+              }}>
+                Free access
+              </span>
+              <h3 style={{ fontSize: 24, fontWeight: 900, color: '#0f172a', marginBottom: 8, lineHeight: 1.2 }}>
+                Unlock the full directory
+              </h3>
+              <p style={{ color: '#64748b', fontSize: 14, lineHeight: 1.6, margin: 0 }}>
+                Request access to direct contact details, phone numbers, websites and AI visibility scores
+                for all 200+ verified Australian security companies. Reviewed and approved within 1 business day.
+              </p>
+            </div>
+
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div>
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Full Name</label>
+                <input
+                  type="text" required placeholder="Jane Smith" value={form.name}
+                  onChange={set('name')} style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+                />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Business Email Address</label>
+                <input
+                  type="email" required placeholder="jane@company.com" value={form.email}
+                  onChange={set('email')} style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+                />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Company Name</label>
+                <input
+                  type="text" required placeholder="Acme Corp" value={form.company}
+                  onChange={set('company')} style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={e => e.target.style.borderColor = '#e2e8f0'}
+                />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 6 }}>Purpose of Inquiry</label>
+                <select
+                  required value={form.purpose} onChange={set('purpose')}
+                  style={{ ...inputStyle, cursor: 'pointer', appearance: 'auto' }}
+                  onFocus={e => (e.target as HTMLSelectElement).style.borderColor = '#3b82f6'}
+                  onBlur={e => (e.target as HTMLSelectElement).style.borderColor = '#e2e8f0'}
+                >
+                  <option value="">Select a reason...</option>
+                  {PURPOSE_OPTIONS.map(o => <option key={o} value={o}>{o}</option>)}
+                </select>
+              </div>
+
+              {error && (
+                <div style={{ fontSize: 13, color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, padding: '10px 14px' }}>
+                  {error}
+                </div>
+              )}
+
+              <button
+                type="submit" disabled={loading}
+                style={{
+                  width: '100%', padding: '14px', marginTop: 4,
+                  background: loading ? '#94a3b8' : 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                  color: '#fff', border: 'none', borderRadius: 12,
+                  fontSize: 15, fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer',
+                  transition: 'opacity 0.15s',
+                }}
+              >
+                {loading ? 'Submitting request...' : 'Request access →'}
+              </button>
+            </form>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginTop: 16, flexWrap: 'wrap' }}>
+              {['No spam', 'Secure', 'Free forever'].map(t => (
+                <span key={t} style={{ fontSize: 12, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <span style={{ color: '#10b981' }}>✓</span> {t}
+                </span>
+              ))}
+            </div>
+>>>>>>> claude/trusting-fermat-2pf5z2
           </>
         )}
       </div>
@@ -223,6 +419,7 @@ function NewsletterModal({ onSubscribe, onClose }: { onSubscribe: (email: string
   )
 }
 
+<<<<<<< HEAD
 // ── Company Row (list view) ───────────────────────────────────────────
 function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; isSubscriber: boolean; onUnlock: () => void }) {
   return (
@@ -231,6 +428,17 @@ function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; is
       padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16,
       transition: 'box-shadow 0.15s',
     }}
+=======
+// ── Company Row ───────────────────────────────────────────────────────
+function CompanyCard({ company, isVerified, onUnlock }: { company: Company; isVerified: boolean; onUnlock: () => void }) {
+  return (
+    <div
+      style={{
+        background: '#fff', borderRadius: 12, border: '1px solid #e8edf3',
+        padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16,
+        transition: 'box-shadow 0.15s',
+      }}
+>>>>>>> claude/trusting-fermat-2pf5z2
       onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.07)')}
       onMouseLeave={e => (e.currentTarget.style.boxShadow = 'none')}
     >
@@ -241,7 +449,13 @@ function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; is
 
       {/* Name + location */}
       <div style={{ flex: '0 0 220px', minWidth: 0 }}>
+<<<<<<< HEAD
         <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{company.name}</div>
+=======
+        <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {isVerified ? company.name : maskName(company.name)}
+        </div>
+>>>>>>> claude/trusting-fermat-2pf5z2
         <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 1 }}>{company.city}, {company.state}</div>
       </div>
 
@@ -260,6 +474,7 @@ function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; is
         <span style={{ fontSize: 12, fontWeight: 700, color: '#1e5fe0', flexShrink: 0 }}>{company.aiScore}</span>
       </div>
 
+<<<<<<< HEAD
       {/* Contact / lock — push to right */}
       <div style={{ marginLeft: 'auto', flexShrink: 0 }}>
         {isSubscriber ? (
@@ -269,6 +484,36 @@ function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; is
           </div>
         ) : (
           <button onClick={onUnlock} style={{ fontSize: 12, color: '#3b82f6', fontWeight: 700, background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '6px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+=======
+      {/* Rating — blurred for locked */}
+      <div style={{ flex: '0 0 100px', display: 'flex', alignItems: 'center', gap: 6 }}>
+        {isVerified ? (
+          <>
+            <Stars rating={company.rating} />
+            <span style={{ fontSize: 12, color: '#64748b' }}>({company.reviews})</span>
+          </>
+        ) : (
+          <span style={{ fontSize: 12, color: '#64748b' }}>
+            <Locked><Stars rating={company.rating} /> ({company.reviews})</Locked>
+          </span>
+        )}
+      </div>
+
+      {/* Contact / lock — push to right */}
+      <div style={{ marginLeft: 'auto', flexShrink: 0 }}>
+        {isVerified ? (
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <a href={`https://${company.website}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#3b82f6', textDecoration: 'none', fontWeight: 600 }}>
+              🌐 Website
+            </a>
+            <span style={{ fontSize: 12, color: '#475569' }}>📞 {company.phone}</span>
+          </div>
+        ) : (
+          <button
+            onClick={onUnlock}
+            style={{ fontSize: 12, color: '#3b82f6', fontWeight: 700, background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '6px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+          >
+>>>>>>> claude/trusting-fermat-2pf5z2
             🔒 Unlock
           </button>
         )}
@@ -286,14 +531,23 @@ export default function DirectoryClient() {
   const [filterState, setFilterState] = useState('')
   const [filterSize, setFilterSize] = useState('')
   const [filterRating, setFilterRating] = useState('')
+<<<<<<< HEAD
   const [isSubscriber, setIsSubscriber] = useState(false)
+=======
+  const [isVerified, setIsVerified] = useState(false)
+>>>>>>> claude/trusting-fermat-2pf5z2
   const [showModal, setShowModal] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
 
+<<<<<<< HEAD
   // Persist subscriber state
   useEffect(() => {
     setIsSubscriber(localStorage.getItem('sg-dir-subscriber') === 'true')
+=======
+  useEffect(() => {
+    setIsVerified(localStorage.getItem('sg-dir-verified') === 'true')
+>>>>>>> claude/trusting-fermat-2pf5z2
   }, [])
 
   // Autocomplete suggestions
@@ -305,6 +559,7 @@ export default function DirectoryClient() {
     setSuggestions([...new Set([...matches, ...nameMatches])].slice(0, 6))
   }, [search])
 
+<<<<<<< HEAD
   const handleSubscribe = (email: string) => {
     localStorage.setItem('sg-dir-subscriber', 'true')
     localStorage.setItem('sg-dir-email', email)
@@ -312,6 +567,8 @@ export default function DirectoryClient() {
     setShowModal(false)
   }
 
+=======
+>>>>>>> claude/trusting-fermat-2pf5z2
   const filtered = useMemo(() => {
     return COMPANIES.filter(c => {
       const q = search.toLowerCase()
@@ -333,24 +590,49 @@ export default function DirectoryClient() {
 
   return (
     <>
+<<<<<<< HEAD
       {showModal && <NewsletterModal onSubscribe={handleSubscribe} onClose={() => setShowModal(false)} />}
+=======
+      {showModal && <AccessModal onClose={() => setShowModal(false)} />}
+>>>>>>> claude/trusting-fermat-2pf5z2
 
       <div style={{ background: '#f8f9fc', minHeight: '60vh' }}>
         <div className="container" style={{ paddingTop: 48, paddingBottom: 80 }}>
 
+<<<<<<< HEAD
           {/* Subscriber banner */}
           {isSubscriber ? (
             <div style={{ background: 'linear-gradient(135deg, #ecfdf5, #eff6ff)', border: '1px solid #bbf7d0', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
               <span style={{ fontSize: 20 }}>✅</span>
               <span style={{ fontSize: 14, fontWeight: 600, color: '#166534' }}>Full directory access unlocked — you can see all contact details and company profiles.</span>
+=======
+          {/* Status banner */}
+          {isVerified ? (
+            <div style={{ background: 'linear-gradient(135deg, #ecfdf5, #eff6ff)', border: '1px solid #bbf7d0', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
+              <span style={{ fontSize: 20 }}>✅</span>
+              <span style={{ fontSize: 14, fontWeight: 600, color: '#166534' }}>
+                Full directory access — contact details, phone numbers and profiles are unlocked.
+              </span>
+>>>>>>> claude/trusting-fermat-2pf5z2
             </div>
           ) : (
             <div style={{ background: 'linear-gradient(135deg, #eff6ff, #eef2ff)', border: '1px solid #bfdbfe', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 28, flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 20 }}>🔒</span>
+<<<<<<< HEAD
                 <span style={{ fontSize: 14, fontWeight: 600, color: '#1e40af' }}>Subscribe to unlock full company profiles, contact details and ratings.</span>
               </div>
               <button onClick={() => setShowModal(true)} style={{ padding: '9px 20px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+=======
+                <span style={{ fontSize: 14, fontWeight: 600, color: '#1e40af' }}>
+                  Request access to unlock full company profiles, contact details and ratings — approved within 1 business day.
+                </span>
+              </div>
+              <button
+                onClick={() => setShowModal(true)}
+                style={{ padding: '9px 20px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
+              >
+>>>>>>> claude/trusting-fermat-2pf5z2
                 Get Full Access — Free
               </button>
             </div>
@@ -455,7 +737,11 @@ export default function DirectoryClient() {
               Showing <strong style={{ color: '#0f172a' }}>{filtered.length}</strong> of {COMPANIES.length} companies
               {search && <> for &ldquo;<strong style={{ color: '#3b82f6' }}>{search}</strong>&rdquo;</>}
             </p>
+<<<<<<< HEAD
             {!isSubscriber && (
+=======
+            {!isVerified && (
+>>>>>>> claude/trusting-fermat-2pf5z2
               <button onClick={() => setShowModal(true)} style={{ fontSize: 13, color: '#3b82f6', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
                 Unlock full access →
               </button>
@@ -471,11 +757,19 @@ export default function DirectoryClient() {
                 <div style={{ flex: '0 0 220px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Company</div>
                 <div style={{ flex: '0 0 160px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Category</div>
                 <div style={{ flex: '0 0 120px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>AI Score</div>
+<<<<<<< HEAD
+=======
+                <div style={{ flex: '0 0 100px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Rating</div>
+>>>>>>> claude/trusting-fermat-2pf5z2
                 <div style={{ marginLeft: 'auto', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Contact</div>
               </div>
               {filtered.map((company, i) => (
                 <div key={company.id} style={{ borderBottom: i < filtered.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
+<<<<<<< HEAD
                   <CompanyCard company={company} isSubscriber={isSubscriber} onUnlock={() => setShowModal(true)} />
+=======
+                  <CompanyCard company={company} isVerified={isVerified} onUnlock={() => setShowModal(true)} />
+>>>>>>> claude/trusting-fermat-2pf5z2
                 </div>
               ))}
             </div>
@@ -491,19 +785,37 @@ export default function DirectoryClient() {
             </div>
           )}
 
+<<<<<<< HEAD
           {/* Bottom unlock CTA for non-subscribers */}
           {!isSubscriber && filtered.length > 0 && (
+=======
+          {/* Bottom unlock CTA for non-verified */}
+          {!isVerified && filtered.length > 0 && (
+>>>>>>> claude/trusting-fermat-2pf5z2
             <div style={{ marginTop: 48, background: 'linear-gradient(135deg, #eff6ff, #eef2ff)', borderRadius: 24, padding: '40px 36px', textAlign: 'center', border: '1px solid #bfdbfe' }}>
               <h3 style={{ fontSize: 26, fontWeight: 900, color: '#0f172a', marginBottom: 12 }}>
                 See full profiles for all {COMPANIES.length} companies
               </h3>
               <p style={{ color: '#475569', maxWidth: 480, margin: '0 auto 24px', lineHeight: 1.6 }}>
+<<<<<<< HEAD
                 Subscribe to the SecurityBlogs newsletter for free and instantly unlock every contact detail, phone number, website link, specialisation and service area.
               </p>
               <button onClick={() => setShowModal(true)} style={{ padding: '16px 36px', background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', borderRadius: 14, fontSize: 16, fontWeight: 700, cursor: 'pointer' }}>
                 🔓 Get Full Directory Access — Free
               </button>
               <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>No spam. Unsubscribe anytime.</p>
+=======
+                Submit a quick access request. Our team reviews every request and approves genuine buyers,
+                researchers and industry professionals within 1 business day.
+              </p>
+              <button
+                onClick={() => setShowModal(true)}
+                style={{ padding: '16px 36px', background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', borderRadius: 14, fontSize: 16, fontWeight: 700, cursor: 'pointer' }}
+              >
+                🔓 Request Full Directory Access
+              </button>
+              <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>Takes under 60 seconds. Approved within 1 business day.</p>
+>>>>>>> claude/trusting-fermat-2pf5z2
             </div>
           )}
         </div>
