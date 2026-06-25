@@ -215,7 +215,7 @@ function AccessModal({ onClose }: { onClose: () => void }) {
       })
       const data = await res.json()
       if (data.ok) {
-        if (data.alreadyVerified) {
+        if (data.alreadyApproved) {
           localStorage.setItem('sg-dir-verified', 'true')
           localStorage.setItem('sg-dir-email', form.email)
           window.location.reload()
@@ -249,19 +249,19 @@ function AccessModal({ onClose }: { onClose: () => void }) {
           <div style={{ textAlign: 'center' }}>
             <div style={{
               width: 72, height: 72, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+              background: 'linear-gradient(135deg, #10b981, #3b82f6)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               margin: '0 auto 20px', fontSize: 32, color: '#fff',
             }}>
-              ✉
+              ✓
             </div>
-            <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', marginBottom: 10 }}>Check your inbox</h3>
+            <h3 style={{ fontSize: 22, fontWeight: 900, color: '#0f172a', marginBottom: 10 }}>Request submitted!</h3>
             <p style={{ color: '#475569', lineHeight: 1.65, marginBottom: 20 }}>
-              We sent a verification link to <strong>{form.email}</strong>.<br />
-              Click the link to unlock full directory access.
+              Your request has been received. Our team will review it and send an approval
+              email to <strong>{form.email}</strong> within 1 business day.
             </p>
-            <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: '14px 18px', fontSize: 13, color: '#64748b' }}>
-              Didnt receive it? Check your spam folder. The link expires in 24 hours.
+            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 12, padding: '14px 18px', fontSize: 13, color: '#166534', fontWeight: 600 }}>
+              Once approved, you will receive an email with a link to unlock full access.
             </div>
           </div>
         ) : (
@@ -278,8 +278,8 @@ function AccessModal({ onClose }: { onClose: () => void }) {
                 Unlock the full directory
               </h3>
               <p style={{ color: '#64748b', fontSize: 14, lineHeight: 1.6, margin: 0 }}>
-                Get direct contact details, phone numbers, websites and AI visibility scores
-                for all 200+ verified companies — free, no credit card needed.
+                Request access to direct contact details, phone numbers, websites and AI visibility scores
+                for all 200+ verified Australian security companies. Reviewed and approved within 1 business day.
               </p>
             </div>
 
@@ -340,7 +340,7 @@ function AccessModal({ onClose }: { onClose: () => void }) {
                   transition: 'opacity 0.15s',
                 }}
               >
-                {loading ? 'Sending verification...' : 'Send verification email →'}
+                {loading ? 'Submitting request...' : 'Request access →'}
               </button>
             </form>
 
@@ -500,7 +500,7 @@ export default function DirectoryClient() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 20 }}>🔒</span>
                 <span style={{ fontSize: 14, fontWeight: 600, color: '#1e40af' }}>
-                  Verify your email to unlock full company profiles, contact details and ratings — free.
+                  Request access to unlock full company profiles, contact details and ratings — approved within 1 business day.
                 </span>
               </div>
               <button
@@ -655,16 +655,16 @@ export default function DirectoryClient() {
                 See full profiles for all {COMPANIES.length} companies
               </h3>
               <p style={{ color: '#475569', maxWidth: 480, margin: '0 auto 24px', lineHeight: 1.6 }}>
-                Verify your email for free and instantly unlock every contact detail, phone number,
-                website, specialisation and service area listing.
+                Submit a quick access request. Our team reviews every request and approves genuine buyers,
+                researchers and industry professionals within 1 business day.
               </p>
               <button
                 onClick={() => setShowModal(true)}
                 style={{ padding: '16px 36px', background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', borderRadius: 14, fontSize: 16, fontWeight: 700, cursor: 'pointer' }}
               >
-                🔓 Unlock Full Directory Access — Free
+                🔓 Request Full Directory Access
               </button>
-              <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>Takes under 60 seconds. No credit card.</p>
+              <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>Takes under 60 seconds. Approved within 1 business day.</p>
             </div>
           )}
         </div>

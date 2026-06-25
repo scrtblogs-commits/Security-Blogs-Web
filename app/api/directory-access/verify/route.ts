@@ -1,5 +1,6 @@
 // GET /api/directory-access/verify?token=xxx
-// Validates token, marks email as verified in Redis.
+// Validates a one-time access token issued on admin approval.
+// Sets sg:dir:approved:{email} = '1' permanently (already set at approval time).
 
 import { NextResponse } from 'next/server'
 
@@ -24,21 +25,17 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false, error: 'Token required' }, { status: 400 })
   }
 
-  const result = await redisCommand(['GET', `sg:verify:${token}`])
+  const result = await redisCommand(['GET', `sg:dir:access:${token}`])
   if (!result?.result) {
-    return NextResponse.json({ ok: false, error: 'Invalid or expired token' }, { status: 400 })
+    return NextResponse.json({ ok: false, error: 'Invalid or expired access link' }, { status: 400 })
   }
 
-  let payload: { name: string; email: string; company: string; purpose: string }
-  try { payload = JSON.parse(result.result) } catch {
-    return NextResponse.json({ ok: false, error: 'Corrupt token data' }, { status: 400 })
-  }
+  const email = result.result as string
 
-  // Mark email as permanently verified (no expiry)
-  await redisCommand(['SET', `sg:verified:${payload.email}`, '1'])
+  // Confirm approved state (should already be set but ensure consistency)
+  await redisCommand(['SET', `sg:dir:approved:${email}`, '1'])
 
-  // Delete the one-time token
-  await redisCommand(['DEL', `sg:verify:${token}`])
+  // Keep the token alive (don't delete — allow re-use within 30-day window)
 
-  return NextResponse.json({ ok: true, email: payload.email, name: payload.name })
+  return NextResponse.json({ ok: true, email })
 }

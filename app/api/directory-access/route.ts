@@ -1,5 +1,6 @@
 // POST /api/directory-access
-// Accepts 4-field form, stores verification token in Redis, sends email via Resend.
+// Saves a new directory access request as "pending" in Redis.
+// Sends admin notification via Web3Forms — no auto-approval, no user email.
 
 import { NextResponse } from 'next/server'
 
@@ -16,58 +17,29 @@ async function redisCommand(args: (string | number)[]) {
   return res.json()
 }
 
-async function sendWeb3Forms(data: Record<string, string>) {
+async function sendAdminNotification(name: string, email: string, company: string, purpose: string, adminUrl: string) {
   const key = process.env.WEB3FORMS_ACCESS_KEY
   if (!key) return
   await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ access_key: key, ...data }),
-  })
-}
-
-async function sendVerificationEmail(to: string, name: string, verifyUrl: string) {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    console.warn('RESEND_API_KEY not set — skipping verification email')
-    return
-  }
-  await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify({
-      from: 'SecurityBlogs Directory <directory@securityblogs.com.au>',
-      to: [to],
-      subject: 'Verify your email — Security Directory access',
-      html: `
-        <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#0f172a">
-          <div style="margin-bottom:24px">
-            <img src="https://securityblogs.com.au/logo.png" alt="SecurityBlogs" height="32" style="height:32px" />
-          </div>
-          <h2 style="font-size:24px;font-weight:800;margin:0 0 12px">Hi ${name}, one quick step</h2>
-          <p style="font-size:16px;color:#475569;line-height:1.6;margin:0 0 28px">
-            Click the button below to verify your email and unlock full access to the
-            Australian Security Company Directory — including direct contact details,
-            phone numbers, websites and AI visibility scores.
-          </p>
-          <a href="${verifyUrl}" style="display:inline-block;background:#3b82f6;color:#fff;font-weight:700;font-size:15px;padding:14px 32px;border-radius:12px;text-decoration:none">
-            Verify my email and unlock access →
-          </a>
-          <p style="font-size:13px;color:#94a3b8;margin-top:28px">
-            This link expires in 24 hours. If you did not request access, you can safely ignore this email.
-          </p>
-          <hr style="border:none;border-top:1px solid #f1f5f9;margin:28px 0" />
-          <p style="font-size:12px;color:#94a3b8">
-            SecurityBlogs · AI Visibility &amp; SEO for Security Companies · securityblogs.com.au
-          </p>
-        </div>
-      `,
+      access_key: key,
+      subject: `[SecurityBlogs] New Directory Access Request — ${name} (${company})`,
+      from_name: 'Directory Access System',
+      email: process.env.ADMIN_EMAIL || email,
+      message: `New directory access request submitted.\n\nName: ${name}\nEmail: ${email}\nCompany: ${company}\nPurpose: ${purpose}\n\nReview and approve/reject in the admin panel:\n${adminUrl}`,
     }),
   })
 }
+
+const PURPOSE_OPTIONS = [
+  'Looking for a security provider',
+  'Comparing security companies',
+  'Research / Market analysis',
+  'Partnership opportunity',
+  'Other',
+]
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>
@@ -86,42 +58,47 @@ export async function POST(req: Request) {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return NextResponse.json({ ok: false, error: 'Valid business email required' }, { status: 400 })
   }
-
-  // Check if already verified
-  const alreadyVerified = await redisCommand(['GET', `sg:verified:${email}`])
-  if (alreadyVerified?.result === '1') {
-    return NextResponse.json({ ok: true, alreadyVerified: true })
+  if (!PURPOSE_OPTIONS.includes(purpose)) {
+    return NextResponse.json({ ok: false, error: 'Invalid purpose selection' }, { status: 400 })
   }
 
-  // Generate a secure token
-  const token = crypto.randomUUID()
-  const payload = JSON.stringify({ name, email, company, purpose, createdAt: new Date().toISOString() })
+  // Check if already approved
+  const alreadyApproved = await redisCommand(['GET', `sg:dir:approved:${email}`])
+  if (alreadyApproved?.result === '1') {
+    return NextResponse.json({ ok: true, alreadyApproved: true })
+  }
 
-  // Store token with 24h TTL (86400 seconds)
-  await redisCommand(['SET', `sg:verify:${token}`, payload, 'EX', 86400])
+  // Check for existing pending request
+  const existingId = await redisCommand(['GET', `sg:dir:email:${email}`])
+  if (existingId?.result) {
+    // Already submitted — just re-notify admin and return pending
+    return NextResponse.json({ ok: true, pending: true })
+  }
 
-  // Also store lead info
-  await redisCommand(['LPUSH', 'sg:leads', JSON.stringify({
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    source: 'directory-access',
-    email, name, company, purpose,
-  })])
-
-  // Send admin notification
-  await sendWeb3Forms({
-    subject: '[SecurityBlogs] New Directory Access Request',
-    from_name: name,
+  const id = crypto.randomUUID()
+  const request = {
+    id,
+    name,
     email,
-    message: `New directory access request.\n\nName: ${name}\nEmail: ${email}\nCompany: ${company}\nPurpose: ${purpose}`,
-  })
+    company,
+    purpose,
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+  }
 
-  // Build verification URL
+  // Store request data
+  await redisCommand(['SET', `sg:dir:req:${id}`, JSON.stringify(request)])
+  // Index by email for duplicate checks
+  await redisCommand(['SET', `sg:dir:email:${email}`, id])
+  // Append to requests list (newest first)
+  await redisCommand(['LPUSH', 'sg:dir:reqs', id])
+
+  // Admin panel URL
   const origin = req.headers.get('origin') || 'https://securityblogs.com.au'
-  const verifyUrl = `${origin}/verify-directory/?token=${token}`
+  const adminSecret = process.env.ADMIN_SECRET || ''
+  const adminUrl = `${origin}/admin/directory-requests/${adminSecret ? `?key=${adminSecret}` : ''}`
 
-  // Send verification email to user
-  await sendVerificationEmail(email, name, verifyUrl)
+  await sendAdminNotification(name, email, company, purpose, adminUrl)
 
   return NextResponse.json({ ok: true })
 }
