@@ -136,11 +136,7 @@ const COMPANIES: Company[] = [
     website: 'pacificcoastsecurity.com.au', email: 'info@pacificcoastsecurity.com.au', phone: '07 4000 7890',
     specialisations: ['Tourism Security', 'Hotel Security', 'Resort Security'],
     serviceAreas: ['Cairns', 'Port Douglas', 'Townsville', 'Mackay'],
-<<<<<<< HEAD
-    description: 'Tropical North Queensland\'s trusted security provider for tourism and hospitality.',
-=======
     description: "Tropical North Queensland's trusted security provider for tourism and hospitality.",
->>>>>>> claude/trusting-fermat-2pf5z2
   },
 ]
 
@@ -153,8 +149,6 @@ const SERVICE_TYPES = [
 const STATES = ['NSW', 'VIC', 'QLD', 'WA', 'SA', 'TAS', 'ACT', 'NT']
 const SIZES = ['Small', 'Medium', 'Large', 'Enterprise']
 
-<<<<<<< HEAD
-=======
 const PURPOSE_OPTIONS = [
   'Looking for a security provider',
   'Comparing security companies',
@@ -169,7 +163,6 @@ function maskName(name: string): string {
   return name.slice(0, 3) + '**************'
 }
 
->>>>>>> claude/trusting-fermat-2pf5z2
 // ── Star Rating ──────────────────────────────────────────────────────
 function Stars({ rating }: { rating: number }) {
   return (
@@ -186,59 +179,6 @@ function Locked({ children }: { children: React.ReactNode }) {
   )
 }
 
-<<<<<<< HEAD
-// ── Newsletter Gate Modal ────────────────────────────────────────────
-function NewsletterModal({ onSubscribe, onClose }: { onSubscribe: (email: string) => void; onClose: () => void }) {
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [done, setDone] = useState(false)
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email.includes('@')) return
-    setLoading(true)
-    fetch('/api/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    })
-      .then(() => { setDone(true); setTimeout(() => onSubscribe(email), 1200) })
-      .catch(() => { setDone(true); setTimeout(() => onSubscribe(email), 1200) })
-  }
-
-  return (
-    <div style={{ position: 'fixed', inset: 0, zIndex: 999, background: 'rgba(15,23,42,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }} onClick={onClose}>
-      <div style={{ background: '#fff', borderRadius: 24, padding: '48px 40px', maxWidth: 480, width: '100%', boxShadow: '0 32px 80px rgba(0,0,0,0.2)', position: 'relative' }} onClick={e => e.stopPropagation()}>
-        <button onClick={onClose} style={{ position: 'absolute', top: 16, right: 20, background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#94a3b8' }}>✕</button>
-        {done ? (
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
-            <h3 style={{ fontSize: 24, fontWeight: 800, marginBottom: 8, color: '#0f172a' }}>Access Unlocked!</h3>
-            <p style={{ color: '#64748b' }}>Full directory access granted. Enjoy!</p>
-          </div>
-        ) : (
-          <>
-            <div style={{ textAlign: 'center', marginBottom: 28 }}>
-              <span style={{ fontSize: 40 }}>🔓</span>
-              <h3 style={{ fontSize: 26, fontWeight: 900, color: '#0f172a', marginTop: 12, marginBottom: 8 }}>Unlock Full Directory Access</h3>
-              <p style={{ color: '#64748b', lineHeight: 1.6 }}>
-                Get complete company profiles, contact details, website links, phone numbers and ratings — free with your newsletter subscription.
-              </p>
-            </div>
-            <form onSubmit={submit}>
-              <input
-                type="email" required placeholder="your@email.com" value={email}
-                onChange={e => setEmail(e.target.value)}
-                style={{ width: '100%', padding: '14px 18px', border: '2px solid #e2e8f0', borderRadius: 12, fontSize: 15, marginBottom: 12, outline: 'none', boxSizing: 'border-box' }}
-                onFocus={e => e.target.style.borderColor = '#3b82f6'}
-                onBlur={e => e.target.style.borderColor = '#e2e8f0'}
-              />
-              <button type="submit" disabled={loading} style={{ width: '100%', padding: '14px', background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', borderRadius: 12, fontSize: 15, fontWeight: 700, cursor: 'pointer' }}>
-                {loading ? 'Unlocking...' : 'Get Full Access — Free →'}
-              </button>
-            </form>
-            <p style={{ textAlign: 'center', fontSize: 12, color: '#94a3b8', marginTop: 14 }}>No spam. Unsubscribe anytime.</p>
-=======
 // ── 4-Field Access Modal ─────────────────────────────────────────────
 function AccessModal({ onClose }: { onClose: () => void }) {
   const [form, setForm] = useState({ name: '', email: '', company: '', purpose: '' })
@@ -411,7 +351,6 @@ function AccessModal({ onClose }: { onClose: () => void }) {
                 </span>
               ))}
             </div>
->>>>>>> claude/trusting-fermat-2pf5z2
           </>
         )}
       </div>
@@ -419,16 +358,6 @@ function AccessModal({ onClose }: { onClose: () => void }) {
   )
 }
 
-<<<<<<< HEAD
-// ── Company Row (list view) ───────────────────────────────────────────
-function CompanyCard({ company, isSubscriber, onUnlock }: { company: Company; isSubscriber: boolean; onUnlock: () => void }) {
-  return (
-    <div style={{
-      background: '#fff', borderRadius: 12, border: '1px solid #e8edf3',
-      padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16,
-      transition: 'box-shadow 0.15s',
-    }}
-=======
 // ── Company Row ───────────────────────────────────────────────────────
 function CompanyCard({ company, isVerified, onUnlock }: { company: Company; isVerified: boolean; onUnlock: () => void }) {
   return (
@@ -438,7 +367,6 @@ function CompanyCard({ company, isVerified, onUnlock }: { company: Company; isVe
         padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 16,
         transition: 'box-shadow 0.15s',
       }}
->>>>>>> claude/trusting-fermat-2pf5z2
       onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.07)')}
       onMouseLeave={e => (e.currentTarget.style.boxShadow = 'none')}
     >
@@ -449,13 +377,9 @@ function CompanyCard({ company, isVerified, onUnlock }: { company: Company; isVe
 
       {/* Name + location */}
       <div style={{ flex: '0 0 220px', minWidth: 0 }}>
-<<<<<<< HEAD
-        <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{company.name}</div>
-=======
         <div style={{ fontSize: 14, fontWeight: 700, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           {isVerified ? company.name : maskName(company.name)}
         </div>
->>>>>>> claude/trusting-fermat-2pf5z2
         <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 1 }}>{company.city}, {company.state}</div>
       </div>
 
@@ -474,17 +398,6 @@ function CompanyCard({ company, isVerified, onUnlock }: { company: Company; isVe
         <span style={{ fontSize: 12, fontWeight: 700, color: '#1e5fe0', flexShrink: 0 }}>{company.aiScore}</span>
       </div>
 
-<<<<<<< HEAD
-      {/* Contact / lock — push to right */}
-      <div style={{ marginLeft: 'auto', flexShrink: 0 }}>
-        {isSubscriber ? (
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-            <a href={`https://${company.website}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#3b82f6', textDecoration: 'none', fontWeight: 600 }}>🌐 Website</a>
-            <span style={{ fontSize: 12, color: '#475569' }}>📞 {company.phone}</span>
-          </div>
-        ) : (
-          <button onClick={onUnlock} style={{ fontSize: 12, color: '#3b82f6', fontWeight: 700, background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '6px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
-=======
       {/* Rating — blurred for locked */}
       <div style={{ flex: '0 0 100px', display: 'flex', alignItems: 'center', gap: 6 }}>
         {isVerified ? (
@@ -513,7 +426,6 @@ function CompanyCard({ company, isVerified, onUnlock }: { company: Company; isVe
             onClick={onUnlock}
             style={{ fontSize: 12, color: '#3b82f6', fontWeight: 700, background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, padding: '6px 14px', cursor: 'pointer', whiteSpace: 'nowrap' }}
           >
->>>>>>> claude/trusting-fermat-2pf5z2
             🔒 Unlock
           </button>
         )}
@@ -531,23 +443,13 @@ export default function DirectoryClient() {
   const [filterState, setFilterState] = useState('')
   const [filterSize, setFilterSize] = useState('')
   const [filterRating, setFilterRating] = useState('')
-<<<<<<< HEAD
-  const [isSubscriber, setIsSubscriber] = useState(false)
-=======
   const [isVerified, setIsVerified] = useState(false)
->>>>>>> claude/trusting-fermat-2pf5z2
   const [showModal, setShowModal] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
   const searchRef = useRef<HTMLInputElement>(null)
 
-<<<<<<< HEAD
-  // Persist subscriber state
-  useEffect(() => {
-    setIsSubscriber(localStorage.getItem('sg-dir-subscriber') === 'true')
-=======
   useEffect(() => {
     setIsVerified(localStorage.getItem('sg-dir-verified') === 'true')
->>>>>>> claude/trusting-fermat-2pf5z2
   }, [])
 
   // Autocomplete suggestions
@@ -559,16 +461,6 @@ export default function DirectoryClient() {
     setSuggestions([...new Set([...matches, ...nameMatches])].slice(0, 6))
   }, [search])
 
-<<<<<<< HEAD
-  const handleSubscribe = (email: string) => {
-    localStorage.setItem('sg-dir-subscriber', 'true')
-    localStorage.setItem('sg-dir-email', email)
-    setIsSubscriber(true)
-    setShowModal(false)
-  }
-
-=======
->>>>>>> claude/trusting-fermat-2pf5z2
   const filtered = useMemo(() => {
     return COMPANIES.filter(c => {
       const q = search.toLowerCase()
@@ -590,22 +482,11 @@ export default function DirectoryClient() {
 
   return (
     <>
-<<<<<<< HEAD
-      {showModal && <NewsletterModal onSubscribe={handleSubscribe} onClose={() => setShowModal(false)} />}
-=======
       {showModal && <AccessModal onClose={() => setShowModal(false)} />}
->>>>>>> claude/trusting-fermat-2pf5z2
 
       <div style={{ background: '#f8f9fc', minHeight: '60vh' }}>
         <div className="container" style={{ paddingTop: 48, paddingBottom: 80 }}>
 
-<<<<<<< HEAD
-          {/* Subscriber banner */}
-          {isSubscriber ? (
-            <div style={{ background: 'linear-gradient(135deg, #ecfdf5, #eff6ff)', border: '1px solid #bbf7d0', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-              <span style={{ fontSize: 20 }}>✅</span>
-              <span style={{ fontSize: 14, fontWeight: 600, color: '#166534' }}>Full directory access unlocked — you can see all contact details and company profiles.</span>
-=======
           {/* Status banner */}
           {isVerified ? (
             <div style={{ background: 'linear-gradient(135deg, #ecfdf5, #eff6ff)', border: '1px solid #bbf7d0', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
@@ -613,17 +494,11 @@ export default function DirectoryClient() {
               <span style={{ fontSize: 14, fontWeight: 600, color: '#166534' }}>
                 Full directory access — contact details, phone numbers and profiles are unlocked.
               </span>
->>>>>>> claude/trusting-fermat-2pf5z2
             </div>
           ) : (
             <div style={{ background: 'linear-gradient(135deg, #eff6ff, #eef2ff)', border: '1px solid #bfdbfe', borderRadius: 14, padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 28, flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 20 }}>🔒</span>
-<<<<<<< HEAD
-                <span style={{ fontSize: 14, fontWeight: 600, color: '#1e40af' }}>Subscribe to unlock full company profiles, contact details and ratings.</span>
-              </div>
-              <button onClick={() => setShowModal(true)} style={{ padding: '9px 20px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-=======
                 <span style={{ fontSize: 14, fontWeight: 600, color: '#1e40af' }}>
                   Request access to unlock full company profiles, contact details and ratings — approved within 1 business day.
                 </span>
@@ -632,7 +507,6 @@ export default function DirectoryClient() {
                 onClick={() => setShowModal(true)}
                 style={{ padding: '9px 20px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
               >
->>>>>>> claude/trusting-fermat-2pf5z2
                 Get Full Access — Free
               </button>
             </div>
@@ -737,11 +611,7 @@ export default function DirectoryClient() {
               Showing <strong style={{ color: '#0f172a' }}>{filtered.length}</strong> of {COMPANIES.length} companies
               {search && <> for &ldquo;<strong style={{ color: '#3b82f6' }}>{search}</strong>&rdquo;</>}
             </p>
-<<<<<<< HEAD
-            {!isSubscriber && (
-=======
             {!isVerified && (
->>>>>>> claude/trusting-fermat-2pf5z2
               <button onClick={() => setShowModal(true)} style={{ fontSize: 13, color: '#3b82f6', fontWeight: 600, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
                 Unlock full access →
               </button>
@@ -757,19 +627,12 @@ export default function DirectoryClient() {
                 <div style={{ flex: '0 0 220px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Company</div>
                 <div style={{ flex: '0 0 160px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Category</div>
                 <div style={{ flex: '0 0 120px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>AI Score</div>
-<<<<<<< HEAD
-=======
                 <div style={{ flex: '0 0 100px', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Rating</div>
->>>>>>> claude/trusting-fermat-2pf5z2
                 <div style={{ marginLeft: 'auto', fontSize: 11, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Contact</div>
               </div>
               {filtered.map((company, i) => (
                 <div key={company.id} style={{ borderBottom: i < filtered.length - 1 ? '1px solid #f1f5f9' : 'none' }}>
-<<<<<<< HEAD
-                  <CompanyCard company={company} isSubscriber={isSubscriber} onUnlock={() => setShowModal(true)} />
-=======
                   <CompanyCard company={company} isVerified={isVerified} onUnlock={() => setShowModal(true)} />
->>>>>>> claude/trusting-fermat-2pf5z2
                 </div>
               ))}
             </div>
@@ -785,26 +648,13 @@ export default function DirectoryClient() {
             </div>
           )}
 
-<<<<<<< HEAD
-          {/* Bottom unlock CTA for non-subscribers */}
-          {!isSubscriber && filtered.length > 0 && (
-=======
           {/* Bottom unlock CTA for non-verified */}
           {!isVerified && filtered.length > 0 && (
->>>>>>> claude/trusting-fermat-2pf5z2
             <div style={{ marginTop: 48, background: 'linear-gradient(135deg, #eff6ff, #eef2ff)', borderRadius: 24, padding: '40px 36px', textAlign: 'center', border: '1px solid #bfdbfe' }}>
               <h3 style={{ fontSize: 26, fontWeight: 900, color: '#0f172a', marginBottom: 12 }}>
                 See full profiles for all {COMPANIES.length} companies
               </h3>
               <p style={{ color: '#475569', maxWidth: 480, margin: '0 auto 24px', lineHeight: 1.6 }}>
-<<<<<<< HEAD
-                Subscribe to the SecurityBlogs newsletter for free and instantly unlock every contact detail, phone number, website link, specialisation and service area.
-              </p>
-              <button onClick={() => setShowModal(true)} style={{ padding: '16px 36px', background: 'linear-gradient(135deg, #3b82f6, #6366f1)', color: '#fff', border: 'none', borderRadius: 14, fontSize: 16, fontWeight: 700, cursor: 'pointer' }}>
-                🔓 Get Full Directory Access — Free
-              </button>
-              <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>No spam. Unsubscribe anytime.</p>
-=======
                 Submit a quick access request. Our team reviews every request and approves genuine buyers,
                 researchers and industry professionals within 1 business day.
               </p>
@@ -815,7 +665,6 @@ export default function DirectoryClient() {
                 🔓 Request Full Directory Access
               </button>
               <p style={{ fontSize: 12, color: '#94a3b8', marginTop: 12 }}>Takes under 60 seconds. Approved within 1 business day.</p>
->>>>>>> claude/trusting-fermat-2pf5z2
             </div>
           )}
         </div>
