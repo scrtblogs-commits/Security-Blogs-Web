@@ -71,11 +71,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'Invalid purpose selection' }, { status: 400 })
   }
 
-  // Check for existing pending request
+  // Check for existing pending/approved request
   const existingId = await redisCommand(['GET', `sg:dir:email:${email}`])
   if (existingId?.result) {
-    // Already submitted — just re-notify admin and return pending
-    return NextResponse.json({ ok: true, pending: true })
+    return NextResponse.json({ ok: true, duplicate: true })
   }
 
   const id = crypto.randomUUID()

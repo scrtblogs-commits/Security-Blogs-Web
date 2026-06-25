@@ -224,7 +224,13 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
       })
       const data = await res.json()
       if (data.ok) {
-        setReqSent(true)
+        if (data.duplicate) {
+          // Already submitted — switch to check tab
+          setTab('check')
+          setCheckEmail(form.email)
+        } else {
+          setReqSent(true)
+        }
       } else {
         setReqError(data.error || 'Something went wrong. Please try again.')
       }
