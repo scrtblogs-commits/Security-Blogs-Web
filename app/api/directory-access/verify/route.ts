@@ -8,19 +8,20 @@ import { NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-async function redisCommand(args: (string | number)[]) {
+async function redisCommand(args: (string | number | object)[]) {
   const url   = process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) return null
-  const res = await fetch(`${url}`, {
+  const res = await fetch(`${url}/pipeline`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(args),
+    body: JSON.stringify([args]),
   })
-  return res.json()
+  const data = await res.json()
+  return Array.isArray(data) ? data[0] : data
 }
 
 export async function POST(req: Request) {

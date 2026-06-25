@@ -7,19 +7,22 @@ import { NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-async function redisCommand(args: (string | number)[]) {
+async function redisCommand(args: (string | number | object)[]) {
   const url   = process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) return null
-  const res = await fetch(`${url}`, {
+  // Use pipeline endpoint so large JSON values in SET don't break the URL
+  const res = await fetch(`${url}/pipeline`, {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(args),
+    body: JSON.stringify([args]),
   })
-  return res.json()
+  const data = await res.json()
+  // Pipeline returns an array of results; return the first
+  return Array.isArray(data) ? data[0] : data
 }
 
 async function sendAdminNotification(name: string, email: string, company: string, purpose: string, adminUrl: string) {
