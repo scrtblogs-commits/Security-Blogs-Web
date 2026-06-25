@@ -20,24 +20,26 @@ async function redisCommand(args: (string | number)[]) {
 async function sendAdminNotification(name: string, email: string, company: string, purpose: string, adminUrl: string) {
   const key = process.env.WEB3FORMS_ACCESS_KEY
   if (!key) {
-    console.error('[directory-access] WEB3FORMS_ACCESS_KEY not set')
+    console.error('[directory-access] WEB3FORMS_ACCESS_KEY not set — skipping notification')
     return
   }
-  const payload = {
-    access_key: key,
-    subject: `[SecurityBlogs] New Directory Access Request — ${name} (${company})`,
-    from_name: 'Directory Access System',
-    email: process.env.ADMIN_EMAIL || email,
-    message: `New directory access request submitted.\n\nName: ${name}\nEmail: ${email}\nCompany: ${company}\nPurpose: ${purpose}\n\nReview and approve/reject in the admin panel:\n${adminUrl}`,
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: key,
+        subject: `New Directory Access Request — ${name} from ${company}`,
+        from_name: name,
+        replyto: email,
+        message: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nPurpose: ${purpose}\n\nAdmin panel:\n${adminUrl}`,
+      }),
+    })
+    const result = await res.json()
+    console.log('[directory-access] Web3Forms:', JSON.stringify(result))
+  } catch (err) {
+    console.error('[directory-access] Web3Forms error:', err)
   }
-  console.log('[directory-access] Sending Web3Forms notification to:', payload.email)
-  const res = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  })
-  const result = await res.json()
-  console.log('[directory-access] Web3Forms response:', JSON.stringify(result))
 }
 
 const PURPOSE_OPTIONS = [

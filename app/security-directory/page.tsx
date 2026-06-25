@@ -1,6 +1,5 @@
 import HeroBg from '@/components/ui/HeroBg'
 import MagneticButton from '@/components/ui/MagneticButton'
-import CTABand from '@/components/ui/CTABand'
 import Reveal from '@/components/ui/Reveal'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import JsonLd from '@/components/JsonLd'
@@ -59,14 +58,6 @@ export default function SecurityDirectoryPage() {
 
       {/* 4 ── Get your business listed */}
       <DirectoryListBusiness />
-
-      {/* 5 ── Final CTA above footer */}
-      <CTABand
-        title="Ready to get your security business found?"
-        subtitle="Join 200+ verified Australian security companies already listed. Free to start, live in minutes."
-        ctaLabel="List my business free →"
-        ctaHref="/contact/"
-      />
     </>
   )
 }
