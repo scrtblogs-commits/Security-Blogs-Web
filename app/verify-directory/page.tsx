@@ -1,0 +1,131 @@
+'use client'
+import { useEffect, useState } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { Suspense } from 'react'
+
+function VerifyContent() {
+  const params = useSearchParams()
+  const router = useRouter()
+  const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
+  const [name, setName] = useState('')
+
+  useEffect(() => {
+    const token = params.get('token')
+    if (!token) { setStatus('error'); return }
+
+    fetch(`/api/directory-access/verify?token=${encodeURIComponent(token)}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.ok) {
+          localStorage.setItem('sg-dir-verified', 'true')
+          localStorage.setItem('sg-dir-email', data.email || '')
+          setName(data.name || '')
+          setStatus('success')
+          setTimeout(() => router.push('/security-directory/'), 3500)
+        } else {
+          setStatus('error')
+        }
+      })
+      .catch(() => setStatus('error'))
+  }, [params, router])
+
+  return (
+    <div style={{
+      minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: '#f8fafc', padding: 24,
+    }}>
+      <div style={{
+        background: '#fff', borderRadius: 24, padding: '56px 48px',
+        maxWidth: 480, width: '100%',
+        boxShadow: '0 16px 64px rgba(0,0,0,0.08)',
+        textAlign: 'center',
+      }}>
+        {status === 'loading' && (
+          <>
+            <div style={{ fontSize: 48, marginBottom: 20 }}>⏳</div>
+            <h2 style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginBottom: 10 }}>
+              Verifying your email...
+            </h2>
+            <p style={{ color: '#64748b', lineHeight: 1.6 }}>Please wait a moment.</p>
+          </>
+        )}
+
+        {status === 'success' && (
+          <>
+            <div style={{
+              width: 80, height: 80, borderRadius: '50%',
+              background: 'linear-gradient(135deg, #10b981, #3b82f6)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 24px', fontSize: 36,
+            }}>
+              ✓
+            </div>
+            <h2 style={{ fontSize: 26, fontWeight: 900, color: '#0f172a', marginBottom: 10 }}>
+              {name ? `Welcome, ${name.split(' ')[0]}!` : 'Access Unlocked!'}
+            </h2>
+            <p style={{ color: '#475569', lineHeight: 1.65, marginBottom: 28 }}>
+              Your email is verified. You now have full access to the Australian Security
+              Company Directory — contact details, phone numbers, websites and more.
+            </p>
+            <div style={{
+              background: '#f0fdf4', border: '1px solid #bbf7d0',
+              borderRadius: 12, padding: '14px 20px',
+              fontSize: 14, color: '#166534', fontWeight: 600, marginBottom: 28,
+            }}>
+              Redirecting you to the directory...
+            </div>
+            <Link
+              href="/security-directory/"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: '#3b82f6', color: '#fff',
+                fontWeight: 700, fontSize: 15,
+                padding: '14px 28px', borderRadius: 12,
+                textDecoration: 'none',
+              }}
+            >
+              Go to Directory Now →
+            </Link>
+          </>
+        )}
+
+        {status === 'error' && (
+          <>
+            <div style={{ fontSize: 56, marginBottom: 20 }}>⚠️</div>
+            <h2 style={{ fontSize: 24, fontWeight: 800, color: '#0f172a', marginBottom: 10 }}>
+              This link has expired
+            </h2>
+            <p style={{ color: '#64748b', lineHeight: 1.65, marginBottom: 28 }}>
+              Verification links expire after 24 hours. Please request access again from the directory page.
+            </p>
+            <Link
+              href="/security-directory/"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: '#0f172a', color: '#fff',
+                fontWeight: 700, fontSize: 15,
+                padding: '14px 28px', borderRadius: 12,
+                textDecoration: 'none',
+              }}
+            >
+              Back to Directory →
+            </Link>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default function VerifyDirectoryPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc' }}>
+        <div style={{ fontSize: 48 }}>⏳</div>
+      </div>
+    }>
+      <VerifyContent />
+    </Suspense>
+  )
+}
