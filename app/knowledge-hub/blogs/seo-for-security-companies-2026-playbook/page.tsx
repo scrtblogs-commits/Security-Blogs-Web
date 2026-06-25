@@ -143,7 +143,7 @@ export default function SeoPlaybookPage() {
           <div style={{ position: 'absolute', top: '-20%', left: '30%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(30,95,224,0.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
           <div style={{ position: 'absolute', bottom: '0', right: '10%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(30,95,224,0.08) 0%, transparent 65%)', pointerEvents: 'none' }} />
 
-          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px 64px', position: 'relative', zIndex: 1 }}>
+          <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 24px 64px', position: 'relative', zIndex: 1 }}>
             <div className="proto-hero-grid">
 
               {/* Left: content */}
@@ -180,7 +180,7 @@ export default function SeoPlaybookPage() {
                   lineHeight: 1.07,
                   letterSpacing: '-0.025em',
                   marginBottom: 22,
-                  maxWidth: 700,
+                  maxWidth: 860,
                 }}>
                   SEO for Security Companies:{' '}
                   <span style={{ color: '#7eb3ff' }}>The 2026 Playbook</span>
@@ -191,7 +191,7 @@ export default function SeoPlaybookPage() {
                   fontSize: 'clamp(16px, 1.8vw, 19px)',
                   color: 'rgba(255,255,255,0.62)',
                   lineHeight: 1.68,
-                  maxWidth: 580,
+                  maxWidth: 720,
                   marginBottom: 34,
                 }}>
                   A practical, channel-by-channel playbook for ranking a security business on Google in 2026 — from technical foundations to local, content and AI-visibility.
@@ -264,7 +264,7 @@ export default function SeoPlaybookPage() {
         {/* ═══════════════════════════════════════════════════
             MAIN BODY — Article + Sticky Sidebar
         ════════════════════════════════════════════════════ */}
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '48px 24px 0' }} id="article-body">
+        <div style={{ maxWidth: 1440, margin: '0 auto', padding: '48px 32px 0' }} id="article-body">
           <div className="proto-article-grid">
 
             {/* ────────────────────────────────────────────────
@@ -293,7 +293,7 @@ export default function SeoPlaybookPage() {
               </div>
 
               {/* Intro ─────────────────────────────────────── */}
-              <p style={{ fontSize: 18.5, lineHeight: 1.78, color: 'var(--text)', marginBottom: 48, fontFamily: 'var(--font-body)', maxWidth: 700 }}>
+              <p style={{ fontSize: 18.5, lineHeight: 1.78, color: 'var(--text)', marginBottom: 48, fontFamily: 'var(--font-body)', maxWidth: 860 }}>
                 Security buyers research carefully before they call. Whether someone is comparing CCTV installers, access-control integrators or monitoring providers, most of that journey now happens in search — and increasingly inside AI assistants. This playbook walks through the SEO foundations that move a security business up the results, in the order we tackle them with clients.
               </p>
 
@@ -306,7 +306,7 @@ export default function SeoPlaybookPage() {
                     1. Fix the technical foundations first
                   </h2>
                 </div>
-                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 26, maxWidth: 700 }}>
+                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 26, maxWidth: 860 }}>
                   Rankings cap out fast on a site search engines struggle to crawl. Confirm the basics: HTTPS everywhere, a clean XML sitemap, a sensible robots.txt, fast Core Web Vitals, and mobile-first layouts. Resolve duplicate URLs and make sure every important page is actually indexed in Google Search Console.
                 </p>
 
@@ -351,7 +351,7 @@ export default function SeoPlaybookPage() {
                     2. Map keywords to buyer intent
                   </h2>
                 </div>
-                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 700 }}>
+                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 860 }}>
                   Group the terms your buyers use by intent: research ("how does monitored alarm work"), comparison ("best access control system Sydney"), and ready-to-buy ("CCTV installation quote"). Build a page for each high-intent theme rather than stuffing everything onto the homepage.
                 </p>
 
@@ -429,7 +429,7 @@ export default function SeoPlaybookPage() {
                     3. Win local search
                   </h2>
                 </div>
-                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 700 }}>
+                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 860 }}>
                   For installers and service businesses, local is where the revenue is. Claim and complete your Google Business Profile, keep your name, address and phone (NAP) consistent across directories, and build location and service-area pages that genuinely describe the work you do in each area.
                 </p>
 
@@ -472,7 +472,7 @@ export default function SeoPlaybookPage() {
                     4. Publish content that demonstrates expertise
                   </h2>
                 </div>
-                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 700 }}>
+                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 860 }}>
                   Security is a high-trust, compliance-driven industry. Content that answers real buyer questions — standards, installation considerations, cost factors, maintenance — builds the E-E-A-T signals Google rewards and gives AI engines something credible to cite.
                 </p>
 
@@ -516,7 +516,7 @@ export default function SeoPlaybookPage() {
                     5. Earn authority — don&apos;t buy it
                   </h2>
                 </div>
-                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 24, maxWidth: 700 }}>
+                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 24, maxWidth: 860 }}>
                   Relevant mentions and links from industry publications, associations and local press build trust. Guest articles, original research and genuinely useful tools attract these naturally. Avoid bought-link schemes — they put the whole domain at risk.
                 </p>
 
@@ -554,7 +554,7 @@ export default function SeoPlaybookPage() {
                     6. Measure what matters
                   </h2>
                 </div>
-                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 700 }}>
+                <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 28, maxWidth: 860 }}>
                   Track impressions and positions in Search Console, not vanity metrics. Movement usually appears first as impressions, then improving positions, then clicks as you break onto page one. For a newer domain in a competitive niche, expect a 4–9 month climb.
                 </p>
 
@@ -615,7 +615,7 @@ export default function SeoPlaybookPage() {
                 <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'clamp(20px, 2.5vw, 26px)', color: 'var(--text)', marginBottom: 12, letterSpacing: '-0.01em' }}>
                   Want help applying this to your security brand?
                 </h2>
-                <p style={{ fontSize: 16.5, color: 'var(--text-soft)', lineHeight: 1.65, maxWidth: 620, marginBottom: 24 }}>
+                <p style={{ fontSize: 16.5, color: 'var(--text-soft)', lineHeight: 1.65, maxWidth: 760, marginBottom: 24 }}>
                   SecurityBlogs builds SEO, AI-visibility and paid-search programs exclusively for the security industry — CCTV, access control, alarms, monitoring, locksmiths, fencing and more.{' '}
                   <Link href="/contact/" style={{ color: 'var(--blue)', textDecoration: 'underline', textDecorationColor: 'rgba(30,95,224,0.35)', textUnderlineOffset: '3px' }}>
                     Book a free visibility audit
@@ -798,7 +798,7 @@ export default function SeoPlaybookPage() {
         {/* ═══════════════════════════════════════════════════
             RELATED POSTS — bottom grid (visible on mobile too)
         ════════════════════════════════════════════════════ */}
-        <section aria-label="More articles" style={{ maxWidth: 1200, margin: '0 auto', padding: '56px 24px 0' }}>
+        <section aria-label="More articles" style={{ maxWidth: 1440, margin: '0 auto', padding: '56px 24px 0' }}>
           <div style={{ marginBottom: 28, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <div>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--blue)', marginBottom: 8 }}>Keep reading</div>
