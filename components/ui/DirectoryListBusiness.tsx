@@ -11,7 +11,7 @@ const BENEFITS = [
       </svg>
     ),
     title: 'Takes under 2 minutes',
-    body: 'Submit your business details online. No paperwork, no phone calls — just a quick form and you're done.',
+    body: 'Submit your business details online. No paperwork, no phone calls — just a quick form and you are done.',
   },
   {
     color: '#10b981',
