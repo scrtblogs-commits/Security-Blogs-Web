@@ -28,12 +28,7 @@ const dropdowns: Drop[] = [
   {
     label: 'Knowledge Hub',
     href: '/knowledge-hub/',
-    items: knowledgeHub,
-  },
-  {
-    label: 'Publish With Us',
-    href: '/publish-with-us/',
-    items: publishWithUs,
+    items: [...knowledgeHub, ...publishWithUs],
   },
 ]
 
@@ -86,10 +81,9 @@ export default function Navbar() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, height: 'var(--nav-h)',
         display: 'flex', alignItems: 'center',
-        background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
-        backdropFilter: 'blur(14px) saturate(160%)',
-        WebkitBackdropFilter: 'blur(14px) saturate(160%)',
-        borderBottom: '1px solid var(--line)',
+        background: '#ffffff',
+        borderBottom: 'none',
+        boxShadow: '0 1px 0 rgba(0,0,0,0.06)',
       }}
     >
       <div className="container flex items-center justify-between" style={{ gap: 20 }}>
