@@ -1,57 +1,12 @@
 // POST /api/directory-access
-// Saves a new directory access request as "pending" in Redis.
-// Sends admin notification via Web3Forms — no auto-approval, no user email.
+// Sends directory access requests to scrtblogs@gmail.com via Formsubmit.co.
 
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-async function redisCommand(args: (string | number | object)[]) {
-  const url   = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
-  if (!url || !token) return null
-  try {
-    const res = await fetch(`${url}/pipeline`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify([args]),
-    })
-    if (!res.ok) return null
-    const data = await res.json()
-    return Array.isArray(data) ? data[0] : data
-  } catch {
-    return null
-  }
-}
-
-async function sendAdminNotification(name: string, email: string, company: string, purpose: string, adminUrl: string) {
-  const key = process.env.WEB3FORMS_ACCESS_KEY
-  if (!key) {
-    console.error('[directory-access] WEB3FORMS_ACCESS_KEY not set — skipping notification')
-    return
-  }
-  try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        access_key: key,
-        subject: `New Directory Access Request — ${name} from ${company}`,
-        from_name: name,
-        replyto: email,
-        message: `Name: ${name}\nEmail: ${email}\nCompany: ${company}\nPurpose: ${purpose}\n\nAdmin panel:\n${adminUrl}`,
-      }),
-    })
-    const result = await res.json()
-    console.log('[directory-access] Web3Forms:', JSON.stringify(result))
-  } catch (err) {
-    console.error('[directory-access] Web3Forms error:', err)
-  }
-}
+const NOTIFY_EMAIL = 'scrtblogs@gmail.com'
 
 const PURPOSE_OPTIONS = [
   'Looking for a security provider',
@@ -63,60 +18,49 @@ const PURPOSE_OPTIONS = [
 
 export async function POST(req: Request) {
   try {
-  let body: Record<string, unknown>
-  try { body = await req.json() } catch {
-    return NextResponse.json({ ok: false, error: 'Invalid JSON' }, { status: 400 })
-  }
+    let body: Record<string, unknown>
+    try { body = await req.json() } catch {
+      return NextResponse.json({ ok: false, error: 'Invalid JSON' }, { status: 400 })
+    }
 
-  const name    = typeof body.name    === 'string' ? body.name.trim()    : ''
-  const email   = typeof body.email   === 'string' ? body.email.trim()   : ''
-  const company = typeof body.company === 'string' ? body.company.trim() : ''
-  const purpose = typeof body.purpose === 'string' ? body.purpose.trim() : ''
+    const name    = typeof body.name    === 'string' ? body.name.trim()    : ''
+    const email   = typeof body.email   === 'string' ? body.email.trim()   : ''
+    const company = typeof body.company === 'string' ? body.company.trim() : ''
+    const purpose = typeof body.purpose === 'string' ? body.purpose.trim() : ''
 
-  if (!name || !email || !company || !purpose) {
-    return NextResponse.json({ ok: false, error: 'All fields required' }, { status: 400 })
-  }
-  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    return NextResponse.json({ ok: false, error: 'Valid business email required' }, { status: 400 })
-  }
-  if (!PURPOSE_OPTIONS.includes(purpose)) {
-    return NextResponse.json({ ok: false, error: 'Invalid purpose selection' }, { status: 400 })
-  }
+    if (!name || !email || !company || !purpose) {
+      return NextResponse.json({ ok: false, error: 'All fields required' }, { status: 400 })
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      return NextResponse.json({ ok: false, error: 'Valid business email required' }, { status: 400 })
+    }
+    if (!PURPOSE_OPTIONS.includes(purpose)) {
+      return NextResponse.json({ ok: false, error: 'Invalid purpose selection' }, { status: 400 })
+    }
 
-  // Check for existing pending/approved request
-  const existingId = await redisCommand(['GET', `sg:dir:email:${email}`])
-  if (existingId?.result) {
-    return NextResponse.json({ ok: true, duplicate: true })
-  }
+    const res = await fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: `[SecurityBlogs] New Directory Access Request — ${name} from ${company}`,
+        _captcha: 'false',
+        _template: 'table',
+        name,
+        email,
+        company,
+        purpose,
+      }),
+    })
 
-  const id = crypto.randomUUID()
-  const request = {
-    id,
-    name,
-    email,
-    company,
-    purpose,
-    createdAt: new Date().toISOString(),
-    status: 'pending',
-  }
+    const json = await res.json().catch(() => ({}))
+    if (json?.success === 'true' || json?.success === true) {
+      return NextResponse.json({ ok: true })
+    }
 
-  // Store request data
-  await redisCommand(['SET', `sg:dir:req:${id}`, JSON.stringify(request)])
-  // Index by email for duplicate checks
-  await redisCommand(['SET', `sg:dir:email:${email}`, id])
-  // Append to requests list (newest first)
-  await redisCommand(['LPUSH', 'sg:dir:reqs', id])
-
-  // Admin panel URL
-  const origin = req.headers.get('origin') || 'https://securityblogs.com.au'
-  const adminSecret = process.env.ADMIN_SECRET || ''
-  const adminUrl = `${origin}/admin/directory-requests/${adminSecret ? `?key=${adminSecret}` : ''}`
-
-  await sendAdminNotification(name, email, company, purpose, adminUrl)
-
-  return NextResponse.json({ ok: true })
+    console.error('[directory-access] Formsubmit error', json)
+    return NextResponse.json({ ok: false, error: 'Could not send request. Please email us at info@securityblogs.com.au.' }, { status: 502 })
   } catch (err) {
-    console.error('[directory-access] Unhandled error:', err)
+    console.error('[directory-access] error:', err)
     return NextResponse.json({ ok: false, error: 'Server error. Please try again.' }, { status: 500 })
   }
 }
