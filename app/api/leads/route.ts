@@ -1,39 +1,15 @@
 // POST /api/leads
-// Unified form handler: Web3Forms email notification + Upstash Redis storage.
-// Replaces the previous Payload CMS createLead() pipeline.
+// Sends form submissions to scrtblogs@gmail.com via Formsubmit.co.
+// No API key or account required — first submission triggers a one-time
+// activation email to scrtblogs@gmail.com; confirm it and all future
+// submissions arrive automatically.
 
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-// ── Upstash Redis REST helpers ───────────────────────────────────────
-async function redisCommand(args: (string | number)[]) {
-  const url  = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
-  if (!url || !token) {
-    console.warn('[/api/leads] Upstash env vars not set — skipping storage')
-    return null
-  }
-  const res = await fetch(`${url}/${args.map(encodeURIComponent).join('/')}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-  return res.json()
-}
-
-// ── Web3Forms email notification ─────────────────────────────────────
-async function sendWeb3Forms(data: Record<string, string>) {
-  const key = process.env.WEB3FORMS_ACCESS_KEY
-  if (!key) {
-    console.warn('[/api/leads] WEB3FORMS_ACCESS_KEY not set — skipping email')
-    return
-  }
-  await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ access_key: key, ...data }),
-  })
-}
+const NOTIFY_EMAIL = 'scrtblogs@gmail.com'
 
 // ── Rate limit (in-memory) ───────────────────────────────────────────
 type Bucket = { count: number; resetAt: number }
@@ -78,32 +54,46 @@ export async function POST(req: Request) {
   const ip = getIp(req)
   if (!checkRateLimit(ip)) return NextResponse.json({ ok: false, error: 'Too many submissions. Please wait 15 minutes.' }, { status: 429 })
 
-  const lead = {
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    source, name, email, phone, company, service, message, subject, ip,
+  const emailBody = [
+    `Source: ${source}`,
+    `Name: ${name}`,
+    `Email: ${email}`,
+    phone    ? `Phone: ${phone}`     : '',
+    company  ? `Company: ${company}` : '',
+    service  ? `Service: ${service}` : '',
+    message  ? `\nMessage:\n${message}` : '',
+  ].filter(Boolean).join('\n')
+
+  try {
+    const res = await fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: `[SecurityBlogs] ${subject} — ${name}`,
+        _replyto: email,
+        _captcha: 'false',
+        _template: 'table',
+        name,
+        email,
+        ...(phone   ? { phone }   : {}),
+        ...(company ? { company } : {}),
+        ...(service ? { service } : {}),
+        ...(message ? { message } : {}),
+        source,
+        _message: emailBody,
+      }),
+    })
+    const json = await res.json().catch(() => ({}))
+    if (!res.ok || json?.success === 'false' || json?.success === false) {
+      console.error('[/api/leads] Formsubmit error', json)
+      return NextResponse.json({ ok: false, error: 'Email delivery failed. Please email us directly at info@securityblogs.com.au.' }, { status: 502 })
+    }
+  } catch (err) {
+    console.error('[/api/leads] fetch error', err)
+    return NextResponse.json({ ok: false, error: 'Network error. Please try again or email us directly.' }, { status: 502 })
   }
 
-  // 1. Store in Upstash (LPUSH so newest is first)
-  await redisCommand(['LPUSH', 'sg:leads', JSON.stringify(lead)])
-
-  // 2. Email via Web3Forms
-  await sendWeb3Forms({
-    subject: `[SecurityBlogs] ${subject} — ${name}`,
-    from_name: name,
-    email,
-    message: [
-      `Source: ${source}`,
-      `Name: ${name}`,
-      `Email: ${email}`,
-      phone    ? `Phone: ${phone}`     : '',
-      company  ? `Company: ${company}` : '',
-      service  ? `Service: ${service}` : '',
-      message  ? `\nMessage:\n${message}` : '',
-    ].filter(Boolean).join('\n'),
-  })
-
-  return NextResponse.json({ ok: true, id: lead.id })
+  return NextResponse.json({ ok: true })
 }
 
 export async function GET()    { return bad('Method not allowed', 405) }
