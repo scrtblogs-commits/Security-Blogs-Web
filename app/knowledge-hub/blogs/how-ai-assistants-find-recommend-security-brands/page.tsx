@@ -390,7 +390,7 @@ export default function AiVisibilityPage() {
                   <div style={{ border: '1px solid rgba(16,185,129,0.3)', borderRadius: 14, padding: '18px 20px', background: 'rgba(16,185,129,0.04)' }}>
                     <div style={{ fontSize: 12, fontWeight: 700, color: '#10b981', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>✅ AI-citable</div>
                     <p style={{ fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.65, margin: 0 }}>
-                      &ldquo;Access control systems typically cost between $500 and $5,000 per door for commercial installations in Australia, depending on credential type, controller complexity and installation environment. Card-reader systems sit at the lower end; biometric or multi-factor setups command a premium.&rdquo;
+                      &ldquo;Access control systems vary in cost per door depending on complexity and installation requirements for commercial installations in Australia, with credential type, controller complexity and installation environment all affecting the final figure. Card-reader systems sit at the lower end; biometric or multi-factor setups represent a more significant investment.&rdquo;
                     </p>
                   </div>
                 </div>
