@@ -80,34 +80,10 @@ function SectionHeading({ eyebrow, title, sub }: { eyebrow: string; title: strin
   return (
     <div style={{ textAlign: 'center', marginBottom: 40 }}>
       <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#1e5fe0', marginBottom: 10 }}>{eyebrow}</div>
-      <h2 style={{ fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 800, fontFamily: 'var(--font-display)', marginBottom: 12, color: 'var(--text)' }}>{title}</h2>
+      <h2 style={{ fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 800, fontFamily: 'var(--font-display)', marginBottom: 12, color: 'var(--text)' }}
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
       {sub && <p style={{ fontSize: 15, color: 'var(--text-soft)', maxWidth: 520, margin: '0 auto', lineHeight: 1.6 }}>{sub}</p>}
-    </div>
-  )
-}
-
-type TableRow = { tier: string; price: string; includes: string }
-function PriceTable({ rows }: { rows: TableRow[] }) {
-  return (
-    <div style={{ borderRadius: 14, border: '1px solid var(--line)', overflow: 'hidden', marginBottom: 8 }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
-        <thead>
-          <tr style={{ background: 'var(--bg-card)', textAlign: 'left' }}>
-            <th style={{ padding: '12px 18px', borderBottom: '1px solid var(--line)', fontWeight: 600 }}>Tier</th>
-            <th style={{ padding: '12px 18px', borderBottom: '1px solid var(--line)', fontWeight: 600 }}>Price (AUD)</th>
-            <th style={{ padding: '12px 18px', borderBottom: '1px solid var(--line)', fontWeight: 600 }}>What&apos;s included</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, i) => (
-            <tr key={i} style={{ background: '#fff' }}>
-              <td style={{ padding: '12px 18px', borderBottom: '1px solid var(--line)', fontWeight: 600 }}>{r.tier}</td>
-              <td style={{ padding: '12px 18px', borderBottom: '1px solid var(--line)', color: '#1e5fe0', fontWeight: 700, whiteSpace: 'nowrap' }}>{r.price}</td>
-              <td style={{ padding: '12px 18px', borderBottom: '1px solid var(--line)', color: 'var(--text-soft)' }}>{r.includes}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   )
 }
@@ -139,8 +115,8 @@ export default function PricingPage() {
         </section>
 
         {/* ── Retainer Services ── */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px 72px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+        <section style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px 72px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
             <PlanCard
               title="Security SEO"
               price="from $1,500"
@@ -174,7 +150,7 @@ export default function PricingPage() {
               badge="Fastest ROI"
             />
             <PlanCard
-              title="GMB Profile"
+              title="GMB / Local SEO"
               price="Custom"
               priceSuffix="quote"
               features={[
@@ -193,13 +169,13 @@ export default function PricingPage() {
 
         {/* ── AI Visibility Services ── */}
         <section style={{ background: 'var(--bg-card)', padding: '64px 24px' }}>
-          <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <SectionHeading
               eyebrow="AI Visibility"
               title="AI Visibility Services"
               sub="Get cited by ChatGPT, Perplexity, Gemini and every major AI answer engine."
             />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
               {[
                 {
                   title: 'AIO — AI Overviews Optimisation',
@@ -217,19 +193,27 @@ export default function PricingPage() {
                   features: ['Brand entity authority build', 'Knowledge panel optimisation', 'AI trust signal strategy', 'Cross-platform entity consistency', 'Monthly GEO report'],
                 },
               ].map((s) => (
-                <div key={s.title} style={{ background: '#fff', borderRadius: 20, border: '1px solid var(--line)', padding: '28px 24px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
+                <div key={s.title} style={{
+                  background: '#fff', borderRadius: 20, border: '1px solid var(--line)',
+                  padding: '32px 28px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  display: 'flex', flexDirection: 'column',
+                }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>{s.title}</div>
-                  <div style={{ fontSize: 32, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)', marginBottom: 4 }}>Custom</div>
-                  <div style={{ fontSize: 13, color: 'var(--text-dim)', marginBottom: 16 }}>quote — scoped to your goals</div>
-                  <div style={{ height: 1, background: 'var(--line)', marginBottom: 16 }} />
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
+                  <div style={{ fontSize: 34, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)', marginBottom: 4 }}>Custom</div>
+                  <div style={{ fontSize: 13, color: 'var(--text-dim)', marginBottom: 4 }}>quote — scoped to your goals</div>
+                  <div style={{ height: 1, background: 'var(--line)', margin: '16px 0' }} />
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28, flex: 1 }}>
                     {s.features.map((f, i) => (
                       <div key={i} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'var(--text-soft)', alignItems: 'flex-start' }}>
                         {CHECK}<span>{f}</span>
                       </div>
                     ))}
                   </div>
-                  <Link href={s.href} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '11px 20px', borderRadius: 10, fontSize: 14, fontWeight: 600, color: 'var(--text)', border: '1.5px solid var(--line)', textDecoration: 'none' }}>
+                  <Link href={s.href} style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    padding: '12px 20px', borderRadius: 10, fontSize: 14, fontWeight: 600,
+                    color: 'var(--text)', border: '1.5px solid var(--line)', textDecoration: 'none',
+                  }}>
                     Learn more →
                   </Link>
                 </div>
@@ -239,13 +223,13 @@ export default function PricingPage() {
         </section>
 
         {/* ── Bing Ads ── */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
+        <section style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 24px' }}>
           <SectionHeading
             eyebrow="Paid Media"
             title="Bing / Microsoft Ads"
-            sub="Capture B2B security buyers on Microsoft search at 2× lower CPC than Google."
+            sub="Capture B2B security buyers on Microsoft search at lower CPC than Google."
           />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
             <PlanCard
               title="Bing Ads Management"
               price="from $800"
@@ -262,54 +246,104 @@ export default function PricingPage() {
               cta="Get a Bing Ads quote →"
               ctaHref="/contact/"
             />
-            <div style={{ background: 'rgba(30,95,224,0.04)', borderRadius: 20, border: '1px solid rgba(30,95,224,0.15)', padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 12 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#1e5fe0', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Why Bing?</div>
-              {[
-                'Avg CPC $8.40 vs Google\'s $17.60',
-                '41% of B2B buyers search on Microsoft',
-                'Less competition, faster results',
-                'Ideal complement to Google Ads',
-              ].map((f, i) => (
-                <div key={i} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'var(--text-soft)', alignItems: 'flex-start' }}>
-                  {CHECK}<span>{f}</span>
-                </div>
-              ))}
+            <div style={{
+              background: '#fff', borderRadius: 20, border: '1px solid var(--line)',
+              padding: '32px 28px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+              display: 'flex', flexDirection: 'column',
+            }}>
+              <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Why Add Bing?</div>
+              <div style={{ fontSize: 34, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)', marginBottom: 4 }}>Lower CPC</div>
+              <div style={{ fontSize: 13, color: 'var(--text-dim)', marginBottom: 4 }}>more budget, less competition</div>
+              <div style={{ height: 1, background: 'var(--line)', margin: '16px 0' }} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28, flex: 1 }}>
+                {[
+                  '41% of B2B buyers search on Microsoft',
+                  'Less competition, faster results',
+                  'LinkedIn-profile audience targeting',
+                  'Ideal complement to Google Ads',
+                  'Microsoft Clarity heatmaps included',
+                ].map((f, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'var(--text-soft)', alignItems: 'flex-start' }}>
+                    {CHECK}<span>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/services/bing-ads/" style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                padding: '12px 20px', borderRadius: 10, fontSize: 14, fontWeight: 600,
+                color: 'var(--text)', border: '1.5px solid var(--line)', textDecoration: 'none',
+              }}>
+                Learn more →
+              </Link>
             </div>
           </div>
         </section>
 
         {/* ── Web Design ── */}
         <section style={{ background: 'var(--bg-card)', padding: '64px 24px' }}>
-          <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <SectionHeading
               eyebrow="Web Design"
               title="Security Website Design"
               sub="AI-ready websites that rank, convert and get cited — fixed scope, no surprise add-ons."
             />
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20 }}>
-              {[
-                { range: '$3k – $8k', label: 'Starter', desc: 'Clean, fast security website with on-page SEO, schema and analytics setup.' },
-                { range: '$8k – $20k', label: 'Growth', desc: 'Custom design, AI-visibility architecture, CRO, full content strategy and launch.' },
-                { range: '$20k+', label: 'Enterprise', desc: 'Bespoke Next.js build, multiple service areas, AI citation framework and ongoing optimisation.' },
-              ].map((t) => (
-                <div key={t.label} style={{ background: '#fff', borderRadius: 16, border: '1px solid var(--line)', padding: '24px 22px' }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: '#1e5fe0', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>{t.label}</div>
-                  <div style={{ fontSize: 26, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)', marginBottom: 8 }}>{t.range}</div>
-                  <div style={{ fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.55 }}>{t.desc}</div>
-                </div>
-              ))}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+              <PlanCard
+                title="Starter Website"
+                price="$3k – $8k"
+                note="Fixed scope, single project fee"
+                features={[
+                  'Clean, fast security website',
+                  'On-page SEO for all service pages',
+                  'Schema markup & analytics setup',
+                  'Responsive mobile-first design',
+                  'Core Web Vitals optimised',
+                  'Google Search Console setup',
+                ]}
+                cta="Get a quote →"
+                ctaHref="/contact/"
+              />
+              <PlanCard
+                title="Growth Website"
+                price="$8k – $20k"
+                note="Fixed scope, single project fee"
+                features={[
+                  'Custom design & AI-visibility architecture',
+                  'Conversion rate optimisation (CRO)',
+                  'Full content strategy & copywriting',
+                  'Service-area page framework',
+                  'Entity schema & AI citation setup',
+                  'Launch + 30-day post-launch support',
+                ]}
+                cta="Get a quote →"
+                ctaHref="/contact/"
+                highlight
+                badge="Most Popular"
+              />
+              <PlanCard
+                title="Enterprise Website"
+                price="$20k+"
+                note="Fixed scope, single project fee"
+                features={[
+                  'Bespoke Next.js build',
+                  'Multiple service areas & locations',
+                  'Full AI citation framework',
+                  'Ongoing optimisation retainer included',
+                  'Custom integrations & portals',
+                  'Dedicated project manager',
+                ]}
+                cta="Get a quote →"
+                ctaHref="/contact/"
+              />
             </div>
-            <p style={{ fontSize: 13, color: 'var(--text-dim)', textAlign: 'center', marginTop: 20 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-dim)', textAlign: 'center', marginTop: 24 }}>
               All builds include: strategy, UX, design, development, responsive layout, on-page SEO, schema, Core Web Vitals and analytics setup.
             </p>
-            <div style={{ textAlign: 'center', marginTop: 20 }}>
-              <Link href="/contact/" style={{ fontSize: 14, color: '#1e5fe0', fontWeight: 600 }}>Get a custom quote →</Link>
-            </div>
           </div>
         </section>
 
         {/* ── Publishing ── */}
-        <section style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
+        <section style={{ maxWidth: 1200, margin: '0 auto', padding: '64px 24px' }}>
           <SectionHeading
             eyebrow="Publish With Us"
             title="Publishing &amp; Content Placements"
@@ -321,79 +355,95 @@ export default function PricingPage() {
               category: 'Guest Posting',
               href: '/publish-with-us/guest-posting/',
               tiers: [
-                { tier: 'Standard submission', price: 'Free', includes: 'Editorial review, 1 dofollow link, byline credit' },
-                { tier: 'Priority placement', price: '$99', includes: 'Faster review, homepage feature 3 days, 2 dofollow links' },
+                { tier: 'Standard submission', price: 'Free', note: 'no upfront cost', includes: ['Editorial review & feedback', '1 dofollow backlink', 'Byline credit + author bio', 'Published in relevant category'] },
+                { tier: 'Priority placement', price: '$99', note: 'one-time', includes: ['Faster editorial review', 'Homepage feature for 3 days', '2 dofollow backlinks', 'Social share on all channels'] },
               ],
             },
             {
               category: 'Sponsored Posts',
               href: '/publish-with-us/sponsored-posts/',
               tiers: [
-                { tier: 'Standard', price: '$149', includes: '1 dofollow link, permanent placement, social share, live in 3 days' },
-                { tier: 'Featured Homepage', price: '$299', includes: 'Homepage feature 7 days, 2 dofollow links, newsletter mention' },
-                { tier: 'Authority Series', price: '$1,250', includes: '5-article series, homepage + category features, 3 links each, quarterly refresh' },
+                { tier: 'Standard', price: '$149', note: 'one-time', includes: ['1 dofollow backlink', 'Permanent placement', 'Social share', 'Live in 3 business days'] },
+                { tier: 'Featured Homepage', price: '$299', note: 'one-time', includes: ['Homepage feature for 7 days', '2 dofollow backlinks', 'Newsletter mention to subscribers', 'Social share on all channels'] },
+                { tier: 'Authority Series', price: '$1,250', note: 'one-time', includes: ['5-article editorial series', 'Homepage + category features', '3 dofollow links per article', 'Quarterly content refresh'] },
               ],
             },
             {
               category: 'Press Release',
               href: '/publish-with-us/sponsored-posts/',
               tiers: [
-                { tier: 'Single release', price: '$199', includes: 'Editorial review, permanent SEO page, up to 2 dofollow links, social + newsletter' },
-                { tier: '3-release bundle', price: '$499', includes: 'Three releases at a discount, priority review' },
+                { tier: 'Single release', price: '$199', note: 'one-time', includes: ['Editorial review & polish', 'Permanent SEO page', 'Up to 2 dofollow backlinks', 'Social share + newsletter inclusion'] },
+                { tier: '3-release bundle', price: '$499', note: 'bundle saving', includes: ['Three press releases', 'Priority editorial review', 'Permanent SEO pages for all three', 'Bulk discount applied'] },
               ],
             },
             {
               category: 'Backlink Packages',
               href: '/publish-with-us/backlink-packages/',
               tiers: [
-                { tier: 'Starter', price: '$199', includes: '1 sponsored placement on an established security-niche domain, permanent' },
-                { tier: 'Growth', price: '$549', includes: '3 sponsored placements on established security-niche pages, anchor control, reporting' },
-                { tier: 'Authority', price: '$1,290', includes: '8 sponsored placements in full editorial articles on established security-niche pages, detailed report' },
+                { tier: 'Starter', price: '$199', note: 'one-time', includes: ['1 sponsored placement', 'Established security-niche domain', 'Permanent placement', 'Anchor text control'] },
+                { tier: 'Growth', price: '$549', note: 'one-time', includes: ['3 sponsored placements', 'Established security-niche pages', 'Full anchor text control', 'Placement report delivered'] },
+                { tier: 'Authority', price: '$1,290', note: 'one-time', includes: ['8 sponsored placements', 'Full editorial articles on niche pages', 'Detailed placement & metrics report', 'Quarterly link audit included'] },
               ],
             },
             {
               category: 'Product Promotion',
               href: '/publish-with-us/product-promotion/',
               tiers: [
-                { tier: 'Spotlight', price: '$249', includes: '1 product review, 1 dofollow link, social share' },
-                { tier: 'Featured Review', price: '$499', includes: 'Review + comparison, homepage feature, 2 links, video embed' },
-                { tier: 'Launch Campaign', price: '$1,450', includes: "Review + comparison + demo, buyer's guide, 3 links, 90-day promotion" },
+                { tier: 'Spotlight', price: '$249', note: 'one-time', includes: ['1 product review article', '1 dofollow backlink', 'Social share on all channels', 'Permanent placement'] },
+                { tier: 'Featured Review', price: '$499', note: 'one-time', includes: ['Review + competitor comparison', 'Homepage feature slot', '2 dofollow backlinks', 'Video embed support'] },
+                { tier: 'Launch Campaign', price: '$1,450', note: 'one-time', includes: ["Review + comparison + product demo", "Buyer's guide feature", '3 dofollow backlinks', '90-day category promotion'] },
               ],
             },
             {
               category: 'Advertising',
               href: '/publish-with-us/advertise/',
               tiers: [
-                { tier: 'Newsletter Sponsor', price: '$249 / send', includes: 'Dedicated slot to 24K+ subscribers' },
-                { tier: 'Homepage Banner', price: '$650 / month', includes: 'Top-of-page banner across the homepage' },
-                { tier: 'Category Takeover', price: '$900 / month', includes: 'Banner + sponsored label across a full category' },
+                { tier: 'Newsletter Sponsor', price: '$249', note: 'per send', includes: ['Dedicated sponsor slot', '24K+ subscriber list', 'Plain-text or HTML format', 'Performance report included'] },
+                { tier: 'Homepage Banner', price: '$650', note: 'per month', includes: ['Top-of-page banner placement', 'Desktop + mobile ad served', 'Click-through tracking', 'Monthly impressions report'] },
+                { tier: 'Category Takeover', price: '$900', note: 'per month', includes: ['Banner across a full category', 'Sponsored label on relevant posts', 'Desktop + mobile delivery', 'Monthly performance report'] },
               ],
             },
           ].map((group) => (
-            <div key={group.category} style={{ marginBottom: 40 }}>
-              <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: 'var(--text)' }}>{group.category}</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            <div key={group.category} style={{ marginBottom: 56 }}>
+              <h3 style={{ fontSize: 18, fontWeight: 800, fontFamily: 'var(--font-display)', marginBottom: 20, color: 'var(--text)' }}>{group.category}</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
                 {group.tiers.map((t) => (
                   <div key={t.tier} style={{
-                    background: 'var(--bg-card)',
+                    background: '#fff',
                     border: '1px solid var(--line)',
-                    borderRadius: 16,
-                    padding: '24px 22px',
+                    borderRadius: 20,
+                    padding: '32px 28px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 10,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                   }}>
-                    <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1e5fe0' }}>{group.category}</span>
-                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1.3 }}>{t.tier}</div>
-                    <div style={{ fontSize: 26, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)' }}>{t.price}</div>
-                    <p style={{ fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.55, margin: 0 }}>{t.includes}</p>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>{t.tier}</div>
+                    <div style={{ marginBottom: 4 }}>
+                      <span style={{ fontSize: 34, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)' }}>{t.price}</span>
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--text-dim)', marginBottom: 4 }}>{t.note}</div>
+                    <div style={{ height: 1, background: 'var(--line)', margin: '16px 0' }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 28, flex: 1 }}>
+                      {t.includes.map((f, i) => (
+                        <div key={i} style={{ display: 'flex', gap: 10, fontSize: 14, color: 'var(--text-soft)', alignItems: 'flex-start' }}>
+                          {CHECK}<span>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <Link href={group.href} style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      padding: '12px 20px', borderRadius: 10, fontSize: 14, fontWeight: 600,
+                      color: 'var(--text)', border: '1.5px solid var(--line)', textDecoration: 'none',
+                    }}>
+                      Learn more →
+                    </Link>
                   </div>
                 ))}
               </div>
             </div>
           ))}
 
-          <div style={{ textAlign: 'center', marginTop: 32 }}>
+          <div style={{ textAlign: 'center', marginTop: 8 }}>
             <Link href="/publish-with-us/pricing-guidelines/" style={{ fontSize: 14, color: '#1e5fe0', fontWeight: 600 }}>View full editorial guidelines →</Link>
           </div>
         </section>
