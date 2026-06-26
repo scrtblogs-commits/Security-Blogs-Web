@@ -11,18 +11,21 @@ async function redisCommand(args: (string | number | object)[]) {
   const url   = process.env.UPSTASH_REDIS_REST_URL
   const token = process.env.UPSTASH_REDIS_REST_TOKEN
   if (!url || !token) return null
-  // Use pipeline endpoint so large JSON values in SET don't break the URL
-  const res = await fetch(`${url}/pipeline`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify([args]),
-  })
-  const data = await res.json()
-  // Pipeline returns an array of results; return the first
-  return Array.isArray(data) ? data[0] : data
+  try {
+    const res = await fetch(`${url}/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([args]),
+    })
+    if (!res.ok) return null
+    const data = await res.json()
+    return Array.isArray(data) ? data[0] : data
+  } catch {
+    return null
+  }
 }
 
 async function sendAdminNotification(name: string, email: string, company: string, purpose: string, adminUrl: string) {
@@ -59,6 +62,7 @@ const PURPOSE_OPTIONS = [
 ]
 
 export async function POST(req: Request) {
+  try {
   let body: Record<string, unknown>
   try { body = await req.json() } catch {
     return NextResponse.json({ ok: false, error: 'Invalid JSON' }, { status: 400 })
@@ -111,4 +115,8 @@ export async function POST(req: Request) {
   await sendAdminNotification(name, email, company, purpose, adminUrl)
 
   return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.error('[directory-access] Unhandled error:', err)
+    return NextResponse.json({ ok: false, error: 'Server error. Please try again.' }, { status: 500 })
+  }
 }
