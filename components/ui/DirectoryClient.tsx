@@ -217,22 +217,24 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
     setReqError('')
     setReqLoading(true)
     try {
-      const res = await fetch('/api/directory-access', {
+      const res = await fetch('https://formsubmit.co/ajax/scrtblogs@gmail.com', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: `[SecurityBlogs] New Directory Access Request — ${form.name} from ${form.company}`,
+          _captcha: 'false',
+          _template: 'table',
+          name: form.name,
+          email: form.email,
+          company: form.company,
+          purpose: form.purpose,
+        }),
       })
-      const data = await res.json()
-      if (data.ok) {
-        if (data.duplicate) {
-          // Already submitted — switch to check tab
-          setTab('check')
-          setCheckEmail(form.email)
-        } else {
-          setReqSent(true)
-        }
+      const data = await res.json().catch(() => ({}))
+      if (data?.success === 'true' || data?.success === true) {
+        setReqSent(true)
       } else {
-        setReqError(data.error || 'Something went wrong. Please try again.')
+        setReqError('Something went wrong. Please try again.')
       }
     } catch {
       setReqError('Network error. Please try again.')
