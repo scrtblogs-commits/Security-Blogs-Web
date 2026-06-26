@@ -102,7 +102,7 @@ export default function Footer() {
               <img
                 src="/compass-icon.gif"
                 alt="SecurityBlogs"
-                style={{ height: 64, width: 'auto', display: 'block' }}
+                style={{ width: 'min(150px, 100%)', height: 'auto', display: 'block' }}
               />
             </Link>
             <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'center', lineHeight: 1.35 }}>
