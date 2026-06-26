@@ -98,12 +98,14 @@ export default function Footer() {
               className="sg-brand-logo"
               style={{ display: 'inline-block', textDecoration: 'none' }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/whitelogo.gif"
-                alt="SecurityBlogs"
-                style={{ height: 64, width: 'auto', display: 'block' }}
-              />
+              <div style={{ width: 64, height: 64, overflow: 'hidden', flexShrink: 0 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/whitelogo.gif"
+                  alt="SecurityBlogs"
+                  style={{ height: 64, width: 'auto', display: 'block' }}
+                />
+              </div>
             </Link>
             <p style={{ fontSize: 12.5, color: 'var(--text-soft)', margin: 0, textAlign: 'center', lineHeight: 1.35 }}>
               Australia&apos;s AI Visibility Platform for Security Brands.
