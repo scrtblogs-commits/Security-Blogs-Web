@@ -33,7 +33,7 @@ const dropdowns: Drop[] = [
 ]
 
 const flat = [
-  { label: 'About', href: '/about-us/' },
+  { label: 'About Us', href: '/about-us/' },
 ]
 
 function ThemeToggle() {
@@ -110,6 +110,7 @@ export default function Navbar() {
               )}
             </div>
           ))}
+          <Link href="/pricing/" style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>Pricing</Link>
           {flat.map((f) => (
             <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>{f.label}</Link>
           ))}

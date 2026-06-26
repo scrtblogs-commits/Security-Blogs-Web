@@ -15,7 +15,6 @@ export const aiPlatforms = [
 
 export const knowledgeHub = [
   { title: 'Blog', href: '/knowledge-hub/blogs/' },
-  { title: 'Security Industry SEO', href: '/knowledge-hub/security-industry-seo/' },
 ]
 
 export const publishWithUs = [
