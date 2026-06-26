@@ -214,7 +214,7 @@ export default function ContentMarketingFrameworkPage() {
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
                   {[
                     'A topic cluster (one deep pillar page + focused supporting posts) beats publishing dozens of disconnected articles.',
-                    'Buyer-intent mapping ensures every piece of content has a job — educate, compare or convert.',
+                    'Buyer-intent mapping is designed to give every piece of content a clear job — educate, compare or convert.',
                     'E-E-A-T signals — real expertise, accurate detail, credible authorship — are what make security content rank and get cited.',
                     'AI-ready formatting (answer-first, clear headings, FAQ schema) turns good content into citable content.',
                   ].map((item, i) => (
@@ -323,7 +323,7 @@ export default function ContentMarketingFrameworkPage() {
                   </h2>
                 </div>
                 <p style={{ fontSize: 17, lineHeight: 1.78, color: 'var(--text-soft)', marginBottom: 26, maxWidth: 860 }}>
-                  Every piece of content should serve buyers at a specific stage of their journey. Mapping content to intent ensures every page has a clear purpose — and prevents you from publishing content that serves neither the buyer nor the search engine.
+                  Every piece of content should serve buyers at a specific stage of their journey. Mapping content to intent is designed to give every page a clear purpose — and helps avoid publishing content that serves neither the buyer nor the search engine.
                 </p>
 
                 <div className="cm-3col" style={{ marginBottom: 48 }}>
