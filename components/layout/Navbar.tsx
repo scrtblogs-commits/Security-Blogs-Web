@@ -86,11 +86,10 @@ export default function Navbar() {
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, height: 'var(--nav-h)',
         display: 'flex', alignItems: 'center',
-        background: scrolled ? 'color-mix(in srgb, var(--bg) 78%, transparent)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(14px) saturate(160%)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(14px) saturate(160%)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--line)' : '1px solid transparent',
-        transition: 'all 0.25s ease',
+        background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+        backdropFilter: 'blur(14px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(14px) saturate(160%)',
+        borderBottom: '1px solid var(--line)',
       }}
     >
       <div className="container flex items-center justify-between" style={{ gap: 20 }}>
