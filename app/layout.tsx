@@ -27,17 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: '/' },
   verification: { google: '_aGSb1due9fnalv6S8xYnOXcislTQ3F95AZl2CXRwNw' },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
-    ],
-    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-    other: [{ rel: 'mask-icon', url: '/favicon-32x32.png' }],
-  },
+  icons: { icon: '/compass-icon.gif', shortcut: '/compass-icon.gif' },
   openGraph: {
     title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
     description:
@@ -45,7 +35,11 @@ export const metadata: Metadata = {
     url: '/',
     siteName: 'SecurityBlogs',
     type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'SecurityBlogs' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'SecurityBlogs — AI Visibility for Security Companies' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
 }
 
@@ -79,7 +73,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: gtagHead }} />
         {/* End Google Analytics 4 + Google Ads */}
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
-        <link rel="manifest" href="/site.webmanifest" />
         <JsonLd data={siteSchema} />
       </head>
       <body>
