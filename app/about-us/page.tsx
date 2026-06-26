@@ -26,7 +26,7 @@ const founder = {
   initials: 'YJ',
   color: 'var(--blue)',
   linkedin: 'https://www.linkedin.com/in/yousif-jonaid-55893b361',
-  bio: "Yousif Jonaid is the Founder and Director of SecurityBlogs, Australia's specialist AI visibility, SEO and authority publishing platform for the security industry. With a background spanning digital marketing and the physical and cyber security sectors, Yousif launched SecurityBlogs in 2025 to fill a critical gap: a dedicated growth platform built specifically for security companies, integrators, MSSPs and manufacturers. SecurityBlogs is Australian-incorporated and remote-first, serving clients across Australia, the USA, UK, UAE and Singapore.",
+  bio: "Yousif Jonaid is the Founder and Director of SecurityBlogs, Australia's specialist AI visibility, SEO and authority publishing platform for the security industry. With a background spanning digital marketing and the physical and cyber security sectors, Yousif launched SecurityBlogs in 2025 to fill a critical gap: a dedicated growth platform built specifically for security companies, integrators, MSSPs and manufacturers. SecurityBlogs is headquartered in Australia and operates as a distributed virtual team, with specialists based in the Philippines and Pakistan — giving us global execution capacity while remaining an Australian-led, Australian-focused agency.",
 }
 
 const timeline = [
@@ -116,6 +116,28 @@ export default function AboutPage() {
                   </div>
                 </div>
               </GlassCard>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SectionHead eyebrow="Where We Operate" title="Australian-headquartered. Globally distributed." sub="We are an Australian business operating as a lean, virtual team — with specialists across Australia, the Philippines and Pakistan." />
+          <Reveal>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 20, maxWidth: 960, margin: '0 auto' }}>
+              {[
+                { flag: '🇦🇺', country: 'Australia', role: 'Headquarters', detail: 'Strategy, client leadership, account management and business direction are all run from Australia.' },
+                { flag: '🇵🇭', country: 'Philippines', role: 'Virtual Team', detail: 'Content production, SEO execution, research and digital operations specialists.' },
+                { flag: '🇵🇰', country: 'Pakistan', role: 'Virtual Team', detail: 'Technical SEO, web development, schema implementation and data analysis.' },
+              ].map((loc) => (
+                <div key={loc.country} className="card" style={{ textAlign: 'center', padding: '28px 24px' }}>
+                  <div style={{ fontSize: 40, marginBottom: 12 }}>{loc.flag}</div>
+                  <div style={{ fontWeight: 800, fontSize: 18, fontFamily: 'var(--font-display)', marginBottom: 4, color: 'var(--text)' }}>{loc.country}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 12 }}>{loc.role}</div>
+                  <p style={{ fontSize: 14, color: 'var(--text-soft)', lineHeight: 1.6, margin: 0 }}>{loc.detail}</p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
