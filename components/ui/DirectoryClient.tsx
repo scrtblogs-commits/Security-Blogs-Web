@@ -191,8 +191,9 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
 
   // ── Check Access tab state ──
   const [checkEmail, setCheckEmail] = useState('')
+  const [checkCode, setCheckCode] = useState('')
   const [checkLoading, setCheckLoading] = useState(false)
-  const [checkResult, setCheckResult] = useState<'approved' | 'pending' | 'rejected' | 'not_found' | null>(null)
+  const [checkResult, setCheckResult] = useState<'approved' | 'pending' | 'rejected' | 'not_found' | 'invalid_code' | null>(null)
   const [checkError, setCheckError] = useState('')
 
   const inputStyle: React.CSSProperties = {
@@ -249,6 +250,10 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
       setCheckError('Please enter a valid email address.')
       return
     }
+    if (!checkCode.trim()) {
+      setCheckError('Please enter your access code.')
+      return
+    }
     setCheckError('')
     setCheckLoading(true)
     setCheckResult(null)
@@ -256,7 +261,7 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
       const res = await fetch('/api/directory-access/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: checkEmail }),
+        body: JSON.stringify({ email: checkEmail, code: checkCode.trim() }),
       })
       const data = await res.json()
       if (data.ok) {
@@ -296,6 +301,11 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
       icon: '?', title: 'No request found',
       body: 'No access request was found for this email. Please submit a request first.',
       color: '#1e40af', bg: '#eff6ff',
+    },
+    invalid_code: {
+      icon: '✕', title: 'Invalid access code',
+      body: 'That code does not match. Please check the email we sent you and try again.',
+      color: '#991b1b', bg: '#fef2f2',
     },
   }
 
@@ -420,7 +430,7 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
                 Check your access status
               </h3>
               <p style={{ color: '#64748b', fontSize: 13, lineHeight: 1.6, margin: 0 }}>
-                Enter the email you used to request access. If approved, your directory will unlock immediately.
+                Enter the email you used to request access and the access code we emailed you.
               </p>
             </div>
 
@@ -432,6 +442,15 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = '#3b82f6'}
                   onBlur={e => e.target.style.borderColor = '#e2e8f0'} />
+              </div>
+              <div>
+                <label style={{ fontSize: 12, fontWeight: 700, color: '#475569', display: 'block', marginBottom: 5 }}>Access Code</label>
+                <input type="text" required placeholder="e.g. A1B2C3D4" value={checkCode}
+                  onChange={e => { setCheckCode(e.target.value.toUpperCase()); setCheckResult(null); setCheckError('') }}
+                  style={{ ...inputStyle, fontFamily: 'monospace', letterSpacing: '0.15em', textTransform: 'uppercase' }}
+                  onFocus={e => e.target.style.borderColor = '#3b82f6'}
+                  onBlur={e => e.target.style.borderColor = '#e2e8f0'} />
+                <p style={{ fontSize: 11.5, color: '#94a3b8', marginTop: 5, marginBottom: 0 }}>The 8-character code from the approval email we sent you.</p>
               </div>
 
               {checkError && (

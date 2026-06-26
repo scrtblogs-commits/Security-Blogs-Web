@@ -1,7 +1,9 @@
 // POST /api/directory-access
 // Sends directory access requests to scrtblogs@gmail.com via Formsubmit.co.
+// The notification email includes a ready-to-send approval code for the user.
 
 import { NextResponse } from 'next/server'
+import { generateCode } from '@/lib/directoryCode'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -38,17 +40,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: 'Invalid purpose selection' }, { status: 400 })
     }
 
+    const approvalCode = generateCode(email)
+
     const res = await fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify({
-        _subject: `[SecurityBlogs] New Directory Access Request — ${name} from ${company}`,
+        _subject: `[SecurityBlogs] Directory Access Request — ${name} from ${company}`,
         _captcha: 'false',
         _template: 'table',
         name,
         email,
         company,
         purpose,
+        '--- TO APPROVE ---': `Reply to ${email} with their code below`,
+        'Approval Code': approvalCode,
+        'Email to send': `Hi ${name}, your SecurityBlogs directory access code is: ${approvalCode} — enter it at securityblogs.com.au/security-directory under "Check My Status".`,
       }),
     })
 
