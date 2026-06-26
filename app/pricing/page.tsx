@@ -316,45 +316,82 @@ export default function PricingPage() {
             sub="One-time placements to build authority and backlinks on the SecurityBlogs platform."
           />
 
-          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, color: 'var(--text)' }}>Guest Posting</h3>
-          <PriceTable rows={[
-            { tier: 'Standard submission', price: 'Free', includes: 'Editorial review, 1 dofollow link, byline credit' },
-            { tier: 'Priority placement', price: '$99', includes: 'Faster review, homepage feature 3 days, 2 dofollow links' },
-          ]} />
-
-          <h3 style={{ fontSize: 16, fontWeight: 700, margin: '28px 0 12px', color: 'var(--text)' }}>Sponsored Posts</h3>
-          <PriceTable rows={[
-            { tier: 'Standard', price: '$149', includes: '1 dofollow link, permanent placement, social share, live in 3 days' },
-            { tier: 'Featured Homepage', price: '$299', includes: 'Homepage feature 7 days, 2 dofollow links, newsletter mention' },
-            { tier: 'Authority Series', price: '$1,250', includes: '5-article series, homepage + category features, 3 links each, quarterly refresh' },
-          ]} />
-
-          <h3 style={{ fontSize: 16, fontWeight: 700, margin: '28px 0 12px', color: 'var(--text)' }}>Press Release</h3>
-          <PriceTable rows={[
-            { tier: 'Single release', price: '$199', includes: 'Editorial review, permanent SEO page, up to 2 dofollow links, social + newsletter' },
-            { tier: '3-release bundle', price: '$499', includes: 'Three releases at a discount, priority review' },
-          ]} />
-
-          <h3 style={{ fontSize: 16, fontWeight: 700, margin: '28px 0 12px', color: 'var(--text)' }}>Backlink Packages</h3>
-          <PriceTable rows={[
-            { tier: 'Starter', price: '$199', includes: '1 sponsored placement on an established security-niche domain, permanent' },
-            { tier: 'Growth', price: '$549', includes: '3 sponsored placements on established security-niche pages, anchor control, reporting' },
-            { tier: 'Authority', price: '$1,290', includes: '8 sponsored placements in full editorial articles on established security-niche pages, detailed report' },
-          ]} />
-
-          <h3 style={{ fontSize: 16, fontWeight: 700, margin: '28px 0 12px', color: 'var(--text)' }}>Product Promotion</h3>
-          <PriceTable rows={[
-            { tier: 'Spotlight', price: '$249', includes: '1 product review, 1 dofollow link, social share' },
-            { tier: 'Featured Review', price: '$499', includes: 'Review + comparison, homepage feature, 2 links, video embed' },
-            { tier: 'Launch Campaign', price: '$1,450', includes: "Review + comparison + demo, buyer's guide, 3 links, 90-day promotion" },
-          ]} />
-
-          <h3 style={{ fontSize: 16, fontWeight: 700, margin: '28px 0 12px', color: 'var(--text)' }}>Advertising</h3>
-          <PriceTable rows={[
-            { tier: 'Newsletter Sponsor', price: '$249 / send', includes: 'Dedicated slot to 24K+ subscribers' },
-            { tier: 'Homepage Banner', price: '$650 / month', includes: 'Top-of-page banner across the homepage' },
-            { tier: 'Category Takeover', price: '$900 / month', includes: 'Banner + sponsored label across a full category' },
-          ]} />
+          {[
+            {
+              category: 'Guest Posting',
+              href: '/publish-with-us/guest-posting/',
+              tiers: [
+                { tier: 'Standard submission', price: 'Free', includes: 'Editorial review, 1 dofollow link, byline credit' },
+                { tier: 'Priority placement', price: '$99', includes: 'Faster review, homepage feature 3 days, 2 dofollow links' },
+              ],
+            },
+            {
+              category: 'Sponsored Posts',
+              href: '/publish-with-us/sponsored-posts/',
+              tiers: [
+                { tier: 'Standard', price: '$149', includes: '1 dofollow link, permanent placement, social share, live in 3 days' },
+                { tier: 'Featured Homepage', price: '$299', includes: 'Homepage feature 7 days, 2 dofollow links, newsletter mention' },
+                { tier: 'Authority Series', price: '$1,250', includes: '5-article series, homepage + category features, 3 links each, quarterly refresh' },
+              ],
+            },
+            {
+              category: 'Press Release',
+              href: '/publish-with-us/sponsored-posts/',
+              tiers: [
+                { tier: 'Single release', price: '$199', includes: 'Editorial review, permanent SEO page, up to 2 dofollow links, social + newsletter' },
+                { tier: '3-release bundle', price: '$499', includes: 'Three releases at a discount, priority review' },
+              ],
+            },
+            {
+              category: 'Backlink Packages',
+              href: '/publish-with-us/backlink-packages/',
+              tiers: [
+                { tier: 'Starter', price: '$199', includes: '1 sponsored placement on an established security-niche domain, permanent' },
+                { tier: 'Growth', price: '$549', includes: '3 sponsored placements on established security-niche pages, anchor control, reporting' },
+                { tier: 'Authority', price: '$1,290', includes: '8 sponsored placements in full editorial articles on established security-niche pages, detailed report' },
+              ],
+            },
+            {
+              category: 'Product Promotion',
+              href: '/publish-with-us/product-promotion/',
+              tiers: [
+                { tier: 'Spotlight', price: '$249', includes: '1 product review, 1 dofollow link, social share' },
+                { tier: 'Featured Review', price: '$499', includes: 'Review + comparison, homepage feature, 2 links, video embed' },
+                { tier: 'Launch Campaign', price: '$1,450', includes: "Review + comparison + demo, buyer's guide, 3 links, 90-day promotion" },
+              ],
+            },
+            {
+              category: 'Advertising',
+              href: '/publish-with-us/advertise/',
+              tiers: [
+                { tier: 'Newsletter Sponsor', price: '$249 / send', includes: 'Dedicated slot to 24K+ subscribers' },
+                { tier: 'Homepage Banner', price: '$650 / month', includes: 'Top-of-page banner across the homepage' },
+                { tier: 'Category Takeover', price: '$900 / month', includes: 'Banner + sponsored label across a full category' },
+              ],
+            },
+          ].map((group) => (
+            <div key={group.category} style={{ marginBottom: 40 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: 'var(--text)' }}>{group.category}</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+                {group.tiers.map((t) => (
+                  <div key={t.tier} style={{
+                    background: 'var(--bg-card)',
+                    border: '1px solid var(--line)',
+                    borderRadius: 16,
+                    padding: '24px 22px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 10,
+                  }}>
+                    <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1e5fe0' }}>{group.category}</span>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1.3 }}>{t.tier}</div>
+                    <div style={{ fontSize: 26, fontWeight: 800, color: '#1e5fe0', fontFamily: 'var(--font-display)' }}>{t.price}</div>
+                    <p style={{ fontSize: 13.5, color: 'var(--text-soft)', lineHeight: 1.55, margin: 0 }}>{t.includes}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
 
           <div style={{ textAlign: 'center', marginTop: 32 }}>
             <Link href="/publish-with-us/pricing-guidelines/" style={{ fontSize: 14, color: '#1e5fe0', fontWeight: 600 }}>View full editorial guidelines →</Link>
