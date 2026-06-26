@@ -96,9 +96,7 @@ export default function Navbar() {
       <div className="container flex items-center justify-between" style={{ gap: 20 }}>
         <Link href="/" aria-label="SecurityBlogs home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <div style={{ width: 44, height: 44, overflow: 'hidden', flexShrink: 0 }}>
-            <img src="/whitelogo.gif" alt="SecurityBlogs" style={{ height: 44, width: 'auto', display: 'block' }} />
-          </div>
+          <img src="/logo-header.webp" alt="SecurityBlogs" style={{ height: 52, width: 'auto', display: 'block' }} />
         </Link>
 
         {/* Desktop nav — whiteSpace:nowrap so labels never wrap to a 2nd line */}
