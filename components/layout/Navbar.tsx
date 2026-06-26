@@ -94,6 +94,9 @@ export default function Navbar() {
 
         {/* Desktop nav — whiteSpace:nowrap so labels never wrap to a 2nd line */}
         <nav className="sg-desktop-nav flex items-center" style={{ gap: 2 }}>
+          {flat.map((f) => (
+            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>{f.label}</Link>
+          ))}
           {dropdowns.map((d) => (
             <div key={d.label} style={{ position: 'relative' }} onMouseEnter={() => openDrop(d.label)} onMouseLeave={closeDrop}>
               <Link href={d.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', display: 'inline-flex', gap: 5, alignItems: 'center', whiteSpace: 'nowrap' }}>
@@ -111,9 +114,6 @@ export default function Navbar() {
             </div>
           ))}
           <Link href="/pricing/" style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>Pricing</Link>
-          {flat.map((f) => (
-            <Link key={f.href} href={f.href} style={{ padding: '8px 10px', fontWeight: 500, fontSize: 14, color: 'var(--text)', whiteSpace: 'nowrap' }}>{f.label}</Link>
-          ))}
         </nav>
 
         <div className="sg-desktop-nav flex items-center gap-2">

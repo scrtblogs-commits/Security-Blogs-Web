@@ -72,81 +72,132 @@ export default async function BlogPostPage({ params }: Props) {
       <JsonLd data={articleSchema} />
       <BlogReadingProgress />
 
+      <style>{`
+        @media (max-width: 1024px) { .blog-hero-grid { grid-template-columns: 1fr !important; } .blog-hero-img { display: none !important; } }
+        @media (max-width: 900px) { .blog-article-grid { grid-template-columns: 1fr !important; } .blog-sidebar { display: none !important; } }
+      `}</style>
+
       <article>
-        {/* ── Hero ──────────────────────────────────────── */}
-        <div className="sg-post-hero">
-          <div className="container" style={{ maxWidth: 1200, paddingTop: 0, paddingBottom: 40 }}>
-            {/* Breadcrumb */}
-            <nav style={{ marginBottom: 20, fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, color: 'var(--text-dim)' }}>
-              <Link href="/" style={{ color: 'var(--text-dim)' }}>Home</Link>
-              <span style={{ opacity: 0.5 }}>/</span>
-              <Link href="/knowledge-hub/" style={{ color: 'var(--text-dim)' }}>Knowledge Hub</Link>
-              <span style={{ opacity: 0.5 }}>/</span>
-              <Link href="/knowledge-hub/blogs/" style={{ color: 'var(--text-dim)' }}>Blog</Link>
-              <span style={{ opacity: 0.5 }}>/</span>
-              <span style={{ color: 'var(--text-soft)' }}>{post.title}</span>
-            </nav>
+        {/* ── Dark Navy Hero ── */}
+        <div style={{
+          position: 'relative',
+          background: 'linear-gradient(135deg, #060f1f 0%, #0d1e3d 55%, #071428 100%)',
+          overflow: 'hidden',
+          paddingTop: 'calc(var(--nav-h) + 48px)',
+          paddingBottom: 64,
+        }}>
+          {/* Dot grid */}
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
+          {/* Glow blobs */}
+          <div style={{ position: 'absolute', top: '10%', left: '5%', width: 420, height: 420, borderRadius: '50%', background: 'radial-gradient(circle, rgba(30,95,224,0.18) 0%, transparent 70%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'absolute', bottom: '0%', right: '10%', width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,57,224,0.12) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-            {/* Category + meta */}
-            <div className="sg-post-meta">
-              <span className="chip" style={{ color: 'var(--blue)', borderColor: 'rgba(30,95,224,0.3)', background: 'rgba(30,95,224,0.07)' }}>
-                {post.category}
-              </span>
-              <span className="sep">·</span>
-              <span>{formattedDate}</span>
-              <span className="sep">·</span>
-              <span>{post.read} read</span>
-              <span className="sep">·</span>
-              <span>By SecurityBlogs Team</span>
-            </div>
+          <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 32px', position: 'relative', zIndex: 1 }}>
+            <div className="blog-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr minmax(0, 360px)', gap: 48, alignItems: 'center' }}>
 
-            {/* Title */}
-            <h1 style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(28px, 5vw, 48px)',
-              fontWeight: 800,
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-              color: 'var(--text)',
-              marginBottom: 20,
-              maxWidth: 820,
-            }}>
-              {post.title}
-            </h1>
+              {/* Left: text */}
+              <div>
+                {/* Breadcrumb */}
+                <nav style={{ marginBottom: 20, fontSize: 12.5, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <Link href="/" style={{ color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Home</Link>
+                  <span style={{ color: 'rgba(255,255,255,0.25)' }}>/</span>
+                  <Link href="/knowledge-hub/" style={{ color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Knowledge Hub</Link>
+                  <span style={{ color: 'rgba(255,255,255,0.25)' }}>/</span>
+                  <Link href="/knowledge-hub/blogs/" style={{ color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Blog</Link>
+                  <span style={{ color: 'rgba(255,255,255,0.25)' }}>/</span>
+                  <span style={{ color: 'rgba(255,255,255,0.6)' }}>{post.category}</span>
+                </nav>
 
-            {/* Excerpt */}
-            <p style={{
-              fontSize: 'clamp(16px, 2vw, 19px)',
-              color: 'var(--text-soft)',
-              lineHeight: 1.65,
-              maxWidth: 720,
-              marginBottom: 28,
-            }}>
-              {post.excerpt}
-            </p>
+                {/* Meta row */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 20 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#7eb3ff', background: 'rgba(30,95,224,0.2)', border: '1px solid rgba(30,95,224,0.35)', borderRadius: 99, padding: '4px 12px' }}>
+                    {post.category}
+                  </span>
+                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.4)' }}>·</span>
+                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.5)' }}>{formattedDate}</span>
+                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.4)' }}>·</span>
+                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.5)' }}>{post.read} read</span>
+                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.4)' }}>·</span>
+                  <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.5)' }}>By SecurityBlogs Team</span>
+                </div>
 
-            {/* Share + back */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-              <Link href="/knowledge-hub/blogs/" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontSize: 13.5, color: 'var(--text-dim)', padding: '8px 14px',
-                border: '1px solid var(--line)', borderRadius: 8,
-                transition: 'all 0.15s ease',
+                {/* Title */}
+                <h1 style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'clamp(28px, 4vw, 48px)',
+                  fontWeight: 800,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.025em',
+                  color: '#fff',
+                  marginBottom: 20,
+                  maxWidth: 760,
+                }}>
+                  {post.title}
+                </h1>
+
+                {/* Excerpt */}
+                <p style={{
+                  fontSize: 'clamp(15px, 1.8vw, 18px)',
+                  color: 'rgba(255,255,255,0.62)',
+                  lineHeight: 1.7,
+                  maxWidth: 660,
+                  marginBottom: 32,
+                }}>
+                  {post.excerpt}
+                </p>
+
+                {/* Back link */}
+                <Link href="/knowledge-hub/blogs/" style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  fontSize: 13.5, color: 'rgba(255,255,255,0.55)',
+                  padding: '8px 16px', border: '1px solid rgba(255,255,255,0.15)',
+                  borderRadius: 8, textDecoration: 'none',
+                }}>
+                  ← Back to blog
+                </Link>
+              </div>
+
+              {/* Right: decorative glow card */}
+              <div className="blog-hero-img" style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                borderRadius: 20,
+                padding: 28,
+                backdropFilter: 'blur(16px)',
               }}>
-                ← Back to blog
-              </Link>
+                <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>
+                  {post.category} · SecurityBlogs
+                </div>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#fff', lineHeight: 1.4, marginBottom: 20 }}>
+                  {post.title}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {[formattedDate, `${post.read} read`, 'By SecurityBlogs Team'].map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13, color: 'rgba(255,255,255,0.45)' }}>
+                      <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#1e5fe0', flexShrink: 0 }} />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
+
+          {/* Bottom fade */}
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, background: 'linear-gradient(to bottom, transparent, #fff)', pointerEvents: 'none' }} />
         </div>
 
-        {/* ── Article body + sidebar ────────────────────── */}
-        <section className="section" style={{ paddingTop: 40 }}>
-          <div className="container sg-article-layout" style={{
+        {/* ── Article body + sidebar ── */}
+        <section style={{ paddingTop: 48, paddingBottom: 64 }}>
+          <div className="blog-article-grid" style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 280px',
+            gridTemplateColumns: 'minmax(0,1fr) 300px',
             gap: 48,
             alignItems: 'start',
             maxWidth: 1440,
+            margin: '0 auto',
+            padding: '0 32px',
           }}>
             {/* Main content */}
             <div>
@@ -185,11 +236,9 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
 
             {/* Sidebar */}
-            <aside className="sg-sidebar" style={{ position: 'sticky', top: 96 }}>
-              {/* TOC */}
+            <aside className="blog-sidebar" style={{ position: 'sticky', top: 96 }}>
               <BlogTOC html={bodyWithIds} />
 
-              {/* CTA widget */}
               <div className="sg-sidebar-widget" style={{ background: 'linear-gradient(135deg, rgba(30,95,224,0.08) 0%, rgba(30,95,224,0.02) 100%)', borderColor: 'rgba(30,95,224,0.2)' }}>
                 <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-display)', marginBottom: 10 }}>
                   Free Visibility Audit
@@ -202,7 +251,6 @@ export default async function BlogPostPage({ params }: Props) {
                 </Link>
               </div>
 
-              {/* Related posts */}
               {related.length > 0 && (
                 <div className="sg-sidebar-widget">
                   <div className="sg-sidebar-widget-title">Related reads</div>
@@ -218,7 +266,6 @@ export default async function BlogPostPage({ params }: Props) {
                 </div>
               )}
 
-              {/* Directory widget */}
               <div className="sg-sidebar-widget">
                 <div className="sg-sidebar-widget-title">Security Directory</div>
                 <p style={{ fontSize: 13.5, color: 'var(--text-soft)', marginBottom: 14, lineHeight: 1.55 }}>
@@ -232,10 +279,10 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </section>
 
-        {/* ── Related posts (mobile / bottom) ──────────── */}
+        {/* ── Related posts bottom ── */}
         {related.length > 0 && (
-          <section className="section" style={{ paddingTop: 0 }}>
-            <div className="container" style={{ maxWidth: 1440 }}>
+          <section style={{ paddingBottom: 64, paddingTop: 0 }}>
+            <div style={{ maxWidth: 1440, margin: '0 auto', padding: '0 32px' }}>
               <div style={{ marginBottom: 24 }}>
                 <span className="eyebrow">More from {post.category}</span>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 700, marginTop: 8 }}>
