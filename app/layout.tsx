@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: '/' },
   verification: { google: '_aGSb1due9fnalv6S8xYnOXcislTQ3F95AZl2CXRwNw' },
-  icons: { icon: '/whitelogo.gif', shortcut: '/whitelogo.gif' },
+  icons: { icon: '/compass-icon.gif', shortcut: '/compass-icon.gif' },
   openGraph: {
     title: 'SecurityBlogs — The AI Visibility Platform for Security Brands',
     description:
