@@ -218,7 +218,7 @@ function AccessModal({ onClose, onUnlocked }: { onClose: () => void; onUnlocked:
     setReqError('')
     setReqLoading(true)
     try {
-      const res = await fetch('https://formsubmit.co/ajax/scrtblogs@gmail.com', {
+      const res = await fetch('https://formsubmit.co/ajax/info@securityblogs.com.au', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({

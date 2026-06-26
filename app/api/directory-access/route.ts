@@ -1,5 +1,5 @@
 // POST /api/directory-access
-// Sends directory access requests to scrtblogs@gmail.com via Formsubmit.co.
+// Sends directory access requests to info@securityblogs.com.au via Formsubmit.co.
 // The notification email includes a ready-to-send approval code for the user.
 
 import { NextResponse } from 'next/server'
@@ -8,7 +8,7 @@ import { generateCode } from '@/lib/directoryCode'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const NOTIFY_EMAIL = 'scrtblogs@gmail.com'
+const NOTIFY_EMAIL = 'info@securityblogs.com.au'
 
 const PURPOSE_OPTIONS = [
   'Looking for a security provider',

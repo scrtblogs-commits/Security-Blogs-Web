@@ -1,6 +1,6 @@
 export const CONTACT_EMAIL = 'info@securityblogs.com.au'
 
-const FORMSUBMIT_EMAIL = 'scrtblogs@gmail.com'
+const FORMSUBMIT_EMAIL = 'info@securityblogs.com.au'
 
 type SubmitOptions = {
   formData: FormData

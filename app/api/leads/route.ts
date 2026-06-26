@@ -1,7 +1,7 @@
 // POST /api/leads
-// Sends form submissions to scrtblogs@gmail.com via Formsubmit.co.
+// Sends form submissions to info@securityblogs.com.au via Formsubmit.co.
 // No API key or account required — first submission triggers a one-time
-// activation email to scrtblogs@gmail.com; confirm it and all future
+// activation email to info@securityblogs.com.au; confirm it and all future
 // submissions arrive automatically.
 
 import { NextResponse } from 'next/server'
@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server'
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-const NOTIFY_EMAIL = 'scrtblogs@gmail.com'
+const NOTIFY_EMAIL = 'info@securityblogs.com.au'
 
 // ── Rate limit (in-memory) ───────────────────────────────────────────
 type Bucket = { count: number; resetAt: number }
