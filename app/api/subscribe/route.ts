@@ -1,30 +1,12 @@
 // POST /api/subscribe
-// Directory newsletter unlock — email only (no name required).
+// Directory newsletter signup — sends subscriber email to info@securityblogs.com.au
 
 import { NextResponse } from 'next/server'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
-async function redisCommand(args: (string | number)[]) {
-  const url   = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
-  if (!url || !token) return null
-  const res = await fetch(`${url}/${args.map(encodeURIComponent).join('/')}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
-  return res.json()
-}
-
-async function sendWeb3Forms(data: Record<string, string>) {
-  const key = process.env.WEB3FORMS_ACCESS_KEY
-  if (!key) return
-  await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ access_key: key, ...data }),
-  })
-}
+const NOTIFY_EMAIL = 'info@securityblogs.com.au'
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>
@@ -37,22 +19,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'Valid email required' }, { status: 400 })
   }
 
-  const lead = {
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-    source: 'directory',
-    email,
-    name: '',
+  try {
+    await fetch(`https://formsubmit.co/ajax/${NOTIFY_EMAIL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        _subject: '[SecurityBlogs] New Directory Subscriber',
+        _captcha: 'false',
+        _template: 'table',
+        email,
+        source: 'directory-subscribe',
+      }),
+    })
+  } catch (err) {
+    console.error('[/api/subscribe] fetch error', err)
   }
-
-  await redisCommand(['LPUSH', 'sg:leads', JSON.stringify(lead)])
-
-  await sendWeb3Forms({
-    subject: '[SecurityBlogs] New Directory Subscriber',
-    from_name: 'Directory Signup',
-    email,
-    message: `New newsletter subscriber from Security Directory.\n\nEmail: ${email}`,
-  })
 
   return NextResponse.json({ ok: true })
 }
